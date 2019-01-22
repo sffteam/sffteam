@@ -456,10 +456,9 @@ $saving = Savings::find('first',array(
 $Plan = 0;
 
 if(count($saving)==0){
-  $Plan = 0;
+  $Plan = $this->request->data["Plan"];
 }else{
  foreach($saving['payment'] as $p){
-  
   if($p['approved']=='Yes' && $p['shopping']>1110){
    $Plan = $p['shopping'];
   }
