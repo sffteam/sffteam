@@ -565,9 +565,9 @@ public function updateUser(){
    if($this->request->data['mcaNumber']!=""){
     $data = array(
 				'mcaNumber'=>(string)$this->request->data["mcaNumber"],
-    'DP'=>(integer)($this->request->data['Plan'],
-    'PBV'=>(integer)($this->request->data['Plan']/2,
-    'GBV'=>(integer)($this->request->data['Plan']/2,
+    'DP'=>(integer)($this->request->data['Plan']),
+    'PBV'=>(integer)($this->request->data['Plan']/2),
+    'GBV'=>(integer)($this->request->data['Plan']/2),
 			);
    $conditions = array('mcaNumber'=>(string)$this->request->data["mcaNumber"]);
    Users::update($data,$conditions);
