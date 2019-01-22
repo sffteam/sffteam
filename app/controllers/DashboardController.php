@@ -454,6 +454,9 @@ $saving = Savings::find('first',array(
   'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 ));
 $Plan = 0;
+print_r($this->request->data['mcaNumber']);
+print_r($this->request->data['refer']);
+
 if(count($saving)==0){
   return compact('users','sponsor');
 }else{
