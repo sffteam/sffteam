@@ -10,14 +10,14 @@
       <input type="text" value="" id="mcaName" name="mcaName" class="form-control">
       DateJoin:
       <input type="text" class="form-control" id="DateJoin" placeholder="1985-12-31" name="DateJoin" value="">
-<!--      Plan:
+      Plan:
       <select name="Plan" id="Plan" class="form-control">
       <option value="0">--</option>
       <?php foreach($plans as $p){?>
        <option value="<?=$p['invoice']?>"><?=$p['invoice']*12?></option>
       <?php }?>
       </select>
--->      Sponsor:
+      Sponsor:
       <select class="form-control" name="refer" id="refer">
       <?php foreach($users as $user){?>
       <option value="<?=$user['mcaNumber']?>" <?php if($sponsor==$user['mcaNumber']){echo " selected ";}?>><?=$user['mcaName']?> - <?=$user['mcaNumber']?></option>
