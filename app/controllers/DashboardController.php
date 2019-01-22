@@ -312,6 +312,136 @@ class DashboardController extends \lithium\action\Controller {
   return $this->render(array('json' => array("success"=>"Yes")));		
  }
  
+ public function import(){
+  
+  
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+ print_r($file);
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'mcaNumber' => (string)$data[1],
+									'mcaName' => ucwords(strtolower((string)$data[2])),
+									'refer' => (integer)$data[5],
+									'DateJoin' => (string)$data[4],
+								);
+								$user = Users::find("first",array(
+								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
+								));
+								if(count($user)!=1){
+									if($data['mcaNumber']!=""){
+										if((int)$data['mcaNumber']>0){
+											$this->adduserImports($data);
+											print_r($data);
+										}
+									}
+								}else{
+											$this->updateuserImport($data);
+        }
+						}
+						fclose($handle);
+			}
+  
+  }
+ }
+ public function updateuserImport($data){
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+				'refer_name'=>$refer_name,
+				'refer_id'=>(string)$refer_id,
+				'ancestors'=> $ancestors,
+				'DateJoin'=>(string)$data["DateJoin"],
+				'left'=>(integer)($refer_left+1),
+				'right'=>(integer)($refer_left+2)
+			);
+   $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
+			Users::update($data,$conditions);
+ }
+
+ 	public function adduserImports($data){
+		
+			if($data){
+			if($data['mcaNumber']!="" && $data["mcaName"]!=""){
+				print_r($data['refer']);
+				$refer = Users::first(array(
+						'fields'=>array('left','mcaNumber','ancestors','mcaName'),
+							'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+						));
+				$refer_ancestors = $refer['ancestors'];
+				
+				$ancestors = array();
+    if(count($refer_ancestors)>0){
+     foreach ($refer_ancestors as $ra){
+      array_push($ancestors, $ra);
+     }
+    }
+				$refer_mcanumber = (string) $refer['mcaNumber'];
+
+				array_push($ancestors,$refer_mcanumber);
+
+				$refer_id = $refer_mcanumber;
+				$refer_left = (integer)$refer['left'];
+				$refer_left_inc = (integer)$refer['left'];
+				$refername = Users::find('first',array(
+						'fields'=>array('mcaName','mcaNumber'),
+						'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+				));
+				
+				$refer_name = $refername['mcaName'];
+				$refer_id = $refername['mcaNumber']; 
+
+				
+			}else{
+				$refer_left = 0;
+				$refer_name = "";
+				$refer_id = "";
+				$ancestors = array();
+			}
+				Users::update(
+					array(
+						'$inc' => array('right' => (integer)2)
+					),
+					array('right' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+				Users::update(
+					array(
+						'$inc' => array('left' => (integer)2)
+					),
+					array('left' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+			
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+				'refer_name'=>$refer_name,
+				'refer_id'=>(string)$refer_id,
+				'ancestors'=> $ancestors,
+				'DateJoin'=>(string)$data["DateJoin"],
+				'left'=>(integer)($refer_left+1),
+				'right'=>(integer)($refer_left+2),
+			);
+			Users::create()->save($data);
+			
+		}
+
+	}
+ 
  public function users($sponsor=null){
   
 		$users = Users::find("all",array(
