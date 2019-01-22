@@ -453,10 +453,9 @@ class DashboardController extends \lithium\action\Controller {
 $saving = Savings::find('first',array(
   'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 ));
-$Plan = 0;
 
   $Plan = $this->request->data["Plan"];
-
+print_r($Plan);
    $refer = Users::first(array(
 						'fields'=>array('left','mcaNumber','ancestors','mcaName','plan'),
 							'conditions'=>array('mcaNumber'=>$this->request->data['refer'])
