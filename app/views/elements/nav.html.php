@@ -21,6 +21,9 @@
             <a class="nav-link" href="/dashboard/users/">Add User</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/dashboard/updateUser/">Update User</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/dashboard/usertree/92143138">User Tree</a>
           </li>
           <li><hr style="margin:0px;padding:0px;" size="4"></li>
