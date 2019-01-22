@@ -563,6 +563,14 @@ print_r($Plan);
 public function updateUser(){
   if($this->request->data){
    if($this->request->data['mcaNumber']!=""){
+    $data = array(
+				'mcaNumber'=>(string)$this->request->data["mcaNumber"],
+    'DP'=>(integer)($this->request->data['Plan'],
+    'PBV'=>(integer)($this->request->data['Plan']/2,
+    'GBV'=>(integer)($this->request->data['Plan']/2,
+			);
+   $conditions = array('mcaNumber'=>(string)$this->request->data["mcaNumber"]);
+   Users::update($data,$conditions);
      $getParents = $this->getParents((string)$this->request->data["mcaNumber"])  ;
      foreach($getParents as $p){
       $data = array('$inc' => array('GBV' => (integer)($this->request->data['Plan']/2)));
