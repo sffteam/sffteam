@@ -560,7 +560,7 @@ print_r($Plan);
   return compact('users','plans','approvedNo','approvedYes','registered','paid','sponsor');
  }
 
-public function updateUser($mcaNumber){
+public function updateUser(){
   if($this->request->data){
    if($this->request->data['mcaNumber']!=""){
      $getParents = $this->getParents((string)$this->request->data["mcaNumber"])  ;
