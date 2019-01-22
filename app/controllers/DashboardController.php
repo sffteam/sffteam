@@ -558,9 +558,24 @@ print_r($Plan);
  
 
   return compact('users','plans','approvedNo','approvedYes','registered','paid','sponsor');
-
-  
  }
+
+public function updateUser($mcaNumber){
+  if($this->request->data){
+   if($this->request->data['mcaNumber']!=""){
+     $getParents = $this->getParents((string)$this->request->data["mcaNumber"])  ;
+     foreach($getParents as $p){
+      $data = array('$inc' => array('GBV' => (integer)($this->request->data['Plan']/2)));
+      $conditions = array('mcaNumber'=>$p['mcaNumber']);
+      Users::update($data,$conditions);
+     }
+   }
+  }
+  
+  $plans = Plans::find('all');
+
+  return compact('mcaNumber','plans');
+}
  
  public function usertree($mcaNumber = null,$yyyymm=null){
 $this->_render['layout'] = 'noHeaderFooter';
