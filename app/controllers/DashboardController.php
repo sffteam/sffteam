@@ -508,9 +508,9 @@ print_r($Plan);
 				'DateJoin'=>(string)$this->request->data["DateJoin"],
 				'left'=>(integer)($refer_left+1),
 				'right'=>(integer)($refer_left+2),
-    'DP'=>(integer)$Plan/12,
-    'PBV'=>(integer)$Plan/12/2,
-    'GBV'=>(integer)$Plan/12/2,
+    'DP'=>(integer)$Plan,
+    'PBV'=>(integer)$Plan/2,
+    'GBV'=>(integer)$Plan/2,
 			);
 
 			Users::create()->save($data);
