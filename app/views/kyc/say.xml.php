@@ -1,0 +1,1 @@
+<Response><Say voice="woman">Hi, I am Ruchi Doctor calling from School of Financial Freedom. You have joined my Indian Eagles Team for Modi care. <?=urldecode($message)?>, I repeat, <?=urldecode($message)?>.</Say></Response>
