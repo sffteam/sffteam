@@ -10,6 +10,7 @@ use app\models\Banks;
 use app\models\Events;
 use app\models\Settings;
 use app\models\Savings;
+use app\models\Users;
 use app\models\Products;
 use app\models\Admins;
 use app\models\Logins;
@@ -493,6 +494,8 @@ class SavingsController extends \lithium\action\Controller {
   $function = new Functions();
   $msg = "SFF - Savings OTP is ". $otp . ",  to place order.";
   $returnvalues = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
+  $returnvalues = $function->sendSms($mobile,$msg);	 // Testing if it works 
+  
   return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp)));		
 
   }
@@ -622,5 +625,32 @@ class SavingsController extends \lithium\action\Controller {
  return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification)));		
  
 }
+
+public function tree($mcaNumber = null){
+ 
+ $users = Users::find('all',array(
+  'conditions'=>array('refer'=>(string)$mcaNumber),
+  'order'=>array('mcaName'=>'ASC')
+ ));
+ 
+ $downline = array();
+ 
+ foreach($users as $u){
+  array_push(
+   $downline,
+   array(
+    'mcaNumber'=>$u['mcaNumber'],
+    'mcaName'=>$u['mcaName'],
+    'refer'=>$u['refer'],
+    'PBV'=>$u['PBV'],
+    'GBV'=>$u['GBV'],
+    'DP'=>$u['DP'],
+    )
+  );
+ }
+  return $this->render(array('json' => array("success"=>"Yes",'downline'=>$downline)));		
+}
+ 
+
 }
 ?>
