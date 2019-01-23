@@ -4,7 +4,7 @@
 <br>
 <?=$this->form->field('file', array('type' => 'file','label'=>'BV.csv', 'class'=>'form-control-file')); ?>
 <br>
-
+<input type="text" name="yyyymm" value="<?=gmdate('Y-m',time())?>" class="form-control"><br>
 <input type="submit" name="submit" value="Submit" id="Submit" class="btn btn-primary">
 
 </form>

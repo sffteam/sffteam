@@ -335,19 +335,40 @@ class DashboardController extends \lithium\action\Controller {
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'refer' => (integer)$data[5],
 									'DateJoin' => (string)$data[4],
-								);
+         'ValidTitle'=>(string)$data[6],
+         'PaidTitle'=>(string)$data[7],
+         'Percent'=>(integer)$data[8],
+         'PBV'=>(integer)$data[10],
+         'GBV'=>(integer)$data[12],
+         'TGBV'=>(integer)$data[13],
+         'TCGBV'=>(integer)$data[14],
+         'Level'=>(integer)$data[15],
+         'PGBV'=>(integer)$data[16],
+         'RollUp'=>(integer)$data[17],
+         'Legs'=>(integer)$data[18],
+         'QDLegs'=>(integer)$data[19],
+         'APB'=>(integer)$data[20],
+         'DB'=>(integer)$data[21],
+         'LPB'=>(integer)$data[22],
+         'TF'=>(integer)$data[23],
+         'CF'=>(integer)$data[24],
+         'HF'=>(integer)$data[25],
+         'Gross'=>(integer)$data[26],
+        );
 								$user = Users::find("first",array(
 								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
 								));
 								if(count($user)!=1){
 									if($data['mcaNumber']!=""){
 										if((int)$data['mcaNumber']>0){
-											$this->adduserImports($data);
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->adduserImports($data,$yyyymm);
 											print_r($data);
 										}
 									}
 								}else{
-											$this->updateuserImport($data);
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->updateuserImport($data,$yyyymm);
         }
 						}
 						fclose($handle);
@@ -355,7 +376,7 @@ class DashboardController extends \lithium\action\Controller {
   
   }
  }
- public function updateuserImport($data){
+ public function updateuserImport($data,$yyyymm){
 			$data = array(
 				'mcaName'=>(string)$data["mcaName"],
 				'mcaNumber'=>(string)$data["mcaNumber"],
@@ -365,13 +386,33 @@ class DashboardController extends \lithium\action\Controller {
 				'ancestors'=> $ancestors,
 				'DateJoin'=>(string)$data["DateJoin"],
 				'left'=>(integer)($refer_left+1),
-				'right'=>(integer)($refer_left+2)
+				'right'=>(integer)($refer_left+2),
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+     $yyyymm.'.PBV'=>(integer)$data['PBV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+     $yyyymm.'.TGBV'=>(integer)$data['TGBV'],
+     $yyyymm.'.TCGBV'=>(integer)$data['TCGBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+     $yyyymm.'.RollUp'=>(integer)$data['RollUp'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+     $yyyymm.'.APB'=>(integer)$data['APB'],
+     $yyyymm.'.DB'=>(integer)$data['DB'],
+     $yyyymm.'.LPB'=>(integer)$data['LPB'],
+     $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.CF'=>(integer)$data['CF'],
+     $yyyymm.'.HF'=>(integer)$data['HF'],
+     $yyyymm.'.Gross'=>(integer)$data['Gross'],
+
 			);
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
 			Users::update($data,$conditions);
  }
 
- 	public function adduserImports($data){
+ 	public function adduserImports($data,$yyyymm){
 		
 			if($data){
 			if($data['mcaNumber']!="" && $data["mcaName"]!=""){
@@ -435,9 +476,28 @@ class DashboardController extends \lithium\action\Controller {
 				'DateJoin'=>(string)$data["DateJoin"],
 				'left'=>(integer)($refer_left+1),
 				'right'=>(integer)($refer_left+2),
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+     $yyyymm.'.PBV'=>(integer)$data['PBV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+     $yyyymm.'.TGBV'=>(integer)$data['TGBV'],
+     $yyyymm.'.TCGBV'=>(integer)$data['TCGBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+     $yyyymm.'.RollUp'=>(integer)$data['RollUp'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+     $yyyymm.'.APB'=>(integer)$data['APB'],
+     $yyyymm.'.DB'=>(integer)$data['DB'],
+     $yyyymm.'.LPB'=>(integer)$data['LPB'],
+     $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.CF'=>(integer)$data['CF'],
+     $yyyymm.'.HF'=>(integer)$data['HF'],
+     $yyyymm.'.Gross'=>(integer)$data['Gross'],
+
 			);
 			Users::create()->save($data);
-			
 		}
 
 	}
