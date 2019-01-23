@@ -645,7 +645,7 @@ public function updateUser(){
   return compact('mcaNumber','plans');
 }
  
- public function usertree($mcaNumber = null,$yyyymm=null){
+public function usertree($mcaNumber = null,$yyyymm=null){
 $this->_render['layout'] = 'noHeaderFooter';
  
 			$selfline = Users::find('first',array(
@@ -713,7 +713,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 			return compact('allusers','level','selfline');	
 
  }
-
+ 
 	public function countChilds($user_id){
 	#Retrieving a Full Tree
 	/* 	SELECT node.user_id

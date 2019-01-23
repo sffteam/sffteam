@@ -626,7 +626,7 @@ class SavingsController extends \lithium\action\Controller {
  
 }
 
-public function tree($mcaNumber = null){
+public function tree($mcaNumber = null,$yyyymm=null){
  
  $user = Users::find('first',array(
   'conditions'=>array('mcaNumber'=>(string)$mcaNumber),
@@ -671,6 +671,19 @@ public function tree($mcaNumber = null){
 //    'ancestors'=>$user['ancestors'],
     'GBV'=>$user['GBV']?:0,
     'DP'=>$user['DP']?:0,
+    $yyyymm=>
+     array(
+     'PBV'=>$user[$yyyymm]['PBV']?:0,
+     'PGBV'=>$user[$yyyymm]['PGBV']?:0,
+     'PaidTitle'=>$user[$yyyymm]['PaidTitle']?:0,
+     'ValidTitle'=>$user[$yyyymm]['ValidTitle']?:0,
+     'Percent'=>$user[$yyyymm]['Percent']?:0,
+     'GBV'=>$user[$yyyymm]['GBV']?:0,
+     'TGBV'=>$user[$yyyymm]['TGBV']?:0,
+     'TCGBV'=>$user[$yyyymm]['TCGBV']?:0,
+     'RollUp'=>$user[$yyyymm]['RollUp']?:0,
+     'QDLegs'=>$user[$yyyymm]['QDLegs']?:0
+     ),
     'ancestors'=>$namesFound
     )
   );
@@ -685,6 +698,19 @@ public function tree($mcaNumber = null){
     'PBV'=>$u['PBV']?:0,
     'GBV'=>$u['GBV']?:0,
     'DP'=>$u['DP']?:0,
+    $yyyymm=>
+     array(
+     'PBV'=>$u[$yyyymm]['PBV']?:0,
+     'PGBV'=>$u[$yyyymm]['PGBV']?:0,
+     'PaidTitle'=>$u[$yyyymm]['PaidTitle']?:0,
+     'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:0,
+     'Percent'=>$u[$yyyymm]['Percent']?:0,
+     'GBV'=>$u[$yyyymm]['GBV']?:0,
+     'TGBV'=>$u[$yyyymm]['TGBV']?:0,
+     'TCGBV'=>$u[$yyyymm]['TCGBV']?:0,
+     'RollUp'=>$u[$yyyymm]['RollUp']?:0,
+     'QDLegs'=>$u[$yyyymm]['QDLegs']?:0
+     )
     )
   );
  }
