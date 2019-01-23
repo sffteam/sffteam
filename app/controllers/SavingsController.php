@@ -5,7 +5,7 @@ use app\extensions\action\GoogleAuthenticator;
 
 use app\extensions\action\Functions;
 use app\models\Notifications;
-
+use app\controllers\DashboardController;
 use app\models\Banks;
 use app\models\Events;
 use app\models\Settings;
@@ -633,6 +633,25 @@ public function tree($mcaNumber = null){
   'order'=>array('mcaName'=>'ASC')
  ));
  
+ $ancestors = array();
+ foreach($user['ancestors'] as $a){
+  if($a!=""){
+  array_push($ancestors,$a);
+  }
+ }
+ 
+ 
+ $names = Users::find('all',array(
+  'conditions'=>array('mcaNumber'=>array('$in'=>$ancestors)),
+  'order'=>array('_id'=>'ASC')
+ ));
+ $namesFound = array();
+ foreach($names as $n){
+  array_push($namesFound, array(
+    'mcaName'=>$n['mcaName'],
+    'mcaNumber'=>$n['mcaNumber']
+  ));
+ }
  
  $users = Users::find('all',array(
   'conditions'=>array('refer'=>(string)$mcaNumber),
@@ -641,6 +660,7 @@ public function tree($mcaNumber = null){
  
  $downline = array();
  
+ 
   array_push(
    $downline,
    array(
@@ -648,8 +668,10 @@ public function tree($mcaNumber = null){
     'mcaName'=>$user['mcaName'],
     'refer'=>$user['refer'],
     'PBV'=>$user['PBV']?:0,
+//    'ancestors'=>$user['ancestors'],
     'GBV'=>$user['GBV']?:0,
     'DP'=>$user['DP']?:0,
+    'ancestors'=>$namesFound
     )
   );
  
