@@ -634,12 +634,13 @@ public function tree($mcaNumber = null,$yyyymm=null){
  ));
  
  $ancestors = array();
- foreach($user['ancestors'] as $a){
-  if($a!=""){
-  array_push($ancestors,$a);
+ if($user['ancestors']){
+  foreach($user['ancestors'] as $a){
+   if($a!=""){
+    array_push($ancestors,$a);
+   }
   }
  }
- 
  
  $names = Users::find('all',array(
   'conditions'=>array('mcaNumber'=>array('$in'=>$ancestors)),
