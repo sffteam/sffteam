@@ -628,12 +628,30 @@ class SavingsController extends \lithium\action\Controller {
 
 public function tree($mcaNumber = null){
  
+ $user = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$mcaNumber),
+  'order'=>array('mcaName'=>'ASC')
+ ));
+ 
+ 
  $users = Users::find('all',array(
   'conditions'=>array('refer'=>(string)$mcaNumber),
   'order'=>array('mcaName'=>'ASC')
  ));
  
  $downline = array();
+ 
+  array_push(
+   $downline,
+   array(
+    'mcaNumber'=>$user['mcaNumber'],
+    'mcaName'=>$user['mcaName'],
+    'refer'=>$user['refer'],
+    'PBV'=>$user['PBV'],
+    'GBV'=>$user['GBV'],
+    'DP'=>$user['DP'],
+    )
+  );
  
  foreach($users as $u){
   array_push(
