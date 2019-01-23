@@ -647,9 +647,9 @@ public function tree($mcaNumber = null){
     'mcaNumber'=>$user['mcaNumber'],
     'mcaName'=>$user['mcaName'],
     'refer'=>$user['refer'],
-    'PBV'=>$user['PBV'],
-    'GBV'=>$user['GBV'],
-    'DP'=>$user['DP'],
+    'PBV'=>$user['PBV']?:0,
+    'GBV'=>$user['GBV']?:0,
+    'DP'=>$user['DP']?:0,
     )
   );
  
@@ -660,9 +660,9 @@ public function tree($mcaNumber = null){
     'mcaNumber'=>$u['mcaNumber'],
     'mcaName'=>$u['mcaName'],
     'refer'=>$u['refer'],
-    'PBV'=>$u['PBV'],
-    'GBV'=>$u['GBV'],
-    'DP'=>$u['DP'],
+    'PBV'=>$u['PBV']?:0,
+    'GBV'=>$u['GBV']?:0,
+    'DP'=>$u['DP']?:0,
     )
   );
  }
