@@ -647,6 +647,11 @@ public function tree($mcaNumber = null,$yyyymm=null){
   'conditions'=>array('mcaNumber'=>array('$in'=>$ancestors)),
   'order'=>array('_id'=>'ASC')
  ));
+ 
+ $saving = Savings::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+ ));
+ 
  $namesFound = array();
  foreach($names as $n){
   array_push($namesFound, array(
@@ -675,7 +680,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'DP'=>$user['DP']?:0,
     'summary'=>array(
      $yyyymm=>array(
-      'invoices'=>$user['summary'][$yyyymm]['invoices']
+      'invoices'=>$saving['summary'][$yyyymm]['invoices']
      )
     ),
     $yyyymm=>
@@ -696,6 +701,11 @@ public function tree($mcaNumber = null,$yyyymm=null){
   );
  
  foreach($users as $u){
+  
+ $saving = Savings::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$u['mcaNumber'])
+ ));
+
   array_push(
    $downline,
    array(
@@ -707,7 +717,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'DP'=>$u['DP']?:0,
     'summary'=>array(
      $yyyymm=>array(
-      'invoices'=>$u['summary'][$yyyymm]['invoices']
+      'invoices'=>$saving['summary'][$yyyymm]['invoices']
      )
     ),
     $yyyymm=>
