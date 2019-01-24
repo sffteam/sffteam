@@ -713,6 +713,38 @@ $this->_render['layout'] = 'noHeaderFooter';
 			return compact('allusers','level','selfline');	
 
  }
+
+ public function getChilds($user_id){
+	#Retrieving a Full Tree
+	/* 	SELECT node.user_id
+	FROM details AS node,
+			details AS parent
+	WHERE node.lft BETWEEN parent.lft AND parent.rgt
+		   AND parent.user_id = 3
+	ORDER BY node.lft;
+	
+	parent = db.details.findOne({user_id: ObjectId("50e876e49d5d0cbc08000000")});
+	query = {left: {$gt: parent.left, $lt: parent.right}};
+	select = {user_id: 1};
+	db.details.find(query,select).sort({left: 1})
+	 */
+		$ParentDetails = Users::find('all',array(
+			'conditions'=>array(
+			'mcaNumber' => $user_id
+			)));
+		foreach($ParentDetails as $pd){
+			$left = $pd['left'];
+			$right = $pd['right'];
+		}
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right)
+			))
+		);
+
+		return $NodeDetails;
+	}
  
 	public function countChilds($user_id){
 	#Retrieving a Full Tree

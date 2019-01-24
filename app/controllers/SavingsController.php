@@ -731,6 +731,22 @@ public function tree($mcaNumber = null,$yyyymm=null){
   Savings::update($data,$conditions);
   return $this->render(array('json' => array("success"=>"Yes")));		
  }
-
+function searchmca($mcaNumber){
+  $dashboard = new DashboardController();
+  $Nodes = $dashboard->getChilds($mcaNumber);
+  
+  $users = array();
+  foreach($Nodes as $n){
+   array_push($users,
+    array(
+     'mcaNumber'=>$n['mcaNumber'],
+     'mcaName'=>$n['mcaName']
+    )
+   );
+   
+  }
+  
+  return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
+}
 }
 ?>
