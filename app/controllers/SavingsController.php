@@ -798,7 +798,7 @@ function members(){
   foreach($membersFound as $m){
    array_push($members, array(
     'mcaNumber'=>$m['mcaNumber'],
-    'mcaName'=>$m['firstName'].' '$m['lastName'],
+    'mcaName'=>$m['firstName'].' '.$m['lastName'],
     'mobile'=>$m['mobile'],
    ));
   }
