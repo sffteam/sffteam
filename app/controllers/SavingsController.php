@@ -641,6 +641,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
    }
   }
  }
+// print_r($ancestors);
  
  $names = Users::find('all',array(
   'conditions'=>array('mcaNumber'=>array('$in'=>$ancestors)),
@@ -653,7 +654,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'mcaNumber'=>$n['mcaNumber']
   ));
  }
- 
+// print_r($namesFound);
  $users = Users::find('all',array(
   'conditions'=>array('refer'=>(string)$mcaNumber),
   'order'=>array('mcaName'=>'ASC')
