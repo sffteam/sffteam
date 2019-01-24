@@ -798,7 +798,8 @@ function members(){
   foreach($membersFound as $m){
    array_push($members, array(
     'mcaNumber'=>$m['mcaNumber'],
-    'mcaName'=>$m['mcaName']
+    'mcaName'=>$m['firstName'].' '$m['lastName'],
+    'mobile'=>$m['mobile'],
    ));
   }
  return $this->render(array('json' => array("success"=>"Yes","members"=>$members)));		
