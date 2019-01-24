@@ -620,7 +620,8 @@ print_r($Plan);
   return compact('users','plans','approvedNo','approvedYes','registered','paid','sponsor');
  }
 
-public function updateUser(){
+public function updateUser($mcaNumber=null){
+ 
   if($this->request->data){
    if($this->request->data['mcaNumber']!=""){
     $data = array(

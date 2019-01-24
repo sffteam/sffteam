@@ -5,7 +5,7 @@
       <div style="margin:auto">
       <?=$this->form->create('',array('url'=>'/dashboard/updateUser')); ?>
       MCA Number:
-      <input type="text" value="" id="mcaNumber" name="mcaNumber" class="form-control">
+      <input type="text"  id="mcaNumber" name="mcaNumber" class="form-control" value="<?=$mcaNumber?>">
       Plan:
       <select name="Plan" id="Plan" class="form-control">
       <option value="0">--</option>
