@@ -675,7 +675,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'DP'=>$user['DP']?:0,
     'summary'=>array(
      $yyyymm=>array(
-      'invoices'=>$user['summary'][$yyyymm]['invoices']?:0
+      'invoices'=>$user['summary'][$yyyymm]['invoices']
      )
     ),
     $yyyymm=>
@@ -707,7 +707,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'DP'=>$u['DP']?:0,
     'summary'=>array(
      $yyyymm=>array(
-      'invoices'=>$u['summary'][$yyyymm]['invoices']?:0
+      'invoices'=>$u['summary'][$yyyymm]['invoices']
      )
     ),
     $yyyymm=>
