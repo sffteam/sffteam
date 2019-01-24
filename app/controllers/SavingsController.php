@@ -673,6 +673,11 @@ public function tree($mcaNumber = null,$yyyymm=null){
 //    'ancestors'=>$user['ancestors'],
     'GBV'=>$user['GBV']?:0,
     'DP'=>$user['DP']?:0,
+    'summary'=>array(
+     $yyyymm=>array(
+      'invoices'=>$user['summary'][$yyyymm]['invoices']?:0
+     )
+    ),
     $yyyymm=>
      array(
      'PBV'=>$user[$yyyymm]['PBV']?:0,
@@ -700,6 +705,11 @@ public function tree($mcaNumber = null,$yyyymm=null){
     'PBV'=>$u['PBV']?:0,
     'GBV'=>$u['GBV']?:0,
     'DP'=>$u['DP']?:0,
+    'summary'=>array(
+     $yyyymm=>array(
+      'invoices'=>$u['summary'][$yyyymm]['invoices']?:0
+     )
+    ),
     $yyyymm=>
      array(
      'PBV'=>$u[$yyyymm]['PBV']?:0,
