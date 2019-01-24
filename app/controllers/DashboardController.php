@@ -923,6 +923,13 @@ public function getorder($yyyy = null,$mcaNumber=null){
 
  public function saveinvoice($yyyymm=null,$mcaNumber=null,$dp1=null,$bv1=null,$invoice1=null,$dp2=null,$bv2=null,$invoice2=null,$date1=null,$date2=null){
 
+ $gbvData = Users::find('first',
+  array('conditions'=>
+   array('mcaNumber'=>$mcaNumber)
+  ));
+ 
+ $gbv = $gbvData['summary'][$yyyymm]['gbv'];
+ 
   $invoices = [];
   $invoice = array(
    'DP'=>$dp1,
@@ -959,6 +966,8 @@ public function getorder($yyyy = null,$mcaNumber=null){
   
      $getParents = $this->getParents((string)$mcaNumber)  ;
      foreach($getParents as $p){
+      $data = array('$inc' => array('summary.'.$yyyymm.'.gbv' => -$gbv));
+      Users::update($data,$conditions);
       $data = array('$inc' => array('summary.'.$yyyymm.'.gbv' => (integer)$bv1+(integer)$bv2));
       $conditions = array('mcaNumber'=>$p['mcaNumber']);
       Users::update($data,$conditions);
