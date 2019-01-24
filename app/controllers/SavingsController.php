@@ -77,34 +77,32 @@ class SavingsController extends \lithium\action\Controller {
   $agree = $this->request->data['agree'];
   $reason = $this->request->data['reason'];
   $approved = $this->request->data['approved'];
+  $signpin = $this->request->data['signpin'];
   $user = Savings::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
   $save = "No";
   if(count($user)==0){
    Savings::create()->save($this->request->data);
-   
    $function = new Functions();
    $function->addnotify($this->request->data['mcaNumber'],"Waiting for Approval","You application to join SFF is waiting for approval. The approval process may take 1 to 2 days depending on your KYC documents.");
-   
    $save = "Yes";
   }
   				return $this->render(array('json' => array("success"=>$save)));		
  }
  public function signin(){
   $mcaNumber = $this->request->data['mcaNumber'];
-  $mcaPassword = $this->request->data['mcaPassword'];
+  $signpin = $this->request->data['signpin'];
    $user = Savings::find('first',array(
    'conditions'=>array(
     'mcaNumber'=>$mcaNumber,
-    'mcaPassword'=>$mcaPassword
+    'signpin'=>$signpin
    )
   ));
   if(count($user)==0){
    $success = "No";
   }else{
    $success = "Yes";
-   
   }
   return $this->render(array('json' => array("success"=>$success,"user"=>$user)));		
  }
