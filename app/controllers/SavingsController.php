@@ -124,6 +124,7 @@ class SavingsController extends \lithium\action\Controller {
   $agree = $this->request->data['agree'];
   $reason = $this->request->data['reason'];
   $approved = $this->request->data['approved'];
+  $signpin = $this->request->data['signpin'];
   $user = Savings::find('first',array(
    'conditions'=>array('mcaNumber'=>$o_mcaNumber)
   ));
@@ -151,6 +152,7 @@ class SavingsController extends \lithium\action\Controller {
      'agree' => $this->request->data['agree'],
      'approved' => $this->request->data['approved'],
      'reason' => $this->request->data['reason'],
+     'signpin' => $this->request->data['signpin'],
     );
     
     
