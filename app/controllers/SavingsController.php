@@ -628,6 +628,21 @@ class SavingsController extends \lithium\action\Controller {
 
 public function tree($mcaNumber = null,$yyyymm=null){
  
+  $members = Savings::find('all',array(
+   'conditions'=>array(
+    'payment'=>array(
+      '$elemMatch'=>array(
+        'approved'=>'Yes',
+        'shopping'=>1110
+      )
+    )
+   )
+  ));
+  
+  $members = count($members);
+
+ 
+ 
  $user = Users::find('first',array(
   'conditions'=>array('mcaNumber'=>(string)$mcaNumber),
   'order'=>array('mcaName'=>'ASC')
@@ -733,7 +748,7 @@ public function tree($mcaNumber = null,$yyyymm=null){
     )
   );
  }
-  return $this->render(array('json' => array("success"=>"Yes",'downline'=>$downline)));		
+  return $this->render(array('json' => array("success"=>"Yes",'downline'=>$downline,'members'=>$members)));		
 }
  function changepin(){
   $mcaNumber = $this->request->data['mcaNumber'];
