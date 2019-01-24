@@ -791,7 +791,7 @@ function members(){
       )
     )
    ),
-   'order'=>array('mcaName'=>'ASC')
+   'order'=>array('firstName'=>'ASC','lastName'=>'ASC')
   ));
   
   $members = array();
