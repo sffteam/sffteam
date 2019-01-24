@@ -943,14 +943,15 @@ public function getorder($yyyy = null,$mcaNumber=null){
   );
   
   $conditions = array('mcaNumber'=>$mcaNumber);
-  print_r($data);
+  
   Savings::update($data,$conditions);
+  Users::update($data,$conditions);
   $data = array(
    'summary.'.$yyyymm.'.dp'=>(integer)$dp1+(integer)$dp2,
    'summary.'.$yyyymm.'.pbv'=>(integer)$bv1+(integer)$bv2,
    'summary.'.$yyyymm.'.gbv' => (integer)$bv1+(integer)$bv2,
   );
-   print_r($data);
+  Savings::update($data,$conditions);
   Users::update($data,$conditions);
 
      $function = new Functions();
