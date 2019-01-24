@@ -780,5 +780,28 @@ function searchmca($mcaNumber){
   
   return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
 }
+
+function members(){
+   $membersFound = Savings::find('all',array(
+   'conditions'=>array(
+    'payment'=>array(
+      '$elemMatch'=>array(
+        'approved'=>'Yes',
+        'shopping'=>1110
+      )
+    )
+   ),
+   'order'=>array('mcaName'=>'ASC')
+  ));
+  
+  $members = array();
+  foreach($membersFound as $m){
+   array_push($members, array(
+    'mcaNumber'=>$m['mcaNumber'],
+    'mcaName'=>$m['mcaName']
+   ));
+  }
+ return $this->render(array('json' => array("success"=>"Yes","members"=>$members)));		
+}
 }
 ?>
