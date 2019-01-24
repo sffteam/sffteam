@@ -718,7 +718,19 @@ public function tree($mcaNumber = null,$yyyymm=null){
  }
   return $this->render(array('json' => array("success"=>"Yes",'downline'=>$downline)));		
 }
- 
+ function changepin(){
+  $mcaNumber = $this->request->data['mcaNumber'];
+  $signpin = $this->request->data['signpin'];
+  
+  $data = array(
+   'signpin'=>$signpin
+  );
+  $conditions = array(
+   'mcaNumber'=>$mcaNumber
+  );
+  Savings::update($data,$conditions);
+  return $this->render(array('json' => array("success"=>"Yes")));		
+ }
 
 }
 ?>
