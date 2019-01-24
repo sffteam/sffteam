@@ -968,7 +968,7 @@ public function getorder($yyyy = null,$mcaNumber=null){
      foreach($getParents as $p){
       
       $conditions = array('mcaNumber'=>$p['mcaNumber']);
-      $data = array('$inc' => array('summary.'.$yyyymm.'.gbv' => (0-$gbv)));
+      $data = array('$inc' => array('summary.'.$yyyymm.'.gbv' => -$gbv));
       Users::update($data,$conditions);
       
       $conditions = array('mcaNumber'=>$p['mcaNumber']);
