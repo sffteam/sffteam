@@ -943,19 +943,18 @@ public function getorder($yyyy = null,$mcaNumber=null){
   );
   
   $conditions = array('mcaNumber'=>$mcaNumber);
+  print_r($data);
   Savings::update($data,$conditions);
   $data = array(
    'summary.'.$yyyymm.'.dp'=>(integer)$dp1+(integer)$dp2,
    'summary.'.$yyyymm.'.pbv'=>(integer)$bv1+(integer)$bv2,
    'summary.'.$yyyymm.'.gbv' => (integer)$bv1+(integer)$bv2,
   );
-  
+   print_r($data);
   Users::update($data,$conditions);
 
      $function = new Functions();
      $function->addnotify($mcaNumber,"Invoice prepared","We have prepared an invoice on your MCA number ".$mcaNumber.". It will be emailed to you.");
-
-  
   
      $getParents = $this->getParents((string)$mcaNumber)  ;
      foreach($getParents as $p){
