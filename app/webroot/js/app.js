@@ -108,24 +108,25 @@ function onclickModal(year,mcaNumber){
  $("#mMonth").html(year);
  $("#imcaNumber").val(mcaNumber);
  $("#iyyyymm").val(year);
+
  
  
- var date0 = "#gDate-"+year+"-0";
+ var date0 = "#gDate-"+mcaNumber+year+"-0";
  $("#Date1").val($(date0).val());
- var invoice0 = "#gInvoice-"+year+"-0";
+ var invoice0 = "#gInvoice-"+mcaNumber+year+"-0";
  $("#Invoice1").val($(invoice0).val());
- var DP0 = "#gDP-"+year+"-0";
+ var DP0 = "#gDP-"+mcaNumber+year+"-0";
  $("#DP1").val($(DP0).val());
- var BV0 = "#gBV-"+year+"-0";
+ var BV0 = "#gBV-"+mcaNumber+year+"-0";
  $("#BV1").val($(BV0).val()); 
  
- var date1 = "#gDate-"+year+"-1";
+ var date1 = "#gDate-"+mcaNumber+year+"-1";
  $("#Date2").val($(date1).val());
- var invoice1 = "#gInvoice-"+year+"-1";
+ var invoice1 = "#gInvoice-"+mcaNumber+year+"-1";
  $("#Invoice2").val($(invoice1).val());
- var DP1 = "#gDP-"+year+"-1";
+ var DP1 = "#gDP-"+mcaNumber+year+"-1";
  $("#DP2").val($(DP1).val());
- var BV1 = "#gBV-"+year+"-1";
+ var BV1 = "#gBV-"+mcaNumber+year+"-1";
  $("#BV2").val($(BV1).val()); 
   
 }  

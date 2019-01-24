@@ -38,10 +38,10 @@
                  <?php $k = 0; 
                  if($value['invoices']){
                   foreach($value['invoices'] as $i) {?>
-                  <input type="hidden" name="gDate-<?=$key?>-<?=$k?>" id="gDate-<?=$key?>-<?=$k?>" value="<?=$i['Date']?>">
-                  <input type="hidden" name="gInvoice-<?=$key?>-<?=$k?>" id="gInvoice-<?=$key?>-<?=$k?>" value="<?=$i['Invoice']?>">
-                  <input type="hidden" name="gDP-<?=$key?>-<?=$k?>" id="gDP-<?=$key?>-<?=$k?>" value="<?=$i['DP']?>">
-                  <input type="hidden" name="gBV-<?=$key?>-<?=$k?>" id="gBV-<?=$key?>-<?=$k?>" value="<?=$i['BV']?>">
+                  <input type="hidden" name="gDate-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" id="gDate-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" value="<?=$i['Date']?>">
+                  <input type="hidden" name="gInvoice-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" id="gInvoice-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" value="<?=$i['Invoice']?>">
+                  <input type="hidden" name="gDP-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" id="gDP-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" value="<?=$i['DP']?>">
+                  <input type="hidden" name="gBV-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" id="gBV-<?=$u["mcaNumber"]?><?=$key?>-<?=$k?>" value="<?=$i['BV']?>">
                  <?php $k++; }?>
                  
                  </td>
@@ -58,6 +58,7 @@
     </main>
   </div>
 </div>
+
 <div class="modal fade " id="Invoice" tabindex="-1" role="dialog" aria-labelledby="InvoiceModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -109,7 +110,3 @@
 </div>
 
 
-<!--modal-->
-<script>
-
-</script>
