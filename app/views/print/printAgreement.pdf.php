@@ -132,7 +132,7 @@ $html = '
 <li>This service agreement cannot be terminated within the first 90 days of the start of the agreement.</li>
 <li>Either party must provide a written notice to terminate the contract before 90 days of termination. </li>
 <li>Consultant will have to furnish in writing with a reason for termination. Subject to approval by Hitarth.</li>
-<li>On termination, Hitarth will pay the balance amount with 30 days of termination of this agreement.</li>
+<li>On termination, Hitarth will pay the balance amount within 30 days of termination of this agreement.</li>
 <li>Any payment made by Credit Card using the EMI option will not be able to terminate the agreement till the end of the agreement period and no money will be refunded in form of cash or any other mode of payment.</li>
 </ol>
 </td>
