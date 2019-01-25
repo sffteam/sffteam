@@ -36,8 +36,12 @@ routes = [
           html = html + '     <div class="row">';
           html = html + '       <div class="col-50 tablet-25">Name</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Mobile</div>';
+          html = html + '       <div class="col-50 tablet-25">+91'+data['users'][key]['mobile']+'</div>';
           html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['mcaNumber']+' / '+data['users'][key]['mcaPassword']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">PIN</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['signpin']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Date of Birth</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['dateofbirth']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Gender</div>';
@@ -157,8 +161,12 @@ routes = [
           html = html + '     <div class="row">';
           html = html + '       <div class="col-50 tablet-25">Name</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Mobile</div>';
+          html = html + '       <div class="col-50 tablet-25">+91'+data['users'][key]['mobile']+'</div>';
           html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['mcaNumber']+' / '+data['users'][key]['mcaPassword']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">PIN</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['signpin']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Date of Birth</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['dateofbirth']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Gender</div>';
