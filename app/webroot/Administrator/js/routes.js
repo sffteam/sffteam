@@ -253,11 +253,32 @@ routes = [
        	var data = JSON.parse( gotData );
         if(data['user'].length!=0){
          console.log(data['user']);
-         $$("#UserName").html(data['user']['firstName'])
+         $$("#UserName").html(data['user']['firstName']+' '+data['user']['lastName'])
          
          html = "";
          for(key in data['user']){
-          $$("#UsersDetail").html(html);        
+          html = html + '     <div class="row">';
+          html = html + '       <div class="col-50 tablet-25">Name</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['firstName']+' '+data['user'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Mobile</div>';
+          html = html + '       <div class="col-50 tablet-25">+91'+data['user'][key]['mobile']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['mcaNumber']+' / '+data['user'][key]['mcaPassword']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">PIN</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['signpin']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Date of Birth</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['dateofbirth']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Gender</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['gender']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Address</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['address']+', '+data['user'][key]['street']+', '+data['user'][key]['city']+','+data['user'][key]['pin']+' '+data['user'][key]['state']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Select DP</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['point'].name+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Select Reason</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['reason'] + '</div>';
+          html = html + '     </div>';
+
+         $$("#UsersDetail").html(html);        
          }
         }else{
          html = '<div class="block">No Data found</div>';
