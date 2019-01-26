@@ -91,5 +91,33 @@ class AdminController extends \lithium\action\Controller {
 
   return $this->render(array('json' => array("success"=>"Yes","users"=>$users,"reasons"=>$reasons,"points"=>$points)));
  }
+ public function search(){
+  $usersFound = Savings::find('all');
+  
+  $users = array();
+  foreach($usersFound as $u){
+   array_push($users, 
+    array(
+     'mcaNumber'=>$u['mcaNumber'],
+     'mcaName'=>$u['firstName'].' '.$u['lastName'],
+     'mobile'=>$u['mobile']
+    )
+   );  
+  }
+  return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));
+ }
+ 
+ public function user($mcaNumber){
+  $userFound = Savings::find('first',
+   array(
+    'conditions'=>array(
+     'mcaNumber'=>(string)$mcaNumber
+    )
+   )
+  );
+  return $this->render(array('json' => array("success"=>"Yes","user"=>$userFound)));
+  
+ }
+ 
 }
 ?>

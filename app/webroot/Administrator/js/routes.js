@@ -20,7 +20,6 @@ routes = [
       var submitURL = server+'admin/approve';
         app.request.post(submitURL, '', function (gotData) {
        	var data = JSON.parse( gotData );
-        console.log(data);
         if(data['users'].length!=0){
          var html =        '<div class="block-title">New Registration</div>';
          html = html + ' <div class="list accordion-list">';
@@ -145,8 +144,7 @@ routes = [
        var submitURL = server+'admin/approved';
         app.request.post(submitURL, '', function (gotData) {
        	var data = JSON.parse( gotData );
-        console.log(data);
-          if(data['users'].length!=0){
+        if(data['users'].length!=0){
          var html =        '<div class="block-title">Approved </div>';
          html = html + ' <div class="list accordion-list">';
          html = html + '  <ul>';
@@ -202,6 +200,79 @@ routes = [
       }
      }
   },
+  {
+    path: '/search/',
+    templateUrl: './pages/search.html',
+    on: {
+     pageMounted: function(event,page){
+      var submitURL = server+'admin/search';
+        app.request.post(submitURL, '', function (gotData) {
+       	var data = JSON.parse( gotData );
+        if(data['users'].length!=0){
+         console.log(data['users']);
+         html = "";
+         for(key in data['users']){
+          html = html + '<li class="item-content">';
+          html = html + '<div class="item-inner">';
+          html = html + '<div class="item-title"><a href="/user/'+data['users'][key]['mcaNumber']+'/">'+data['users'][key]['mcaNumber']+' ' +data['users'][key]['mcaName']+' '+data['users'][key]['mobile']+'</a></div>';
+          html = html + '</div>';
+          html = html + '</li>';
+          $$("#DivSearch").html(html);        
+         }
+        }else{
+         html = '<div class="block">No Data found</div>';
+         $$("#DivSearch").html(html);        
+        }
+   
+        },
+        function () 	{
+         toastNoInternet.open();
+        });	  
+        
+        var searchbar = app.searchbar.create({
+           el: '.searchbar',
+           searchContainer: '.list',
+           searchIn: '.item-title',
+           on: {
+             search(sb, query, previousQuery) {
+
+             }
+           }
+         });
+
+      }
+     }
+  },
+  {
+    path: '/user/:mcaNumber/',
+    templateUrl: './pages/user.html',
+    on: {
+     pageMounted: function(event,page){
+      var submitURL = server+'admin/user/'+page.route.params.mcaNumber;
+        app.request.post(submitURL, '', function (gotData) {
+       	var data = JSON.parse( gotData );
+        if(data['user'].length!=0){
+         console.log(data['user']);
+         $$("#UserName").html(data['user']['firstName'])
+         
+         html = "";
+         for(key in data['user']){
+          $$("#UsersDetail").html(html);        
+         }
+        }else{
+         html = '<div class="block">No Data found</div>';
+         $$("#UsersDetail").html(html);        
+        }
+   
+        },
+        function () 	{
+         toastNoInternet.open();
+        });	  
+        
+      }
+     }
+  },
+  
   
   
   
