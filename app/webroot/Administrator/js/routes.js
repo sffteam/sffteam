@@ -28,15 +28,17 @@ routes = [
          for(key in data['users']){
           html = html + '       <li class="accordion-item"><a href="#" class="item-content item-link">';
           html = html + '           <div class="item-inner">';
-          html = html + '             <div class="item-title">'+i+'. '+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+' - '+data['users'][key]['mcaNumber']+'   +91'+data['users'][key]['mobile']+'</div>';
+          html = html + '             <div class="item-title">'+i+'. <b>'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</b> - '+data['users'][key]['mcaNumber']+'   +91'+data['users'][key]['mobile']+'</div>';
           html = html + '           </div></a>';
           html = html + '         <div class="accordion-item-content">';
           html = html + '           <div class="block">';
           html = html + '     <div class="row">';
           html = html + '       <div class="col-50 tablet-25">Name</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25"><b>'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</b></div>';
           html = html + '       <div class="col-50 tablet-25">Mobile</div>';
           html = html + '       <div class="col-50 tablet-25">+91'+data['users'][key]['mobile']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Email</div>';
+          html = html + '       <div class="col-50 tablet-25">+91'+data['users'][key]['email']+'</div>';
           html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['mcaNumber']+' / '+data['users'][key]['mcaPassword']+'</div>';
           html = html + '       <div class="col-50 tablet-25">PIN</div>';
@@ -152,15 +154,17 @@ routes = [
          for(key in data['users']){
           html = html + '       <li class="accordion-item"><a href="#" class="item-content item-link">';
           html = html + '           <div class="item-inner">';
-          html = html + '             <div class="item-title">'+i+'. '+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+' - '+data['users'][key]['mcaNumber']+'   +91'+data['users'][key]['mobile']+'</div>';
+          html = html + '             <div class="item-title">'+i+'. <b>'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</b> - '+data['users'][key]['mcaNumber']+'   +91'+data['users'][key]['mobile']+'</div>';
           html = html + '           </div></a>';
           html = html + '         <div class="accordion-item-content">';
           html = html + '           <div class="block">';
           html = html + '     <div class="row">';
           html = html + '       <div class="col-50 tablet-25">Name</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25"><b>'+data['users'][key]['firstName']+' '+data['users'][key]['lastName']+'</b></div>';
           html = html + '       <div class="col-50 tablet-25">Mobile</div>';
           html = html + '       <div class="col-50 tablet-25">+91'+data['users'][key]['mobile']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">Email</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['email']+'</div>';
           html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
           html = html + '       <div class="col-50 tablet-25">'+data['users'][key]['mcaNumber']+' / '+data['users'][key]['mcaPassword']+'</div>';
           html = html + '       <div class="col-50 tablet-25">PIN</div>';
@@ -253,33 +257,179 @@ routes = [
        	var data = JSON.parse( gotData );
         if(data['user'].length!=0){
          console.log(data['user']);
+         
+         
+             var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+             var date = new Date();
+             var month = date.getFullYear()+"-"+months[date.getMonth()] ;
+             
+             
+             
+             
+                       
+var loopMonths = [];
+         for (i=0;i<12;i++){
+            if (date.getMonth() == 11) {
+               var current = new Date(date.getFullYear() + i, date.getMonth() , 1);
+               var endmonth = formatYYYYMMDD(current);
+             } else {
+               var current = new Date(date.getFullYear(), date.getMonth() + i , 1);
+               var endmonth = formatYYYYMMDD(current);
+             }
+         var CDate = new Date(endmonth);
+         loopMonths.push(formatYYYYMM(CDate));
+         }
+         console.log(loopMonths);
+         
+         
          $$("#UserName").html(data['user']['firstName']+' '+data['user']['lastName'])
          
          html = "";
-         for(key in data['user']){
+         
+         
           html = html + '     <div class="row">';
           html = html + '       <div class="col-50 tablet-25">Name</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['firstName']+' '+data['user'][key]['lastName']+'</div>';
+          html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['firstName']+' '+data['user']['lastName']+'</b></div>';
           html = html + '       <div class="col-50 tablet-25">Mobile</div>';
-          html = html + '       <div class="col-50 tablet-25">+91'+data['user'][key]['mobile']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">+91'+data['user']['mobile']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">email</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['email']+'</div>';
           html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['mcaNumber']+' / '+data['user'][key]['mcaPassword']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['mcaNumber']+' / '+data['user']['mcaPassword']+'</div>';
           html = html + '       <div class="col-50 tablet-25">PIN</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['signpin']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['signpin']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Date of Birth</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['dateofbirth']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['dateofbirth']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Gender</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['gender']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['gender']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Address</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['address']+', '+data['user'][key]['street']+', '+data['user'][key]['city']+','+data['user'][key]['pin']+' '+data['user'][key]['state']+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['address']+', '+data['user']['street']+', '+data['user']['city']+','+data['user']['pin']+' '+data['user']['state']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Select DP</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['point'].name+'</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['point']['name']+'</div>';
           html = html + '       <div class="col-50 tablet-25">Select Reason</div>';
-          html = html + '       <div class="col-50 tablet-25">'+data['user'][key]['reason'] + '</div>';
+          html = html + '       <div class="col-50 tablet-25">'+data['user']['reason'] + '</div>';
+          html = html + '       <div class="col-100"><hr></div>';
+          if(data['user']['payment']){
+           html = html + '       <div class="col-100" style="background-color:#ddd;padding:10px;maring:0px"><b>Payment</b></div>';  
+           for(key in data['user']['payment']){
+            html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payment'][key]['mcaNumber'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Payment</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payment'][key]['shopping'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Date</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payment'][key]['datetime'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Approved</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payment'][key]['approved'] + '</div>';
+            html = html + '       <div class="col-100"><hr></div>';  
+           }
+          }
+          if(data['user']['payuMoney']){
+            html = html + '       <div class="col-100" style="background-color:#ddd;padding:10px;maring:0px"><b>PayUMoney</b></div>';  
+           for(key in data['user']['payuMoney']){
+            html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['mcaNumber'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Payment</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payuMoney'][key]['amount'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Date</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payuMoney'][key]['date'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">TXID</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payuMoney'][key]['txnid'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">Status</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payuMoney'][key]['status'] + '</div>';
+            html = html + '       <div class="col-50 tablet-25">MIH PayID</div>';
+            html = html + '       <div class="col-50 tablet-25">'+data['user']['payuMoney'][key]['mihpayid'] + '</div>';
+            html = html + '       <div class="col-100"><hr></div>';  
+           }
+          }
+          if(data['user']['summary']){
+            
+            for(key in data['user']['summary']){
+             html = html + '       <div class="col-100" style="background-color:#ddd;padding:10px;maring:0px"><b>Monthly Shopping / Invoice: '+key+'</b></div>';  
+             html = html + '       <div class="col-50 tablet-25">MCA Number</div>';
+             html = html + '       <div class="col-50 tablet-25">'+data['user']['mcaNumber'] + '</div>';
+             html = html + '       <div class="col-50 tablet-25">Month</div>';
+             html = html + '       <div class="col-50 tablet-25"><b>'+key+ '</b></div>';
+             html = html + '       <div class="col-50 tablet-25">DP Invoice</div>';
+             html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['shopping']/12+ '</b></div>';
+             html = html + '       <div class="col-50 tablet-25">Monthly Order</div>';
+             html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['monthly']+ '</b></div>';
+             html = html + '       <div class="col-50 tablet-25">Shopping</div>';
+             html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['totalValue']+ '</b></div>';
+             html = html + '       <div class="col-50 tablet-25">Pending</div>';
+             html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['pending']+ '</b></div>';
+             if(data['user']['summary'][key]['dp']){
+              html = html + '       <div class="col-100" style="border:1px dotted gray">';
+              html = html + '     <div class="row" style="padding:10px">';
+              html = html + '       <div class="col-50 tablet-25">Projected</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['shopping']/12+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">DP</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['dp']+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">PBV</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['pbv']+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">GBV</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['gbv']+ '</b></div>';
+              html = html + '     </div>';
+              html = html + '       </div>';  
+             }
+             if(data['user']['summary'][key]['invoices']){
+              html = html + '       <div class="col-100" style="border:1px dotted gray">';
+              html = html + '     <div class="row" style="padding:10px">';
+              for(ki in data['user']['summary'][key]['invoices']){
+              html = html + '       <div class="col-50 tablet-25">DP</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['invoices'][ki]['DP']+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">BV</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['invoices'][ki]['BV']+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">Date</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['invoices'][ki]['Date']+ '</b></div>';
+              html = html + '       <div class="col-50 tablet-25">Invoice</div>';
+              html = html + '       <div class="col-50 tablet-25"><b>'+data['user']['summary'][key]['invoices'][ki]['Invoice']+ '</b></div>';
+              }
+              html = html + '     </div>';
+              html = html + '       </div>';  
+             }
+
+             html = html + '       <div class="col-100"><hr size="1"></div>';  
+             
+            }
+            
+             for(mmm in loopMonths){
+
+              if(data['user'][loopMonths[mmm]]){
+               html = html + '       <div class="col-100" style="background-color:#ddd;padding:10px;maring:0px"><b>Product Delivery: '+loopMonths[mmm]+'</b></div>';  
+               for (key in data['user'][loopMonths[mmm]]){
+//                html = html + '       <div class="row">';
+                 html = html + '       <div class="col-50 tablet-25">#</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+key+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Category</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['category']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Code</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['code']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Name</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['name']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">MRP</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['mrp']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Quantity</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['quantity']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Value</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['value']+ '</div>';
+                 html = html + '       <div class="col-50 tablet-25">Discount</div>';
+                 html = html + '       <div class="col-50 tablet-25">'+data['user'][loopMonths[mmm]][key]['discount']+ ' - '+data['user'][loopMonths[mmm]][key]['discountType']+ '</div>';
+//                 html = html + '       </div>';
+                 html = html + '       <div class="col-100"><hr size="1"></div>';  
+  
+                // html = html + '       <div class="col-100" style="border:1px dotted gray">';
+
+               }
+               
+              }
+             }
+
+          }
+          
           html = html + '     </div>';
 
          $$("#UsersDetail").html(html);        
-         }
+         
         }else{
          html = '<div class="block">No Data found</div>';
          $$("#UsersDetail").html(html);        
