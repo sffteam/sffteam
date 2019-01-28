@@ -325,7 +325,7 @@ class DashboardController extends \lithium\action\Controller {
     $tmpName = $_FILES['file']['tmp_name'];
 			}
 			$row = 1;
- print_r($file);
+// print_r($file);
 			if (($handle = fopen($tmpName, "r")) !== FALSE) {
 						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 							$num = count($data);
@@ -378,15 +378,6 @@ class DashboardController extends \lithium\action\Controller {
  }
  public function updateuserImport($data,$yyyymm){
 			$data = array(
-				'mcaName'=>(string)$data["mcaName"],
-				'mcaNumber'=>(string)$data["mcaNumber"],
-				'refer'=>(string)$data["refer"],
-				'refer_name'=>$refer_name,
-				'refer_id'=>(string)$refer_id,
-				'ancestors'=> $ancestors,
-				'DateJoin'=>(string)$data["DateJoin"],
-				'left'=>(integer)($refer_left+1),
-				'right'=>(integer)($refer_left+2),
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
      $yyyymm.'.Percent'=>(integer)$data['Percent'],
