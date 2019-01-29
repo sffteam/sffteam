@@ -309,7 +309,9 @@ class SavingsController extends \lithium\action\Controller {
   $cart = $this->request->data;
   //print_r($this->request->post);
   $value = 0;
-  
+  $totalvalue = 0;
+  $wp = 0;
+  $walletpoints = 0;
   foreach ($cart as $code => $quantity){
    
    $product = Products::find('first',array(
@@ -322,7 +324,7 @@ class SavingsController extends \lithium\action\Controller {
     // print_r("DiscountType: ".$product['discountType']);
     // print_r("Discount: ".$product['discount']);
     // print_r("MRP: ".$product['MRP']);
-
+    $walletpoints = round($product['bv']*5/100,0);
     if($product['discountType']=="Rs"){
      $totalvalue = floatval(($product['mrp'] - $product['discount'])*$quantity);
     }else if($product['discountType']=="Percent"){
@@ -330,11 +332,11 @@ class SavingsController extends \lithium\action\Controller {
     }else{
      $totalvalue = floatval($product['mrp']*$quantity); 
     }
-    
+    $wp = $wp + $walletpoints;
     $value = $value + $totalvalue;
    }
    
-  return $this->render(array('json' => array("success"=>"Yes","value"=>$value)));		
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value;"walletpoints"=>$wp)));		
  }
  public function getcartdetails(){
   $cart = $this->request->data;
