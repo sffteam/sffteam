@@ -336,7 +336,7 @@ class SavingsController extends \lithium\action\Controller {
     $value = $value + $totalvalue;
    }
    
-  return $this->render(array('json' => array("success"=>"Yes","value"=>$value;"walletpoints"=>$wp)));		
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"walletpoints"=>$wp)));		
  }
  public function getcartdetails(){
   $cart = $this->request->data;
