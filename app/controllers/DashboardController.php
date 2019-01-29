@@ -330,7 +330,7 @@ class DashboardController extends \lithium\action\Controller {
 						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 							$num = count($data);
 							$row++;
-								$data = array(
+								$userData = array(
 									'mcaNumber' => (string)$data[1],
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'refer' => (integer)$data[5],
@@ -359,16 +359,16 @@ class DashboardController extends \lithium\action\Controller {
 								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
 								));
 								if(count($user)!=1){
-									if($data['mcaNumber']!=""){
-										if((int)$data['mcaNumber']>0){
+									if($userData['mcaNumber']!=""){
+										if((int)$userData['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-											$this->adduserImports($data,$yyyymm);
-											print_r($data);
+											$this->adduserImports($userData,$yyyymm);
+											print_r($userData);
 										}
 									}
 								}else{
            $yyyymm = $this->request->data['yyyymm'];
-											$this->updateuserImport($data,$yyyymm);
+											$this->updateuserImport($userData,$yyyymm);
         }
 						}
 						fclose($handle);
