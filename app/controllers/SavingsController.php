@@ -527,6 +527,7 @@ class SavingsController extends \lithium\action\Controller {
     'size'=>$p['size'],
     'discountType'=>$p['quantityType'],
     'mrp'=>$p['mrp'],
+    'points'=>round($p['bv']*5/100,0),
     'bv'=>$p['bv'],
     'dp'=>$p['dp'],
    );
