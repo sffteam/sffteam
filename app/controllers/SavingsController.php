@@ -324,7 +324,7 @@ class SavingsController extends \lithium\action\Controller {
     // print_r("DiscountType: ".$product['discountType']);
     // print_r("Discount: ".$product['discount']);
     // print_r("MRP: ".$product['MRP']);
-    $walletpoints = round($product['bv']*5/100,0);
+    $walletpoints = round($product['bv']*$quantity*5/100,0);
     if($product['discountType']=="Rs"){
      $totalvalue = floatval(($product['mrp'] - $product['discount'])*$quantity);
     }else if($product['discountType']=="Percent"){
