@@ -317,14 +317,14 @@ class SavingsController extends \lithium\action\Controller {
    $product = Products::find('first',array(
     'conditions'=>array('code'=>(string)$code)
    ));
-
+   $settings = Settings::find('first');
    // print_r("Code: ".$code);
     // print_r("code: ".$product['code']);
     // print_r("Name: ".$product['name']);
     // print_r("DiscountType: ".$product['discountType']);
     // print_r("Discount: ".$product['discount']);
     // print_r("MRP: ".$product['MRP']);
-    $walletpoints = round($product['bv']*$quantity*5/100,0);
+    $walletpoints = round($product['bv']*$quantity*$settings['WalletPoints']/100,0);
     if($product['discountType']=="Rs"){
      $totalvalue = floatval(($product['mrp'] - $product['discount'])*$quantity);
     }else if($product['discountType']=="Percent"){
@@ -505,7 +505,7 @@ class SavingsController extends \lithium\action\Controller {
 
   }
  public function searchproducts($code = null){
-  
+  $settings = Settings::find('first');
   if($code==null){
    $products = Products::find('all',array(
    'order'=>array(
@@ -529,7 +529,7 @@ class SavingsController extends \lithium\action\Controller {
     'size'=>$p['size'],
     'discountType'=>$p['quantityType'],
     'mrp'=>$p['mrp'],
-    'points'=>round($p['bv']*5/100,0),
+    'points'=>round($p['bv']*$settings['WalletPoints']/100,0),
     'bv'=>$p['bv'],
     'dp'=>$p['dp'],
    );
