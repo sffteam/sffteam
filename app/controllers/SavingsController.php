@@ -260,7 +260,8 @@ class SavingsController extends \lithium\action\Controller {
 				}
 				$category = $c['category'];
 		}
-		return $this->render(array('json' => array("categories"=>$allcategories)));		
+  $howManyProducts = Products::count();
+		return $this->render(array('json' => array("categories"=>$allcategories,'howManyProducts'=>$howManyProducts)));		
 	}
  public function product($category){
   $allproducts = array();
