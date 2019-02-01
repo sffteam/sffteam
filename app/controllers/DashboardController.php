@@ -994,7 +994,7 @@ public function getorder($yyyy = null,$mcaNumber=null){
   
   return $this->redirect('/dashboard/orders');
  }
- public function ImportProduct(){
+ public function importProduct(){
   if($this->request->data){
 			$file = $this->request->data['file'];	
 			
