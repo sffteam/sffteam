@@ -994,5 +994,67 @@ public function getorder($yyyy = null,$mcaNumber=null){
   
   return $this->redirect('/dashboard/orders');
  }
+ public function ImportProduct(){
+  if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 0;
+// print_r($file);
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+       $code = $data[1];
+      		$productData = array(
+									'category' => (string)$data[0],
+         'code' => (string)$data[1],
+									'name' => (string)$data[2],
+									'size' => (string)$data[3],
+         'mrp'=>(string)$data[4],
+         'dp'=>(string)$data[5],
+         'bv'=>(integer)$data[6],
+         'discount'=>(integer)$data[7],
+         'discountType'=>(string)$data[8],
+         'stock'=>(integer)$data[9],
+         'quantity'=>(integer)$data[10],
+         'video'=>(string)$data[11],
+        );
+        print_r($row);
+        print_r("<br>");
+								$product = Products::find("first",array(
+								"conditions"=>array('code'=>$code)
+								));
+								if(count($product)!=1){
+									if($productData['code']!=""){
+           Products::create()->save($productData);
+  									}
+								}else{
+								$conditions=array('code'=>$code);
+        Products::update($productData,$conditions);
+        }
+						}
+						fclose($handle);
+   }
+  }
+  
+  
+ }
+ public function listproduct(){
+  $products = Products::find('all',array(
+  'order'=>array('code'=>'ASC')
+  )
+  );
+  return compact('products');
+ }
+ public function deleteproduct($id=null){
+  Products::remove(array('_id'=>(string)$id));
+  return $this->redirect('/dashboard/listproduct');
+ }
 }
 ?>
