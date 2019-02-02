@@ -93,7 +93,7 @@ class SavingsController extends \lithium\action\Controller {
  }
  public function signin(){
   $mcaNumber = $this->request->data['mcaNumber'];
-  $signpin = $this->request->data['signpin'];
+  $signpin = $this->request->data['signinpin'];
    $user = Savings::find('first',array(
    'conditions'=>array(
     'mcaNumber'=>$mcaNumber,
