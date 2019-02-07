@@ -327,20 +327,9 @@ class DistributorsController extends \lithium\action\Controller {
     'conditions'=>array('code'=>(string)$code)
    ));
    $settings = Settings::find('first');
-   // print_r("Code: ".$code);
-    // print_r("code: ".$product['code']);
-    // print_r("Name: ".$product['name']);
-    // print_r("DiscountType: ".$product['discountType']);
-    // print_r("Discount: ".$product['discount']);
-    // print_r("MRP: ".$product['MRP']);
+
     $walletpoints = round($product['bv']*$quantity*$settings['WalletPoints']/100,0);
-    if($product['discountType']=="Rs"){
-     $totalvalue = floatval(($product['mrp'] - $product['discount'])*$quantity);
-    }else if($product['discountType']=="Percent"){
-     $totalvalue = floatval(($product['mrp']-$product['mrp']*$product['discount']/100)*$quantity); 
-    }else{
-     $totalvalue = floatval($product['mrp']*$quantity); 
-    }
+    $totalvalue = floatval($product['dp']*$quantity); 
     $wp = $wp + $walletpoints;
     $value = $value + $totalvalue;
    }
