@@ -816,7 +816,7 @@ function members(){
 
 function savecc(){
  $mcaNumber = $this->request->data['mcaNumber'];
- $conditions = ('mcaNumber'=>$mcaNumber);
+ $conditions = array('mcaNumber'=>$mcaNumber);
  $data = array(
   'CreditCard'=>$this->request->data
  );
