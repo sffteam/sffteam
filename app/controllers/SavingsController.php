@@ -813,5 +813,17 @@ function members(){
   }
  return $this->render(array('json' => array("success"=>"Yes","members"=>$members)));		
 }
+
+function savecc(){
+ $mcaNumber = $this->request->data['mcaNumber'];
+ $conditions = ('mcaNumber'=>$mcaNumber);
+ $data = array(
+  'CreditCard'=>$this->request->data
+ );
+ Savings::update($data,$conditions);
+ return $this->render(array('json' => array("success"=>"Yes","cc"=>$data)));		
+ 
+}
+
 }
 ?>
