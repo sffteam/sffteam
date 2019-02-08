@@ -178,3 +178,14 @@ function productSave(code,discount,discountType,stock,quantity){
    window.location='/dashboard/products/';  });
  
 }
+
+function change(type,value,code){
+ console.log(type);
+ console.log(value);
+ console.log(code);
+ var url = server+'dashboard/ProductUpdate/'+type+'/'+code+'/'+value;
+ $.getJSON(url,
+		function(ReturnValues){
+    console.log("Done");
+  });
+}

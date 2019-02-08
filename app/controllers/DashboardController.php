@@ -1047,7 +1047,10 @@ public function getorder($yyyy = null,$mcaNumber=null){
  }
  public function listproduct(){
   $products = Products::find('all',array(
-  'order'=>array('code'=>'ASC')
+  'order'=>array(
+  'category'=>'ASC',
+  'code'=>'ASC'
+  )
   )
   );
   return compact('products');
@@ -1055,6 +1058,31 @@ public function getorder($yyyy = null,$mcaNumber=null){
  public function deleteproduct($id=null){
   Products::remove(array('_id'=>(string)$id));
   return $this->redirect('/dashboard/listproduct');
+ }
+ public function ProductUpdate($type,$code,$value){
+  $codeNo = explode("-",$code);
+  $conditions = array('code'=>(string)$codeNo[1]);
+  
+  switch ($type) {
+    case 'stock':
+        $data = array('stock'=>(string)$value);
+        break;
+    case 'quantity':
+        $data = array('quantity'=>(integer)$value);
+        break;
+    case 'mrp':
+        $data = array('mrp'=>(integer)$value);
+        break;
+    case 'bv':
+        $data = array('bv'=>(integer)$value);
+        break;
+    case 'dp':
+        $data = array('dp'=>(integer)$value);
+        break;
+  
+ }
+ Products::update($data,$conditions);
+ return $this->render(array('json' => array("success"=>$success)));		
  }
 }
 ?>
