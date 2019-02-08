@@ -180,12 +180,23 @@ function productSave(code,discount,discountType,stock,quantity){
 }
 
 function change(type,value,code){
- console.log(type);
- console.log(value);
- console.log(code);
  var url = server+'dashboard/ProductUpdate/'+type+'/'+code+'/'+value;
  $.getJSON(url,
 		function(ReturnValues){
-    console.log("Done");
+ //   console.log("Done");
   });
+}
+function changeQT(type,value,code){
+ code = code.replace("ST-","QT-");
+  if(value === false){
+   $("#"+code).val(0);
+   console.log(code);
+   change('quantity',0,code);
+   change('stock','false',code);
+  }else{
+   $("#"+code).val(1);
+   console.log(code);
+   change('quantity',1,code);
+   change('stock','true',code);
+  }
 }
