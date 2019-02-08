@@ -181,6 +181,13 @@ function productSave(code,discount,discountType,stock,quantity){
 
 function change(type,value,code){
  var url = server+'dashboard/ProductUpdate/'+type+'/'+code+'/'+value;
+ if (type=='quantity'){
+  if (value>0){
+   code = code.replace("QT-","ST-");
+   $("#"+code).attr('checked','checked');
+   change('stock','true',code);
+  }
+ }
  $.getJSON(url,
 		function(ReturnValues){
  //   console.log("Done");
@@ -190,12 +197,12 @@ function changeQT(type,value,code){
  code = code.replace("ST-","QT-");
   if(value === false){
    $("#"+code).val(0);
-   console.log(code);
+   
    change('quantity',0,code);
    change('stock','false',code);
   }else{
    $("#"+code).val(1);
-   console.log(code);
+   
    change('quantity',1,code);
    change('stock','true',code);
   }
