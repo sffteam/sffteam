@@ -286,6 +286,7 @@ class SavingsController extends \lithium\action\Controller {
     'stock'=>(string)$p['stock'],
 				'description' => (string)$p['description'],
 				'video' => (string)$p['video'],
+    'qrcode' => (string)$p['qrcode'],
 			);
 			array_push($allproducts,$product);
 		}
