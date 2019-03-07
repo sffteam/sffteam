@@ -17,7 +17,7 @@
           <h5>Products</h5>
           <ul class="list-unstyled text-small">
             <li><a class="text-muted" href="#">Laundry care</a></li>
-            <li><a class="text-muted" href="#">Personal care</a></li>
+            <li><a class="text-muted" href="#">Wellnes care</a></li>
             <li><a class="text-muted" href="#">Agricuture</a></li>
             <li><a class="text-muted" href="#">Electronics</a></li>
           </ul>
