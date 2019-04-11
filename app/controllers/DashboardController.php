@@ -857,7 +857,7 @@ $this->_render['layout'] = 'noHeaderFooter';
   if($mcaNumber==null){
   $users = Savings::find('all',array(
    'conditions'=>array(
-    'summary.'.$yyyymm.'.delivery'=>array('$ne'=>'')
+    'summary.'.$yyyymm.'.delivery'=>array('$exists'=>1)
    )
   ));
   }else{

@@ -1,0 +1,120 @@
+/* Your app styles here */
+body{
+ font-family: 'Roboto Condensed', sans-serif;
+ background-color:#E7F1FE;
+ text-align:center;
+}
+h2{
+  font-size:30px;
+  border-bottom:1px solid gray
+
+}
+.title .titlet{
+ width:100%;
+ font-size:30px;
+ text-align:center;
+}
+p{
+ font-family:Arial;
+ font-size:14px;
+ font-weight:normal;
+}
+th{
+ background-color:gray;
+ color:#fff;
+ font-size:100%;
+ padding:5px;
+ text-align:center;
+}
+table{
+ width:100%;
+}
+td{
+ text-align:center;
+ color:#222;
+}
+.pink{
+ background-color:#fcf
+}
+.green{
+ background-color:#C4EAC7
+}
+li{border-bottom:1px solid gray}
+ul.a {
+  list-style-type: square;
+  padding:20px
+}
+.card-header{
+ background-color:#C9DEE0
+}
+.card-footer{
+ background-color:#C9DEE0
+}
+.item-content-product{
+ font-size:12px
+}
+.item-subtitle{
+ overflow:auto;
+ white-space: wrap;
+ text-overflow: none;
+ 
+}.form-control::-webkit-input-placeholder {
+  color: #ffccff;
+  opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+  color: #ffccff;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #ffccff;
+  opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #ffccff;
+  opacity: 1;
+}
+
+.form-control::placeholder {
+  color: #ffccff;
+  opacity: 1;
+}
+.cardImage1{
+ background-image: url("/img/form/Name.jpg");
+ background-position: top; /* Center the image */
+ background-repeat: no-repeat;
+ background-size: cover;
+ height:300px;
+}
+
+.cardImage2{
+ background-image: url("/img/form/Email.jpg");
+ background-position: top; /* Center the image */
+ background-repeat: no-repeat;
+ background-size: cover;
+ height:300px;
+}
+.cardImage3{
+ background-image: url("/img/form/Phone.jpg");
+ background-position: top; /* Center the image */
+ background-repeat: no-repeat;
+ background-size: cover;
+ height:300px;
+}
+.cardImage4{
+ background-image: url("/img/form/DOB.jpg");
+ background-position: top; /* Center the image */
+ background-repeat: no-repeat;
+ background-size: cover;
+ height:300px;
+}
+.cardImage5{
+ background-image: url("/img/form/Gender.jpg");
+ background-position: top; /* Center the image */
+ background-repeat: no-repeat;
+ background-size: cover;
+ height:300px;
+}
