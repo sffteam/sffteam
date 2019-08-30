@@ -8,6 +8,11 @@ use app\extensions\action\Uuid;
 use app\models\X_coaches;
 use app\models\X_courses;
 
+use \Swift_MailTransport;
+use \Swift_Mailer;
+use \Swift_Message;
+use \Swift_Attachment;
+
 class CoachController extends \lithium\action\Controller {
 
 	protected function _init(){
@@ -64,8 +69,8 @@ class CoachController extends \lithium\action\Controller {
 				}
 			}else{
 				$coaches = X_coaches::create()->save($data);
-				$smsotp = $this->sendotp($data['Mobile'],$data['CountryCode'],$data['CoachID']);
-				
+//				$smsotp = $this->sendotp($data['Mobile'],$data['CountryCode'],$data['CoachID']);
+				$mobileotp = $this->sendEmailTo($data['Email'],$data['CoachID']);
 				$Message = "Registered! Please verify your email / phone!";
 				if($this->request->data['json']=='true'){
 					return $this->render(array('json' => array("success"=>"Yes","Message"=>$Message,"coaches"=>$coaches)));		      
@@ -114,27 +119,46 @@ class CoachController extends \lithium\action\Controller {
 	}
 	
 	
-	 public function sendotp($mobile,$countrycode,$coachid){
+	public function sendotp($mobile,$countrycode,$coachid){
   
   $mobile = $countrycode.$mobile;
 		$ga = new GoogleAuthenticator();
-		$otp = $ga->getCode($ga->createSecret(64));	
-  
+		$otp = $ga->getCode($ga->createSecret(64));	 
  		$data = array(
-				'otp' => $otp,
+				'otp.mobile' => $otp,
 			);
-   
 		$conditions = array("CoachID"=>(string)$coachid);
 		X_coaches::update($data,$conditions);
-
   $function = new Functions();
   $msg =  $otp . " is the OTP to verify your mobile number/n-- Coaching Hub";
   $returnvalues = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
   $returnvalues = $function->sendSms($mobile,$msg);	 // Testing if it works 
-  
   return $otp;		
-
-  }
-	
+ }
+	 private function sendEmailTo($email,$couchid){
+			$ga = new GoogleAuthenticator();
+			$otp = $ga->getCode($ga->createSecret(64));	 
+			$data = array(
+			'otp.email' => $otp,
+			);
+			
+			$coach = X_coaches::find('first',array(
+				'conditions'=>array('Email'=>$email)
+			));
+			$emaildata = array(
+				'coach' => $coach,
+				'email' => $email,
+				'otp.email'=>$otp
+			);
+			$conditions = array("CoachID"=>(string)$coachid);
+			X_coaches::update($data,$conditions);
+			$function = new Functions();
+			$compact = array('data'=>$emaildata);
+			$from = array(NOREPLY => "noreply@sff.team");
+			$email = $email;
+			
+			$function->sendEmailTo($email,$compact,'coach','otp','Email Verify - OTP',$from,'','','','');
+// sendEmailTo($email, $compact ,$controller,$template,$subject,$from,$mail1,$mail2 ,$mail3,$attach )
+	}
 }
 ?>

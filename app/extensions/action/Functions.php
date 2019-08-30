@@ -250,7 +250,7 @@ class Functions extends \lithium\action\Controller {
 					'layout' => false
 				)
 			);
-
+//			$transport = (new Swift_MailTransport(MAIL_DOMAIN, 25))->setUsername(MAIL_USER)->setPassword(MAIL_PASSWORD);
 			$transport = Swift_MailTransport::newInstance();
 			$mailer = Swift_Mailer::newInstance($transport);
 	
@@ -273,6 +273,7 @@ class Functions extends \lithium\action\Controller {
 			}
 			$message->setBody($body,'text/html');
 			$mailer->send($message);
+			
 //print_r($mailer->send($message));
 	}
 
