@@ -38,8 +38,8 @@ class CoachController extends \lithium\action\Controller {
 			$uuid = new Uuid();
 			$data = array(
 				'DateTime'=> new \MongoDate(),
-				'FirstName'=>ucfirst($this->request->data['FirstName']),
-				'LastName'=>ucfirst($this->request->data['LastName']),
+				'FirstName'=>ucfirst(strtolower($this->request->data['FirstName'])),
+				'LastName'=>ucfirst(strtolower($this->request->data['LastName'])),
 				'Email'=>strtolower($this->request->data['Email']),
 				'Gender'=>strtolower($this->request->data['Gender']),
 				'DateofBirth'=>strtolower($this->request->data['DateofBirth']),
@@ -64,9 +64,11 @@ class CoachController extends \lithium\action\Controller {
 				}
 			}else{
 				$coaches = X_coaches::create()->save($data);
+				$smsotp = $this->sendotp($data['Mobile'],$data['CountryCode'],$data['CoachID']);
+				
 				$Message = "Registered! Please verify your email / phone!";
 				if($this->request->data['json']=='true'){
-					return $this->render(array('json' => array("success"=>"Yes",compact('Message'))));		      
+					return $this->render(array('json' => array("success"=>"Yes","Message"=>$Message,"coaches"=>$coaches)));		      
 				}else{
 					return compact('Message');
 				}
@@ -130,7 +132,7 @@ class CoachController extends \lithium\action\Controller {
   $returnvalues = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
   $returnvalues = $function->sendSms($mobile,$msg);	 // Testing if it works 
   
-  return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp)));		
+  return $otp;		
 
   }
 	
