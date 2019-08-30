@@ -35,12 +35,6 @@ class CodeController extends \lithium\action\Controller {
 		)
 		);	
 		return $this->render(array('layout' => false));
-//<Response>
-//	<Say>Please enter EvolveChainX mobile phone verification code.
-//	I repeat 3,4,5,6,9,1.
-//	Again. 3,4,5,6,9,1.</Say>
-//</Response>
-
 		
 	}
  

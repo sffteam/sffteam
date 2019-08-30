@@ -1,1 +1,1 @@
-<Response><Say voice="woman">Please enter SFF - Savings place order verification OTP. <?=$newcode?>, I repeat <?=$newcode?>. Again! <?=$newcode?>.</Say></Response>
+<Response><Say voice="woman">Your verification OTP. <?=$newcode?>, I repeat <?=$newcode?>. Again! <?=$newcode?>.</Say></Response>
