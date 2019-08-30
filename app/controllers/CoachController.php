@@ -69,7 +69,7 @@ class CoachController extends \lithium\action\Controller {
 				}
 			}else{
 				$coaches = X_coaches::create()->save($data);
-//				$smsotp = $this->sendotp($data['Mobile'],$data['CountryCode'],$data['CoachID']);
+				$smsotp = $this->sendotp($data['Mobile'],$data['CountryCode'],$data['CoachID']);
 				$mobileotp = $this->sendEmailTo($data['Email'],$data['CoachID']);
 				$Message = "Registered! Please verify your email / phone!";
 				if($this->request->data['json']=='true'){
@@ -135,7 +135,7 @@ class CoachController extends \lithium\action\Controller {
   $returnvalues = $function->sendSms($mobile,$msg);	 // Testing if it works 
   return $otp;		
  }
-	 private function sendEmailTo($email,$couchid){
+	 private function sendEmailTo($email,$coachid){
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	 
 			$data = array(
