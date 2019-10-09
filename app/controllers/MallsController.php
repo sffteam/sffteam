@@ -19,7 +19,7 @@ class MallsController extends \lithium\action\Controller {
  }
 	public function index(){
 		$products = Malls::find('all',array(
-			'order'=>array('Code'=>array('ASC'=>1))
+//			'order'=>array('Code'=>array('ASC'=>1))
 		));
 		$AllProducts = array();
 		foreach($products as $p){
