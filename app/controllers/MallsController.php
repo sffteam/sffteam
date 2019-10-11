@@ -22,6 +22,7 @@ class MallsController extends \lithium\action\Controller {
 //			'order'=>array('Code'=>array('ASC'=>1))
 		));
 		$AllProducts = array();
+		
 		foreach($products as $p){
 			array_push($AllProducts,array(
 				'Code'=>$p['Code'],
@@ -32,8 +33,46 @@ class MallsController extends \lithium\action\Controller {
 				'PV'=>$p['PV'],
 			));
 		}
-		return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts)));		
+		$CategoriesArray = array(
+		  'FS' => 'Food Supplement',
+				'PC' => 'Personal Care',
+    'HL' => 'Health',
+				'HC' => 'Home Care',
+    'LC' => 'Laundry Care',
+				'FP' => 'Food Products',
+				'SC' => 'Skin Care',
+    'BC' => 'Baby Care',
+				'UC' => 'Urban Color',
+    'AG' => 'Agriculture',
+    'AC' => 'Auto Care',
+    'MJ' => 'Jewelery',
+    
+				'00' => 'Others',
+    '60' => 'Extra',
+				);
+				
+		return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray)));		
 		
+	}
+	
+	public function getcategory($Code){
+		$products = Malls::find('all',array(
+			'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/'))
+		));
+		$AllProducts = array();
+		
+		foreach($products as $p){
+			array_push($AllProducts,array(
+				'Code'=>$p['Code'],
+				'Name'=>$p['Name'],
+				'MRP'=>$p['MRP'],
+				'DP'=>$p['DP'],
+				'BV'=>$p['BV'],
+				'PV'=>$p['PV'],
+			));
+		}
+		
+		return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$Code)));		
 	}
 	public function upload(){
 		ini_set('memory_limit','-1');
