@@ -2,7 +2,7 @@
 namespace app\controllers;
 use \lithium\template\View;
 use app\models\Questions;
-use app\models\Qusers;
+use app\models\;
 
 use app\extensions\action\GoogleAuthenticator;
 

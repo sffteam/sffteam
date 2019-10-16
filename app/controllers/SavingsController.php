@@ -503,7 +503,7 @@ class SavingsController extends \lithium\action\Controller {
   $returnvalues = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
   $returnvalues = $function->sendSms($mobile,$msg);	 // Testing if it works 
   
-  return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp)));		
+  return $this->render(array('json' => array("success"=>"Yes","otp"=>'000000')));		
 
   }
  public function searchproducts($code = null){

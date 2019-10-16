@@ -266,14 +266,14 @@ public function points(){
   $mcaNumber = $this->request->data['mcaNumber'];
   $agree = $this->request->data['agree'];
 
-  $user = Savings::find('first',array(
+  $user = M_users::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
 
 
   $save = "No";
   if(count($user)==0){
-   Savings::create()->save($this->request->data);
+   M_users::create()->save($this->request->data);
    $function = new Functions();
    $function->addnotify($this->request->data['mcaNumber'],"Waiting for Approval","You application to join SFF is waiting for approval. The approval process may take 1 to 2 days depending on your KYC documents.");
    $save = "Yes";
