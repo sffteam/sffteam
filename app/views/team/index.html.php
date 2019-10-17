@@ -1,23 +1,4 @@
 <div class="container" style="text-align:center">
  <h1 class="">Team</h1>
-
- <div class="row">
-    <div class="col-sm">
-    <ul class="list-group">
-      <li class="list-group-item"><h4>Title</h4></li>
-      <?php foreach($directors as $d){?>
-      <li class="list-group-item"><a href="/team/qualified/<?=$d['Legs']?>"><?=$d['Title']?></a></li>
-      <?php }?>
-    </ul>
-    </div>
-    <div class="col-sm">
-    <ul class="list-group">
-      <li class="list-group-item"><h4>Required Legs</h4></li>
-      <?php foreach($directors as $d){?>
-      <li class="list-group-item"><a href="/team/qualified/<?=$d['Legs']?>"><?=$d['Legs']?></a></li>
-      <?php }?>
-    </ul>
-       
-    </div>
-  </div>
+			<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdriSquq2NNE9IsW1bABgMIjOYDcIJ_m7RtlZyxI2k7lrdDAw/viewform?embedded=true" width="880" height="1019" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>       
 </div>
