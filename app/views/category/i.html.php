@@ -25,7 +25,7 @@
 							<font style="color:red"> MRP: <strike><?=number_format($p['MRP'],2)?></strike></font><br>
 							<font style="color:green"><strong>DP: <?=number_format($p['DP'],2)?></strong></font><br>
 							BV: <?=number_format($p['BV'],2)?><br>
-							DP: <?=number_format($p['DP'],2)?><br>
+							PV: <?=number_format($p['PV'],2)?><br>
 						</div>
 				</div>
 			<?php } ?>
@@ -39,7 +39,7 @@
 							<font style="color:red"> MRP: <strike><?=number_format($p['MRP'],2)?></strike></font><br>
 							<font style="color:green"><strong>DP: <?=number_format($p['DP'],2)?></strong></font><br>
 							BV: <?=number_format($p['BV'],2)?><br>
-							DP: <?=number_format($p['DP'],2)?><br>
+							PV: <?=number_format($p['PV'],2)?><br>
 						</div>
 				</div>
 				<?php }	?>
