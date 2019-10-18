@@ -1,45 +1,63 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+<!DOCTYPE html><?php 
+	$mtime = microtime();
+	$mtime = explode(" ",$mtime);
+	$mtime = $mtime[1] + $mtime[0];
+	$pagestarttime = $mtime;
+?><html amp>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="<?=COMPANY_URL?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="<?php echo 'https://' . $_SERVER['SERVER_NAME']. '/img/logo.png';?>" type="image/x-icon">
+  <meta name="description" content="">
+  <title><?=COMPANY_URL?> - </title>
+		<!-- Canonical URL -->
+  <link rel="canonical" href="<?php echo 'https://' . $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] ; ?>">
+		<!-- Canonical URL -->
+		 <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+  
+		<noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+		<!-- Server Style Sheet CSS file -->
+  <style amp-custom><?php readfile( getcwd() . "/css/style.css"); ?></style>
 
-    <title>Product example for Bootstrap</title>
+		<!-- Server Style Sheet CSS file -->
 
-    <!-- Bootstrap core CSS -->
-<!--    <link href="/css/debug.css" rel="stylesheet">-->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/product.css" rel="stylesheet">
-  </head>
-
-  <body>
-   		<?php echo $this->_render('element', 'header', compact('pagetotaltime'));?>	
-
+		<script async  src="https://cdn.ampproject.org/v0.js"></script>
+		<script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+  <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+		
+  
+		
+</head>
+<body>
+<!-- Server Script file -->
+<!-- Server Script file -->
+<?php 
+	$mtime = microtime();
+	$mtime = explode(" ",$mtime);
+	$mtime = $mtime[1] + $mtime[0];
+	$pageendtime = $mtime;
+	$pagetotaltime = ($pageendtime - $pagestarttime);
+?>
+		<?php echo $this->_render('element', 'header', compact('pagetotaltime'));?>	
 		<div class="content">
 			<?php echo $this->content(); ?>
 		</div>
+<?php 
+	$mtime = microtime();
+	$mtime = explode(" ",$mtime);
+	$mtime = $mtime[1] + $mtime[0];
+	$pageendtime = $mtime;
+	$pagetotaltime = ($pageendtime - $pagestarttime);
+?>
+<?php echo $this->_render('element', 'footer', compact('pagetotaltime'));?>	
 
-		<?php echo $this->_render('element', 'footer', compact('pagetotaltime'));?>	
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="/js/popper.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/holder.js"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
   </body>
 </html>

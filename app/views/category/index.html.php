@@ -1,7 +1,7 @@
 <p>&nbsp;</p>
 <div class="container">
-<div class="row">
-	<div class="col-2">
+
+	<div class="mbr-pb-4">
 		<h4>Categories</h4>
 		<ul class="list-unstyled">
 			<?php foreach($CategoriesArray as $k => $v){?>
@@ -9,9 +9,5 @@
 			<?php }?>
 		</ul>
 	</div>
-	<div class="col-6">
-		<div class="row"><h4>Products</h4>
-	</div>
-</div>
-</div>
+	
 </div>
