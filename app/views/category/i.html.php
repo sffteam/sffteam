@@ -18,7 +18,7 @@
 				<?php if ($count % 2 == 0){ ?>
 					<div class="col-5 mb-2" style="border:1px solid black;padding:2px;margin:2px">
 						<b><?=$p['Code']?>:
-						<small><?=$p['Name']?></small></b><br>
+						<?=$p['Name']?></b><br>
 						<img src="/img/products/<?=$p['Code']?>.jpg" width="150"></br>
 						<hr>
 						<div style="text-align:right">
@@ -32,7 +32,7 @@
 			<?php 	if ($count % 2 == 1){ ?>
 					<div class="col-5 mb-2" style="border:1px solid black;padding:2px;margin:2px">
 						<b><?=$p['Code']?>:
-						<small><?=$p['Name']?></small></b><br>
+						<?=$p['Name']?></b><br>
 						<img src="/img/products/<?=$p['Code']?>.jpg" width="150"></br>
 						<hr>
 						<div style="text-align:right">
