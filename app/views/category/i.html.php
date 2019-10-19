@@ -19,7 +19,7 @@
 					<div class="col-5 mb-2" style="border:1px solid black;padding:2px;margin:2px">
 						<b><?=$p['Code']?>:
 						<?=$p['Name']?></b><br>
-						<amp-img src="/img/products/<?=$p['Code']?>.jpg" width="150"></br>
+						<amp-img src="/img/products/<?=$p['Code']?>.jpg" width="150" height="150"></br>
 						<hr>
 						<div style="text-align:right">
 							<font style="color:red"> MRP: <strike><?=number_format($p['MRP'],2)?></strike></font><br>
@@ -33,7 +33,7 @@
 					<div class="col-5 mb-2" style="border:1px solid black;padding:2px;margin:2px">
 						<b><?=$p['Code']?>:
 						<?=$p['Name']?></b><br>
-						<amp-img src="/img/products/<?=$p['Code']?>.jpg" width="150"></br>
+						<amp-img src="/img/products/<?=$p['Code']?>.jpg" width="150" height="150"></br>
 						<hr>
 						<div style="text-align:right">
 							<font style="color:red"> MRP: <strike><?=number_format($p['MRP'],2)?></strike></font><br>
