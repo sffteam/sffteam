@@ -18,7 +18,7 @@ $Learning = array(
 		<ul class="list-unstyled">
 			<?php foreach($Learning as $k => $v){?>
 			<li><a class="text-muted" href="/learning/e/<?=$k?>"><?=$v?><br>
-			<amp-img src="/img/documents/Images/<?=str_replace(" ","%20",$v);?>_Page_01.jpg" width="100" />
+			<amp-img src="/img/documents/Images/<?=str_replace(" ","%20",$v);?>_Page_01.jpg" width="100" height="100" />
 			</a>
 			</li>
 			<?php }?>
