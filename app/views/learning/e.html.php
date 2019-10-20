@@ -16,13 +16,7 @@ $Learning = array(
 <div class="mbr-pb-4">
 		
 	<h4>Fill in the form to download</h4>
-	<amp-iframe 
-	 sandbox="allow-scripts allow-same-origin"
-		src="https://docs.google.com/forms/d/e/1FAIpQLSeBKG3f5TFhfvTjaaWNd_ks0mGkGyMyUdfaTeA76Dv1ZA5ocA/viewform?embedded=true" 
-		width="600" 
-		height="600" 
-		frameborder="0" 
-		>Loading…</iframe>
+		<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeBKG3f5TFhfvTjaaWNd_ks0mGkGyMyUdfaTeA76Dv1ZA5ocA/viewform?embedded=true" width="100%" height="934" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 	</div>
 	
 	<div class="mbr-pb-4">
