@@ -24,12 +24,12 @@ class PersonalityController extends \lithium\action\Controller {
 		$id = $person->save($data);
 		// print_r($person['_id']);
 		$newID = (string)$person['_id'];
-		$questions = X_personalitytests::find('all');
+		$questions = X_personalitytests::find('all',array('order'=>array('Number'=>'ASC')));
 		$result = $this->assess($newID,true);
 		return $this->render(array('json' => array("success"=>"Yes",'_id'=>$newID,"result"=>$result)));		      
 		
 	}
-		$questions = X_personalitytests::find('all');
+		$questions = X_personalitytests::find('all',array('order'=>array('Number'=>'ASC'))); 
 		return $this->render(array('json' => array("success"=>"Yes",'questions'=>$questions)));		      
 		
 	}
@@ -107,7 +107,7 @@ public function assess($id=null,$json=false){
 		));
 	foreach($resultA as $r){
 		if($r['Point']==round($a)){
-			$AnalysisA = ' <div class="block-header">'.$r['Discription']." (".$a."): </div><p>". $r['Analysis'] .'</p>';
+			$AnalysisA = ' <div class="block-header">'.$r['Description']." (".$a."): </div><p>". $r['Analysis'] .'</p>';
 		}
 	}
 		$resultE = X_personalityresults::find('all',array(
@@ -117,7 +117,7 @@ public function assess($id=null,$json=false){
 		));
 	foreach($resultE as $r){
 		if($r['Point']==round($e)){
-			$AnalysisE = ' <div class="block-header">'.$r['Discription'].' ('.$e.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisE = ' <div class="block-header">'.$r['Description'].' ('.$e.'): </div><p>'. $r['Analysis'] .'</p>';
 		}
 	}
 		$resultN = X_personalityresults::find('all',array(
@@ -127,7 +127,7 @@ public function assess($id=null,$json=false){
 		));
 	foreach($resultN as $r){
 		if($r['Point']==round($n)){
-			$AnalysisN = ' <div class="block-header">'.$r['Discription'].' ('.$n.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisN = ' <div class="block-header">'.$r['Description'].' ('.$n.'): </div><p>'. $r['Analysis'] .'</p>';
 		}
 	}
 		$resultC = X_personalityresults::find('all',array(
@@ -137,7 +137,7 @@ public function assess($id=null,$json=false){
 		));
 	foreach($resultC as $r){
 		if($r['Point']==round($c)){
-			$AnalysisC = ' <div class="block-header">'.$r['Discription'].' ('.$c.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisC = ' <div class="block-header">'.$r['Description'].' ('.$c.'): </div><p>'. $r['Analysis'] .'</p>';
 		}
 	}
 		$resultO = X_personalityresults::find('all',array(
@@ -147,7 +147,7 @@ public function assess($id=null,$json=false){
 		));
 	foreach($resultO as $r){
 		if($r['Point']==round($o)){
-			$AnalysisO = '<div class="block-header">'.$r['Discription'].' ('.$o.'): </div><p>'. $r["Analysis"] .'</p>';
+			$AnalysisO = '<div class="block-header">'.$r['Description'].' ('.$o.'): </div><p>'. $r["Analysis"] .'</p>';
 		}
 	}
 	
