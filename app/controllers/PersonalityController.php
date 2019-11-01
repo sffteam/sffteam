@@ -108,6 +108,7 @@ public function assess($id=null,$json=false){
 	foreach($resultA as $r){
 		if($r['Point']==round($a)){
 			$AnalysisA = ' <div class="block-header">'.$r['Description']." (".$a."): </div><p>". $r['Analysis'] .'</p>';
+			$AnalysisAH = ' <div class="block-header">'.$r['hDescription']." (".$a."): </div><p>". $r['hAnalysis'] .'</p>';
 		}
 	}
 		$resultE = X_personalityresults::find('all',array(
@@ -118,6 +119,7 @@ public function assess($id=null,$json=false){
 	foreach($resultE as $r){
 		if($r['Point']==round($e)){
 			$AnalysisE = ' <div class="block-header">'.$r['Description'].' ('.$e.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisEH = ' <div class="block-header">'.$r['hDescription'].' ('.$e.'): </div><p>'. $r['hAnalysis'] .'</p>';
 		}
 	}
 		$resultN = X_personalityresults::find('all',array(
@@ -128,6 +130,7 @@ public function assess($id=null,$json=false){
 	foreach($resultN as $r){
 		if($r['Point']==round($n)){
 			$AnalysisN = ' <div class="block-header">'.$r['Description'].' ('.$n.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisNH = ' <div class="block-header">'.$r['hDescription'].' ('.$n.'): </div><p>'. $r['hAnalysis'] .'</p>';
 		}
 	}
 		$resultC = X_personalityresults::find('all',array(
@@ -138,6 +141,7 @@ public function assess($id=null,$json=false){
 	foreach($resultC as $r){
 		if($r['Point']==round($c)){
 			$AnalysisC = ' <div class="block-header">'.$r['Description'].' ('.$c.'): </div><p>'. $r['Analysis'] .'</p>';
+			$AnalysisCH = ' <div class="block-header">'.$r['hDescription'].' ('.$c.'): </div><p>'. $r['hAnalysis'] .'</p>';
 		}
 	}
 		$resultO = X_personalityresults::find('all',array(
@@ -148,17 +152,18 @@ public function assess($id=null,$json=false){
 	foreach($resultO as $r){
 		if($r['Point']==round($o)){
 			$AnalysisO = '<div class="block-header">'.$r['Description'].' ('.$o.'): </div><p>'. $r["Analysis"] .'</p>';
+			$AnalysisOH = '<div class="block-header">'.$r['hDescription'].' ('.$o.'): </div><p>'. $r["hAnalysis"] .'</p>';
 		}
 	}
 	
 	
 		if($json==true){
 			$html = '<div class="block-title">'.$personalityusers['Name'].'</div>';
-			$html = $html . "".$AnalysisA;
-			$html = $html . "".$AnalysisE;
-			$html = $html . "".$AnalysisC;
-			$html = $html . "".$AnalysisN;
-			$html = $html . "".$AnalysisO;
+			$html = $html . "".$AnalysisA.$AnalysisAH;
+			$html = $html . "".$AnalysisE.$AnalysisEH;
+			$html = $html . "".$AnalysisC.$AnalysisCH;
+			$html = $html . "".$AnalysisN.$AnalysisNH;
+			$html = $html . "".$AnalysisO.$AnalysisOH;
 			
 			return $html;
 		}else{
