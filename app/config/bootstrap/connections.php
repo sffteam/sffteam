@@ -13,14 +13,14 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
- Connections::add('Distributor', array(
- 	'type' => CONNECTIONDP_TYPE,
- 	'host' => array(CONNECTIONDP,
+ Connections::add('default_Personality', array(
+ 	'type' => CONNECTIONPERSONALITY_TYPE,
+ 	'host' => array(CONNECTIONPERSONALITY,
 		),
 //	'replicaSet' => true,
-	'database' => CONNECTIONDP_DB,
-	'login' => CONNECTIONDP_USER,
-	'password' => CONNECTIONDP_PASS,	
+	'database' => CONNECTIONPERSONALITY_DB,
+	'login' => CONNECTIONPERSONALITY_USER,
+	'password' => CONNECTIONPERSONALITY_PASS,	
 //	'setSlaveOkay' => true,
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
