@@ -24,4 +24,18 @@ use lithium\data\Connections;
 //	'setSlaveOkay' => true,
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
+
+ Connections::add('default_Modicare', array(
+ 	'type' => CONNECTIONMODICARE_TYPE,
+ 	'host' => array(CONNECTIONMODICARE,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONMODICARE_DB,
+	'login' => CONNECTIONMODICARE_USER,
+	'password' => CONNECTIONMODICARE_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
+
+
 ?>
