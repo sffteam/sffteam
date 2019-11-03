@@ -308,7 +308,7 @@ foreach($products as $p){
 		return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
 }
 
-public function show(){
+public function show($Code){
 	
 	if($this->request->data){
 		$conditions = array('Code'=>$this->request->data['Code']);
@@ -320,15 +320,17 @@ public function show(){
 		);
 		Malls::update($data,$conditions);
 	}
-	$product = Malls::find('first', array(
+	$products = Malls::find('all', array(
 		'conditions' =>array(
-			'g_Description'=>"",
-//				'Code'=>$Code
+//			'g_Description'=>"",
+		//		'Code'=>$Code
 			),
-		'limit'=>1
+		'order'=>array('Code'=>'ASC')
 	));
-	
-	return compact('product');
+	$product = Malls::find('first', array(
+		'conditions'=>array('Code'=>$Code)
+	));
+	return compact('products','product');
 }
 //end of class
 }
