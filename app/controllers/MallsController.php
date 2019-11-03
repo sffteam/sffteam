@@ -304,7 +304,7 @@ foreach($products as $p){
 	);
 	Malls::update($data,$conditions);
 }	
-
+ 
 		return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
 }
 
