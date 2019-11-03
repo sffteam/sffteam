@@ -5,6 +5,7 @@ use \lithium\template\View;
 use app\extensions\action\Functions;
 
 use app\models\Malls;
+use app\models\Modicare_products;
 use app\models\Settings;
 use app\models\Points;
 
@@ -17,7 +18,7 @@ class MallsController extends \lithium\action\Controller {
   // if($user==null){
    // return $this->redirect('/savings');
   // }
-  $this->_render['layout'] = null;
+  $this->_render['layout'] = 'savings';
  }
 	public function index(){
 		$products = Malls::find('all',array(
@@ -281,4 +282,55 @@ public function points(){
 		return $this->render(array('json' => array("success"=>$save)));		
  }
 
+
+public function product($Code){
+		$product = Malls::find('first',array(
+			'conditions'=>array('Code'=> $Code)
+		));
+	return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
 }
+
+public function transfer(){
+$products = Modicare_products::find('all');
+$product = array();
+
+foreach($products as $p){
+	array_push($product,$p['Code']);
+	$conditions = array('Code'=>$p['Code']);
+	$data = array(
+		'Description'=> $p['Description'],
+		'g_Description'=>"",
+		'h_Description'=>"",
+	);
+	Malls::update($data,$conditions);
+}	
+
+		return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
+}
+
+public function show(){
+	
+	if($this->request->data){
+		$conditions = array('Code'=>$this->request->data['Code']);
+		$data = array(
+		'Description'=> $this->request->data['Description'],
+		'g_Description'=>$this->request->data['g_Description'],
+		'h_Description'=>$this->request->data['h_Description'],
+		'Video'=>$this->request->data['Video'],
+		);
+		Malls::update($data,$conditions);
+	}
+	$product = Malls::find('first', array(
+		'conditions' =>array(
+			'g_Description'=>"",
+//				'Code'=>$Code
+			),
+		'limit'=>1
+	));
+	
+	return compact('product');
+}
+//end of class
+}
+
+
