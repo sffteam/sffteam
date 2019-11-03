@@ -1,3 +1,12 @@
+<div class="row">
+<div class="col-2">
+<ul>
+	<?php foreach ($products as $p){?>
+	<li><a href="/malls/show/<?=$p['Code']?>"><?=$p['Code']?>-<?=is_null($p['Description'])?></a></li>
+	<?php	}	?>
+	</ul>
+</div>	
+<div class="col-10">
 <?=$product['Code']?> - 
 <?=$product['Name']?>
 
@@ -14,3 +23,5 @@
 		<input type="hidden" name="Code" id="Code" value="<?=$product['Code']?>">
 		<input type="button" value="Save" class="form-control btn btn-primary" onclick="$('#Product').submit();">
 		</form>
+		</div>
+</div>
