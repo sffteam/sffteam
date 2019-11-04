@@ -3,9 +3,11 @@ namespace app\controllers;
 use lithium\storage\Session;
 use \lithium\template\View;
 use app\extensions\action\Functions;
+use app\extensions\action\GoogleAuthenticator;
 
 use app\models\Malls;
-use app\models\Modicare_products;
+use app\models\Modicare_products; // Only for Transfer of products.. Not required
+use app\models\Users;
 use app\models\Settings;
 use app\models\Points;
 
@@ -323,7 +325,7 @@ public function show($Code){
 	$products = Malls::find('all', array(
 		'conditions' =>array(
 //			'g_Description'=>"",
-		//		'Code'=>$Code
+		//		'Code'=>$Codesearchmca
 			),
 		'order'=>array('Code'=>'ASC')
 	));
@@ -332,6 +334,298 @@ public function show($Code){
 	));
 	return compact('products','product');
 }
+
+public function searchmca(){
+	if($this->request->data){
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+		));
+		if(count($user)==1){
+			return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));				
+		}else{
+			return $this->render(array('json' => array("success"=>"No")));				
+		}
+	}
+	
+}
+
+public function sendotp(){
+	if($this->request->data){
+		
+		$mcaNumber = $this->request->data['mcaNumber'];
+	 $user = Users::find('first',array(
+   'conditions'=>array(
+				'mcaNumber'=>(string)$mcaNumber,
+				'DateJoin'=>$this->request->data['dateofjoin']
+				)
+		));
+		if(count($user)==1){
+			$mobile = "+91".$this->request->data['mobile'];
+			$ga = new GoogleAuthenticator();
+			$otp = $ga->getCode($ga->createSecret(64));	
+			$data = array(
+				'otp' => $otp,
+				'mobile'=>$mobile,
+			);
+			$conditions = array("mcaNumber"=>(string)$mcaNumber);
+
+			Users::update($data,$conditions);
+			$function = new Functions();
+			$msg = "SFF-Mall OTP is ". $otp . ",  to register.";
+			$returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
+			$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
+			$user = Users::find('first',array(
+   'conditions'=>array(
+				'mcaNumber'=>(string)$mcaNumber,
+				)
+			));
+			
+			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
+		}else{
+			return $this->render(array('json' => array("success"=>"No")));		
+		}
+		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
+
+public function searchdown(){
+	if($this->request->data){
+		$users = Users::find('all',array(
+			'conditions'=>array('refer'=>$this->request->data['mcaNumber'])
+			));
+		if(count($users)>0){
+			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'users'=>$users)));		
+		}else{
+			return $this->render(array('json' => array("success"=>"No")));		
+		}
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
+
+
+
+
+public function uploadbuilders(){
+
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'mcaNumber' => (string)$data[1],
+									'mcaName' => ucwords(strtolower((string)$data[2])),
+									'DateJoin' => (string)$data[4],
+									'refer' => (integer)$data[5],
+         'ValidTitle'=>(string)$data[6],
+         'PaidTitle'=>(string)$data[7],
+         'Percent'=>(integer)$data[8],
+         'PrevCummPV'=>(integer)$data[9],
+         'PV'=>(integer)$data[10],
+         'BV'=>(integer)$data[11],
+         'GPV'=>(integer)$data[12],
+         'GBV'=>(integer)$data[13],
+         'GrossPV'=>(integer)$data[14],
+         'PGPV'=>(integer)$data[15],
+         'PGBV'=>(integer)$data[16],
+         'RollUpBV'=>(integer)$data[17],
+         'Level'=>(integer)$data[18],
+									'Legs'=>(integer)$data[19],
+         'QDLegs'=>(integer)$data[20],
+         'APB'=>(integer)$data[21],
+         'DB'=>(integer)$data[22],
+         'LPB'=>(integer)$data[23],
+         'TF'=>(integer)$data[24],
+         'CF'=>(integer)$data[25],
+									'HF'=>(integer)$data[26],
+									'Gross'=>(integer)$data[27],
+         
+         
+								);
+								
+//								print_r($data);exit;
+								$user = Users::find("first",array(
+								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
+								));
+								if(count($user)!=1){
+									if($data['mcaNumber']!=""){
+										if((int)$data['mcaNumber']>0){
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->addUserBuilders($data,$yyyymm);
+											print_r($data);
+										}
+									}
+								}else{
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->updateUserBuilders($data,$yyyymm);
+        }
+						}
+						fclose($handle);
+			}
+	}
+}
+
+	public function updateUserBuilders($data,$yyyymm){
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+				'refer_name'=>$refer_name,
+				'refer_id'=>(string)$refer_id,
+				'ancestors'=> $ancestors,
+				'DateJoin'=>(string)$data["DateJoin"],
+				'left'=>(integer)($refer_left+1),
+				'right'=>(integer)($refer_left+2),
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
+     $yyyymm.'.PV'=>(integer)$data['PV'],
+     $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.GPV'=>(integer)$data['GPV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+					$yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
+					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+     $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+     $yyyymm.'.APB'=>(integer)$data['APB'],
+     $yyyymm.'.DB'=>(integer)$data['DB'],
+     $yyyymm.'.LPB'=>(integer)$data['LPB'],
+     $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.CF'=>(integer)$data['CF'],
+     $yyyymm.'.HF'=>(integer)$data['HF'],
+     $yyyymm.'.Gross'=>(integer)$data['Gross'],
+
+			);
+   $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
+			Users::update($data,$conditions);
+  
+ }
+
+	public function adduserBuilders($data,$yyyymm){
+		
+			if($data){
+			if($data['mcaNumber']!="" && $data["mcaName"]!=""){
+				print_r($data['refer']);
+				$refer = Users::first(array(
+						'fields'=>array('left','mcaNumber','ancestors','mcaName'),
+							'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+						));
+				$refer_ancestors = $refer['ancestors'];
+				
+				$ancestors = array();
+    if(count($refer_ancestors)>0){
+     foreach ($refer_ancestors as $ra){
+      array_push($ancestors, $ra);
+     }
+    }
+				$refer_mcanumber = (string) $refer['mcaNumber'];
+
+				array_push($ancestors,$refer_mcanumber);
+
+				$refer_id = $refer_mcanumber;
+				$refer_left = (integer)$refer['left'];
+				$refer_left_inc = (integer)$refer['left'];
+				$refername = Users::find('first',array(
+						'fields'=>array('mcaName','mcaNumber'),
+						'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+				));
+				
+				$refer_name = $refername['mcaName'];
+				$refer_id = $refername['mcaNumber']; 
+
+				
+			}else{
+				$refer_left = 0;
+				$refer_name = "";
+				$refer_id = "";
+				$ancestors = array();
+			}
+				Users::update(
+					array(
+						'$inc' => array('right' => (integer)2)
+					),
+					array('right' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+				Users::update(
+					array(
+						'$inc' => array('left' => (integer)2)
+					),
+					array('left' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+			
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+				'refer_name'=>$refer_name,
+				'refer_id'=>(string)$refer_id,
+				'ancestors'=> $ancestors,
+				'DateJoin'=>(string)$data["DateJoin"],
+				'left'=>(integer)($refer_left+1),
+				'right'=>(integer)($refer_left+2),
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
+     $yyyymm.'.PV'=>(integer)$data['PV'],
+     $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.GPV'=>(integer)$data['GPV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+					$yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
+					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+     $yyyymm.'.APB'=>(integer)$data['APB'],
+     $yyyymm.'.DB'=>(integer)$data['DB'],
+     $yyyymm.'.LPB'=>(integer)$data['LPB'],
+     $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.CF'=>(integer)$data['CF'],
+     $yyyymm.'.HF'=>(integer)$data['HF'],
+     $yyyymm.'.Gross'=>(integer)$data['Gross'],
+
+			);
+
+			Users::create()->save($data);
+			
+		}
+
+	}
+
+
+// {
+  // "DateJoin": "2015-12-13",
+  // "ancestors": [""],
+  // "left": 1,
+  // "mcaName": "Ruchi Nilam Doctor",
+  // "mcaNumber": "92143138",
+  // "otp": "403362",
+  // "refer": "92000000",
+  // "refer_id": "",
+  // "right": 2
+// }
+
+
+
 //end of class
 }
 
