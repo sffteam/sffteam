@@ -4,7 +4,7 @@ use lithium\storage\Session;
 use \lithium\template\View;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
-
+use app\controllers\DashboardController;
 use app\models\Malls;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -644,6 +644,25 @@ public function addUser(){
 	));
 	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
 	
+}
+
+public function getusers(){
+		$dashboard = new DashboardController();
+  $Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+  
+  $users = array();
+  foreach($Nodes as $n){
+   array_push($users,
+    array(
+     'mcaNumber'=>$n['mcaNumber'],
+     'mcaName'=>$n['mcaName']
+    )
+   );
+   
+  }
+  
+  return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
+
 }
 
 //end of class
