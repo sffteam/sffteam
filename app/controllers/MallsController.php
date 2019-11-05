@@ -408,7 +408,7 @@ public function searchdown(){
 
 
 public function uploadbuilders(){
-
+set_time_limit(0);
 		if($this->request->data){
 			$file = $this->request->data['file'];	
 			
@@ -521,7 +521,7 @@ public function uploadbuilders(){
 		
 			if($data){
 			if($data['mcaNumber']!="" && $data["mcaName"]!=""){
-				print_r($data['refer']);
+//				print_r($data['refer']);
 				$refer = Users::first(array(
 						'fields'=>array('left','mcaNumber','ancestors','mcaName'),
 							'conditions'=>array('mcaNumber'=>(string)$data['refer'])
@@ -629,10 +629,14 @@ public function addUser(){
 	if($this->request->data){	
 		$data = array(
 			'mcaNumber' => (string)$this->request->data['mcaNumber'],
-			'mcaName' => ucwords(strtolower((string)$this->request->data['Name'])),
+			'mcaName' => ucwords(strtolower((string)$this->request->data['mcaName'])),
 			'DateJoin' => (string)$this->request->data['DateJoin'],
 			'refer' => (integer)$this->request->data['refer'],
+			'refer_id'=>(integer)$this->request->data['refer'],
+			'refer_name'=>ucwords(strtolower((string)$this->request->data['referName'])),
 		);
+		
+		$yyyymm = date("Y-m" ,strtotime('first day of last month'));
 		$this->addUserBuilders($data,$yyyymm);
 	}
 	$user = Users::find('first',array(
