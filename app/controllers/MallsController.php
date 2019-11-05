@@ -41,17 +41,16 @@ class MallsController extends \lithium\action\Controller {
 		$CategoriesArray = array(
 		  'FS' => 'Food Supplement',
 				'PC' => 'Personal Care',
-    'HL' => 'Health',
+    'HL' => 'Wellness',
 				'HC' => 'Home Care',
     'LC' => 'Laundry Care',
-				'FP' => 'Food Products',
+				'FP' => 'Food & Beverages',
 				'SC' => 'Skin Care',
     'BC' => 'Baby Care',
 				'UC' => 'Urban Color',
     'AG' => 'Agriculture',
     'AC' => 'Auto Care',
     'MJ' => 'Jewelery',
-    
 				'00' => 'Others',
     '60' => 'Extra',
 				);
@@ -353,10 +352,12 @@ public function sendotp(){
 	if($this->request->data){
 		
 		$mcaNumber = $this->request->data['mcaNumber'];
+		$date = date_create($this->request->data['dateofjoin']);
+		
 	 $user = Users::find('first',array(
    'conditions'=>array(
 				'mcaNumber'=>(string)$mcaNumber,
-				'DateJoin'=>$this->request->data['dateofjoin']
+				'DateJoin'=>date_format($date,"d M Y"),
 				)
 		));
 		if(count($user)==1){
@@ -463,7 +464,7 @@ public function uploadbuilders(){
 										if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
 											$this->addUserBuilders($data,$yyyymm);
-											print_r($data);
+											//print_r($data);
 										}
 									}
 								}else{
@@ -624,7 +625,22 @@ public function uploadbuilders(){
   // "right": 2
 // }
 
-
+public function addUser(){
+	if($this->request->data){	
+		$data = array(
+			'mcaNumber' => (string)$this->request->data['mcaNumber'],
+			'mcaName' => ucwords(strtolower((string)$this->request->data['Name'])),
+			'DateJoin' => (string)$this->request->data['DateJoin'],
+			'refer' => (integer)$this->request->data['refer'],
+		);
+		$this->addUserBuilders($data,$yyyymm);
+	}
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>(string)$this->request->data['mcaNumber'])
+	));
+	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+	
+}
 
 //end of class
 }
