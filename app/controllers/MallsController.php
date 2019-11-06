@@ -6,9 +6,11 @@ use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
 use app\models\Malls;
+use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
 use app\models\Settings;
+use app\models\Messages;
 use app\models\Points;
 
 class MallsController extends \lithium\action\Controller {
@@ -410,30 +412,30 @@ public function searchdown(){
 				'mcaName'=>$u['mcaName'],
 				'refer'=>$u['refer'],
 					$yyyymm=>array(
-					'PV'=>$u[$yyyymm]['PV'],
-					'BV'=>$u[$yyyymm]['BV'],
-					'GBV'=>$u[$yyyymm]['GBV'],
-					'GrossPV'=>$u[$yyyymm]['GrossPV'],
-					'PGPV'=>$u[$yyyymm]['PGPV'],
-					'PGBV'=>$u[$yyyymm]['PGBV'],
-					'RollUpBV'=>$u[$yyyymm]['RollUpBV'],
-					'RollUpPV'=>$u[$yyyymm]['RollUpPV'],
-					'Legs'=>$u[$yyyymm]['Legs'],
-					'QDLegs'=>$u[$yyyymm]['QDLegs'],
-					'ValidTitle'=>$u[$yyyymm]['ValidTitle'],
+					'PV'=>$u[$yyyymm]['PV']?:0,
+					'BV'=>$u[$yyyymm]['BV']?:0,
+					'GBV'=>$u[$yyyymm]['GBV']?:0,
+					'GrossPV'=>$u[$yyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$yyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$yyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$yyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$yyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$yyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 				),
 				$pyyyymm => array(
-					'PV'=>$u[$pyyyymm]['PV'],
-					'BV'=>$u[$pyyyymm]['BV'],
-					'GBV'=>$u[$pyyyymm]['GBV'],
-					'GrossPV'=>$u[$pyyyymm]['GrossPV'],
-					'PGPV'=>$u[$pyyyymm]['PGPV'],
-					'PGBV'=>$u[$pyyyymm]['PGBV'],
-					'RollUpBV'=>$u[$pyyyymm]['RollUpBV'],
-					'RollUpPV'=>$u[$pyyyymm]['RollUpPV'],
-					'Legs'=>$u[$pyyyymm]['Legs'],
-					'QDLegs'=>$u[$pyyyymm]['QDLegs'],
-					'ValidTitle'=>$u[$pyyyymm]['ValidTitle'],
+					'PV'=>$u[$pyyyymm]['PV']?:0,
+					'BV'=>$u[$pyyyymm]['BV']?:0,
+					'GBV'=>$u[$pyyyymm]['GBV']?:0,
+					'GrossPV'=>$u[$pyyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$pyyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$pyyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$pyyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$pyyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$pyyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$pyyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$pyyyymm]['ValidTitle']?:"",
 					),
 				'count'=>$count
 				));
@@ -920,6 +922,158 @@ set_time_limit(0);
 			Users::update($data,$conditions);
   
  }
+
+public function saveMessage(){
+	if($this->request->data){
+		$group = $this->request->data['group'];
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$message = $this->request->data['message'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$data = array(
+			'group'=>$group,
+			'mcaNumber'=>$mcaNumber,
+			'mcaName'=>$user['mcaName'],
+			'message'=>$message,
+			'DateTime'=>new \MongoDate()
+		);
+		
+		Messages::create()->save($data);
+	}
+	$allmessages = $this->getmessages($group,$mcaNumber);
+	return $this->render(array('json' => array("success"=>"Yes",'messages'=>$allmessages)));			
+}
+
+public function getmessagesgroup(){
+	if($this->request->data){
+		$allmessages = $this->getmessages($this->request->data['group'],$this->request->data['mcaNumber']);
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'messages'=>$allmessages)));
+}
+
+public function getmessages($group,$mcaNumber){
+		$messages = Messages::find('all',array(
+		'conditions'=>array('group'=>$group),
+		'order'=>array('DateTime'=>'ASC')
+	));
+	
+	$allmessages = array();
+	foreach($messages as $m){
+		if($m['mcaNumber']==$mcaNumber){
+				array_push($allmessages, array(
+					'mcaNumber'=>$m['mcaNumber'],
+					'mcaName'=>$m['mcaName'],
+					'group'=>$m['group'],
+					'DateTime'=>gmdate("Y-M-d h:i:s",$m['DateTime']->sec),
+					'message'=>$m['message'],
+					'Type'=>'send'
+					));
+		}else{
+				array_push($allmessages, array(
+					'mcaNumber'=>$m['mcaNumber'],
+					'mcaName'=>$m['mcaName'],
+					'group'=>$m['group'],
+					'DateTime'=>gmdate("Y-M-d h:i:s",$m['DateTime']->sec),
+					'message'=>$m['message'],
+					'Type'=>'received'
+					));			
+		}
+	}
+	return $allmessages;
+}
+
+public function groupinfo(){
+	if($this->request->data){
+		$group = $this->request->data['group'];
+		$pyyyymm = date('Y-m', strtotime('last month'));		
+		switch ($group) {
+			case "0PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0));
+							break;
+			case "25PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>25));
+							break;
+			case "50PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>50));
+							break;
+			case "100PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>100));
+							break;
+			case "200PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>200));
+							break;
+			case "Offers":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0));
+							break;
+		} 
+		$users = Users::find('all',array(
+			'conditions'=>$conditions,
+			'order'=>array($pyyyymm.'.PV'=>'DESC')
+		));
+		$allusers = array();
+		foreach ($users as $u){
+			array_push($allusers,array(
+				'mcaNumber'=>$u['mcaNumber'],
+				'mcaName'=>$u['mcaName'],
+				'PV' => $u[$pyyyymm]['PV']
+			));
+			
+		}
+		
+	}		
+	return $this->render(array('json' => array("success"=>"Yes","users"=>$allusers)));			
+}
+
+
+public function groupinfosend(){
+	if($this->request->data){
+		$group = $this->request->data['group'];
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$pyyyymm = date('Y-m', strtotime('last month'));
+		switch ($group) {
+			case "General":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'mcaNumber'=>$mcaNumber);
+							break;
+			case "0PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'mcaNumber'=>$mcaNumber);
+							break;
+			case "25PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>25),'mcaNumber'=>$mcaNumber);
+							break;
+			case "50PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>50),'mcaNumber'=>$mcaNumber);
+							break;
+			case "100PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>100),'mcaNumber'=>$mcaNumber);
+							break;
+			case "200PV":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>200),'mcaNumber'=>$mcaNumber);
+							break;
+			case "Offers":
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'mcaNumber'=>$mcaNumber);
+							break;
+		} 
+		
+		$user = Users::find('first',array(
+			'conditions'=>$conditions,
+		));
+		if(count($user)==0){
+			return $this->render(array('json' => array("success"=>"No")));					
+		}else{
+			return $this->render(array('json' => array("success"=>"Yes",'group'=>$group)));					
+		}
+		return $this->render(array('json' => array("success"=>"No")));					
+	}		
+}
+
+public function saveInvoice(){
+	if($this->request->data){
+		Invoices::create()->save($this->request->data);
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));			
+}
+
 
 //end of class
 }
