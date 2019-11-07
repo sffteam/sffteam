@@ -7,5 +7,5 @@
  * The full license text can be found in the LICENSE.txt file.
  */
 ?>
-<?php echo '<' . '?xml version="1.0" ?' . '>'; ?>
+<?php echo '<' . '?xml version="1.0" encloding="UTF-8" ?' . '>'; ?>
 <?=$this->content;?>
