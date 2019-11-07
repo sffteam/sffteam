@@ -449,7 +449,11 @@ public function searchdown(){
 }
 
 
+// Upload Builders
+// Upload Joinee
 
+// Upload Enrolment
+// Upload Active
 
 public function uploadbuilders(){
 set_time_limit(0);
@@ -495,6 +499,7 @@ set_time_limit(0);
          'CF'=>(integer)$data[25],
 									'HF'=>(integer)$data[26],
 									'Gross'=>(integer)$data[27],
+									'Enable'=>(string)$data[28],
          
          
 								);
@@ -527,6 +532,7 @@ set_time_limit(0);
 				'mcaNumber'=>(string)$data["mcaNumber"],
 				'refer'=>(string)$data["refer"],
 				'DateJoin'=>(string)$data["DateJoin"],
+				'Enable'=>$data['Enable'],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
      $yyyymm.'.Percent'=>(integer)$data['Percent'],
@@ -620,6 +626,7 @@ set_time_limit(0);
 				'DateJoin'=>(string)$data["DateJoin"],
 				'left'=>(integer)($refer_left+1),
 				'right'=>(integer)($refer_left+2),
+				'Enable'=>$data['Enable'],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
      $yyyymm.'.Percent'=>(integer)$data['Percent'],
@@ -704,6 +711,85 @@ public function getusers(){
 
 }
 
+
+public function uploadJoinee(){
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'mcaNumber' => (string)$data[1],
+									'mcaName' => ucwords(strtolower((string)$data[2])),
+									'DateJoin' => (string)$data[4],
+									'refer' => (integer)$data[6],
+         'ValidTitle'=>(string)$data[7],
+         'PaidTitle'=>(string)$data[8],
+									'KYC'=>(string)$data[9],
+									'InActive'=>(integer)$data[10],
+									'PrevCummPV'=>(integer)$data[11],
+         'PV'=>(integer)$data[12],
+         'BV'=>(integer)$data[13],
+         'GPV'=>(integer)$data[14],
+         'GBV'=>(integer)$data[15],
+         'GrossPV'=>(integer)$data[16],
+         'PGPV'=>(integer)$data[17],
+         'PGBV'=>(integer)$data[18],
+									'RollUpPV'=>(integer)$data[19],
+         'RollUpBV'=>(integer)$data[20],
+         'Level'=>(integer)$data[21],
+									'Legs'=>(integer)$data[22],
+         'QDLegs'=>(integer)$data[23],
+         'APB'=>(integer)$data[24],
+         'DB'=>(integer)$data[26],
+         'LPB'=>(integer)$data[28],
+         'TF'=>(integer)$data[29],
+         'CF'=>(integer)$data[30],
+									'HF'=>(integer)$data[31],
+									'Gross'=>(integer)$data[32],
+									'NEFT'=>(string)$data[33],
+									'Aadhar'=>(string)$data[34],
+									'State'=>(string)$data[36],
+									'Zone'=>(string)$data[37],
+									'City'=>(string)$data[38],
+									'Enable'=>(string)$data[39],
+								);
+								
+		//						print_r($data);
+								$user = Users::find("first",array(
+								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
+								));
+								if(count($user)!=1){
+									if($data['mcaNumber']!=""){
+										if((int)$data['mcaNumber']>0){
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->addUserEnrolment($data,$yyyymm);
+											//print_r($data);
+										}
+									}
+								}else{
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->updateUserEnrolment($data,$yyyymm);
+        }
+						}
+						fclose($handle);
+			}
+	}
+}
+
+
+
 public function uploadEnrolment(){
 set_time_limit(0);
 		if($this->request->data){
@@ -755,6 +841,7 @@ set_time_limit(0);
 									'State'=>(string)$data[36],
 									'Zone'=>(string)$data[37],
 									'City'=>(string)$data[38],
+									'Enable'=>(string)$data[39],
 								);
 								
 		//						print_r($data);
@@ -873,6 +960,7 @@ set_time_limit(0);
 					'State'=>$data['State'],
 					'Zone'=>$data['Zone'],
 					'City'=>$data['City'],
+					'Enable'=>$data['Enable'],
 
 			);
 //print_r($data);
@@ -917,6 +1005,7 @@ set_time_limit(0);
 					'State'=>$data['State'],
 					'Zone'=>$data['Zone'],
 					'City'=>$data['City'],
+					'Enable'=>$data['Enable'],
 			);
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
 			Users::update($data,$conditions);
@@ -989,22 +1078,22 @@ public function groupinfo(){
 		$pyyyymm = date('Y-m', strtotime('last month'));		
 		switch ($group) {
 			case "0PV":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'Enable'=>'Yes');
 							break;
 			case "25PV":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>25));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>25),'Enable'=>'Yes');
 							break;
 			case "50PV":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>50));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>50),'Enable'=>'Yes');
 							break;
 			case "100PV":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>100));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>100),'Enable'=>'Yes');
 							break;
 			case "200PV":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>200));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>200),'Enable'=>'Yes');
 							break;
 			case "Offers":
-				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0));
+				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'Enable'=>'Yes');
 							break;
 		} 
 		$users = Users::find('all',array(
