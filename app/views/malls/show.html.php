@@ -2,7 +2,8 @@
 <div class="col-2">
 <ul>
 	<?php foreach ($products as $p){?>
-	<li><a href="/malls/show/<?=$p['Code']?>"><?=$p['Code']?>-<?=is_null($p['Description'])?></a></li>
+	<li><a href="/malls/show/<?=$p['Code']?>"><?=$p['Code']?>-<?=is_null($p['Description'])?></a>
+	<?=$p['Name']?></li>
 	<?php	}	?>
 	</ul>
 </div>	
