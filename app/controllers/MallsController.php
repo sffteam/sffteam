@@ -1393,7 +1393,21 @@ public function seminar($date=null){
 		
 }
 
-
+public function getproducts(){
+	$products = Malls::find('all',array(
+		'order'=>array('Code'=>'ASC','Name'=>'ASC')
+	));
+	
+	$allproducts = array();
+	foreach ($products as $p){
+		array_push($allproducts,array(
+			'Code'=>$p['Code'],
+			'Name'=>$p['Name']
+		));
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));			
+}
 
 //end of class
 }
