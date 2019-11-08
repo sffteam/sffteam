@@ -668,7 +668,8 @@ set_time_limit(0);
   // "otp": "403362",
   // "refer": "92000000",
   // "refer_id": "",
-  // "right": 2
+  // "right": 2,
+		// "Enable":"Yes"
 // }
 
 public function addUser(){
@@ -736,34 +737,19 @@ set_time_limit(0);
 									'refer' => (integer)$data[6],
          'ValidTitle'=>(string)$data[7],
          'PaidTitle'=>(string)$data[8],
-									'KYC'=>(string)$data[9],
-									'InActive'=>(integer)$data[10],
-									'PrevCummPV'=>(integer)$data[11],
-         'PV'=>(integer)$data[12],
-         'BV'=>(integer)$data[13],
-         'GPV'=>(integer)$data[14],
-         'GBV'=>(integer)$data[15],
-         'GrossPV'=>(integer)$data[16],
-         'PGPV'=>(integer)$data[17],
-         'PGBV'=>(integer)$data[18],
-									'RollUpPV'=>(integer)$data[19],
-         'RollUpBV'=>(integer)$data[20],
-         'Level'=>(integer)$data[21],
-									'Legs'=>(integer)$data[22],
-         'QDLegs'=>(integer)$data[23],
-         'APB'=>(integer)$data[24],
-         'DB'=>(integer)$data[26],
-         'LPB'=>(integer)$data[28],
-         'TF'=>(integer)$data[29],
-         'CF'=>(integer)$data[30],
-									'HF'=>(integer)$data[31],
-									'Gross'=>(integer)$data[32],
-									'NEFT'=>(string)$data[33],
-									'Aadhar'=>(string)$data[34],
-									'State'=>(string)$data[36],
-									'Zone'=>(string)$data[37],
-									'City'=>(string)$data[38],
-									'Enable'=>(string)$data[39],
+									'PrevCummPV'=>(integer)$data[9],
+         'PV'=>(integer)$data[10],
+         'BV'=>(integer)$data[11],
+         'GPV'=>(integer)$data[12],
+         'GBV'=>(integer)$data[13],
+         'GrossPV'=>(integer)$data[14],
+         'PGPV'=>(integer)$data[15],
+         'PGBV'=>(integer)$data[16],
+									'RollUpPV'=>(integer)$data[17],
+         'RollUpBV'=>(integer)$data[18],
+         'Level'=>(integer)$data[19],
+									'Legs'=>(integer)$data[20],
+         'QDLegs'=>(integer)$data[21],
 								);
 								
 		//						print_r($data);
@@ -774,19 +760,78 @@ set_time_limit(0);
 									if($data['mcaNumber']!=""){
 										if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-											$this->addUserEnrolment($data,$yyyymm);
+											$this->addUserJoinee($data,$yyyymm);
 											//print_r($data);
 										}
 									}
 								}else{
-           $yyyymm = $this->request->data['yyyymm'];
-											$this->updateUserEnrolment($data,$yyyymm);
         }
 						}
 						fclose($handle);
 			}
 	}
 }
+
+
+public function uploadActive(){
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'mcaNumber' => (string)$data[1],
+									'mcaName' => ucwords(strtolower((string)$data[2])),
+									'DateJoin' => (string)$data[4],
+									'refer' => (integer)$data[6],
+         'PaidTitle'=>(string)$data[7],
+         'ValidTitle'=>(string)$data[8],
+									'PrevCummPV'=>(integer)$data[9],
+         'PV'=>(integer)$data[10],
+         'BV'=>(integer)$data[11],
+         'GPV'=>(integer)$data[12],
+         'GBV'=>(integer)$data[13],
+         'GrossPV'=>(integer)$data[14],
+         'PGPV'=>(integer)$data[15],
+         'PGBV'=>(integer)$data[16],
+									'RollUpPV'=>(integer)$data[17],
+         'RollUpBV'=>(integer)$data[18],
+         'Level'=>(integer)$data[19],
+									'Legs'=>(integer)$data[20],
+         'QDLegs'=>(integer)$data[21],
+								);
+								
+		//						print_r($data);
+								$user = Users::find("first",array(
+								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
+								));
+								if(count($user)==1){
+									if($data['mcaNumber']!=""){
+										if((int)$data['mcaNumber']>0){
+           $yyyymm = $this->request->data['yyyymm'];
+											$this->addUserActive($data,$yyyymm);
+											//print_r($data);
+										}
+									}
+								}else{
+        }
+						}
+						fclose($handle);
+			}
+	}
+}
+
 
 
 
@@ -865,6 +910,138 @@ set_time_limit(0);
 			}
 	}
 }
+
+	public function adduserJoinee($data,$yyyymm){
+			if($data){
+		
+				if($data['mcaNumber']!="" && $data["mcaName"]!=""){
+//				print_r($data['refer']);
+					$refer = Users::first(array(
+						'fields'=>array('left','mcaNumber','ancestors','mcaName','Enable'),
+							'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+						));
+						
+					
+			if(count($refer)>0){	
+			$refer_ancestors = $refer['ancestors'];
+			
+			print_r($refer['Enable']);
+				$ancestors = array();
+    if(count($refer_ancestors)>0){
+     foreach ($refer_ancestors as $ra){
+      array_push($ancestors, $ra);
+     }
+    }
+				$refer_mcanumber = (string) $refer['mcaNumber'];
+
+				array_push($ancestors,$refer_mcanumber);
+
+				$refer_id = $refer_mcanumber;
+				$refer_left = (integer)$refer['left'];
+				$refer_left_inc = (integer)$refer['left'];
+				$refername = Users::find('first',array(
+						'fields'=>array('mcaName','mcaNumber'),
+						'conditions'=>array('mcaNumber'=>(string)$data['refer'])
+				));
+				
+				$refer_name = $refername['mcaName'];
+				$refer_id = $refername['mcaNumber']; 
+Users::update(
+					array(
+						'$inc' => array('right' => (integer)2)
+					),
+					array('right' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+				Users::update(
+					array(
+						'$inc' => array('left' => (integer)2)
+					),
+					array('left' => array('>'=>(integer)$refer_left_inc)),
+					array('multi' => true)
+				);
+		
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+				'refer_name'=>$refer_name,
+				'refer_id'=>(string)$refer_id,
+				'ancestors'=> $ancestors,
+				'DateJoin'=>(string)$data["DateJoin"],
+				'left'=>(integer)($refer_left+1),
+				'right'=>(integer)($refer_left+2),
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
+     $yyyymm.'.PV'=>(integer)$data['PV'],
+     $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.GPV'=>(integer)$data['GPV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+					$yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
+					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+					$yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
+					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+					'Enable'=>$refer_enable
+
+			);
+//print_r($data);
+			Users::create()->save($data);
+			}
+			}else{
+				$refer_left = 0;
+				$refer_name = "";
+				$refer_id = "";
+				$ancestors = array();
+			}
+				
+			}
+	}
+
+
+	public function adduserActive($data,$yyyymm){
+			if($data){
+		
+			$userActive = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$data['mcaNumber'])
+			));
+			
+			if(count($userActive)>0){
+				print_r($data['mcaName'].'<br>');
+			$data = array(
+				'mcaName'=>(string)$data["mcaName"],
+				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
+     $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
+     $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
+					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
+     $yyyymm.'.PV'=>(integer)$data['PV'],
+     $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.GPV'=>(integer)$data['GPV'],
+     $yyyymm.'.GBV'=>(integer)$data['GBV'],
+					$yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
+					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
+					$yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
+					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     $yyyymm.'.Legs'=>(integer)$data['Legs'],
+     $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+		);
+				$conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
+				Users::update($data,$conditions);
+
+			}else{
+				
+			}
+			}
+	}
 
 	public function adduserEnrolment($data,$yyyymm){
 		
