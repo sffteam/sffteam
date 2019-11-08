@@ -722,7 +722,8 @@ $this->_render['layout'] = 'noHeaderFooter';
 	 */
 		$ParentDetails = Users::find('all',array(
 			'conditions'=>array(
-			'mcaNumber' => $user_id
+			'mcaNumber' => $user_id,
+			'Enable'=>'Yes'
 			)));
 		foreach($ParentDetails as $pd){
 			$left = $pd['left'];
@@ -731,7 +732,8 @@ $this->_render['layout'] = 'noHeaderFooter';
 		$NodeDetails = Users::find('all',array(
 			'conditions' => array(
 				'left'=>array('$gt'=>$left),
-				'right'=>array('$lt'=>$right)
+				'right'=>array('$lt'=>$right),
+				'Enable'=>'Yes'
 			))
 		);
 

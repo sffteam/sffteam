@@ -10,6 +10,8 @@ use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
 use app\models\Settings;
+use app\models\Seminars;
+use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
 
@@ -693,18 +695,40 @@ public function addUser(){
 	
 }
 
+public function getactive(){
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');		
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+	 $users = array();
+  foreach($Nodes as $n){
+			if($n[$yyyymm]["PV"]){
+				array_push($users,
+					array(
+						'mcaNumber'=>$n['mcaNumber'],
+						'mcaName'=>$n['mcaName'],
+						'PV'=>$n[$yyyymm]['PV']
+					)
+				);
+			}
+		}
+		return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
+}
+
 public function getusers(){
 		$dashboard = new DashboardController();
   $Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
   
   $users = array();
   foreach($Nodes as $n){
-   array_push($users,
-    array(
-     'mcaNumber'=>$n['mcaNumber'],
-     'mcaName'=>$n['mcaName']
-    )
-   );
+			if($n["Enable"]=="Yes"){
+				array_push($users,
+					array(
+						'mcaNumber'=>$n['mcaNumber'],
+						'mcaName'=>$n['mcaName']
+					)
+				);
+			}
    
   }
   
@@ -760,7 +784,7 @@ set_time_limit(0);
 									if($data['mcaNumber']!=""){
 										if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-											$this->addUserJoinee($data,$yyyymm);
+											$this->adduserjoinee($data,$yyyymm);
 											//print_r($data);
 										}
 									}
@@ -911,7 +935,7 @@ set_time_limit(0);
 	}
 }
 
-	public function adduserJoinee($data,$yyyymm){
+	public function adduserjoinee($data,$yyyymm){
 			if($data){
 		
 				if($data['mcaNumber']!="" && $data["mcaName"]!=""){
@@ -1340,8 +1364,40 @@ public function saveInvoice(){
 	return $this->render(array('json' => array("success"=>"Yes")));			
 }
 
+public function seminar($date=null){
+	$today = date('Y-m-d');
+	if($this->request->data){
+		if($this->request->data['Name']==""){
+		$seminar = Seminars::find('first',array(
+			'conditions'=>array('Date'=>$this->request->data['date'])
+		));
+		}else{
+			Prospects::create()->save($this->request->data);			
+			$seminar = Seminars::find('first',array(
+				'conditions'=>array('Date'=>$this->request->data['date'])
+			));
+			$registered = 'Yes';
+			return compact('seminar','registered');
+		}
+	return compact('seminar');
+	}	
+	
+	if($date==null){
+		$dates = Seminars::find('all',array(
+			'conditons'=>array('Date'=>array('$gte'=>$today)),
+			'order'=>array('Date'=>'ASC')
+		));
+		return compact('dates');
+	}
+	
+		
+}
+
+
 
 //end of class
 }
+
+
 
 
