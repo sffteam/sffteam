@@ -713,7 +713,7 @@ public function getusers(){
 }
 
 
-public function uploadJoinee(){
+public function uploadjoinee(){
 set_time_limit(0);
 		if($this->request->data){
 			$file = $this->request->data['file'];	
@@ -773,7 +773,7 @@ set_time_limit(0);
 }
 
 
-public function uploadActive(){
+public function uploadactive(){
 set_time_limit(0);
 		if($this->request->data){
 			$file = $this->request->data['file'];	
