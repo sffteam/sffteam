@@ -18,9 +18,16 @@ class TwilioController extends \lithium\action\Controller {
   $this->_render['layout'] = null;
  }
 	
-	public function index(){}
+	public function index(){
+		return $this->render(array('json' => array("success"=>"Yes","result","index")));		
+	}
 	
-	public function received(){
+	public function pre(){
+		return $this->render(array('json' => array("success"=>"Yes","result","pre")));		
+		
+	}
+	public function post(){
+		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
 	}
 
 }
