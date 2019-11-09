@@ -29,5 +29,7 @@ class TwilioController extends \lithium\action\Controller {
 	public function post(){
 		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
 	}
-
+	public function callback(){
+		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
+	}
 }
