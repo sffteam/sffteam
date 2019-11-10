@@ -4,6 +4,7 @@ use \lithium\template\View;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
+use Twilio\Rest\Client;
 
 use app\models\Malls;
 use app\models\Invoices;
@@ -27,9 +28,38 @@ class TwilioController extends \lithium\action\Controller {
 		
 	}
 	public function post(){
+			$sid = TWILIO_ACCOUNT_SID;
+			$token = TWILIO_AUTH_TOKEN;
+			$whatapp = TWILIO_WHATSAPP;
+			$client = new Client($sid, $token);
+				$client->messages->create(
+						// the number you'd like to send the message to
+						'+917597219319',
+						array(
+										// A Twilio phone number you purchased at twilio.com/console
+										'from' => TWILIO_WHATSAPP,
+										// the body of the text message you'd like to send
+										'body' => 'Hey Nilam! Good luck on the bar exam!'
+						)
+				);
+
 		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
 	}
 	public function callback(){
 		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
+	}
+	
+	private function call(){
+			$sid = TWILIO_ACCOUNT_SID;
+			$token = TWILIO_AUTH_TOKEN;
+			$whatapp = TWILIO_WHATSAPP;
+			$client = new Client($sid, $token);
+		
+			$client->calls->create(
+    "+919879578255", "+917597219319",
+    array("url" => "http://demo.twilio.com/docs/voice.xml")
+			);
+
+		
 	}
 }
