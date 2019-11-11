@@ -9,6 +9,7 @@ use app\models\Malls;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
+use app\models\Mobiles;
 use app\models\Settings;
 use app\models\Seminars;
 use app\models\Prospects;
@@ -1408,6 +1409,101 @@ public function getproducts(){
 	
 	return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));			
 }
+
+public function uploadmobile(){
+
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 0;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'mcaNumber' => (string)$data[0],
+									'mcaName' => ucwords(strtolower((string)$data[1])),
+									'Mobile'=> (string)$data[2],
+									);
+							$user = Mobiles::find("first",array(
+								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
+							));
+							if(count($user)!=1){
+									if($data['mcaNumber']!=""){
+										if((int)$data['mcaNumber']>0){
+      					Mobiles::create()->save($data);
+										}
+									}
+								}else{
+									$conditions = array('mcaNumber'=>$data['mcaNumber']);
+										Mobiles::update($data,$conditions);
+        }
+			
+							}
+						}
+						
+						fclose($handle);						
+			}
+	}
+
+public function uploadproducts(){
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 0;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'Code' => (string)$data[0],
+									'Name' => ucwords(strtolower((string)$data[1])),
+									'MRP'=> $data[2],
+									'DP'=> $data[3],
+									'BV'=> $data[4],
+									'PV'=> $data[5],
+									);
+									print_r($data['Code'].": ".$data['Name']."<br>");
+							$product = Malls::find("first",array(
+								"conditions"=>array('Code'=>$data['Code'])
+							));
+							if(count($product)!=1){
+									if($data['Code']!=""){
+										if((int)$data['Code']>0){
+      					Malls::create()->save($data);
+										}
+									}
+								}else{
+									$conditions = array('Code'=>$data['Code']);
+										Malls::update($data,$conditions);
+        }
+			
+							}
+						}
+						
+						fclose($handle);						
+			}
+		
+	
+}
+
+
 
 //end of class
 }
