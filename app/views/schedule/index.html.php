@@ -1,3 +1,1 @@
-
-
-<iframe src="https://calendar.google.com/calendar/embed?src=ruchi.doctor.modicare%40gmail.com&ctz=Asia%2FKolkata" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+<iframe src="https://calendar.google.com/calendar/b/3/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKolkata&amp;src=cnVjaGkuZG9jdG9yLm1vZGljYXJlQGdtYWlsLmNvbQ&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%2322AA99&amp;color=%23336699&amp;color=%233366CC" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
