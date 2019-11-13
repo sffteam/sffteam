@@ -736,9 +736,35 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'Enable'=>'Yes'
 			))
 		);
-
 		return $NodeDetails;
 	}
+
+ public function getChildsClub($user_id,$club0,$club1,$yyyymm){
+
+		$ParentDetails = Users::find('all',array(
+			'conditions'=>array(
+			'mcaNumber' => $user_id,
+			'Enable'=>'Yes'
+			)));
+		
+		
+		foreach($ParentDetails as $pd){
+			$left = $pd['left'];
+			$right = $pd['right'];
+		}
+		
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right),
+				$yyyymm.'.PV'=>array('$gte'=>(integer)$club0, '$lt'=>(integer)$club1),
+				'Enable'=>'Yes'
+			))
+		);
+		return $NodeDetails;
+	}
+
+
  
 	public function countChilds($user_id){
 	#Retrieving a Full Tree
