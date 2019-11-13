@@ -1503,7 +1503,72 @@ set_time_limit(0);
 	
 }
 
+public function clubmembers(){
+	if($this->request->data){	
+	$club = split("-",$this->request->data['club']);
+	
+	$yyyymm = date('Y-m');
+	$p1yyyymm = date('Y-m', strtotime('-1 month'));
+	$p2yyyymm = date('Y-m', strtotime('-2 month'));
+	$p3yyyymm = date('Y-m', strtotime('-3 month'));
+	$p4yyyymm = date('Y-m', strtotime('-4 month'));
+	$p5yyyymm = date('Y-m', strtotime('-5 month'));
+	$p6yyyymm = date('Y-m', strtotime('-6 month'));
+	$p7yyyymm = date('Y-m', strtotime('-7 month'));
+	$p8yyyymm = date('Y-m', strtotime('-8 month'));
+	$p9yyyymm = date('Y-m', strtotime('-9 month'));
+	$p10yyyymm = date('Y-m', strtotime('-10 month'));
+	$p11yyyymm = date('Y-m', strtotime('-11 month'));
+	
+		if($club[0]=="x"){
+		$conditions = array(
+				$yyyymm.'.PV'=>null,
+				'Enable'=>'Yes'
+		);
+	}else{
+		$conditions = array(
+				$yyyymm.'.PV'=>array('$gte'=>(integer)$club[0], '$lt'=>(integer)$club[1]),
+				'Enable'=>'Yes'
+		);
+	}	
+//		print_r($conditions);
 
+
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChildsClub($mcaNumber,$club[0],$club[1],$yyyymm);
+	
+	
+	
+ $allusers = array();
+ foreach($Nodes as $n){
+		
+		$mobile = Mobiles::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
+		));
+		
+		array_push($allusers,array(
+				'mcaName'=>$n['mcaName'],
+				'mcaNumber'=>$n['mcaNumber'],
+				'mobile'=>$mobile['Mobile']?:"",
+				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0),
+				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0),
+				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0),
+				$p3yyyymm => array('PV'=>$n[$p3yyyymm]['PV']?:0),				
+				$p4yyyymm => array('PV'=>$n[$p4yyyymm]['PV']?:0),				
+				$p5yyyymm => array('PV'=>$n[$p5yyyymm]['PV']?:0),				
+				$p6yyyymm => array('PV'=>$n[$p6yyyymm]['PV']?:0),				
+				$p7yyyymm => array('PV'=>$n[$p7yyyymm]['PV']?:0),				
+				$p8yyyymm => array('PV'=>$n[$p8yyyymm]['PV']?:0),				
+				$p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0),				
+				$p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0),				
+				$p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0),				
+			)
+		);
+		}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'users'=>$allusers,'count'=>count($allusers))));				
+}
 
 //end of class
 }
