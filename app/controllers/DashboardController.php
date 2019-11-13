@@ -759,7 +759,9 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'right'=>array('$lt'=>$right),
 				$yyyymm.'.PV'=>array('$gte'=>(integer)$club0, '$lt'=>(integer)$club1),
 				'Enable'=>'Yes'
-			))
+			),
+			'order'=>array($yyyymm.'.PV'=>'DESC')
+			)
 		);
 		return $NodeDetails;
 	}

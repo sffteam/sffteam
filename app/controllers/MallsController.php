@@ -418,6 +418,7 @@ public function searchdown(){
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
 					'GBV'=>$u[$yyyymm]['GBV']?:0,
+					'GPV'=>$u[$yyyymm]['GPV']?:0,
 					'GrossPV'=>$u[$yyyymm]['GrossPV']?:0,
 					'PGPV'=>$u[$yyyymm]['PGPV']?:0,
 					'PGBV'=>$u[$yyyymm]['PGBV']?:0,
@@ -431,6 +432,7 @@ public function searchdown(){
 					'PV'=>$u[$pyyyymm]['PV']?:0,
 					'BV'=>$u[$pyyyymm]['BV']?:0,
 					'GBV'=>$u[$pyyyymm]['GBV']?:0,
+					'GPV'=>$u[$pyyyymm]['GPV']?:0,
 					'GrossPV'=>$u[$pyyyymm]['GrossPV']?:0,
 					'PGPV'=>$u[$pyyyymm]['PGPV']?:0,
 					'PGBV'=>$u[$pyyyymm]['PGBV']?:0,
@@ -443,7 +445,7 @@ public function searchdown(){
 				'count'=>$count
 				));
 			}
-			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'users'=>$allusers,'allusers'=>$allusers)));		
+			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'users'=>$allusers)));		
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));		
 		}
@@ -1551,18 +1553,18 @@ public function clubmembers(){
 				'mcaName'=>$n['mcaName'],
 				'mcaNumber'=>$n['mcaNumber'],
 				'mobile'=>$mobile['Mobile']?:"",
-				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0),
-				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0),
-				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0),
-				$p3yyyymm => array('PV'=>$n[$p3yyyymm]['PV']?:0),				
-				$p4yyyymm => array('PV'=>$n[$p4yyyymm]['PV']?:0),				
-				$p5yyyymm => array('PV'=>$n[$p5yyyymm]['PV']?:0),				
-				$p6yyyymm => array('PV'=>$n[$p6yyyymm]['PV']?:0),				
-				$p7yyyymm => array('PV'=>$n[$p7yyyymm]['PV']?:0),				
-				$p8yyyymm => array('PV'=>$n[$p8yyyymm]['PV']?:0),				
-				$p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0),				
-				$p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0),				
-				$p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0),				
+				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
+				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
+				$p3yyyymm => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0),				
+				$p4yyyymm => array('PV'=>$n[$p4yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0),				
+				$p5yyyymm => array('PV'=>$n[$p5yyyymm]['PV']?:0,'GPV'=>$n[$p5yyyymm]['GPV']?:0),				
+				$p6yyyymm => array('PV'=>$n[$p6yyyymm]['PV']?:0,'GPV'=>$n[$p6yyyymm]['GPV']?:0),				
+				$p7yyyymm => array('PV'=>$n[$p7yyyymm]['PV']?:0,'GPV'=>$n[$p7yyyymm]['GPV']?:0),				
+				$p8yyyymm => array('PV'=>$n[$p8yyyymm]['PV']?:0,'GPV'=>$n[$p8yyyymm]['GPV']?:0),				
+				$p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),				
+				$p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),				
+				$p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),				
 			)
 		);
 		}
