@@ -724,7 +724,9 @@ $this->_render['layout'] = 'noHeaderFooter';
 			'conditions'=>array(
 			'mcaNumber' => $user_id,
 			'Enable'=>'Yes'
-			)));
+			),
+			'order'=>array('mcaName'=>'ASC')
+			));
 		foreach($ParentDetails as $pd){
 			$left = $pd['left'];
 			$right = $pd['right'];
@@ -734,7 +736,9 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'left'=>array('$gt'=>$left),
 				'right'=>array('$lt'=>$right),
 				'Enable'=>'Yes'
-			))
+			),
+			'order'=>array('mcaName'=>'ASC')
+			)
 		);
 		return $NodeDetails;
 	}
