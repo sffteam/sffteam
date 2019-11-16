@@ -9,6 +9,7 @@ use app\models\Malls;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
+use app\models\Orders;
 use app\models\Mobiles;
 use app\models\Settings;
 use app\models\Seminars;
@@ -260,6 +261,108 @@ public function points(){
 	return $this->render(array('json' => array("success"=>"Yes","points"=>$AllPoints)));		
 }
 
+ public function payment(){
+		$this->_render['layout'] = null;
+	$cart = split(",",$this->request->data['cart']);
+  
+  $ProductData = array();
+  
+  $dateTime = new \MongoDate;
+  $dateTime = date('Y-m',$dateTime->sec);
+  //array_push($data,$dateTime);
+  $totalValue= 0;
+  foreach ($cart as $key => $val){
+			$item = split(":",$val);
+   if($item[1]!=0){
+    $product = Malls::find('first',array(
+     'conditions'=>array('Code'=>(string)$item[0]))
+    );
+				
+   if(count($product)>0){
+    $value = 0;
+    $DP = (float)$product['DP'];
+    $value = (float)$DP*$item[1];
+    $totalValue = $totalValue + $value;
+    $cartArray = array(
+     'Code'=>$product['Code'],
+     'Name'=>$product['Name'],
+     'MRP'=>(integer)$product['MRP'],
+     'BV'=>(integer)$product['BV'],
+     'DP'=>(integer)$product['DP'],
+					'PV'=>(integer)$product['PV'],
+     'Quantity'=>(integer)$item[1],
+     'Value'=>(float)$value,
+     
+    );
+     array_push($ProductData,$cartArray);
+    }
+   }
+  }
+  $data = array(
+			'Name'=>(string)$this->request->data['Name'],
+			'Email'=>$this->request->data['Email'],
+			'Mobile'=>$this->request->data['Mobile'],
+			'Address'=>$this->request->data['Address'],
+			'Street'=>$this->request->data['Street'],
+			'City'=>$this->request->data['City'],
+			'Pin'=>$this->request->data['Pin'],
+			'State'=>$this->request->data['State'],
+			'mcaNumber'=>$this->request->data['mcaNumber'],
+			'Mode'=>$this->request->data['Mode'],
+			'shopping'=>(integer)$totalValue,
+			'TotalValue'=>(integer)$totalValue,
+			'Products'=>$ProductData,
+			'dateTime'=> new \MongoDate,
+		);
+//print_r($data);
+		$order = Orders::create();
+		$id = $order->save($data);
+
+		
+  
+$key = PAYUMONEY_KEY;
+$txnid = "TXN-" . rand(10000,99999999);
+$amount = $data['shopping'];
+$productinfo = $data['mcaNumber'].'#'.$data['shopping'];
+$firstname = urldecode($data['Name']);
+$email = $data['Email'];
+$mobile = $data['Mobile'];
+$udf1 = (string)$order;
+$udf5 = "BOLT_KIT_PHP7";
+$salt = PAYUMONEY_SALT;
+
+//$PAYU_BASE_URL = "https://sandboxsecure.payu.in";		// For Sandbox Mode
+$PAYU_BASE_URL = "https://secure.payu.in";			// For Production Mode
+$action = $PAYU_BASE_URL . '/_payment';
+
+	$hash=strtolower(hash('sha512', $key.'|'.$txnid.'|'.$amount.'|'.$productinfo.'|'.$firstname.'|'.$email.'|'.$udf1.'||||'.$udf5.'||||||'.$salt));
+	return compact('data','paymentCount','success','amount','action','key','hash','txnid','udf1','udf5','productinfo','firstname','email','mobile');	
+//  return $this->render(array('json' => array("success"=>"Yes","data"=>$data)));		
+ }
+
+	public function getprevorder(){
+		if($this->request->data){
+			$user = Orders::find('first',array(
+				'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+			));
+			
+		}
+		return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  public function register(){
   $firstName = $this->request->data['firstName'];
   $lastName = $this->request->data['lastName'];
@@ -273,7 +376,7 @@ public function points(){
   $mcaNumber = $this->request->data['mcaNumber'];
   $agree = $this->request->data['agree'];
 
-  $user = M_users::find('first',array(
+  $user = Orders::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
 
