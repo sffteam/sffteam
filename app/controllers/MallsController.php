@@ -342,16 +342,46 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 	public function getprevorder(){
 		if($this->request->data){
+			$mcaNumber = $this->request->data['mcaNumber'];
 			$user = Orders::find('first',array(
-				'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+				'conditions'=>array('mcaNumber'=>$mcaNumber)
 			));
-			
 		}
 		return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
 	}
 
 
+public function getpreviousorders(){
+		if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		
+		$cart = split(",",$this->request->data['cart']);
+		$conditions = array('mcaNumber'=>$mcaNumber);
+		foreach ($cart as $key => $val){
+			$item = split(":",$val);
+			if($item[1]!=0){
+			$conditions = array_merge($conditions, array('Products.Code'=> (string)$item[0]));
+			$conditions = array_merge($conditions, array('Products.Quantity'=> (integer)$item[1]));
+			}
+		}
+		
+		$user = Orders::find('first',array(
+			'conditions'=> $conditions
+		));
+		if(count($user)==1){
+			$cart = "Yes";
+		}else{
+			$cart = "No";
+		}
 
+		$previousOrders = Orders::find('all',array(
+			'conditions'=> array('mcaNumber'=>$mcaNumber)
+		));
+		
+		}
+		return $this->render(array('json' => array("success"=>"Yes","previousOrders"=>$previousOrders,"Cart"=>$cart)));		
+	
+}
 
 
 
