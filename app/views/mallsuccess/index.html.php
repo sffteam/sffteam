@@ -1,8 +1,3 @@
-<?php
-
-//print_r($postdata);
-
-?>
 <div class="navbar">
 	<div class="navbar-bg"></div>
 	<div class="navbar-inner">
@@ -34,5 +29,5 @@
      <?php }else{?>
      <h4>Failed!</h4>
      <?php }?>
-     <a href="#" class="btn btn-small btn-primary btn-block" onclick="return window.close();">Close the App - SFF-Savings</a>
+     <a href="#" class="btn btn-small btn-primary btn-block" onclick="return window.close();">Close the App - SFF-Mall</a>
 </div>
