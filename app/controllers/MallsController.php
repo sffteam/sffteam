@@ -832,6 +832,7 @@ public function addUser(){
 }
 
 public function getactive(){
+	ini_set('memory_limit', '-1');
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$yyyymm = date('Y-m');		
 	$dashboard = new DashboardController();
