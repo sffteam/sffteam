@@ -838,12 +838,17 @@ public function getactive(){
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
 	 $users = array();
   foreach($Nodes as $n){
+			$mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
+			));
 			if($n[$yyyymm]["PV"]){
 				array_push($users,
 					array(
 						'mcaNumber'=>$n['mcaNumber'],
 						'mcaName'=>$n['mcaName'],
-						'PV'=>$n[$yyyymm]['PV']
+						'PV'=>$n[$yyyymm]['PV'],
+						'Region'=>$n['Zone'].'-'.$n['City'],
+						'Mobile'=>$mobile['Mobile']?:""
 					)
 				);
 			}
