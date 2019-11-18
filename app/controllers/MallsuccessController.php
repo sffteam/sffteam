@@ -101,19 +101,19 @@ $CalcHashString = null;
    Orders::update($pm,$conditions);    
    
    if ($status == 'success' && $resphash == $CalcHashString) {
-     $data = array('payuMoney.'.$count.'.approved' =>'Yes','payment.'.$count.'.approved' =>'Yes','payuMoney.'.$count.'.msg' =>'Hash Verified');
+     $data = array('Status'=>'Accepted','payuMoney.'.$count.'.approved' =>'Yes','payment.'.$count.'.approved' =>'Yes','payuMoney.'.$count.'.msg' =>'Hash Verified');
      Orders::update($data,$conditions);    
      
      // $function = new Functions();
      // $function->addmallnotify($mcaNumber,"Payment received Rs. ".$postdata['amount'],"We have received your payment through PayUMoney transaction ID: ". $postdata['txnid']);
      
    }else if ($status == 'success'){
-     $data = array('payuMoney.'.$count.'.approved' =>'Yes','payment.'.$count.'.approved' =>'Yes','payuMoney.'.$count.'.msg' =>'Hash Not Verified');
+     $data = array('Status'=>'Waiting','payuMoney.'.$count.'.approved' =>'Yes','payment.'.$count.'.approved' =>'Yes','payuMoney.'.$count.'.msg' =>'Hash Not Verified');
      Orders::update($data,$conditions);    
      // $function = new Functions();
      // $function->addmallnotify($mcaNumber,"Payment received Rs. ".$postdata['amount'],"We have received your payment through PayUMoney transaction ID: ". $postdata['txnid']);
    }else if ($status != 'success'){
-    $data = array('payuMoney.'.$count.'.approved' =>'No','payuMoney.'.$count.'.msg' =>'Hash Incorrect');
+    $data = array('Status'=>'Declined','payuMoney.'.$count.'.approved' =>'No','payuMoney.'.$count.'.msg' =>'Hash Incorrect');
     Orders::update($data,$conditions);   
 				// $function = new Functions();
     // $function->addmallnotify($mcaNumber,"Payment not complete Rs. ".$postdata['amount'],"Your payment is canceled/not authorized transaction ID: ". $postdata['txnid']);
