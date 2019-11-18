@@ -848,7 +848,7 @@ public function getactive(){
 						'mcaName'=>$n['mcaName'],
 						'PV'=>$n[$yyyymm]['PV'],
 						'Region'=>$n['Zone'].'-'.$n['City'],
-						'Mobile'=>$mobile['Mobile']
+						'Mobile'=>$mobile['Mobile']?:""
 					)
 				);
 			}
