@@ -477,8 +477,11 @@ public function searchmca(){
 		$user = Users::find('first',array(
 			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 		));
+		$mobile = Mobiles::find('first',array(
+			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+		));
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));				
+			return $this->render(array('json' => array("success"=>"Yes","user"=>$user,"mobile"=>$mobile)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -540,6 +543,9 @@ public function searchdown(){
 				$count = Users::count(array(
 					'conditions'=>array('refer'=>$u['mcaNumber'])
 				));
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+				));
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('last month'));
 				
@@ -547,6 +553,7 @@ public function searchdown(){
 				'mcaNumber'=>$u['mcaNumber'],
 				'mcaName'=>$u['mcaName'],
 				'refer'=>$u['refer'],
+				'Mobile'=>$mobile['Mobile']?:"",
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
@@ -1645,6 +1652,7 @@ set_time_limit(0);
 }
 
 public function clubmembers(){
+	ini_set('memory_limit', '-1');
 	if($this->request->data){	
 	$club = split("-",$this->request->data['club']);
 	
@@ -1692,6 +1700,7 @@ public function clubmembers(){
 				'mcaName'=>$n['mcaName'],
 				'mcaNumber'=>$n['mcaNumber'],
 				'mobile'=>$mobile['Mobile']?:"",
+				'Region'=>$n['Zone'].'-'.$n['City'],
 				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
 				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
 				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
