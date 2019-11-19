@@ -534,9 +534,11 @@ public function sendotp(){
 
 public function searchdown(){
 	$dashboard = new DashboardController();	
+	$yyyymm = date('Y-m');
 	if($this->request->data){
 		$users = Users::find('all',array(
-			'conditions'=>array('refer'=>$this->request->data['mcaNumber'])
+			'conditions'=>array('refer'=>$this->request->data['mcaNumber']),
+			'order'=>array($yyyymm.'.GPV'=>'DESC')
 			));
 		if(count($users)>0){
 			$allusers = array();
