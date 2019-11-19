@@ -10,6 +10,7 @@ use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
 use app\models\Orders;
+use app\models\Versions;
 use app\models\Mobiles;
 use app\models\Settings;
 use app\models\Seminars;
@@ -1719,6 +1720,17 @@ public function clubmembers(){
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'users'=>$allusers,'count'=>count($allusers))));				
 }
+
+public function getversion(){
+	if($this->request->data){
+			$version = Versions::find('first');
+			if($version['Version']!=$this->request->data['version']){
+				return $this->render(array('json' => array("success"=>"Yes",'version'=>$version['Version'])));							
+			}
+	}
+	return $this->render(array('json' => array("success"=>"No",'version'=>$version['Version'],'data'=>$this->request->data['version'])));							
+}
+
 
 //end of class
 }
