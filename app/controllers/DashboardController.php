@@ -757,6 +757,30 @@ $this->_render['layout'] = 'noHeaderFooter';
 			$right = $pd['right'];
 		}
 		
+		if($club1==null){
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+					$yyyymm.'.PV'=>array('$exists'=>false),
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right),
+				'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC'),
+			'limit'=>100
+			)
+		);
+		}else	if($club1==0){
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+					$yyyymm.'.PV'=>0,
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right),
+				'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC')
+			)
+		);
+		}else{
 		$NodeDetails = Users::find('all',array(
 			'conditions' => array(
 				'left'=>array('$gt'=>$left),
@@ -767,6 +791,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 			'order'=>array($yyyymm.'.PV'=>'DESC')
 			)
 		);
+		}
 		return $NodeDetails;
 	}
 
