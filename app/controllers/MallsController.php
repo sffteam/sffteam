@@ -46,18 +46,18 @@ class MallsController extends \lithium\action\Controller {
 			));
 		}
 		$CategoriesArray = array(
-		  'FS' => 'Food Supplement',
-				'PC' => 'Personal Care',
-    'HL' => 'Wellness',
 				'HC' => 'Home Care',
     'LC' => 'Laundry Care',
+				'PC' => 'Personal Care',
 				'FP' => 'Food & Beverages',
-				'SC' => 'Skin Care',
+		  'SC' => 'Skin Care',
+				'FS' => 'Food Supplement',
+				'MJ' => 'Jewelery',
+				'UC' => 'Cosmetics - Urban Color',
     'BC' => 'Baby Care',
-				'UC' => 'Urban Color',
     'AG' => 'Agriculture',
     'AC' => 'Auto Care',
-    'MJ' => 'Jewelery',
+    'HL' => 'Wellness',
 				'00' => 'Others',
     '60' => 'Extra',
 				);
@@ -482,6 +482,9 @@ public function searchmca(){
 		$mobile = Mobiles::find('first',array(
 			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 		));
+		if(count($mobile)==0){
+			$mobile = array('Mobile'=>"");
+		}
 		if(count($user)==1){
 			return $this->render(array('json' => array("success"=>"Yes","user"=>$user,"mobile"=>$mobile)));				
 		}else{
