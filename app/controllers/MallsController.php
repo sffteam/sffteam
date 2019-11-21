@@ -858,6 +858,10 @@ public function getactive(){
 						'mcaNumber'=>$n['mcaNumber'],
 						'mcaName'=>$n['mcaName'],
 						'PV'=>$n[$yyyymm]['PV'],
+						'GPV'=>$n[$yyyymm]['GPV'],
+						'PGPV'=>$n[$yyyymm]['PGPV'],
+						'RollUpPV'=>$n[$yyyymm]['RollUpPV'],
+						'PaidTitle'=>$n[$yyyymm]['PaidTitle'],
 						'Region'=>$n['Zone'].'-'.$n['City'],
 						'Mobile'=>$mobile['Mobile']?:""
 					)
@@ -1677,13 +1681,18 @@ public function clubmembers(){
 				$yyyymm.'.PV'=>null,
 				'Enable'=>'Yes'
 		);
+	}else if($club[1]==0){
+		$conditions = array(
+				$yyyymm.'.PV'=>0,
+				'Enable'=>'Yes'
+		);
 	}else{
 		$conditions = array(
 				$yyyymm.'.PV'=>array('$gte'=>(integer)$club[0], '$lt'=>(integer)$club[1]),
 				'Enable'=>'Yes'
 		);
 	}	
-//		print_r($conditions);
+//	print_r($conditions);
 
 
 	$mcaNumber = $this->request->data['mcaNumber'];
@@ -1733,6 +1742,66 @@ public function getversion(){
 	return $this->render(array('json' => array("success"=>"No",'version'=>$version['Version'],'data'=>$this->request->data['version'])));							
 }
 
+public function getbuilders(){
+
+	ini_set('memory_limit', '-1');
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$yyyymm = date('Y-m');		
+		$dashboard = new DashboardController();
+		$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+	 $users = array();
+  foreach($Nodes as $n){
+			$mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
+			));
+			if($n[$yyyymm]["PGPV"]>1){
+				array_push($users,
+					array(
+						'mcaNumber'=>$n['mcaNumber'],
+						'mcaName'=>$n['mcaName'],
+						'PV'=>$n[$yyyymm]['PV'],
+						'GPV'=>$n[$yyyymm]['GPV'],
+						'PGPV'=>$n[$yyyymm]['PGPV'],
+						'RollUpPV'=>$n[$yyyymm]['RollUpPV'],
+						'PaidTitle'=>$n[$yyyymm]['PaidTitle'],
+						'Region'=>$n['Zone'].'-'.$n['City'],
+						'Mobile'=>$mobile['Mobile']?:""
+					)
+				);
+			}
+		}
+		return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
+
+	}
+	
+}
+
+public function blankmobile(){
+	$mobiles = Mobiles::find('all',array(
+		'conditions' => array('Mobile'=>array('$ne'=>null))
+	));
+	
+	$mob = array();
+	foreach ($mobiles as $m){
+		array_push($mob,$m['mcaNumber']);
+	}
+	//print_r($mob);
+	$yyyymm = date('Y-m');		
+	$pyyyymm = date('Y-m', strtotime('last month'));
+	$pendingmobiles = Users::find('all',array(
+		'conditions'=>array(
+			'mcaNumber'=>array('$nin'=>$mob),
+			'Enable'=>'Yes',
+//			$pyyyymm.'.PV'=>array('$gt'=>0)
+		)
+	));
+	
+	return compact('pendingmobiles');
+	
+	
+	
+}
 
 //end of class
 }
