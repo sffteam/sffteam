@@ -1760,12 +1760,12 @@ public function getbuilders(){
 					array(
 						'mcaNumber'=>$n['mcaNumber'],
 						'mcaName'=>$n['mcaName'],
-						'PV'=>$n[$yyyymm]['PV'],
-						'GPV'=>$n[$yyyymm]['GPV'],
-						'PGPV'=>$n[$yyyymm]['PGPV'],
-						'RollUpPV'=>$n[$yyyymm]['RollUpPV'],
-						'PaidTitle'=>$n[$yyyymm]['PaidTitle'],
-						'Region'=>$n['Zone'].'-'.$n['City'],
+						'PV'=>$n[$yyyymm]['PV']?:0,
+						'GPV'=>$n[$yyyymm]['GPV']?:0,
+						'PGPV'=>$n[$yyyymm]['PGPV']?:0,
+						'RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
+						'PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
+						'Region'=>$n['Zone'].'-'.$n['City']?:"",
 						'Mobile'=>$mobile['Mobile']?:""
 					)
 				);
