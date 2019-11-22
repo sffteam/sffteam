@@ -766,7 +766,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'Enable'=>'Yes'
 			),
 			'order'=>array('mcaName'=>'ASC'),
-			'limit'=>100
+//			'limit'=>100
 			)
 		);
 		}else	if($club1==0){
