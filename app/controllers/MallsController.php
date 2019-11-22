@@ -2,6 +2,7 @@
 namespace app\controllers;
 use lithium\storage\Session;
 use \lithium\template\View;
+use \lithium\data\Model;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
@@ -1882,6 +1883,78 @@ public function blankmobile(){
 	
 }
 
+public function getgroups(){
+ini_set('memory_limit', '-1');
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$left = $user['left'];
+		$right = $user['right'];
+		
+		$yyyymm = date('Y-m');		
+		
+			
+	
+			$groups = array(
+				'Consultant '=>array('GPV'=>0,'Level'=>7),
+				'Senior Consultant '=>array('GPV'=>300,'Level'=>10),
+				'Deputy Supervisor '=>array('GPV'=>1200,'Level'=>13),
+				'Supervisor '=>array('GPV'=>2700,'Level'=>16),
+				'Senior Supervisor '=>array('GPV'=>4500,'Level'=>19),
+				'Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1250,'Legs'=>0),
+				'Senior Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1100,'Legs'=>1),
+				'Execuive Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>900,'Legs'=>2),
+				'Senior Executive Direc'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>600,'Legs'=>3),
+				'Platinum Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>300,'Legs'=>4),
+				'Presidential Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>6),
+				'Crown Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>8),
+				'Royal Black Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>11),
+				'Global Black Diamong Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>14),
+			);
+
+		foreach ($groups as $key=>$val){
+			$countUser = Users::count(
+				array(
+					$yyyymm.'.ValidTitle'=>$key,
+					'left'=>array('$gt'=>$left),
+					'right'=>array('$lt'=>$right),
+					'Enable'=>'Yes'
+				));
+
+				$MyUsers = array();				
+				$ListUsers = Users::find('all',array(
+					'conditions'=>array(
+							$yyyymm.'.ValidTitle'=>$key,
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes'
+					)
+				));
+				foreach($ListUsers as $lu){
+						array_push($MyUsers,array(
+							'mcaNumber'=>$lu['mcaNumber'],
+							'mcaName'=>$lu['mcaName'],
+							'Level'=>$lu[$yyyymm]['Level']
+							));
+					
+				}
+			
+			array_push($groups[$key], array('Count'=>$countUser,'users'=>$MyUsers));
+		}
+		
+
+
+	}
+		return $this->render(array('json' => array("success"=>"Yes","groups"=>$groups)));		
+
+}
+
+
+public function countGroups($mcaNUmber){
+	return true;
+}
 //end of class
 }
 
