@@ -31,7 +31,7 @@ class MallsController extends \lithium\action\Controller {
  }
 	public function index(){
 		$products = Malls::find('all',array(
-			'order'=>array('DP'=>array('DESC'=>1),'Name'=>array('ASC'=>1))
+			'order'=>array('DP'=>'DESC','Name'=>'ASC')
 		));
 		$AllProducts = array();
 		
