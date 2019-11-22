@@ -69,7 +69,7 @@ class MallsController extends \lithium\action\Controller {
 	public function getcategory($Code){
 		$products = Malls::find('all',array(
 			'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/')),
-			'order'=>array('DP'=>'ASC'))
+			'order'=>array('DP'=>'ASC')
 		));
 		$AllProducts = array();
 		
