@@ -485,13 +485,82 @@ public function searchmca(){
 		if(count($mobile)==0){
 			$mobile = array('Mobile'=>"");
 		}
+		
+		$tree = $this->findTree($this->request->data['mcaNumber'],4);
+		
+		
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","user"=>$user,"mobile"=>$mobile)));				
+			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
 	}
 	
+}
+
+public function findTree($mcaNumber,$level){
+	$tree = array();
+	$yyyymm = date('Y-m');
+	$pyyyymm = date('Y-m', strtotime('last month'));
+	$downlines = Users::find('all',array(
+		'conditions'=>array('refer_id'=>$mcaNumber)
+	));
+	
+	foreach($downlines as $d){
+		if($d[$yyyymm]['Level']!=null && $d[$yyyymm]['Percent']==22){
+			array_push($tree,array(
+				'mcaNumber'=>$d['mcaNumber'],
+				'mcaName'=>$d['mcaName'],
+				'ValidTitle'=>$d[$pyyyymm]['ValidTitle'],
+				'Level'=>$d[$yyyymm]['Level']?:""
+				));
+				$downlines1 = Users::find('all',array(
+					'conditions'=>array('refer_id'=>$d['mcaNumber'])
+				));
+				foreach($downlines1 as $d1){
+					if($d1[$yyyymm]['Level']!=null && $d1[$yyyymm]['Percent']==22){
+						array_push($tree,array(
+							'mcaNumber'=>$d1['mcaNumber'],
+							'mcaName'=>$d1['mcaName'],
+							'ValidTitle'=>$d1[$pyyyymm]['ValidTitle'],
+							'Level'=>$d1[$yyyymm]['Level']?:""
+							));
+					}
+					$downlines2 = Users::find('all',array(
+					'conditions'=>array('refer_id'=>$d1['mcaNumber'])
+				));
+				foreach($downlines2 as $d2){
+					if($d2[$yyyymm]['Level']!=null && $d2[$yyyymm]['Percent']==22){
+						array_push($tree,array(
+							'mcaNumber'=>$d2['mcaNumber'],
+							'mcaName'=>$d2['mcaName'],
+							'ValidTitle'=>$d2[$pyyyymm]['ValidTitle'],
+							'Level'=>$d2[$yyyymm]['Level']?:""
+							));
+					}
+					$downlines3 = Users::find('all',array(
+					'conditions'=>array('refer_id'=>$d2['mcaNumber'])
+				));
+				foreach($downlines3 as $d3){
+					if($d3[$yyyymm]['Level']!=null && $d3[$yyyymm]['Percent']==22){
+						array_push($tree,array(
+							'mcaNumber'=>$d3['mcaNumber'],
+							'mcaName'=>$d3['mcaName'],
+							'ValidTitle'=>$d3[$pyyyymm]['ValidTitle'],
+							'Level'=>$d3[$yyyymm]['Level']?:""
+							));
+					}
+				}
+				}
+					
+					
+				}
+				
+				
+			}
+	}
+	
+	return $tree;
 }
 
 public function sendotp(){
@@ -561,6 +630,7 @@ public function searchdown(){
 				'mcaName'=>$u['mcaName'],
 				'refer'=>$u['refer'],
 				'Mobile'=>$mobile['Mobile']?:"",
+				'Enable'=>$u['Enable'],
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
@@ -697,7 +767,7 @@ set_time_limit(0);
 					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
 					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
      $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
+    'Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.APB'=>(integer)$data['APB'],
@@ -791,7 +861,7 @@ set_time_limit(0);
 					$yyyymm.'.PGPV'=>(integer)$data['PGPV'],
 					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
 					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
+     'Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.APB'=>(integer)$data['APB'],
@@ -867,7 +937,8 @@ public function getactive(){
 						'RollUpPV'=>$n[$yyyymm]['RollUpPV'],
 						'PaidTitle'=>$n[$yyyymm]['PaidTitle'],
 						'Region'=>$n['Zone'].'-'.$n['City'],
-						'Mobile'=>$mobile['Mobile']?:""
+						'Mobile'=>$mobile['Mobile']?:"",
+						'Level'=>$n[$yyyymm]['Level'],
 					)
 				);
 			}
@@ -878,14 +949,15 @@ public function getactive(){
 public function getusers(){
 		$dashboard = new DashboardController();
   $Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
-  
+  $yyyymm = date('Y-m');		
   $users = array();
   foreach($Nodes as $n){
 			if($n["Enable"]=="Yes"){
 				array_push($users,
 					array(
 						'mcaNumber'=>$n['mcaNumber'],
-						'mcaName'=>$n['mcaName']
+						'mcaName'=>$n['mcaName'],
+//						'Level'=>$n[$yyyymm]['Level']
 					)
 				);
 			}
@@ -918,6 +990,7 @@ set_time_limit(0);
 									'mcaNumber' => (string)$data[1],
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'DateJoin' => (string)$data[4],
+									'Level'=>(integer)$data[5],
 									'refer' => (integer)$data[6],
          'ValidTitle'=>(string)$data[7],
          'PaidTitle'=>(string)$data[8],
@@ -931,9 +1004,10 @@ set_time_limit(0);
          'PGBV'=>(integer)$data[16],
 									'RollUpPV'=>(integer)$data[17],
          'RollUpBV'=>(integer)$data[18],
-         'Level'=>(integer)$data[19],
+         'Percent'=>(integer)$data[19],
 									'Legs'=>(integer)$data[20],
          'QDLegs'=>(integer)$data[21],
+									'Enable'=>"Yes"
 								);
 								
 		//						print_r($data);
@@ -1168,7 +1242,7 @@ Users::update(
 					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
 					$yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
 					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
+     'Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
 					'Enable'=>$refer_enable
@@ -1214,7 +1288,7 @@ Users::update(
 					$yyyymm.'.PGBV'=>(integer)$data['PGBV'],
 					$yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
 					$yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
+     'Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
 		);
@@ -1770,7 +1844,8 @@ public function getbuilders(){
 						'RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
 						'PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
 						'Region'=>$n['Zone'].'-'.$n['City']?:"",
-						'Mobile'=>$mobile['Mobile']?:""
+						'Mobile'=>$mobile['Mobile']?:"",
+						'Level'=>$n[$yyyymm]['Level']?:"",
 					)
 				);
 			}
