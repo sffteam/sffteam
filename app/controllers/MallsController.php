@@ -1936,7 +1936,7 @@ ini_set('memory_limit', '-1');
 						array_push($MyUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
-							'Level'=>$lu[$yyyymm]['Level']
+							'Level'=>$lu[$yyyymm]['Level']?:""
 							));
 					
 				}
