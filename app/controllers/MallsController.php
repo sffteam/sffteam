@@ -1069,6 +1069,7 @@ set_time_limit(0);
          'Level'=>(integer)$data[19],
 									'Legs'=>(integer)$data[20],
          'QDLegs'=>(integer)$data[21],
+									'Enable'=>'Yes'
 								);
 								
 		//						print_r($data);
@@ -1183,6 +1184,7 @@ set_time_limit(0);
 					
 			if(count($refer)>0){	
 			$refer_ancestors = $refer['ancestors'];
+			$refer_enable = $refer['Enable'];
 			
 			print_r($refer['Enable']);
 				$ancestors = array();
@@ -1930,12 +1932,14 @@ ini_set('memory_limit', '-1');
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes'
-					)
+					),
+					'order'=>array('mcaName'=>'ASC')
 				));
 				foreach($ListUsers as $lu){
 						array_push($MyUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
+							'PV'=>$lu[$yyyymm]['PV']?:0,
 							'Level'=>$lu[$yyyymm]['Level']?:""
 							));
 					
