@@ -1932,12 +1932,14 @@ ini_set('memory_limit', '-1');
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes'
-					)
+					),
+					'order'=>array('mcaName'=>'ASC')
 				));
 				foreach($ListUsers as $lu){
 						array_push($MyUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
+							'PV'=>$lu[$yyyymm]['PV']?:0,
 							'Level'=>$lu[$yyyymm]['Level']?:""
 							));
 					
