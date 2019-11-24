@@ -632,6 +632,7 @@ public function searchdown(){
 				'refer'=>$u['refer'],
 				'Mobile'=>$mobile['Mobile']?:"",
 				'Enable'=>$u['Enable'],
+				'Level'=>$u['Level'],
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
@@ -1896,7 +1897,7 @@ ini_set('memory_limit', '-1');
 		$right = $user['right'];
 		
 		$yyyymm = date('Y-m');		
-		
+		$pyyyymm = date('Y-m', strtotime('last month'));
 			
 	
 			$groups = array(
@@ -1940,6 +1941,7 @@ ini_set('memory_limit', '-1');
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
 							'PV'=>$lu[$yyyymm]['PV']?:0,
+							'PPV'=>$lu[$pyyyymm]['PV']?:0,
 							'Level'=>$lu[$yyyymm]['Level']?:""
 							));
 					
