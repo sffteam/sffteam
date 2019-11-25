@@ -701,8 +701,8 @@ set_time_limit(0);
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'DateJoin' => (string)$data[4],
 									'refer' => (integer)$data[5],
-         'ValidTitle'=>(string)$data[6],
-         'PaidTitle'=>(string)$data[7],
+         'ValidTitle'=>trim((string)$data[6]),
+         'PaidTitle'=>trim((string)$data[7]),
          'Percent'=>(integer)$data[8],
          'PrevCummPV'=>(integer)$data[9],
          'PV'=>(integer)$data[10],
@@ -884,18 +884,71 @@ set_time_limit(0);
 
 
 // {
-  // "DateJoin": "2015-12-13",
-  // "ancestors": [""],
+  // "2019-10": {
+    // "APB": 0,
+    // "BV": 4750,
+    // "CF": 0,
+    // "DB": 0,
+    // "GBV": 3982224,
+    // "GPV": 147489.78,
+    // "Gross": 0,
+    // "GrossPV": 3252023,
+    // "HF": 0,
+    // "LPB": 0,
+    // "Legs": 14,
+    // "Level": 11,
+    // "PGBV": 4750,
+    // "PGPV": 175.93,
+    // "PV": 175.93,
+    // "PaidTitle": "Global Black Diamond",
+    // "Percent": 22,
+    // "PrevCummPV": 3252023,
+    // "QDLegs": 4,
+    // "RollUpBV": 61503,
+    // "TF": 0,
+    // "ValidTitle": "Global Black Diamond"
+  // },
+  // "2019-11": {
+    // "APB": 0,
+    // "BV": 2561,
+    // "CF": 0,
+    // "DB": 0,
+    // "GBV": 2802948,
+    // "GPV": 103812,
+    // "Gross": 0,
+    // "GrossPV": 3355835,
+    // "HF": 0,
+    // "LPB": 0,
+    // "Legs": 14,
+    // "Level": 11,
+    // "PGBV": 2561,
+    // "PGPV": 94,
+    // "PV": 94,
+    // "PaidTitle": "Global Black Diamond",
+    // "Percent": 22,
+    // "PrevCummPV": 3252023,
+    // "QDLegs": 3,
+    // "RollUpBV": 100028,
+    // "TF": 0,
+    // "ValidTitle": "Global Black Diamond"
+  // },
+  // "DateJoin": "13 Dec 2018",
+  // "Enable": "Yes",
+  // "Level": 11,
+  // "_id": {
+    // "$oid": "5ddbce8397eaec0f9e83ba50"
+  // },
+  // "ancestors": [
+    // ""
+  // ],
   // "left": 1,
   // "mcaName": "Ruchi Nilam Doctor",
   // "mcaNumber": "92143138",
   // "otp": "403362",
-  // "refer": "92000000",
-  // "refer_id": "",
-  // "right": 2,
-		// "Enable":"Yes"
+  // "refer": "00000000",
+  // "refer_id": "0000",
+  // "right": 2
 // }
-
 public function addUser(){
 	if($this->request->data){	
 		$data = array(
@@ -994,8 +1047,8 @@ set_time_limit(0);
 									'DateJoin' => (string)$data[4],
 									'Level'=>(integer)$data[5],
 									'refer' => (integer)$data[6],
-         'ValidTitle'=>(string)$data[7],
-         'PaidTitle'=>(string)$data[8],
+         'ValidTitle'=>trim((string)$data[7]),
+         'PaidTitle'=>((string)$data[8]),
 									'PrevCummPV'=>(integer)$data[9],
          'PV'=>(integer)$data[10],
          'BV'=>(integer)$data[11],
@@ -1055,8 +1108,8 @@ set_time_limit(0);
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'DateJoin' => (string)$data[4],
 									'refer' => (integer)$data[6],
-         'PaidTitle'=>(string)$data[7],
-         'ValidTitle'=>(string)$data[8],
+         'PaidTitle'=>trim((string)$data[7]),
+         'ValidTitle'=>trim((string)$data[8]),
 									'PrevCummPV'=>(integer)$data[9],
          'PV'=>(integer)$data[10],
          'BV'=>(integer)$data[11],
@@ -1118,8 +1171,8 @@ set_time_limit(0);
 									'mcaName' => ucwords(strtolower((string)$data[2])),
 									'DateJoin' => (string)$data[4],
 									'refer' => (integer)$data[6],
-         'ValidTitle'=>(string)$data[7],
-         'PaidTitle'=>(string)$data[8],
+         'ValidTitle'=>trim((string)$data[7]),
+         'PaidTitle'=>trim((string)$data[8]),
 									'KYC'=>(string)$data[9],
 									'InActive'=>(integer)$data[10],
 									'PrevCummPV'=>(integer)$data[11],
@@ -1895,23 +1948,24 @@ ini_set('memory_limit', '-1');
 		));
 		$left = $user['left'];
 		$right = $user['right'];
-		
+		// print_r('left'.$left);
+		// print_r('right'.$right);
 		$yyyymm = date('Y-m');		
 		$pyyyymm = date('Y-m', strtotime('last month'));
 			
 	
 			$groups = array(
-				'Consultant '=>array('GPV'=>0,'Level'=>7),
-				'Senior Consultant '=>array('GPV'=>300,'Level'=>10),
-				'Deputy Supervisor '=>array('GPV'=>1200,'Level'=>13),
-				'Supervisor '=>array('GPV'=>2700,'Level'=>16),
-				'Senior Supervisor '=>array('GPV'=>4500,'Level'=>19),
-				'Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1250,'Legs'=>0),
-				'Senior Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1100,'Legs'=>1),
-				'Execuive Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>900,'Legs'=>2),
+				'Consultant'=>array('GPV'=>0,'Level'=>7),
+				'Senior Consultant'=>array('GPV'=>300,'Level'=>10),
+				'Deputy Supervisor'=>array('GPV'=>1200,'Level'=>13),
+				'Supervisor'=>array('GPV'=>2700,'Level'=>16),
+				'Senior Supervisor'=>array('GPV'=>4500,'Level'=>19),
+				'Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1250,'Legs'=>0),
+				'Senior Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1100,'Legs'=>1),
+				'Execuive Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>900,'Legs'=>2),
 				'Senior Executive Direc'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>600,'Legs'=>3),
-				'Platinum Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>300,'Legs'=>4),
-				'Presidential Director '=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>6),
+				'Platinum Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>300,'Legs'=>4),
+				'Presidential Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>6),
 				'Crown Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>8),
 				'Royal Black Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>11),
 				'Global Black Diamong Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>14),
@@ -1950,7 +2004,6 @@ ini_set('memory_limit', '-1');
 			array_push($groups[$key], array('Count'=>$countUser,'users'=>$MyUsers));
 		}
 		
-
 
 	}
 		return $this->render(array('json' => array("success"=>"Yes","groups"=>$groups)));		
