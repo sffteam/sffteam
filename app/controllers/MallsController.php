@@ -1996,7 +1996,7 @@ ini_set('memory_limit', '-1');
 							'mcaName'=>$lu['mcaName'],
 							'PV'=>$lu[$yyyymm]['PV']?:0,
 							'PPV'=>$lu[$pyyyymm]['PV']?:0,
-							'Level'=>$lu[$yyyymm]['Level']?:""
+							'Level'=>$lu['Level']?:""
 							));
 					
 				}
