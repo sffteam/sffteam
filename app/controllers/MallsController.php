@@ -508,47 +508,47 @@ public function findTree($mcaNumber,$level){
 	));
 	
 	foreach($downlines as $d){
-		if($d[$yyyymm]['Level']!=null && $d[$yyyymm]['Percent']==22){
+		if($d['Level']!=null && $d[$yyyymm]['Percent']==22){
 			array_push($tree,array(
 				'mcaNumber'=>$d['mcaNumber'],
 				'mcaName'=>$d['mcaName'],
 				'ValidTitle'=>$d[$pyyyymm]['ValidTitle'],
-				'Level'=>$d[$yyyymm]['Level']?:""
+				'Level'=>$d['Level']?:""
 				));
 				$downlines1 = Users::find('all',array(
 					'conditions'=>array('refer_id'=>$d['mcaNumber'])
 				));
 				foreach($downlines1 as $d1){
-					if($d1[$yyyymm]['Level']!=null && $d1[$yyyymm]['Percent']==22){
+					if($d1['Level']!=null && $d1[$yyyymm]['Percent']==22){
 						array_push($tree,array(
 							'mcaNumber'=>$d1['mcaNumber'],
 							'mcaName'=>$d1['mcaName'],
 							'ValidTitle'=>$d1[$pyyyymm]['ValidTitle'],
-							'Level'=>$d1[$yyyymm]['Level']?:""
+							'Level'=>$d1['Level']?:""
 							));
 					}
 					$downlines2 = Users::find('all',array(
 					'conditions'=>array('refer_id'=>$d1['mcaNumber'])
 				));
 				foreach($downlines2 as $d2){
-					if($d2[$yyyymm]['Level']!=null && $d2[$yyyymm]['Percent']==22){
+					if($d2['Level']!=null && $d2[$yyyymm]['Percent']==22){
 						array_push($tree,array(
 							'mcaNumber'=>$d2['mcaNumber'],
 							'mcaName'=>$d2['mcaName'],
 							'ValidTitle'=>$d2[$pyyyymm]['ValidTitle'],
-							'Level'=>$d2[$yyyymm]['Level']?:""
+							'Level'=>$d2['Level']?:""
 							));
 					}
 					$downlines3 = Users::find('all',array(
 					'conditions'=>array('refer_id'=>$d2['mcaNumber'])
 				));
 				foreach($downlines3 as $d3){
-					if($d3[$yyyymm]['Level']!=null && $d3[$yyyymm]['Percent']==22){
+					if($d3['Level']!=null && $d3[$yyyymm]['Percent']==22){
 						array_push($tree,array(
 							'mcaNumber'=>$d3['mcaNumber'],
 							'mcaName'=>$d3['mcaName'],
 							'ValidTitle'=>$d3[$pyyyymm]['ValidTitle'],
-							'Level'=>$d3[$yyyymm]['Level']?:""
+							'Level'=>$d3['Level']?:""
 							));
 					}
 				}
@@ -560,7 +560,7 @@ public function findTree($mcaNumber,$level){
 				
 			}
 	}
-	
+//	return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree)));				
 	return $tree;
 }
 
