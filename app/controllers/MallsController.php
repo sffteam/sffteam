@@ -1452,7 +1452,6 @@ Users::update(
 				'right'=>(integer)($refer_left+2),
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
-					$yyyymm.'.KYC'=>(string)$data['KYC'],
 					$yyyymm.'.InActive'=>(integer)$data['InActive'],
      $yyyymm.'.Percent'=>(integer)$data['Percent'],
 					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
@@ -1475,6 +1474,7 @@ Users::update(
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
+					'KYC'=>(string)$data['KYC'],
 					'NEFT'=>$data['NEFT'],
 					'Aadhar'=>$data['Aadhar'],
 					'State'=>$data['State'],
@@ -1497,7 +1497,6 @@ Users::update(
 				'mcaNumber'=>(string)$data["mcaNumber"],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
-					$yyyymm.'.KYC'=>(string)$data['KYC'],
 					$yyyymm.'.InActive'=>(integer)$data['InActive'],
      $yyyymm.'.Percent'=>(integer)$data['Percent'],
 					$yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
@@ -1520,6 +1519,7 @@ Users::update(
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
+					'KYC'=>(string)$data['KYC'],
 					'NEFT'=>$data['NEFT'],
 					'Aadhar'=>$data['Aadhar'],
 					'State'=>$data['State'],
@@ -2042,9 +2042,48 @@ ini_set('memory_limit', '-1');
 public function countGroups($mcaNUmber){
 	return true;
 }
-//end of class
+
+public function getkyc(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		
+		$left = $user['left'];
+		$right = $user['right'];
+		
+		$kycUsers = array();
+		$ListUsers = Users::find('all',array(
+					'conditions'=>array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes',
+						'KYC'=>array('$ne'=>'Approved')
+					),
+					'order'=>array('mcaName'=>'ASC')
+				));
+		//		print_r(count($ListUsers));
+				foreach($ListUsers as $lu){
+					$mobile = Mobiles::find('first',array(
+						'conditions'=>array('mcaNumber'=>$lu['mcaNumber'])
+					));
+						array_push($kycUsers,array(
+							'mcaNumber'=>$lu['mcaNumber'],
+							'mcaName'=>$lu['mcaName'],
+							'KYC'=>$lu['KYC']?:'',
+							'Mobile'=>$mobile['Mobile']?:""
+							));
+				}
+		
+		return $this->render(array('json' => array("success"=>"Yes",'users'=>$kycUsers)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
 }
 
 
+
+//end of class
+}
 
 
