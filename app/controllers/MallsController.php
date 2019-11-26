@@ -18,6 +18,7 @@ use app\models\Seminars;
 use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
+use \MongoRegex;
 
 class MallsController extends \lithium\action\Controller {
 
@@ -488,15 +489,41 @@ public function searchmca(){
 		}
 		
 		$tree = $this->findTree($this->request->data['mcaNumber'],4);
-		
+		$joinee = $this->findJoinee($this->request->data['mcaNumber']);
 		
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile)));				
+			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
 	}
+	return $this->render(array('json' => array("success"=>"No")));				
+}
+
+public function findJoinee($mcaNumber){
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$pyyyymm = date('Y-m', strtotime('last month'));
+	$yyyyMMM = strtotime('01 Nov 2019');
+//	print_r(new MongoRegex('/^'.$yyyyMMM.'^/i'));
+//	print_r($yyyyMMM);	
+	$left = $user['left'];
+	$right = $user['right'];
+	$joinee = Users::find('all',array('conditions'=>
+			array(
+						$pyyyymm=>null,
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes'
+			),
+			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'order'=>array('DateJoin'=>'ASC')
+			)
+	);
 	
+//	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'Detail'=>$joinee)));				
+	return $joinee;
 }
 
 public function findTree($mcaNumber,$level){
@@ -625,7 +652,7 @@ public function searchdown(){
 				));
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('last month'));
-				
+				$joinee = count($this->findJoinee($u['mcaNumber']));
 				array_push($allusers,array(
 				'mcaNumber'=>$u['mcaNumber'],
 				'mcaName'=>$u['mcaName'],
@@ -646,6 +673,7 @@ public function searchdown(){
 					'Legs'=>$u[$yyyymm]['Legs']?:0,
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
+					'Joinee'=>$joinee,
 				),
 				$pyyyymm => array(
 					'PV'=>$u[$pyyyymm]['PV']?:0,
