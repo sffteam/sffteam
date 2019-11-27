@@ -7,6 +7,7 @@ use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
 use app\models\Malls;
+use app\models\Contacts;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -2118,6 +2119,14 @@ public function getjoinee(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
+
+public function savecontacts(){
+	if($this->request->data){
+		Contacts::create()->save($this->request->data);
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
+
 
 //end of class
 }
