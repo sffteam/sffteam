@@ -2038,7 +2038,7 @@ ini_set('memory_limit', '-1');
 }
 
 
-public function countGroups($mcaNUmber){
+public function countGroups($mcaNumber){
 	return true;
 }
 
@@ -2122,7 +2122,11 @@ public function getjoinee(){
 
 public function savecontacts(){
 	if($this->request->data){
-		Contacts::create()->save($this->request->data);
+		$data = array(
+			'mcaNumber'=>$this->request->data['mcaNumber'],
+			'contacts'=>json_decode(str_replace("undefined","O",$this->request->data['contacts']))
+		);
+		Contacts::create()->save($data);
 	}
 	return $this->render(array('json' => array("success"=>"Yes")));		
 }
