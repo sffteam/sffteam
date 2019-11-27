@@ -505,9 +505,7 @@ public function findJoinee($mcaNumber){
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
 	$pyyyymm = date('Y-m', strtotime('last month'));
-	$yyyyMMM = strtotime('01 Nov 2019');
-//	print_r(new MongoRegex('/^'.$yyyyMMM.'^/i'));
-//	print_r($yyyyMMM);	
+	
 	$left = $user['left'];
 	$right = $user['right'];
 	$joinee = Users::find('all',array('conditions'=>
@@ -2081,7 +2079,45 @@ public function getkyc(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
-
+public function getjoinee(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		
+		$left = $user['left'];
+		$right = $user['right'];
+		$yyyymm = date('Y-m');
+		$pyyyymm = date('Y-m', strtotime('last month'));
+		$joineeUsers = array();
+		$joinee = Users::find('all',array('conditions'=>
+			array(
+						$pyyyymm=>null,
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes'
+			),
+			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'order'=>array('DateJoin'=>'ASC')
+			)
+	);		
+		foreach($joinee as $lu){
+					$mobile = Mobiles::find('first',array(
+						'conditions'=>array('mcaNumber'=>$lu['mcaNumber'])
+					));
+						array_push($joineeUsers,array(
+							'mcaNumber'=>$lu['mcaNumber'],
+							'mcaName'=>$lu['mcaName'],
+							'PV'=>$lu[$yyyymm]['PV']?:'',
+							'Mobile'=>$mobile['Mobile']?:""
+							));
+				}
+	
+		return $this->render(array('json' => array("success"=>"Yes",'users'=>$joineeUsers)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 
 //end of class
 }
