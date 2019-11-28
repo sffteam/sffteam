@@ -8,6 +8,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
 use app\models\Malls;
 use app\models\Contacts;
+use app\models\Tools;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -2129,6 +2130,27 @@ public function savecontacts(){
 		Contacts::create()->save($data);
 	}
 	return $this->render(array('json' => array("success"=>"Yes")));		
+}
+
+public function getTools(){
+	$tools = Tools::find('all');
+	$alltools = array();
+	$toolscat = array();
+	foreach($tools as $t){
+		$one = $t['Category'];
+		array_push($alltools,array(
+			'Category'=>$t['Category'],
+			'Type'=>$t['Type'],
+			'Caption'=>$t['Caption'],
+			'URL'=>$t['URL'],
+			));
+			
+			
+			if(!in_array($one, $toolscat)){
+				array_push($toolscat,$one);
+			}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'toolscat'=>$toolscat,'alltools'=>$alltools)));		
 }
 
 
