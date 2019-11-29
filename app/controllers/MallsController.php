@@ -2169,6 +2169,56 @@ public function getTools(){
 	return $this->render(array('json' => array("success"=>"Yes",'tools'=>$alltools)));		
 }
 
+public function getproductsimages(){
+		$CategoriesArray = array(
+				'HC' => 'Home Care',
+    'LC' => 'Laundry Care',
+				'PC' => 'Personal Care',
+				'FP' => 'Food & Beverages',
+		  'SC' => 'Skin Care',
+				'FS' => 'Food Supplement',
+				'MJ' => 'Jewelery',
+				'UC' => 'Cosmetics - Urban Color',
+    'BC' => 'Baby Care',
+    'AG' => 'Agriculture',
+    'AC' => 'Auto Care',
+    'HL' => 'Wellness',
+				'00' => 'Others',
+    '60' => 'Extra',
+				);
+	
+	$allproducts = array();
+	foreach($CategoriesArray as $key=>$val){
+		$Code = $key;
+		//print_r($Code);
+		$data = array(
+			'category'=>$val,
+			'category_'=> str_replace("-","_",str_replace(" ","_",$val)),
+		);
+		
+		
+		$products = Malls::find('all',array(
+			'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/')),
+		));
+		$allparams = array();
+				foreach($products as $p){
+						$dataParam = array(
+							'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
+							'caption'=> ' <span class="text-color-yellow">'.$val.'</span><br>'.$p['Name']." <br>".$p['Code']." <span class='text-color-red'>MRP: <strike>".number_format($p['MRP'],2)."</strike></span> <span class='text-color-green'>DP: ".number_format($p['DP'],2)." PV: ".number_format($p['PV'],2)."</span>",
+						);
+					array_push($allparams,$dataParam);
+				
+				}
+		
+		array_push($allproducts,array(
+			'category'=>$data,
+			'photos'=>$allparams
+		));
+		
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));		
+}
 
 //end of class
 }
