@@ -2133,24 +2133,40 @@ public function savecontacts(){
 }
 
 public function getTools(){
-	$tools = Tools::find('all');
+	$tools = Tools::find('all', array(
+		 'order'=>array(
+			 'Category'=>'ASC',
+			// 'URL'=>'DESC'
+			)
+	));
+	
 	$alltools = array();
-	$toolscat = array();
 	foreach($tools as $t){
-		$one = $t['Category'];
-		array_push($alltools,array(
-			'Category'=>$t['Category'],
-			'Type'=>$t['Type'],
-			'Caption'=>$t['Caption'],
-			'URL'=>$t['URL'],
-			));
-			
-			
-			if(!in_array($one, $toolscat)){
-				array_push($toolscat,$one);
+		$data = array(
+			'category'=>$t['Category'],
+			'category_'=> str_replace("-","_",str_replace(" ","_",$t['Category'])),
+		);
+		$allparams = array();
+		foreach($t['Params'] as $p){
+			if($p['Type']=='url'){
+				$dataParam = array(
+					'url'=>$p['URL'],
+					'caption'=>$p['Caption']
+				);
+			}elseif($p['Type']=='html'){
+				$dataParam = array(
+					'html'=>'<iframe src="'.$p['URL'].'" frameborder="0" allowfullscreen></iframe>',
+					'caption'=>$p['Caption']
+				);
 			}
+			array_push($allparams,$dataParam);
+		}
+		array_push($alltools,array(
+			'category'=>$data,
+			'photos'=>$allparams
+		));
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'toolscat'=>$toolscat,'alltools'=>$alltools)));		
+	return $this->render(array('json' => array("success"=>"Yes",'tools'=>$alltools)));		
 }
 
 
