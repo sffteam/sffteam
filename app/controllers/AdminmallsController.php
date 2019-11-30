@@ -208,6 +208,47 @@ public function deleteproduct(){
 	return $this->render(array('json' => array("success"=>"Yes")));			
 }
 
+public function getmobiles(){
+	$numbers = Mobiles::find('all',array(
+		'fields'=>array('mcaNumber')
+	));
+	$next = array();
+	foreach($numbers as $n){
+		array_push($next,$n['mcaNumber']);
+	}
+	
+	$yyyymm = date('Y-m');
+	
+	 $mobile = Users::find('all',array(
+		 'conditions'=>array(
+			'mcaNumber'=>array('$nin'=>$next)
+		 ),
+		 'fields'=>array('mcaNumber', 'mcaName'),
+			'limit'=>100,
+			'order'=>array($yyyymm.'.PV'=>'DESC')
+	 ));
+	return $this->render(array('json' => array("success"=>"Yes",'mobiles'=>$mobile)));			
+}
+
+public function addmobile(){
+	if($this->request->data){
+		$name = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber']),
+			'fields'=>array('mcaNumber', 'mcaName'),
+		));
+		
+		$data = array(
+			'mcaNumber'=>$this->request->data['mcaNumber'],
+			'mcaName'=>$name['mcaName'],
+			'Mobile'=>$this->request->data['Mobile'],
+		);
+		Mobiles::create()->save($data);
+		
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'name'=>$name)));			
+}
+
+
 //end of class
 }
 
