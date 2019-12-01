@@ -2133,6 +2133,7 @@ public function savecontacts(){
 }
 
 public function getTools(){
+	ini_set('memory_limit','-1');
 	$tools = Tools::find('all', array(
 		 'order'=>array(
 			 'Category'=>'ASC',
