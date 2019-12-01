@@ -634,7 +634,7 @@ public function sendotp(){
 }
 
 public function searchdown(){
-	$dashboard = new DashboardController();	
+
 	$yyyymm = date('Y-m');
 	if($this->request->data){
 		$users = Users::find('all',array(
@@ -1041,7 +1041,7 @@ public function getactive(){
 
 public function getusers(){
 		$dashboard = new DashboardController();
-  $Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+  $Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],$this->request->data['chars']);
   $yyyymm = date('Y-m');		
   $users = array();
   foreach($Nodes as $n){
