@@ -706,7 +706,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 
  }
 
- public function getChilds($user_id){
+ public function getChilds($user_id,$chars){
 	#Retrieving a Full Tree
 	/* 	SELECT node.user_id
 	FROM details AS node,
@@ -733,6 +733,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 		}
 		$NodeDetails = Users::find('all',array(
 			'conditions' => array(
+				'mcaName'=>array('like'=>'/'.$chars.'/i'),
 				'left'=>array('$gt'=>$left),
 				'right'=>array('$lt'=>$right),
 				'Enable'=>'Yes'
