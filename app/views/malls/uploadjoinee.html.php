@@ -2,9 +2,9 @@
 <div class="col-md-6">
 <?=$this->form->create('',array('url'=>'/malls/uploadJoinee', 'enctype'=>"multipart/form-data")); ?>
 <br>
-<?=$this->form->field('file', array('type' => 'file','label'=>'BV.csv', 'class'=>'form-control-file')); ?>
+<?=$this->form->field('file', array('type' => 'file','label'=>'BV.csv', 'id'=>"FileName",'onblur'=>'changeYear()','class'=>'form-control-file')); ?>
 <br>
-<input type="text" name="yyyymm" value="<?=gmdate('Y-m',time())?>" class="form-control">
+<input type="text" id="yyyymm" name="yyyymm" value="<?=gmdate('Y-m',time())?>" class="form-control">
 <input type="submit" name="submit" value="Submit" id="Submit" class="btn btn-primary">
 
 </form>
@@ -15,3 +15,10 @@
 	</table>
 </div>
 </div>
+<script>
+function changeYear(){
+	var FileNameSelected = document.getElementById("FileName").value;
+	console.log(FileNameSelected.substring(12,19));
+	document.getElementById("yyyymm").value = FileNameSelected.substring(12,19);
+}
+</script>

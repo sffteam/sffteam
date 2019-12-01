@@ -1002,6 +1002,7 @@ public function getactive(){
 	ini_set('memory_limit', '-1');
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$yyyymm = date('Y-m');		
+	$pyyyymm = date('Y-m', strtotime('last month'));		
 	$dashboard = new DashboardController();
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
 	 $users = array();
@@ -1009,19 +1010,28 @@ public function getactive(){
 			$mobile = Mobiles::find('first',array(
 				'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
 			));
-			if($n[$yyyymm]["PV"]){
+			if($n[$pyyyymm]["PV"]){
 				array_push($users,
 					array(
 						'mcaNumber'=>$n['mcaNumber'],
 						'mcaName'=>$n['mcaName'],
-						'PV'=>$n[$yyyymm]['PV'],
-						'GPV'=>$n[$yyyymm]['GPV'],
-						'PGPV'=>$n[$yyyymm]['PGPV'],
-						'RollUpPV'=>$n[$yyyymm]['RollUpPV'],
-						'PaidTitle'=>$n[$yyyymm]['PaidTitle'],
-						'Region'=>$n['Zone'].'-'.$n['City'],
-						'Mobile'=>$mobile['Mobile']?:"",
-						'Level'=>$n[$yyyymm]['Level'],
+						$yyyymm.'.PV'=>$n[$yyyymm]['PV']?:0,
+						$yyyymm.'.GPV'=>$n[$yyyymm]['GPV']?:0,
+						$yyyymm.'.PGPV'=>$n[$yyyymm]['PGPV']?:0,
+						$yyyymm.'.RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
+						$yyyymm.'.PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
+						$yyyymm.'.Region'=>$n['Zone'].'-'.$n['City']?:"",
+						$yyyymm.'.Mobile'=>$mobile['Mobile']?:"",
+						$yyyymm.'.Level'=>$n['Level']?:"",
+
+						$pyyyymm.'.PV'=>$n[$pyyyymm]['PV']?:0,
+						$pyyyymm.'.GPV'=>$n[$pyyyymm]['GPV']?:0,
+						$pyyyymm.'.PGPV'=>$n[$pyyyymm]['PGPV']?:0,
+						$pyyyymm.'.RollUpPV'=>$n[$pyyyymm]['RollUpPV']?:0,
+						$pyyyymm.'.PaidTitle'=>$n[$pyyyymm]['PaidTitle']?:"",
+						$pyyyymm.'.Region'=>$n['Zone'].'-'.$n['City']?:"",
+						$pyyyymm.'.Mobile'=>$mobile['Mobile']?:"",
+						$pyyyymm.'.Level'=>$n['Level']?:"",
 					)
 				);
 			}
