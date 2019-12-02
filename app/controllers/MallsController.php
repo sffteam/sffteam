@@ -490,7 +490,21 @@ public function searchmca(){
 			$mobile = array('Mobile'=>"");
 		}
 		
-		$tree = $this->findTree($this->request->data['mcaNumber'],4);
+		$tree=array();
+		foreach($user['ancestors'] as $key=>$val){
+				$upline = Users::find('first',array(
+					'conditions'=>array('mcaNumber'=>$val)
+				));
+				if($upline['mcaNumber']!=null){
+					array_push($tree,array(
+						'mcaName'=>$upline['mcaName'],
+						'mcaNumber'=>$upline['mcaNumber']
+					));
+				}
+
+		}
+		
+//		$tree = $this->findTree($this->request->data['mcaNumber'],4);
 		$joinee = $this->findJoinee($this->request->data['mcaNumber']);
 		
 		if(count($user)==1){
