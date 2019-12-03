@@ -489,16 +489,21 @@ public function searchmca(){
 		if(count($mobile)==0){
 			$mobile = array('Mobile'=>"");
 		}
-		
+		$p1yyyymm = date('Y-m', strtotime('-1 month'));
 		$tree=array();
 		foreach($user['ancestors'] as $key=>$val){
 				$upline = Users::find('first',array(
 					'conditions'=>array('mcaNumber'=>$val)
 				));
 				if($upline['mcaNumber']!=null){
+					$mobile = Mobiles::find('first',array(
+						'conditions'=>array('mcaNumber'=>$upline['mcaNumber'])
+					));
 					array_push($tree,array(
 						'mcaName'=>$upline['mcaName'],
-						'mcaNumber'=>$upline['mcaNumber']
+						'mcaNumber'=>$upline['mcaNumber'],
+						'Percent'=>$upline[$p1yyyymm]['Percent'],
+						'Mobile'=>$mobile['Mobile']?:"",
 					));
 				}
 
@@ -674,6 +679,7 @@ public function searchdown(){
 				'Mobile'=>$mobile['Mobile']?:"",
 				'Enable'=>$u['Enable'],
 				'Level'=>$u['Level'],
+				'KYC'=>$u['KYC'],
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
@@ -688,6 +694,7 @@ public function searchdown(){
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 					'Joinee'=>$joinee,
+					'InActive' => $u[$yyyymm]['InActive']?:"",
 				),
 				$pyyyymm => array(
 					'PV'=>$u[$pyyyymm]['PV']?:0,
@@ -702,6 +709,7 @@ public function searchdown(){
 					'Legs'=>$u[$pyyyymm]['Legs']?:0,
 					'QDLegs'=>$u[$pyyyymm]['QDLegs']?:0,
 					'ValidTitle'=>$u[$pyyyymm]['ValidTitle']?:"",
+					'InActive' => $u[$pyyyymm]['InActive']?:"",
 					),
 				'count'=>$count
 				));
@@ -2229,7 +2237,7 @@ public function getproductsimages(){
 				foreach($products as $p){
 						$dataParam = array(
 							'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
-							'caption'=> ' <span class="text-color-yellow">'.$val.'</span><br>'.$p['Name']." <br>".$p['Code']." <span class='text-color-red'>MRP: <strike>".number_format($p['MRP'],2)."</strike></span> <span class='text-color-green'>DP: ".number_format($p['DP'],2)." PV: ".number_format($p['PV'],2)."</span>",
+							'caption'=> ' <span class="text-color-yellow">'.$val.'</span><br>'.$p['Name'].' <br>'.$p['Code'].' <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
 						);
 					array_push($allparams,$dataParam);
 				
@@ -2244,6 +2252,62 @@ public function getproductsimages(){
 	
 	return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));		
 }
+
+function getnotactive(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		
+		$left = $user['left'];
+		$right = $user['right'];
+		$pyyyymm = date('Y-m', strtotime('last month'));
+
+		$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			$pyyyymm.'.InActive'=>array('$gt'=>0),
+			'Enable'=>'Yes'
+		);	
+
+		
+		$notactive = Users::find('all',array(
+			'conditions'=>$conditions,
+			'fields'=>array('mcaNumber','mcaName','DateJoin',$pyyyymm.'.InActive','KYC'),
+			'order'=>array($pyyyymm.'.InActive'=>'ASC')
+			)
+		);
+		$allusers = array();
+		$month = "6";
+		$alldata = array();
+		
+		foreach($notactive as $na){
+			$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNUmber'=>$na['mcaNumber']),
+					'fields'=>array('Mobile','mcaNumber'),
+			));
+				$users = array(
+						'DateJoin'=>$na['DateJoin'],
+						'mcaName'=>$na['mcaName'],
+						'mcaNumber'=>$na['mcaNumber'],
+						'InActive'=>$na[$pyyyymm]['InActive'],
+						'KYC'=>$na['KYC'],
+						'Mobile'=>$mobile['Mobile']?:"",
+				);
+				array_push($alldata,$users);
+					if($month!=$na[$pyyyymm]['InActive']){
+						array_push ($allusers ,array($month=>$alldata));
+						$month = $na[$pyyyymm]['InActive'];
+						$alldata = array();		
+					}
+				
+		}
+		array_push($allusers,$alldata);
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'allusers'=>$allusers)));		
+}
+
 
 //end of class
 }
