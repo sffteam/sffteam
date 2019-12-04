@@ -503,7 +503,7 @@ public function searchmca(){
 						'mcaName'=>$upline['mcaName'],
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
-						'Mobile'=>$mobile['Mobile']?:"",
+						'Mobile'=>$mobile['Mobile']?:"NO",
 					));
 				}
 
@@ -680,6 +680,7 @@ public function searchdown(){
 				'Enable'=>$u['Enable'],
 				'Level'=>$u['Level'],
 				'KYC'=>$u['KYC'],
+				'NEFT'=>$u['NEFT'],
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
