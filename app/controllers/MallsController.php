@@ -488,6 +488,8 @@ public function searchmca(){
 		));
 		if(count($mobile)==0){
 			$mobile = array('Mobile'=>"");
+		}else{
+			$mobile = array('Mobile'=>$mobile['Mobile']);
 		}
 		$p1yyyymm = date('Y-m', strtotime('-1 month'));
 		$tree=array();
