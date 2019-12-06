@@ -13,6 +13,7 @@ use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
 use app\models\Orders;
+use app\models\Events;
 use app\models\Versions;
 use app\models\Mobiles;
 use app\models\Settings;
@@ -2240,7 +2241,7 @@ public function getproductsimages(){
 				foreach($products as $p){
 						$dataParam = array(
 							'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
-							'caption'=> ' <span class="text-color-yellow">'.$val.'</span><br>'.$p['Name'].' <br>'.$p['Code'].' <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
+							'caption'=> ' <span class="text-color-yellow">'.$val.'&nbsp;<a onclick="window.plugins.socialsharing.share(\'Message and image\', null, \'https://www.google.nl/images/srpr/logo4w.png\', null)"><i class="f7-icons text-align-right">share</i></a></span><br>'.$p['Name'].' <br>'.$p['Code'].' <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
 						);
 					array_push($allparams,$dataParam);
 				
@@ -2311,6 +2312,65 @@ function getnotactive(){
 	return $this->render(array('json' => array("success"=>"Yes",'allusers'=>$allusers)));		
 }
 
+public function uploadevents(){
+	
+//	"Event Date","Event Time","Category","Venue & Address","City","State","Contact No","Event Presenter"
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'EventDate' => (string)$data[0],
+									'Date'=>strtotime((string)$data[0]),
+									'EventTime' => (string)$data[1],								
+									'EventCategories' => (string)$data[2],
+									'Venue' => (string)$data[3],								
+									'City' => (string)$data[4], 
+									'State' => (string)$data[5],
+									'Contact' => (string)$data[6],
+									'Presenter' => (string)$data[7],								
+								);
+							Events::create()->save($data);
+						}
+			}
+		}
+	//return $this->render(array('json' => array("success"=>"Yes")));		
+}
+
+
+public function getevents(){
+	$order = $this->request->data['order'];
+	$today =  strtotime(gmdate('Y-M-d'))."\n";
+	$conditions = array('Date'=>array('$gte'=>(integer)$today));
+	if($order=="Date"){
+			$orderCondition = array('Date'=>'ASC');
+	}else if($order=="City"){
+			$orderCondition = array('City'=>'ASC');
+	}else if($order == "Leader"){
+			$orderCondition = array('Presenter'=>'ASC');
+	}else{
+		$orderCondition = array('Date'=>'ASC','EventTime'=>'ASC','City'=>'ASC');
+	}
+	
+	$events = Events::find('all',array(
+		'conditions'=>$conditions,
+		'order'=>$orderCondition
+	));
+	
+	return $this->render(array('json' => array("success"=>"Yes",'events'=>$events,'order'=>$order,'con'=>$orderCondition)));		
+}
 
 //end of class
 }
