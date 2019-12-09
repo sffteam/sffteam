@@ -2247,7 +2247,7 @@ public function getproductsimages(){
 				foreach($products as $p){
 						$dataParam = array(
 							'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
-							'caption'=> ' <span class="text-color-yellow">'.$val.'</span><br>'.$p['Name'].' <br>'.$p['Code'].' <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
+							'caption'=> ' <span class="text-color-yellow"> &nbsp;'.$val.'&nbsp; </span><br>'.$p['Name'].' <br>['.$p['Code'].'] <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
 						);
 					array_push($allparams,$dataParam);
 				
