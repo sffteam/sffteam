@@ -684,6 +684,7 @@ public function searchdown(){
 				'Level'=>$u['Level'],
 				'KYC'=>$u['KYC'],
 				'NEFT'=>$u['NEFT'],
+				'DateJoin'=>$u['DateJoin'],
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
@@ -2352,8 +2353,9 @@ set_time_limit(0);
 
 public function getevents(){
 	$order = $this->request->data['order'];
-	$today =  strtotime(gmdate('Y-M-d'))."\n";
-	$conditions = array('Date'=>array('$gte'=>(integer)$today));
+	$today =  strtotime(gmdate('Y-M-d',time()-84600));
+
+	$conditions = array('Date'=>array('$gte'=>$today));
 	if($order=="Date"){
 			$orderCondition = array('Date'=>'ASC');
 	}else if($order=="City"){
