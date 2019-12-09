@@ -8,6 +8,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
 use app\models\Malls;
 use app\models\Contacts;
+use app\models\Distributors;
 use app\models\Tools;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
@@ -2376,6 +2377,16 @@ public function getevents(){
 	));
 	
 	return $this->render(array('json' => array("success"=>"Yes",'events'=>$events,'order'=>$order,'con'=>$orderCondition)));		
+}
+
+
+public function getdistributors(){
+	$chars = $this->request->data['chars']	;
+	$distributors = Distributors::find('all',array(
+		'conditions'=>array('City'=> array('like'=>'/'.$chars.'/i')),
+		'order'=>array('Name'=>'ASC')
+	));
+		return $this->render(array('json' => array("success"=>"Yes",'distributors'=>$distributors)));		
 }
 
 //end of class
