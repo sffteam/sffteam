@@ -429,10 +429,14 @@ public function getpreviousorders(){
  }
 
 
-public function product($Code){
+public function product($Code,$format=null){
 		$product = Malls::find('first',array(
 			'conditions'=>array('Code'=> $Code)
 		));
+		if($format=="jpg"){
+			
+			return compact('product');
+		}
 	return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
 }
 
