@@ -2392,10 +2392,30 @@ public function getdistributors(){
 
 
 public function getp2p(){
-		$audios = Audios::find('all',array(
-			'order'=>array('Params.Caption'=>'ASC')
+		$audios = Audios::find('first',array(
+			'order'=>array('Params.Code'=>'ASC')
 		));
-		return $this->render(array('json' => array("success"=>"Yes",'audios'=>$audios)));		
+		$allaudios = array();
+//		print_r($audios);
+		foreach($audios['Params'] as $a){
+			
+			$Code = $a['Code'];
+			$product = Malls::find('first',array(
+				'conditions'=>array('Code'=>$Code)
+			));
+			array_push($allaudios , array(
+				'Code'=>$a['Code'],
+				'MRP'=>$product['MRP'],
+				'DP'=>$product['DP'],
+				'BV'=>$product['BV'],
+				'PV'=>$product['PV'],
+				'Name'=>$product['Name'],
+				'Caption'=>$a['Caption'],
+				'Image'=>$a['Image'],
+				'URL'=>$a['URL'],
+			));
+		}
+		return $this->render(array('json' => array("success"=>"Yes",'audios'=>$allaudios)));		
 }
 
 //end of class
