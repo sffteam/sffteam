@@ -10,6 +10,7 @@ use app\models\Malls;
 use app\models\Contacts;
 use app\models\Distributors;
 use app\models\Tools;
+use app\models\Audios;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -2387,6 +2388,14 @@ public function getdistributors(){
 		'order'=>array('Name'=>'ASC')
 	));
 		return $this->render(array('json' => array("success"=>"Yes",'distributors'=>$distributors)));		
+}
+
+
+public function getp2p(){
+		$audios = Audios::find('all',array(
+			'order'=>array('Params.Caption'=>'ASC')
+		));
+		return $this->render(array('json' => array("success"=>"Yes",'audios'=>$audios)));		
 }
 
 //end of class
