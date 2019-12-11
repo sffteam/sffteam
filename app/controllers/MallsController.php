@@ -496,7 +496,7 @@ public function searchmca(){
 		if(count($findmobile)==0){
 			$mobile = array('Mobile'=>"");
 		}else{
-			$mobile = array('Mobile'=>$mobile['Mobile']);
+			$mobile = array('Mobile'=>$findmobile['Mobile']);
 		}
 		$p1yyyymm = date('Y-m', strtotime('-1 month'));
 		$tree=array();
@@ -508,11 +508,16 @@ public function searchmca(){
 					$findUserMobile = Mobiles::find('first',array(
 						'conditions'=>array('mcaNumber'=>$upline['mcaNumber'])
 					));
+			if(count($findUserMobile)==0){
+				$UserMobile = array('Mobile'=>"");
+			}else{
+				$UserMobile = array('Mobile'=>$findUserMobile['Mobile']);
+			}		
 					array_push($tree,array(
 						'mcaName'=>$upline['mcaName'],
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
-						'Mobile'=>$findUserMobile['Mobile']?:"NO",
+						'Mobile'=>$UserMobile,
 					));
 				}
 
@@ -2295,7 +2300,7 @@ function getnotactive(){
 		
 		foreach($notactive as $na){
 			$mobile = Mobiles::find('first',array(
-					'conditions'=>array('mcaNUmber'=>$na['mcaNumber']),
+					'conditions'=>array('mcaNumber'=>$na['mcaNumber']),
 					'fields'=>array('Mobile','mcaNumber'),
 			));
 				$users = array(
