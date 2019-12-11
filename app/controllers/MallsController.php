@@ -2173,9 +2173,15 @@ public function savecontacts(){
 	if($this->request->data){
 		$data = array(
 			'mcaNumber'=>$this->request->data['mcaNumber'],
+			'mcaName'=>$this->request->data['mcaName'],
 			'contacts'=>json_decode(str_replace("undefined","O",$this->request->data['contacts']))
 		);
-		Contacts::create()->save($data);
+		$user = Contacts::find('first',array(
+			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+		));
+		if(count($user)==0){
+				Contacts::create()->save($data);
+		}
 	}
 	return $this->render(array('json' => array("success"=>"Yes")));		
 }
