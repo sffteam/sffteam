@@ -490,10 +490,10 @@ public function searchmca(){
 		$user = Users::find('first',array(
 			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 		));
-		$mobile = Mobiles::find('first',array(
+		$findmobile = Mobiles::find('first',array(
 			'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
 		));
-		if(count($mobile)==0){
+		if(count($findmobile)==0){
 			$mobile = array('Mobile'=>"");
 		}else{
 			$mobile = array('Mobile'=>$mobile['Mobile']);
@@ -512,7 +512,7 @@ public function searchmca(){
 						'mcaName'=>$upline['mcaName'],
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
-						'Mobile'=>$mobile['Mobile']?:"NO",
+						'Mobile'=>$findmobile['Mobile']?:"NO",
 					));
 				}
 
