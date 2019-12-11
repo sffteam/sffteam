@@ -505,14 +505,14 @@ public function searchmca(){
 					'conditions'=>array('mcaNumber'=>$val)
 				));
 				if($upline['mcaNumber']!=null){
-					$mobile = Mobiles::find('first',array(
+					$findUserMobile = Mobiles::find('first',array(
 						'conditions'=>array('mcaNumber'=>$upline['mcaNumber'])
 					));
 					array_push($tree,array(
 						'mcaName'=>$upline['mcaName'],
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
-						'Mobile'=>$findmobile['Mobile']?:"NO",
+						'Mobile'=>$findUserMobile['Mobile']?:"NO",
 					));
 				}
 
