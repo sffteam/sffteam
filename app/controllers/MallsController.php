@@ -2438,6 +2438,18 @@ public function getpdfs(){
 		return $this->render(array('json' => array("success"=>"Yes",'pdfs'=>$pdfs)));		
 }
 
+public function pdf($Code,$format=null){
+		$pdf = Pdfs::find('first',array(
+			'conditions'=>array('_id'=> (string)$Code)
+		));
+		if($format=="pdf"){
+			
+			return compact('pdf');
+		}
+	return $this->render(array('json' => array("success"=>"Yes","pdf"=>$pdf)));		
+}
+
+
 //end of class
 }
 
