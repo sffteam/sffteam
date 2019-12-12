@@ -11,6 +11,7 @@ use app\models\Contacts;
 use app\models\Distributors;
 use app\models\Tools;
 use app\models\Audios;
+use app\models\Pdfs;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -2427,6 +2428,14 @@ public function getp2p(){
 			));
 		}
 		return $this->render(array('json' => array("success"=>"Yes",'audios'=>$allaudios)));		
+}
+
+public function getpdfs(){
+	$pdfs = Pdfs::find('all',array(
+		'order'=>array('Language'=>'ASC','Name'=>'ASC')
+	));
+	
+		return $this->render(array('json' => array("success"=>"Yes",'pdfs'=>$pdfs)));		
 }
 
 //end of class
