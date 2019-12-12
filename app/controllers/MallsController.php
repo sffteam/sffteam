@@ -11,6 +11,7 @@ use app\models\Contacts;
 use app\models\Distributors;
 use app\models\Tools;
 use app\models\Audios;
+use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
@@ -2449,6 +2450,24 @@ public function pdf($Code,$format=null){
 	return $this->render(array('json' => array("success"=>"Yes","pdf"=>$pdf)));		
 }
 
+public function gettemplates(){
+	$templates = Templates::find('all',array(
+		'order'=>array('Title'=>'ASC')
+	));
+	
+		return $this->render(array('json' => array("success"=>"Yes",'templates'=>$templates)));		
+}
+
+public function template($Code,$format=null){
+		$template = Templates::find('first',array(
+			'conditions'=>array('_id'=> (string)$Code)
+		));
+		if($format=="template"){
+			
+			return compact('template');
+		}
+	return $this->render(array('json' => array("success"=>"Yes","template"=>$template)));		
+}
 
 //end of class
 }
