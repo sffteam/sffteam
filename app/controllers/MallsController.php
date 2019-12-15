@@ -2492,7 +2492,7 @@ public function getdown(){
 	foreach ($Nodes as $n){
 			if($n[$yyyymm]['PV'] < $n[$p1yyyymm]['PV']){
 				$mobile = Mobiles::find('first',array(
-					'conditions'=>array('mcaNumber'=>$n[mcaNumber])
+					'conditions'=>array('mcaNumber'=>$n['mcaNumber'])
 				));
 				array_push($allusers,array(
 					'mcaNumber'=>$n['mcaNumber'],
@@ -2540,7 +2540,7 @@ public function getup(){
 		if($n[$yyyymm]['PV'] > 0 || $n[$p1yyyymm]['PV'] >0 ){
 			if($n[$yyyymm]['PV'] >= $n[$p1yyyymm]['PV'] ){
 				$mobile = Mobiles::find('first',array(
-					'conditions'=>array('mcaNumber'=>$n[mcaNumber])
+					'conditions'=>array('mcaNumber'=>$n['mcaNumber'])
 				));
 				array_push($allusers,array(
 					'mcaNumber'=>$n['mcaNumber'],
