@@ -2469,6 +2469,104 @@ public function template($Code,$format=null){
 	return $this->render(array('json' => array("success"=>"Yes","template"=>$template)));		
 }
 
+public function getdown(){
+	$mcaNumber = $this->request->data['mcaNumber']	;	
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);	
+	
+	$yyyymm = date('Y-m');
+	$p1yyyymm = date('Y-m', strtotime('-1 month'));
+	$p2yyyymm = date('Y-m', strtotime('-2 month'));
+	$p3yyyymm = date('Y-m', strtotime('-3 month'));
+	$p4yyyymm = date('Y-m', strtotime('-4 month'));
+	$p5yyyymm = date('Y-m', strtotime('-5 month'));
+	$p6yyyymm = date('Y-m', strtotime('-6 month'));
+	$p7yyyymm = date('Y-m', strtotime('-7 month'));
+	$p8yyyymm = date('Y-m', strtotime('-8 month'));
+	$p9yyyymm = date('Y-m', strtotime('-9 month'));
+	$p10yyyymm = date('Y-m', strtotime('-10 month'));
+	$p11yyyymm = date('Y-m', strtotime('-11 month'));
+
+	$allusers = array();
+
+	foreach ($Nodes as $n){
+			if($n[$yyyymm]['PV'] < $n[$p1yyyymm]['PV']){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$n[mcaNumber])
+				));
+				array_push($allusers,array(
+					'mcaNumber'=>$n['mcaNumber'],
+					'mcaName'=>$n['mcaName'],
+					'mobile'=>$mobile['Mobile'],
+					$yyyymm."" => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+					$p1yyyymm."" => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
+					$p2yyyymm."" => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
+					$p3yyyymm."" => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0),
+					$p4yyyymm."" => array('PV'=>$n[$p4yyyymm]['PV']?:0,'GPV'=>$n[$p4yyyymm]['GPV']?:0),
+					$p5yyyymm."" => array('PV'=>$n[$p5yyyymm]['PV']?:0,'GPV'=>$n[$p5yyyymm]['GPV']?:0),
+					$p6yyyymm."" => array('PV'=>$n[$p6yyyymm]['PV']?:0,'GPV'=>$n[$p6yyyymm]['GPV']?:0),
+					$p7yyyymm."" => array('PV'=>$n[$p7yyyymm]['PV']?:0,'GPV'=>$n[$p7yyyymm]['GPV']?:0),
+					$p8yyyymm."" => array('PV'=>$n[$p8yyyymm]['PV']?:0,'GPV'=>$n[$p8yyyymm]['GPV']?:0),
+					$p9yyyymm."" => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),
+					$p10yyyymm."" => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),
+					$p11yyyymm."" => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),
+				));
+			}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),"users"=>$allusers)));		
+}
+
+public function getup(){
+	$mcaNumber = $this->request->data['mcaNumber']	;	
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);	
+	
+	$yyyymm = date('Y-m');
+	$p1yyyymm = date('Y-m', strtotime('-1 month'));
+	$p2yyyymm = date('Y-m', strtotime('-2 month'));
+	$p3yyyymm = date('Y-m', strtotime('-3 month'));
+	$p4yyyymm = date('Y-m', strtotime('-4 month'));
+	$p5yyyymm = date('Y-m', strtotime('-5 month'));
+	$p6yyyymm = date('Y-m', strtotime('-6 month'));
+	$p7yyyymm = date('Y-m', strtotime('-7 month'));
+	$p8yyyymm = date('Y-m', strtotime('-8 month'));
+	$p9yyyymm = date('Y-m', strtotime('-9 month'));
+	$p10yyyymm = date('Y-m', strtotime('-10 month'));
+	$p11yyyymm = date('Y-m', strtotime('-11 month'));
+
+	$allusers = array();
+
+	foreach ($Nodes as $n){
+		if($n[$yyyymm]['PV'] > 0 || $n[$p1yyyymm]['PV'] >0 ){
+			if($n[$yyyymm]['PV'] >= $n[$p1yyyymm]['PV'] ){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$n[mcaNumber])
+				));
+				array_push($allusers,array(
+					'mcaNumber'=>$n['mcaNumber'],
+					'mcaName'=>$n['mcaName'],
+					'mobile'=>$mobile['Mobile'],
+					$yyyymm."" => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+					$p1yyyymm."" => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
+					$p2yyyymm."" => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
+					$p3yyyymm."" => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0),
+					$p4yyyymm."" => array('PV'=>$n[$p4yyyymm]['PV']?:0,'GPV'=>$n[$p4yyyymm]['GPV']?:0),
+					$p5yyyymm."" => array('PV'=>$n[$p5yyyymm]['PV']?:0,'GPV'=>$n[$p5yyyymm]['GPV']?:0),
+					$p6yyyymm."" => array('PV'=>$n[$p6yyyymm]['PV']?:0,'GPV'=>$n[$p6yyyymm]['GPV']?:0),
+					$p7yyyymm."" => array('PV'=>$n[$p7yyyymm]['PV']?:0,'GPV'=>$n[$p7yyyymm]['GPV']?:0),
+					$p8yyyymm."" => array('PV'=>$n[$p8yyyymm]['PV']?:0,'GPV'=>$n[$p8yyyymm]['GPV']?:0),
+					$p9yyyymm."" => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),
+					$p10yyyymm."" => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),
+					$p11yyyymm."" => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),
+				));
+			}
+		}
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),"users"=>$allusers)));		
+}
+
+
 //end of class
 }
 
