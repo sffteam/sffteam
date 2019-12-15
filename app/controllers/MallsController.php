@@ -2470,6 +2470,7 @@ public function template($Code,$format=null){
 }
 
 public function getdown(){
+	ini_set('memory_limit', '-1');
 	$mcaNumber = $this->request->data['mcaNumber']	;	
 	$dashboard = new DashboardController();
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
@@ -2517,6 +2518,7 @@ public function getdown(){
 }
 
 public function getup(){
+	ini_set('memory_limit', '-1');
 	$mcaNumber = $this->request->data['mcaNumber']	;	
 	$dashboard = new DashboardController();
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
