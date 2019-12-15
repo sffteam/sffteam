@@ -1044,7 +1044,7 @@ public function getactive(){
 	$yyyymm = date('Y-m');		
 	$pyyyymm = date('Y-m', strtotime('last month'));		
 	$dashboard = new DashboardController();
-	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");
 	 $users = array();
   foreach($Nodes as $n){
 			$mobile = Mobiles::find('first',array(
@@ -1962,7 +1962,7 @@ public function getbuilders(){
 		$mcaNumber = $this->request->data['mcaNumber'];
 		$yyyymm = date('Y-m');		
 		$dashboard = new DashboardController();
-		$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);
+		$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");
 	 $users = array();
   foreach($Nodes as $n){
 			$mobile = Mobiles::find('first',array(
@@ -2472,7 +2472,7 @@ public function template($Code,$format=null){
 public function getdown(){
 	$mcaNumber = $this->request->data['mcaNumber']	;	
 	$dashboard = new DashboardController();
-	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);	
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
 	
 	$yyyymm = date('Y-m');
 	$p1yyyymm = date('Y-m', strtotime('-1 month'));
@@ -2519,7 +2519,7 @@ public function getdown(){
 public function getup(){
 	$mcaNumber = $this->request->data['mcaNumber']	;	
 	$dashboard = new DashboardController();
-	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber']);	
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
 	
 	$yyyymm = date('Y-m');
 	$p1yyyymm = date('Y-m', strtotime('-1 month'));

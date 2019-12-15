@@ -706,7 +706,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 
  }
 
- public function getChilds($user_id,$chars){
+ public function getChilds($user_id,$chars=null){
 	#Retrieving a Full Tree
 	/* 	SELECT node.user_id
 	FROM details AS node,
