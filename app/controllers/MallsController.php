@@ -2568,7 +2568,18 @@ public function getup(){
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),"users"=>$allusers)));		
 }
 
-
+public function pvdown($mcaNumber){
+	$user = Users::find('first',array(
+	'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
+}
+public function pvup($mcaNumber){
+	$user = Users::find('first',array(
+	'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
+}
 //end of class
 }
 
