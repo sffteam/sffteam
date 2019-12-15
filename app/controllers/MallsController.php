@@ -2498,7 +2498,7 @@ public function getdown(){
 				array_push($allusers,array(
 					'mcaNumber'=>$n['mcaNumber'],
 					'mcaName'=>$n['mcaName'],
-					'mobile'=>$mobile['Mobile'],
+					'mobile'=>$mobile['Mobile']?:"",
 					$yyyymm."" => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
 					$p1yyyymm."" => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
 					$p2yyyymm."" => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
@@ -2547,7 +2547,7 @@ public function getup(){
 				array_push($allusers,array(
 					'mcaNumber'=>$n['mcaNumber'],
 					'mcaName'=>$n['mcaName'],
-					'mobile'=>$mobile['Mobile'],
+					'mobile'=>$mobile['Mobile']?:"",
 					$yyyymm."" => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
 					$p1yyyymm."" => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
 					$p2yyyymm."" => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
