@@ -536,8 +536,8 @@ public function searchmca(){
 			$dataLists = array();
 			foreach($lists as $l){
 				array_push($dataLists,array(
-					(string)$l['mcaNumber']=>(string)$l['list'].":".(string)$l['member'])
-				));
+					(string)$l['mcaNumber']=>(string)$l['list'].":".(string)$l['member']
+					));
 			}
 			
 			
