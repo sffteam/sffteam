@@ -708,9 +708,11 @@ public function searchdown(){
 			
 			$dataLists = array();
 			foreach($lists as $l){
+				if($u['mcaNumber']==$l['mcaNumber']){
 				array_push($dataLists,array(
 					(string)$l['mcaNumber']=>(string)$l['list'].":".(string)$l['member']
 					));
+				}
 			}
 
 				
