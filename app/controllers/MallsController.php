@@ -539,6 +539,7 @@ public function searchmca(){
 					'mcaNumber'=>$l['mcaNumber'],
 					'list'=>$l['list'],
 					'member'=>$l['member'],
+					'whoami'=>$l['whoami']
 				));
 			}
 			
@@ -1768,7 +1769,7 @@ public function seminar($date=null){
 	
 	if($date==null){
 		$dates = Seminars::find('all',array(
-			'conditons'=>array('Date'=>array('$gte'=>$today)),
+			'conditions'=>array('Date'=>array('$gte'=>$today)),
 			'order'=>array('Date'=>'ASC')
 		));
 		return compact('dates');
@@ -2601,45 +2602,40 @@ public function pvup($mcaNumber){
 	));
 	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
 }
+
+
 public function setlist(){
-	$mcaNumber = $this->request->data['mcaNumber'];
+	$mcaNumber = $this->request->data['mcaNumber'];	;
 	$list = $this->request->data['list'];
 	$whoami = $this->request->data['whoami'];
-	$user = array(
-		'mcaNumber'=>$mcaNumber,
-		'list'=>$list,
-		'whoami'=>$whoami
+
+	$conditions = array(
+		'mcaNumber'=>(string)$mcaNumber,
+		'list'=>(string)$list,
+		'whoami'=>(string)$whoami
 	);
 	
-	$conditions = $user;
+	$users = Lists::find('first',array(
+		'conditions'=>$conditions
+	));
 	
-	$findUser = Lists::find('first',array(
-		'$conditions'=>$conditions
-	)); 
-	
-	if(count($findUser)==0){
-			$data = array(
-				'mcaNumber'=>$mcaNumber,
-				'list'=>$list,
-				'whoami'=>$whoami,
-				'member'=>"Yes"
-			);
-			Lists::create()->save($data);
+	if(count($users)==0){
+		$data = array(
+		'mcaNumber'=>(string)$mcaNumber,
+		'list'=>(string)$list,
+		'whoami'=>(string)$whoami,
+		'member'=>"Yes"
+	);
+		Lists::create()->save($data);
 	}else{
-		if($findUser['member']=='Yes'){
-			$data = array(
-				'member'=>"No"
-			);
-		}else{
-			$data = array(
-				'member'=>"Yes"
-			);
-		}
+			if($users['member']=="Yes"){
+				$data = array('member'=>"No");
+			}else{
+				$data = array('member'=>"Yes");
+			}
 		Lists::update($data,$conditions);
 	}
-	
-	
-	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,)));		
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$data)));		
 }
 
 
