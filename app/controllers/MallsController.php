@@ -536,16 +536,14 @@ public function searchmca(){
 			$dataLists = array();
 			foreach($lists as $l){
 				array_push($dataLists,array(
-					'mcaNumber'=>$l['mcaNumber'],
-					'list'=>$l['list'],
-					'member'=>$l['member'],
-					'whoami'=>$l['whoami']
+					$l['mcaNumber']=>array(
+						$l['list']=>$l['member'])
 				));
 			}
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee,'lists'=>$dataLists)));				
+			return $this->render(array('json' => array("success"=>"Yes",'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
