@@ -701,6 +701,19 @@ public function searchdown(){
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('last month'));
 				$joinee = count($this->findJoinee($u['mcaNumber']));
+				
+			$lists = Lists::find('all',array(
+				'conditions'=>array('whoami'=>$this->request->data['mcaNumber'])
+			));
+			
+			$dataLists = array();
+			foreach($lists as $l){
+				array_push($dataLists,array(
+					(string)$l['mcaNumber']=>(string)$l['list'].":".(string)$l['member']
+					));
+			}
+
+				
 				array_push($allusers,array(
 				'mcaNumber'=>$u['mcaNumber'],
 				'mcaName'=>$u['mcaName'],
@@ -711,6 +724,7 @@ public function searchdown(){
 				'KYC'=>$u['KYC'],
 				'NEFT'=>$u['NEFT'],
 				'DateJoin'=>$u['DateJoin'],
+				'lists'=>$dataLists,
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
