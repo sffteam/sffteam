@@ -14,6 +14,7 @@ use app\models\Audios;
 use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
+use app\models\Lists;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
 use app\models\Orders;
@@ -526,10 +527,24 @@ public function searchmca(){
 		}
 		
 //		$tree = $this->findTree($this->request->data['mcaNumber'],4);
-		$joinee = $this->findJoinee($this->request->data['mcaNumber']);
-		
+			$joinee = $this->findJoinee($this->request->data['mcaNumber']);
+			
+			$lists = Lists::find('all',array(
+				'conditions'=>array('whoami'=>$this->request->data['mcaNumber'])
+			));
+			
+			$dataLists = array();
+			foreach($lists as $l){
+				array_push($dataLists,array(
+					'mcaNumber'=>$l['mcaNumber'],
+					'list'=>$l['list'],
+					'member'=>$l['member'],
+				));
+			}
+			
+			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee)));				
+			return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee,'lists'=>$dataLists)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -2586,6 +2601,58 @@ public function pvup($mcaNumber){
 	));
 	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
 }
+public function setlist(){
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$list = $this->request->data['list'];
+	$whoami = $this->request->data['whoami'];
+	$user = array(
+		'mcaNumber'=>$mcaNumber,
+		'list'=>$list,
+		'whoami'=>$whoami
+	);
+	
+	$conditions = $user;
+	
+	$findUser = Lists::find('first',array(
+		'$conditions'=>$conditions
+	)); 
+	
+	if(count($findUser)==0){
+			$data = array(
+				'mcaNumber'=>$mcaNumber,
+				'list'=>$list,
+				'whoami'=>$whoami,
+				'member'=>"Yes"
+			);
+			Lists::create()->save($data);
+	}else{
+		if($findUser['member']=='Yes'){
+			$data = array(
+				'member'=>"No"
+			);
+		}else{
+			$data = array(
+				'member'=>"Yes"
+			);
+		}
+		Lists::update($data,$conditions);
+	}
+	
+	
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,)));		
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //end of class
 }
 
