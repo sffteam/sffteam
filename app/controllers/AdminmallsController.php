@@ -221,7 +221,8 @@ public function getmobiles(){
 	
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
-			'mcaNumber'=>array('$nin'=>$next)
+			'mcaNumber'=>array('$nin'=>$next),
+			'Enable'=>'Yes'
 		 ),
 		 'fields'=>array('mcaNumber', 'mcaName'),
 			'limit'=>100,
