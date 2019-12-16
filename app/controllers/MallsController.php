@@ -2572,13 +2572,19 @@ public function pvdown($mcaNumber){
 	$user = Users::find('first',array(
 	'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
-	return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
+	$template = Templates::find('first',array(
+	'conditions'=>array('Title'=>'PV Up')
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
 }
 public function pvup($mcaNumber){
 	$user = Users::find('first',array(
 	'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
-	return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
+	$template = Templates::find('first',array(
+	'conditions'=>array('Title'=>'PV Down')
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
 }
 //end of class
 }
