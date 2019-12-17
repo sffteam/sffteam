@@ -2669,9 +2669,62 @@ public function loguser(){
 }
 
 
+function array2csv(array &$array)
+{
+   if (count($array) == 0) {
+     return null;
+   }
+   ob_start();
+   $df = fopen("php://output", 'w');
+   fputcsv($df, array_keys(reset($array)));
+   foreach ($array as $row) {
+      fputcsv($df, $row);
+   }
+   fclose($df);
+   return ob_get_clean();
+}
 
 
-
+public function getlevel(){
+	ini_set('memory_limit','-1');
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$gpv =  $this->request->data['gpv'];
+	$lpv =  $this->request->data['lpv'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+			$yyyymm.'.GrossPV'=>array('$gt'=>(integer)$gpv,'$lte'=>(integer)$lpv),
+			$yyyymm.'.Percent'=>array('$lt'=>(integer)22),
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+		'order'=>array($yyyymm.'.GrossPV'=>'DESC')
+	));
+	$allusers = array();
+	foreach($users as $u){
+		$mobile = Mobiles::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$u['mcaNumber'])
+		));
+		
+		array_push($allusers, array(
+			'mcaNumber' => $u['mcaNumber'],
+			'mcaName' => $u['mcaName'],
+			'GrossPV'=>$u[$yyyymm]['GrossPV'],
+			'PV'=>$u[$yyyymm]['PV'],
+			'mobile'=>$mobile['Mobile']?:"",
+			'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV'])
+			));
+		
+	}
+	return $this->render(array('json' => array("success"=>"Yes","count"=>count($users),"users"=>$allusers)));		
+}
 
 
 
