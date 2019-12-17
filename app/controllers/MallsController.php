@@ -2727,6 +2727,16 @@ public function getlevel(){
 	return $this->render(array('json' => array("success"=>"Yes","count"=>count($users),"users"=>$allusers)));		
 }
 
+public function levelup($mcaNumber){
+	$user = Users::find('first',array(
+	'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$template = Templates::find('first',array(
+	'conditions'=>array('Title'=>'Level Up')
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
+	
+}
 
 
 
