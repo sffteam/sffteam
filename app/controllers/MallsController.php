@@ -477,8 +477,6 @@ public function show($Code){
 	}
 	$products = Malls::find('all', array(
 		'conditions' =>array(
-//			'g_Description'=>"",
-		//		'Code'=>$Codesearchmca
 			),
 		'order'=>array('Code'=>'ASC')
 	));
@@ -530,7 +528,7 @@ public function searchmca(){
 			$joinee = $this->findJoinee($this->request->data['mcaNumber']);
 			
 			$lists = Lists::find('all',array(
-				'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+				'conditions'=>array('whoami'=>$this->request->data['mcaNumber'])
 			));
 			
 			$dataLists = array();
