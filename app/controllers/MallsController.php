@@ -1612,7 +1612,7 @@ Users::update(
 public function saveMessage(){
 	if($this->request->data){
 		$group = $this->request->data['group'];
-		$user = $this->request->data['user'];
+		$touser = $this->request->data['user'];
 		$mcaNumber = $this->request->data['mcaNumber'];
 		$message = $this->request->data['message'];
 		$user = Users::find('first',array(
@@ -1620,7 +1620,7 @@ public function saveMessage(){
 		));
 		$data = array(
 			'group'=>$group,
-			'toUser'=>$user,
+			'toUser'=>$touser,
 			'mcaNumber'=>$mcaNumber,
 			'mcaName'=>$user['mcaName'],
 			'message'=>$message,
