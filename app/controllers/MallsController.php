@@ -2719,7 +2719,8 @@ public function getlevel(){
 			'GrossPV'=>$u[$yyyymm]['GrossPV'],
 			'PV'=>$u[$yyyymm]['PV'],
 			'mobile'=>$mobile['Mobile']?:"",
-			'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV'])
+			'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
+			'yyyymm'=>$yyyymm,
 			));
 		
 	}
