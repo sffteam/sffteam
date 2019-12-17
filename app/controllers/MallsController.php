@@ -703,7 +703,7 @@ public function searchdown(){
 				$joinee = count($this->findJoinee($u['mcaNumber']));
 				
 			$lists = Lists::find('all',array(
-				'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+				'conditions'=>array('whoami'=>$this->request->data['mcaNumber'])
 			));
 			
 			$dataLists = array();
