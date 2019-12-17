@@ -14,6 +14,7 @@ use app\models\Audios;
 use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
+use app\models\Logs;
 use app\models\Lists;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
 use app\models\Users;
@@ -2654,7 +2655,18 @@ public function setlist(){
 }
 
 
-
+public function loguser(){
+		$mcaName = $this->request->data['mcaName'];
+		$mcaNumber = $this->request->data['mcaNumber'];
+	
+	$data = array(
+		'mcaName'=>$mcaName,
+		'mcaNumber'=>$mcaNumber,
+		'DateTime'=> new \MongoDate
+	);
+	Logs::create()->save($data);
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
 
 
 
