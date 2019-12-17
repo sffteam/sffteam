@@ -1612,6 +1612,7 @@ Users::update(
 public function saveMessage(){
 	if($this->request->data){
 		$group = $this->request->data['group'];
+		$user = $this->request->data['user'];
 		$mcaNumber = $this->request->data['mcaNumber'];
 		$message = $this->request->data['message'];
 		$user = Users::find('first',array(
@@ -1619,6 +1620,7 @@ public function saveMessage(){
 		));
 		$data = array(
 			'group'=>$group,
+			'toUser'=>$user,
 			'mcaNumber'=>$mcaNumber,
 			'mcaName'=>$user['mcaName'],
 			'message'=>$message,
@@ -1650,6 +1652,7 @@ public function getmessages($group,$mcaNumber){
 				array_push($allmessages, array(
 					'mcaNumber'=>$m['mcaNumber'],
 					'mcaName'=>$m['mcaName'],
+					'toUser'=>$m['toUser'],
 					'group'=>$m['group'],
 					'DateTime'=>gmdate("Y-M-d h:i:s",$m['DateTime']->sec),
 					'message'=>$m['message'],
@@ -1659,6 +1662,7 @@ public function getmessages($group,$mcaNumber){
 				array_push($allmessages, array(
 					'mcaNumber'=>$m['mcaNumber'],
 					'mcaName'=>$m['mcaName'],
+					'toUser'=>$m['toUser'],
 					'group'=>$m['group'],
 					'DateTime'=>gmdate("Y-M-d h:i:s",$m['DateTime']->sec),
 					'message'=>$m['message'],
