@@ -2491,7 +2491,7 @@ public function gettemplates(){
 }
 
 public function template($format=null){
-		$Code = $this->request->data['Code'];
+		$Code = $this->request->data['code'];
 		$mcaNumber = $this->request->data['mcaNumber'];
 		$template = Templates::find('first',array(
 			'conditions'=>array('_id'=> (string)$Code)
