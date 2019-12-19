@@ -2490,15 +2490,17 @@ public function gettemplates(){
 		return $this->render(array('json' => array("success"=>"Yes",'templates'=>$templates)));		
 }
 
-public function template($Code,$format=null){
+public function template($format=null){
+		$Code = $this->request->data['Code'];
+		$mcaNumber = $this->request->data['mcaNumber'];
 		$template = Templates::find('first',array(
 			'conditions'=>array('_id'=> (string)$Code)
 		));
-		if($format=="template"){
-			
-			return compact('template');
-		}
-	return $this->render(array('json' => array("success"=>"Yes","template"=>$template)));		
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=> (string)$mcaNumber)
+		));
+		
+	return $this->render(array('json' => array("success"=>"Yes","template"=>$template,'user'=>$user)));		
 }
 
 public function getdown(){
