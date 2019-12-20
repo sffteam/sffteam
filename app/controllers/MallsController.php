@@ -554,12 +554,12 @@ public function findJoinee($mcaNumber){
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
 	$pyyyymm = date('Y-m', strtotime('last month'));
-	
+	$dateJoin = date('M Y');
 	$left = $user['left'];
 	$right = $user['right'];
 	$joinee = Users::find('all',array('conditions'=>
 			array(
-						$pyyyymm=>null,
+						'DateJoin'=>array('like'=>'/'.$dateJoin.'/'),
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes'
@@ -1433,7 +1433,20 @@ Users::update(
 			));
 			
 			if(count($userActive)>0){
-				print_r($data['mcaName'].'<br>');
+				
+				if($data['PV']>$userActive[$yyyymm]['PV']){
+					$today = array(
+						'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+						'Date'=> new \MongoDate()
+					);
+					print_r($data['mcaName'].': PV');
+					print_r($today['PV'])."<br>";
+				}else{
+					$today = array(
+						'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+						'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
+					);
+				}
 			$data = array(
 				'mcaName'=>(string)$data["mcaName"],
 				'mcaNumber'=>(string)$data["mcaNumber"],
@@ -1454,6 +1467,7 @@ Users::update(
      'Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
+					$yyyymm.'.today'=>$today,
 		);
 				$conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
 				Users::update($data,$conditions);
@@ -2173,16 +2187,18 @@ public function getjoinee(){
 		$left = $user['left'];
 		$right = $user['right'];
 		$yyyymm = date('Y-m');
+		$dateJoin = date('M Y');
+		
 		$pyyyymm = date('Y-m', strtotime('last month'));
 		$joineeUsers = array();
 		$joinee = Users::find('all',array('conditions'=>
 			array(
-						$pyyyymm=>null,
+						'DateJoin'=>array('like'=>'/'.$dateJoin.'/'),
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes'
 			),
-			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV',$yyyymm.'.GPV','KYC','NEFT'),
 			'order'=>array('DateJoin'=>'ASC')
 			)
 	);		
@@ -2193,12 +2209,16 @@ public function getjoinee(){
 						array_push($joineeUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
+							'DateJoin'=>$lu['DateJoin'],
+							'KYC'=>$lu['KYC'],
+							'NEFT'=>$lu['NEFT'],
 							'PV'=>$lu[$yyyymm]['PV']?:'',
+							'GPV'=>$lu[$yyyymm]['GPV']?:'',
 							'Mobile'=>$mobile['Mobile']?:""
 							));
 				}
 	
-		return $this->render(array('json' => array("success"=>"Yes",'users'=>$joineeUsers)));		
+		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($joineeUsers),'users'=>$joineeUsers)));		
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
