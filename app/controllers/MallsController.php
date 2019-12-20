@@ -2218,7 +2218,7 @@ public function getjoinee(){
 							));
 				}
 	
-		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($joineeUsers),'users'=>$joineeUsers)));		
+		return $this->render(array('json' => array("success"=>"Yes",'yyyymm'=>$yyyymm,'count'=>count($joineeUsers),'users'=>$joineeUsers)));		
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
