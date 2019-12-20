@@ -2222,6 +2222,17 @@ public function getjoinee(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
+public function newjoinee($mcaNumber){
+	$user = Users::find('first',array(
+	'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$template = Templates::find('first',array(
+	'conditions'=>array('Title'=>'New Joinee')
+	));
+	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
+	
+}
+
 
 public function savecontacts(){
 	if($this->request->data){
