@@ -2795,12 +2795,12 @@ public function getswipers(){
 	));
 	
 	$allusers = array();
-	array_push($allusers,array(
-		'mcaNumber'=>'00000000',
-		'image'=>'00000000.jpg',
-		'mcaName'=>'Buy Save Earn, More',
-		'ValidTitle'=>'Buy Save Earn, More'
-	));
+	// array_push($allusers,array(
+		// 'mcaNumber'=>'00000000',
+		// 'image'=>'00000000.jpg',
+		// 'mcaName'=>'Buy Save Earn, More',
+		// 'ValidTitle'=>'Buy Save Earn, More'
+	// ));
 	if(in_array($user['mcaNumber'].'.jpg',$files)){
 		array_push($allusers,array(
 			'mcaNumber'=>$user['mcaNumber'],
