@@ -2787,7 +2787,7 @@ public function getswipers(){
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
-			$yyyymm.'.PV'=>array('$gt'=>0),
+//			$yyyymm.'.PV'=>array('$gt'=>0),
 		);
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
