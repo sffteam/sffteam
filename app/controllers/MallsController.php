@@ -2835,7 +2835,7 @@ public function getswipers(){
 		}
 	}
 	
-	return $this->render(array('json' => array("success"=>"Yes",'files'=>$files,'users'=>$allusers)));		
+	return $this->render(array('json' => array("success"=>"Yes",'users'=>$allusers)));		
 }
 
 
