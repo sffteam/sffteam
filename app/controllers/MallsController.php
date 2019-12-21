@@ -722,8 +722,8 @@ public function searchdown(){
 				'Mobile'=>$mobile['Mobile']?:"",
 				'Enable'=>$u['Enable'],
 				'Level'=>$u['Level'],
-				'KYC'=>$u['KYC'],
-				'NEFT'=>$u['NEFT'],
+				'KYC'=>$u['KYC']?:"",
+				'NEFT'=>$u['NEFT']?:"",
 				'DateJoin'=>$u['DateJoin'],
 				'lists'=>$dataLists,
 					$yyyymm=>array(
