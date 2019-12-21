@@ -821,11 +821,9 @@ set_time_limit(0);
 									'HF'=>(integer)$data[26],
 									'Gross'=>(integer)$data[27],
 									'Enable'=>(string)$data[28],
-         
-         
 								);
 								
-//								print_r($data);exit;
+//					print_r($data);exit;
 								$user = Users::find("first",array(
 								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
 								));
@@ -878,6 +876,7 @@ set_time_limit(0);
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
 
 			);
+			
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
 			Users::update($data,$conditions);
   
@@ -2775,7 +2774,68 @@ public function levelup($mcaNumber){
 public function getswipers(){
 	$dir    = LITHIUM_APP_PATH . '/webroot/img/swiper';
 	$files = scandir($dir);
-	return $this->render(array('json' => array("success"=>"Yes",'files'=>$files)));		
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+			$yyyymm.'.PV'=>array('$gt'=>0),
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+		'order'=>array($yyyymm.'.PV'=>'DESC')
+	));
+	
+	$allusers = array();
+	array_push($allusers,array(
+		'mcaNumber'=>'00000000',
+		'image'=>'00000000.jpg',
+		'mcaName'=>'Buy Save Earn, More',
+		'ValidTitle'=>'Buy Save Earn, More'
+	));
+	if(in_array($user['mcaNumber'].'.jpg',$files)){
+		array_push($allusers,array(
+			'mcaNumber'=>$user['mcaNumber'],
+			'image'=>$user['mcaNumber'].'.jpg',
+			'mcaName'=>$user['mcaName'],
+			'ValidTitle'=>$user[$yyyymm]['ValidTitle']
+		));
+	}
+	$ancestors = $user['ancestors'];
+	foreach($ancestors as $a){
+		if(in_array($a.'.jpg',$files)){
+			$upline = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>$a)
+			));
+		array_push($allusers,array(
+			'mcaNumber'=>$upline['mcaNumber'],
+			'image'=>$upline['mcaNumber'].'.jpg',
+			'mcaName'=>$upline['mcaName'],
+			'ValidTitle'=>$upline[$yyyymm]['ValidTitle']
+		));
+		}
+	}
+	
+	foreach($users as $u){
+		if(in_array($u['mcaNumber'].'.jpg',$files)){
+		array_push($allusers,array(
+			'mcaNumber'=>$u['mcaNumber'],
+			'image'=>$u['mcaNumber'].'.jpg',
+			'mcaName'=>$u['mcaName'],
+			'ValidTitle'=>$u[$yyyymm]['ValidTitle']
+		));
+		}
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'files'=>$files,'users'=>$allusers)));		
 }
 
 
