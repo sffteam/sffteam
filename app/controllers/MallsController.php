@@ -11,6 +11,7 @@ use app\models\Contacts;
 use app\models\Distributors;
 use app\models\Tools;
 use app\models\Audios;
+use app\models\Swipers;
 use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
@@ -2769,6 +2770,12 @@ public function levelup($mcaNumber){
 	));
 	return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));		
 	
+}
+
+public function getswipers(){
+	$dir    = LITHIUM_APP_PATH . '/webroot/img/swiper';
+	$files = scandir($dir);
+	return $this->render(array('json' => array("success"=>"Yes",'files'=>$files)));		
 }
 
 
