@@ -2724,6 +2724,7 @@ public function getlevel(){
 	$gpv =  $this->request->data['gpv'];
 	$lpv =  $this->request->data['lpv'];
 	$yyyymm = date('Y-m');	
+	$pyyyymm = date('Y-m', strtotime('-1 month'));
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
@@ -2733,8 +2734,8 @@ public function getlevel(){
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
-			$yyyymm.'.GrossPV'=>array('$gt'=>(integer)$gpv,'$lte'=>(integer)$lpv),
-			$yyyymm.'.Percent'=>array('$lt'=>(integer)22),
+			$pyyyymm.'.GrossPV'=>array('$gt'=>(integer)$gpv,'$lte'=>(integer)$lpv),
+			$pyyyymm.'.Percent'=>array('$lt'=>(integer)22),
 		);
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
@@ -2750,10 +2751,10 @@ public function getlevel(){
 			'mcaNumber' => $u['mcaNumber'],
 			'mcaName' => $u['mcaName'],
 			'GrossPV'=>$u[$yyyymm]['GrossPV'],
-			'PV'=>$u[$yyyymm]['PV'],
+			'PV'=>$u[$pyyyymm]['PV'],
 			'mobile'=>$mobile['Mobile']?:"",
-			'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
-			'yyyymm'=>$yyyymm,
+			'LevelUp'=>((integer)$lpv-(integer)$u[$pyyyymm]['GrossPV']),
+			'yyyymm'=>$pyyyymm,
 			));
 		
 	}
@@ -2839,7 +2840,17 @@ public function getswipers(){
 }
 
 
-
+function yyyymmpv(){
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	return $this->render(array('json' => array("success"=>"Yes",'users'=>$user)));		
+}
 //end of class
 }
 
