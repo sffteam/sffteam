@@ -733,6 +733,9 @@ public function searchdown(){
 				'KYC'=>$u['KYC']?:"",
 				'NEFT'=>$u['NEFT']?:"",
 				'DateJoin'=>$u['DateJoin'],
+				'State'=>$u['State'],
+				'Zone'=>$u['Zone'],
+				'City'=>$u['City'],
 				'lists'=>$dataLists,
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
