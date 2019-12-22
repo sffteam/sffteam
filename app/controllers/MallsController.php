@@ -6,6 +6,7 @@ use \lithium\data\Model;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
+use lithium\data\Connections;
 use app\models\Malls;
 use app\models\Contacts;
 use app\models\Distributors;
@@ -360,6 +361,9 @@ $action = $PAYU_BASE_URL . '/_payment';
 			$user = Orders::find('first',array(
 				'conditions'=>array('mcaNumber'=>$mcaNumber)
 			));
+			if($user==null){
+				return $this->render(array('json' => array("success"=>"No")));		
+			}
 		}
 		return $this->render(array('json' => array("success"=>"Yes","user"=>$user)));		
 	}
@@ -2841,6 +2845,8 @@ public function getswipers(){
 
 
 function yyyymmpv(){
+ini_set('memory_limit','-1');	
+	
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$yyyymm = date('Y-m');	
 	$user = Users::find('first',array(
@@ -2849,7 +2855,31 @@ function yyyymmpv(){
 	$left = $user['left'];
 	$right = $user['right'];
 	
-	return $this->render(array('json' => array("success"=>"Yes",'users'=>$user)));		
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+	
+	$joinMonth = array();
+foreach ($users as $u){
+	
+	
+		if(!in_array(substr($u['DateJoin'],-8),$joinMonth )){
+			array_push($joinMonth,	
+				substr($u['DateJoin'],-8));
+		}
+}
+foreach ($users as $u){
+	
+}
+
+
+	
+	return $this->render(array('json' => array("success"=>"Yes",'users'=>$joinMonth)));		
 }
 //end of class
 }
