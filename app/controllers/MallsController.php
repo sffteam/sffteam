@@ -324,6 +324,7 @@ public function points(){
 			'State'=>$this->request->data['State'],
 			'mcaNumber'=>$this->request->data['mcaNumber'],
 			'Mode'=>$this->request->data['Mode'],
+			'PaymentMode'=>$this->request->data['PaymentMode'],
 			'shopping'=>(integer)$totalValue,
 			'TotalValue'=>(integer)$totalValue,
 			'Products'=>$ProductData,
@@ -333,7 +334,9 @@ public function points(){
 		$order = Orders::create();
 		$id = $order->save($data);
 
-		
+		if($this->request->data['PaymentMode']=="UPI"){
+			return $this->render(array('json' => array("success"=>"Yes","data"=>$data)));		
+		}
   
 $key = PAYUMONEY_KEY;
 $txnid = "TXN-" . rand(10000,99999999);
