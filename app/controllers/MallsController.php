@@ -2952,18 +2952,26 @@ public function getstate(){
 	ini_set('memory_limit','-1');	
 
 	$mcaNumber = $this->request->data['mcaNumber'];
+	$region = $this->request->data['region'];
 	$yyyymm = date('Y-m');	
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	
+	if($region = ""){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
 		);
+	}else{
+		$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+			'Zone'=>$region
+	}
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
 	));
