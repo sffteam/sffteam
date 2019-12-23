@@ -2937,7 +2937,15 @@ public function getregion(){
     $sumArray[$id]+=$value;
   }
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+	$Region = array();
+	foreach ($sumArray as $key => $val) {
+    array_push($Region,array(
+					'Region'=>$key,
+					'Value'=>$val
+				));
+	}
+	array_multisort($Region, SORT_ASC);
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));				
 }
 
 public function getstate(){
@@ -2978,7 +2986,15 @@ public function getstate(){
     $sumArray[$id]+=$value;
   }
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+	$Region = array();
+	foreach ($sumArray as $key => $val) {
+    array_push($Region,array(
+					'Region'=>$key,
+					'Value'=>$val
+				));
+	}
+	array_multisort($Region, SORT_ASC);
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));				
 }
 
 
@@ -3015,16 +3031,21 @@ public function getCity(){
 					);
 				}
 		}
-	
 		$sumArray = array();
-
 	foreach ($joinMonth as $k=>$subArray) {
   foreach ($subArray as $id=>$value) {
     $sumArray[$id]+=$value;
   }
 	}
-	
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+	$Region = array();
+	foreach ($sumArray as $key => $val) {
+    array_push($Region,array(
+					'Region'=>$key,
+					'Value'=>$val
+				));
+	}
+	array_multisort($Region, SORT_ASC);
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));		
 }
 
 
