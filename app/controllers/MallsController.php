@@ -2909,12 +2909,20 @@ public function getregion(){
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	
+	if($region == "x"){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
 		);
+	}else{
+		$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+			'Zone'=>$region
+		);
+	}
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
 	));
@@ -2959,7 +2967,7 @@ public function getstate(){
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	if($region == ""){
+	if($region == "x"){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
