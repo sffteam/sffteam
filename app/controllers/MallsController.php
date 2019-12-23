@@ -2972,10 +2972,10 @@ public function getstate(){
 
 	$joinMonth = array();
 		foreach ($users as $u){
-				if(!$this->in_array_r($u['Zone']." ".$u['State'],$u['Zone']." ".$u['State'])){
+				if(!$this->in_array_r($u['Zone']."-".$u['State'],$u['Zone']."-".$u['State'])){
 					array_push($joinMonth, 
 						array(
-							$u['Zone']." ".$u['State']=>1 //$joinMonth[$u['Zone']+1]
+							$u['Zone']."-".$u['State']=>1 //$joinMonth[$u['Zone']+1]
 						)
 					);
 				}
@@ -3025,10 +3025,10 @@ public function getCity(){
 			if($u['State']=="Gujarat" && $u['City']=="Allahabad"){
 				$u['City']="Ahmedabad";
 			}
-				if(!$this->in_array_r($u['Zone']." ".$u['State']." ".$u['City'],$u['Zone']." ".$u['State']." ".$u['City'])){
+				if(!$this->in_array_r($u['Zone']."-".$u['State']."-".$u['City'],$u['Zone']."-".$u['State']."-".$u['City'])){
 					array_push($joinMonth, 
 						array(
-							$u['Zone']." ".$u['State']." ".$u['City']=>1 //$joinMonth[$u['Zone']+1]
+							$u['Zone']."-".$u['State']."-".$u['City']=>1 //$joinMonth[$u['Zone']+1]
 						)
 					);
 				}
