@@ -3075,7 +3075,45 @@ public function finduser(){
 		),
 		'order'=>array('mcaName'=>'ASC')
 	));
-	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));		
+	$allusers = array();
+		foreach ($users as $u){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+				));
+			array_push($allusers,array(
+				'mcaNumber'=>$u['mcaNumber'],
+				'mcaName'=>$u['mcaName'],
+				'refer'=>$u['refer'],
+				'Mobile'=>$mobile['Mobile']?:"",
+				'Enable'=>$u['Enable'],
+				'Level'=>$u['Level'],
+				'KYC'=>$u['KYC']?:"",
+				'NEFT'=>$u['NEFT']?:"",
+				'DateJoin'=>$u['DateJoin'],
+				'State'=>$u['State'],
+				'Zone'=>$u['Zone'],
+				'City'=>$u['City'],
+				'lists'=>$dataLists,
+					$yyyymm=>array(
+					'PV'=>$u[$yyyymm]['PV']?:0,
+					'BV'=>$u[$yyyymm]['BV']?:0,
+					'GBV'=>$u[$yyyymm]['GBV']?:0,
+					'GPV'=>$u[$yyyymm]['GPV']?:0,
+					'GrossPV'=>$u[$yyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$yyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$yyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$yyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$yyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$yyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
+					'Joinee'=>$joinee,
+					'InActive' => $u[$yyyymm]['InActive']?:"",
+				)
+				));
+		}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$allusers)));		
 }
 
 
