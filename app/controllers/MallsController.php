@@ -2903,26 +2903,28 @@ public function getregion(){
 	ini_set('memory_limit','-1');	
 
 	$mcaNumber = $this->request->data['mcaNumber'];
+	$region = $this->request->data['region'];
 	$yyyymm = date('Y-m');	
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	if($region == "x"){
+	if($region=="x"){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
 		);
 	}else{
-		$conditions = array(
+	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
 			'Zone'=>$region
-		);
+		);		
 	}
+	
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
 	));
@@ -2967,7 +2969,7 @@ public function getstate(){
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	if($region == "x"){
+	if($region == "x" || $region ==""	){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
@@ -3026,7 +3028,7 @@ public function getCity(){
 	));
 	$left = $user['left'];
 	$right = $user['right'];
-	if($region == ""){
+	if($region == "x" || $region == ""){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
