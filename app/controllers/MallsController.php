@@ -3093,7 +3093,7 @@ public function finduser(){
 				'State'=>$u['State'],
 				'Zone'=>$u['Zone'],
 				'City'=>$u['City'],
-				'lists'=>$dataLists,
+				
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
