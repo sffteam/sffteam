@@ -2887,6 +2887,158 @@ foreach ($users as $u){
 	
 	return $this->render(array('json' => array("success"=>"Yes",'users'=>$joinMonth)));		
 }
+
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+public function getregion(){
+	ini_set('memory_limit','-1');	
+
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+
+	$joinMonth = array();
+		foreach ($users as $u){
+				if(!$this->in_array_r($u['Zone'],$u['Zone'])){
+					array_push($joinMonth, 
+						array(
+							$u['Zone']=>1 //$joinMonth[$u['Zone']+1]
+						)
+					);
+				}
+		}
+	
+		$sumArray = array();
+
+	foreach ($joinMonth as $k=>$subArray) {
+  foreach ($subArray as $id=>$value) {
+    $sumArray[$id]+=$value;
+  }
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+}
+
+public function getstate(){
+	ini_set('memory_limit','-1');	
+
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+
+	$joinMonth = array();
+		foreach ($users as $u){
+				if(!$this->in_array_r($u['State'],$u['State'])){
+					array_push($joinMonth, 
+						array(
+							$u['State']=>1 //$joinMonth[$u['Zone']+1]
+						)
+					);
+				}
+		}
+	
+		$sumArray = array();
+
+	foreach ($joinMonth as $k=>$subArray) {
+  foreach ($subArray as $id=>$value) {
+    $sumArray[$id]+=$value;
+  }
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+}
+
+
+public function getCity(){
+	ini_set('memory_limit','-1');	
+
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$yyyymm = date('Y-m');	
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+
+	$joinMonth = array();
+		foreach ($users as $u){
+			if($u['State']=="Gujarat" && $u['City']=="Allahabad"){
+				$u['City']="Ahmedabad";
+			}
+				if(!$this->in_array_r($u['City'],$u['City'])){
+					array_push($joinMonth, 
+						array(
+							$u['City']=>1 //$joinMonth[$u['Zone']+1]
+						)
+					);
+				}
+		}
+	
+		$sumArray = array();
+
+	foreach ($joinMonth as $k=>$subArray) {
+  foreach ($subArray as $id=>$value) {
+    $sumArray[$id]+=$value;
+  }
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$sumArray)));		
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //end of class
 }
 
