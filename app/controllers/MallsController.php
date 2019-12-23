@@ -3061,7 +3061,7 @@ public function finduser(){
 	$right = $user['right'];
 	
 	$params = split("-",$this->request->data['ZoneStateCity']);
-
+	$yyyymm = date('Y-m');	
 
 	
 	$users = Users::find('all',array(
@@ -3107,7 +3107,6 @@ public function finduser(){
 					'Legs'=>$u[$yyyymm]['Legs']?:0,
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
-					'Joinee'=>$joinee,
 					'InActive' => $u[$yyyymm]['InActive']?:"",
 				)
 				));
