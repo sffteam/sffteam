@@ -3051,7 +3051,32 @@ public function getCity(){
 }
 
 
+public function finduser(){
+	ini_set('memory_limit','-1');	
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	
+	$params = split("-",$this->request->data['ZoneStateCity']);
 
+
+	
+	$users = Users::find('all',array(
+		'conditions'=>array(
+			'Zone'=>$params[0],
+			'State'=>$params[1],
+			'City'=>$params[2],
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		),
+		'order'=>array('mcaName'=>'ASC')
+	));
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));		
+}
 
 
 
