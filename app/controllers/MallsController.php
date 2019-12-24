@@ -13,6 +13,7 @@ use app\models\Distributors;
 use app\models\Tools;
 use app\models\Audios;
 use app\models\Swipers;
+use app\models\Rewards;
 use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
@@ -3115,7 +3116,12 @@ public function finduser(){
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$allusers)));		
 }
 
-
+public function findRewards(){
+	$rewards = Rewards::find('all',array(
+		'order'=>array('Name'=>'ASC')
+	));
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($rewards),'rewards'=>$rewards)));		
+}
 
 
 
