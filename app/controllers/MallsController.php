@@ -3118,7 +3118,7 @@ public function finduser(){
 
 public function findRewards(){
 	$rewards = Rewards::find('all',array(
-		'order'=>array('Name'=>'ASC')
+		'order'=>array('Type.Points'=>'DESC')
 	));
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($rewards),'rewards'=>$rewards)));		
 }
