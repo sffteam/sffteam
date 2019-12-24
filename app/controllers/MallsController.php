@@ -3143,7 +3143,7 @@ $yyyymm = date('Y-m');
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
 		),
-		'order'=>array($yyyymm.'.today.Date'=>'ASC')
+		'order'=>array($yyyymm.'.today.Date'=>'DESC')
 	));
 	$allusers = array();
 		foreach ($users as $u){
