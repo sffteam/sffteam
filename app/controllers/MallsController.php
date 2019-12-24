@@ -3125,7 +3125,66 @@ public function findRewards(){
 
 
 
+public function todayjoinee(){
+	ini_set('memory_limit','-1');	
+	$mcaNumber = $this->request->data['mcaNumber'];
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];	
+$yyyymm = date('Y-m');	
 
+	
+	$users = Users::find('all',array(
+		'conditions'=>array(
+			$yyyymm.'.today.PV'=>array('$gt'=>0),
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		),
+		'order'=>array($yyyymm.'.today.Date'=>'ASC')
+	));
+	$allusers = array();
+		foreach ($users as $u){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+				));
+						array_push($allusers,array(
+				'mcaNumber'=>$u['mcaNumber'],
+				'mcaName'=>$u['mcaName'],
+				'refer'=>$u['refer'],
+				'Mobile'=>$mobile['Mobile']?:"",
+				'Enable'=>$u['Enable'],
+				'Level'=>$u['Level'],
+				'KYC'=>$u['KYC']?:"",
+				'NEFT'=>$u['NEFT']?:"",
+				'DateJoin'=>$u['DateJoin'],
+				'State'=>$u['State'],
+				'Zone'=>$u['Zone'],
+				'City'=>$u['City'],
+				
+					$yyyymm=>array(
+					'PV'=>$u[$yyyymm]['PV']?:0,
+					'BV'=>$u[$yyyymm]['BV']?:0,
+					'GBV'=>$u[$yyyymm]['GBV']?:0,
+					'GPV'=>$u[$yyyymm]['GPV']?:0,
+					'GrossPV'=>$u[$yyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$yyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$yyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$yyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$yyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$yyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
+					'InActive' => $u[$yyyymm]['InActive']?:"",
+					'ShoppingDate'=>gmdate('Y-m-d',$u[$yyyymm]['today']['Date']->sec)
+				)
+				));
+	
+		}	
+		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),'users'=>$allusers)));		
+}
 
 
 
