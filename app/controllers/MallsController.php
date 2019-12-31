@@ -562,7 +562,7 @@ public function findJoinee($mcaNumber){
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
-	$pyyyymm = date('Y-m', strtotime('last month'));
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));
 	$dateJoin = date('M Y');
 	$left = $user['left'];
 	$right = $user['right'];
@@ -585,7 +585,7 @@ public function findJoinee($mcaNumber){
 public function findTree($mcaNumber,$level){
 	$tree = array();
 	$yyyymm = date('Y-m');
-	$pyyyymm = date('Y-m', strtotime('last month'));
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));
 	$downlines = Users::find('all',array(
 		'conditions'=>array('refer_id'=>$mcaNumber)
 	));
@@ -707,7 +707,7 @@ public function searchdown(){
 					'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
 				));
 				$yyyymm = date('Y-m');
-				$pyyyymm = date('Y-m', strtotime('last month'));
+				$pyyyymm = date('Y-m', strtotime('first day of last month'));
 				$joinee = count($this->findJoinee($u['mcaNumber']));
 				
 			$lists = Lists::find('all',array(
@@ -1081,7 +1081,7 @@ public function getactive(){
 	ini_set('memory_limit', '-1');
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$yyyymm = date('Y-m');		
-	$pyyyymm = date('Y-m', strtotime('last month'));		
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));		
 	$dashboard = new DashboardController();
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");
 	 $users = array();
@@ -1702,7 +1702,7 @@ public function getmessages($group,$mcaNumber){
 public function groupinfo(){
 	if($this->request->data){
 		$group = $this->request->data['group'];
-		$pyyyymm = date('Y-m', strtotime('last month'));		
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));		
 		switch ($group) {
 			case "0PV":
 				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'Enable'=>'Yes');
@@ -1746,7 +1746,7 @@ public function groupinfosend(){
 	if($this->request->data){
 		$group = $this->request->data['group'];
 		$mcaNumber = $this->request->data['mcaNumber'];
-		$pyyyymm = date('Y-m', strtotime('last month'));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
 		switch ($group) {
 			case "General":
 				$conditions = array($pyyyymm.'.PV'=>array('$gte'=>0),'mcaNumber'=>$mcaNumber);
@@ -2059,7 +2059,7 @@ public function blankmobile(){
 	}
 	//print_r($mob);
 	$yyyymm = date('Y-m');		
-	$pyyyymm = date('Y-m', strtotime('last month'));
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));
 	$pendingmobiles = Users::find('all',array(
 		'conditions'=>array(
 			'mcaNumber'=>array('$nin'=>$mob),
@@ -2086,7 +2086,7 @@ ini_set('memory_limit', '-1');
 		// print_r('left'.$left);
 		// print_r('right'.$right);
 		$yyyymm = date('Y-m');		
-		$pyyyymm = date('Y-m', strtotime('last month'));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
 			
 	
 			$groups = array(
@@ -2200,7 +2200,7 @@ public function getjoinee(){
 		$yyyymm = date('Y-m');
 		$dateJoin = date('M Y');
 		
-		$pyyyymm = date('Y-m', strtotime('last month'));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
 		$joineeUsers = array();
 		$joinee = Users::find('all',array('conditions'=>
 			array(
@@ -2360,7 +2360,7 @@ function getnotactive(){
 		
 		$left = $user['left'];
 		$right = $user['right'];
-		$pyyyymm = date('Y-m', strtotime('last month'));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
 
 		$conditions = array(
 			'left'=>array('$gt'=>$left),
