@@ -509,7 +509,8 @@ public function searchmca(){
 		}else{
 			$mobile = array('Mobile'=>$findmobile['Mobile']);
 		}
-		$p1yyyymm = date('Y-m', strtotime('-1 month'));
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+
 		$tree=array();
 		foreach($user['ancestors'] as $key=>$val){
 				$upline = Users::find('first',array(
@@ -2554,17 +2555,17 @@ public function getdown(){
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
 	
 	$yyyymm = date('Y-m');
-	$p1yyyymm = date('Y-m', strtotime('-1 month'));
-	$p2yyyymm = date('Y-m', strtotime('-2 month'));
-	$p3yyyymm = date('Y-m', strtotime('-3 month'));
-	$p4yyyymm = date('Y-m', strtotime('-4 month'));
-	$p5yyyymm = date('Y-m', strtotime('-5 month'));
-	$p6yyyymm = date('Y-m', strtotime('-6 month'));
-	$p7yyyymm = date('Y-m', strtotime('-7 month'));
-	$p8yyyymm = date('Y-m', strtotime('-8 month'));
-	$p9yyyymm = date('Y-m', strtotime('-9 month'));
-	$p10yyyymm = date('Y-m', strtotime('-10 month'));
-	$p11yyyymm = date('Y-m', strtotime('-11 month'));
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	$p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+	$p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	$p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+	$p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+	$p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+	$p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+	$p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
 
 	$allusers = array();
 
@@ -2602,17 +2603,17 @@ public function getup(){
 	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
 	
 	$yyyymm = date('Y-m');
-	$p1yyyymm = date('Y-m', strtotime('-1 month'));
-	$p2yyyymm = date('Y-m', strtotime('-2 month'));
-	$p3yyyymm = date('Y-m', strtotime('-3 month'));
-	$p4yyyymm = date('Y-m', strtotime('-4 month'));
-	$p5yyyymm = date('Y-m', strtotime('-5 month'));
-	$p6yyyymm = date('Y-m', strtotime('-6 month'));
-	$p7yyyymm = date('Y-m', strtotime('-7 month'));
-	$p8yyyymm = date('Y-m', strtotime('-8 month'));
-	$p9yyyymm = date('Y-m', strtotime('-9 month'));
-	$p10yyyymm = date('Y-m', strtotime('-10 month'));
-	$p11yyyymm = date('Y-m', strtotime('-11 month'));
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	$p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+	$p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	$p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+	$p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+	$p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+	$p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+	$p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
 
 	$allusers = array();
 
@@ -2737,7 +2738,8 @@ public function getlevel(){
 	$gpv =  $this->request->data['gpv'];
 	$lpv =  $this->request->data['lpv'];
 	$yyyymm = date('Y-m');	
-	$pyyyymm = date('Y-m', strtotime('-1 month'));
+	$pyyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
@@ -2752,7 +2754,7 @@ public function getlevel(){
 		);
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
-		'order'=>array($yyyymm.'.GrossPV'=>'DESC')
+		'order'=>array($yyyymm.'.GrossPV'=>'DESC',$pyyyymm.'.GrossPV'=>'DESC')
 	));
 	$allusers = array();
 	foreach($users as $u){
