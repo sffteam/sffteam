@@ -692,10 +692,12 @@ public function sendotp(){
 public function searchdown(){
 
 	$yyyymm = date('Y-m');
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));
+	
 	if($this->request->data){
 		$users = Users::find('all',array(
 			'conditions'=>array('refer'=>$this->request->data['mcaNumber']),
-			'order'=>array($yyyymm.'.GPV'=>'DESC')
+			'order'=>array($yyyymm.'.GPV'=>'DESC',$pyyyymm.'.GPV'=>'DESC')
 			));
 		if(count($users)>0){
 			$allusers = array();
