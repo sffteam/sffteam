@@ -888,6 +888,7 @@ set_time_limit(0);
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
+					$yyyymm.'.InActive'=>(integer)0,
 
 			);
 			
@@ -3190,7 +3191,108 @@ $yyyymm = date('Y-m');
 		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),'users'=>$allusers)));		
 }
 
+public function prevmonths($mcaNumber = null){
+	ini_set('memory_limit','-1');	
+	if($mcaNumber == null){
+		return compact('mcaNumber');	
+	}
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$left = $user['left'];
+	$right = $user['right'];
+	$yyyymm = date('Y-m');	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	
+	$users = Users::find('all',array(
+		'conditions'=>array(
+			$p1yyyymm.'.PV'=>array('$gt'=>0),
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Enable'=>'Yes',
+		),
+		'order'=>array('mcaName'=>'ASC')
+	));
+$allusers = array();
+		foreach ($users as $u){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+				));
+						array_push($allusers,array(
+				'mcaNumber'=>$u['mcaNumber'],
+				'mcaName'=>$u['mcaName'],
+				'refer'=>$u['refer'],
+				'Mobile'=>$mobile['Mobile']?:"",
+				'Enable'=>$u['Enable'],
+				'Level'=>$u['Level'],
+				'KYC'=>$u['KYC']?:"",
+				'NEFT'=>$u['NEFT']?:"",
+				'DateJoin'=>$u['DateJoin'],
+				'State'=>$u['State'],
+				'Zone'=>$u['Zone'],
+				'City'=>$u['City'],
+				
+					$yyyymm=>array(
+					'PV'=>$u[$yyyymm]['PV']?:0,
+					'BV'=>$u[$yyyymm]['BV']?:0,
+					'GBV'=>$u[$yyyymm]['GBV']?:0,
+					'GPV'=>$u[$yyyymm]['GPV']?:0,
+					'GrossPV'=>$u[$yyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$yyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$yyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$yyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$yyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$yyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
+					'InActive' => $u[$yyyymm]['InActive']?:"",
+					'ShoppingDate'=>gmdate('Y-m-d',$u[$yyyymm]['today']['Date']->sec)
+				),
+				
+					$p1yyyymm=>array(
+					'PV'=>$u[$p1yyyymm]['PV']?:0,
+					'BV'=>$u[$p1yyyymm]['BV']?:0,
+					'GBV'=>$u[$p1yyyymm]['GBV']?:0,
+					'GPV'=>$u[$p1yyyymm]['GPV']?:0,
+					'GrossPV'=>$u[$p1yyyymm]['GrossPV']?:0,
+					'PGPV'=>$u[$p1yyyymm]['PGPV']?:0,
+					'PGBV'=>$u[$p1yyyymm]['PGBV']?:0,
+					'RollUpBV'=>$u[$p1yyyymm]['RollUpBV']?:0,
+					'RollUpPV'=>$u[$p1yyyymm]['RollUpPV']?:0,
+					'Legs'=>$u[$p1yyyymm]['Legs']?:0,
+					'QDLegs'=>$u[$p1yyyymm]['QDLegs']?:0,
+					'ValidTitle'=>$u[$p1yyyymm]['ValidTitle']?:"",
+					'InActive' => $u[$p1yyyymm]['InActive']?:"",
+					'ShoppingDate'=>gmdate('Y-m-d',$u[$p1yyyymm]['today']['Date']->sec)
+				),
+				));
+	
+		}	
+		
+	
+	return compact('allusers');	
+}
 
+public function sendsms(){
+	$play = "bit.ly/35m2Wwx";
+	$zoom = "bit.ly/2QRyLYO";
+	$function = new Functions();
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		foreach($mcaNumber as $m){
+			$user = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$m)
+			));
+			$sms = "Hi ".$user['mcaName'].", Join Zoom meeting today @ 9:30pm ".$zoom." Download SFF-Mall App for Modicare ".$play;
+			$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>(string)$m)
+			));
+			$mo = "+91".$mobile['Mobile'];
+			$returnsms = $function->sendSms($mo,$sms);	 // Testing if it works 
+		}
+	}
+	return $this->redirect('/malls/prevmonths');		
+}
 
 
 //end of class

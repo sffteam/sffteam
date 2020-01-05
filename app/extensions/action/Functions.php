@@ -280,6 +280,7 @@ class Functions extends \lithium\action\Controller {
 
 
 	function SMS($mobile,$msg){
+
 		$smsdata = array(
 			'user' => SMSLANE_USERNAME,
 			'password' => SMSLANE_PASSWORD,
@@ -371,6 +372,7 @@ curl_close($curl);
 }
 
 function sendSms($to, $message){
+	ini_set('memory_limit','-1');	
 		$url = "https://api.twilio.com/2010-04-01/Accounts/".TWILIO_ACCOUNT_SID."/SMS/Messages";;
 		$auth = TWILIO_ACCOUNT_SID.":".TWILIO_AUTH_TOKEN;
 		$to = $to; 
