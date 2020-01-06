@@ -2482,7 +2482,7 @@ public function getdistributors(){
 }
 
 
-public function getp2p(){
+public function getp2p($code=null){
 		$audios = Audios::find('first',array(
 			'order'=>array('Params.Code'=>'ASC')
 		));
@@ -2506,7 +2506,11 @@ public function getp2p(){
 				'URL'=>$a['URL'],
 			));
 		}
-		return $this->render(array('json' => array("success"=>"Yes",'audios'=>$allaudios)));		
+		if($code==null){
+			return $this->render(array('json' => array("success"=>"Yes",'audios'=>$allaudios)));		
+		}else{		
+			return compact('allaudios','code');
+		}
 }
 
 public function getpdfs(){
