@@ -2793,6 +2793,7 @@ public function levelup($mcaNumber){
 }
 
 public function getswipers(){
+	ini_set('memory_limit','-1');
 	$dir    = LITHIUM_APP_PATH . '/webroot/img/swiper';
 	$files = scandir($dir);
 	$mcaNumber = $this->request->data['mcaNumber'];
