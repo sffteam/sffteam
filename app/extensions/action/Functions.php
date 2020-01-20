@@ -451,8 +451,7 @@ $curl_errno = curl_errno($curl);
 //print_r( "cURL Error ($curl_errno): $curl_error\n");
 curl_close($curl);
 }
-	
-	
+
 		public function ThroughFile($phone,$msg,$twoCode){
 			
 			$file = 'vanity/out/mobile.php';

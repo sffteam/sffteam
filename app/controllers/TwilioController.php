@@ -27,19 +27,19 @@ class TwilioController extends \lithium\action\Controller {
 		return $this->render(array('json' => array("success"=>"Yes","result","pre")));		
 		
 	}
-	public function post(){
+	public function post($mobile,$message){
 			$sid = TWILIO_ACCOUNT_SID;
 			$token = TWILIO_AUTH_TOKEN;
 			$whatapp = TWILIO_WHATSAPP;
 			$client = new Client($sid, $token);
 				$client->messages->create(
 						// the number you'd like to send the message to
-						'+917597219319',
+						'whatsapp:'.$mobile,
 						array(
 										// A Twilio phone number you purchased at twilio.com/console
-										'from' => TWILIO_WHATSAPP,
+										'from' => "whatsapp:".TWILIO_WHATSAPP,
 										// the body of the text message you'd like to send
-										'body' => 'Hey Nilam! Good luck on the bar exam!'
+										'body' => urldecode($message)
 						)
 				);
 
