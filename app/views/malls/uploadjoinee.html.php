@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col-md-6">
-<?=$this->form->create('',array('url'=>'/malls/uploadJoinee', 'enctype'=>"multipart/form-data")); ?>
+<?=$this->form->create('',array('url'=>'/malls/uploadjoinee', 'enctype'=>"multipart/form-data")); ?>
 <br>
 <?=$this->form->field('file', array('type' => 'file','label'=>'BV.csv', 'id'=>"FileName",'onblur'=>'changeYear()','class'=>'form-control-file')); ?>
 <br>
