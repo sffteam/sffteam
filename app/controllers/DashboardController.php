@@ -744,6 +744,43 @@ $this->_render['layout'] = 'noHeaderFooter';
 		return $NodeDetails;
 	}
 
+ public function getChildsNumber($user_id,$chars=null){
+	#Retrieving a Full Tree
+	/* 	SELECT node.user_id
+	FROM details AS node,
+			details AS parent
+	WHERE node.lft BETWEEN parent.lft AND parent.rgt
+		   AND parent.user_id = 3
+	ORDER BY node.lft;
+	
+	parent = db.details.findOne({user_id: ObjectId("50e876e49d5d0cbc08000000")});
+	query = {left: {$gt: parent.left, $lt: parent.right}};
+	select = {user_id: 1};
+	db.details.find(query,select).sort({left: 1})
+	 */
+		$ParentDetails = Users::find('all',array(
+			'conditions'=>array(
+			'mcaNumber' => $user_id,
+			'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC')
+			));
+		foreach($ParentDetails as $pd){
+			$left = $pd['left'];
+			$right = $pd['right'];
+		}
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+				'mcaNumber'=>array('like'=>'/'.$chars.'/i'),
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right),
+				'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC')
+			)
+		);
+		return $NodeDetails;
+	}
  public function getChildsClub($user_id,$club0,$club1,$yyyymm){
 
 		$ParentDetails = Users::find('all',array(

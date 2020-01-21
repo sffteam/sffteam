@@ -1123,8 +1123,17 @@ public function getactive(){
 }
 
 public function getusers(){
+		$chars = $this->request->data['chars'];
 		$dashboard = new DashboardController();
-  $Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],$this->request->data['chars']);
+	
+		if(is_numeric($chars)){
+			$Nodes = $dashboard->getChildsNumber($this->request->data['mcaNumber'],$chars);
+		}else{
+			$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],$chars);
+		}
+	
+		
+  
   $yyyymm = date('Y-m');		
   $users = array();
   foreach($Nodes as $n){
