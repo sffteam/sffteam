@@ -2483,11 +2483,13 @@ public function getevents(){
 
 public function getdistributors(){
 	$chars = $this->request->data['chars']	;
-	$distributors = Distributors::find('all',array(
-		'conditions'=>array('City'=> array('like'=>'/'.$chars.'/i')),
+	$distributorsAddress = Distributors::find('all',array(
+		'conditions'=> array(
+				'Address'=> array('like'=>'/'.$chars.'/i'),
+				),
 		'order'=>array('Name'=>'ASC')
 	));
-		return $this->render(array('json' => array("success"=>"Yes",'distributors'=>$distributors)));		
+		return $this->render(array('json' => array("success"=>"Yes",'distributors'=>$distributorsAddress)));		
 }
 
 
