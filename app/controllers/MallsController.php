@@ -537,6 +537,7 @@ public function searchmca(){
 		
 //		$tree = $this->findTree($this->request->data['mcaNumber'],4);
 			$joinee = $this->findJoinee($this->request->data['mcaNumber']);
+			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
 			$lists = Lists::find('all',array(
 				'conditions'=>array('whoami'=>$this->request->data['mcaNumber'])
@@ -551,7 +552,7 @@ public function searchmca(){
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes",'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'DetailJoinee'=>$joinee)));				
+			return $this->render(array('json' => array("success"=>"Yes",'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'DetailJoinee'=>$joinee)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -691,7 +692,7 @@ public function sendotp(){
 }
 
 public function searchdown(){
-
+	ini_set('memory_limit', '-1');
 	$yyyymm = date('Y-m');
 	$pyyyymm = date('Y-m', strtotime('first day of last month'));
 	
@@ -712,6 +713,7 @@ public function searchdown(){
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
 				$joinee = count($this->findJoinee($u['mcaNumber']));
+				$findzero = $this->findZero($u['mcaNumber']);
 				
 			$lists = Lists::find('all',array(
 				'conditions'=>array('whoami'=>$this->request->data['whoami'])
@@ -755,6 +757,7 @@ public function searchdown(){
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 					'Joinee'=>$joinee,
+					'FindZero'=>$findzero,
 					'InActive' => $u[$yyyymm]['InActive']?:"",
 				),
 				$pyyyymm => array(
@@ -2611,6 +2614,66 @@ public function getdown(){
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),"users"=>$allusers)));		
 }
+
+public function findzero($mcaNumber){
+	
+	ini_set('memory_limit', '-1');
+	
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChildsZero($mcaNumber);	
+	
+	return $Nodes;		
+}
+
+
+public function getzero(){
+	ini_set('memory_limit', '-1');
+	$mcaNumber = $this->request->data['mcaNumber']	;	
+	$dashboard = new DashboardController();
+	$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");	
+	
+	$yyyymm = date('Y-m');
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	$p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+	$p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	$p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+	$p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+	$p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+	$p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+	$p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
+
+	$allusers = array();
+
+	foreach ($Nodes as $n){
+			if($n[$yyyymm]['PV'] == 0 && $n[$p1yyyymm]['PV'] > 0){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$n['mcaNumber'])
+				));
+				array_push($allusers,array(
+					'mcaNumber'=>$n['mcaNumber'],
+					'mcaName'=>$n['mcaName'],
+					'mobile'=>$mobile['Mobile']?:"",
+					$yyyymm."" => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+					$p1yyyymm."" => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0),
+					$p2yyyymm."" => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0),
+					$p3yyyymm."" => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0),
+					$p4yyyymm."" => array('PV'=>$n[$p4yyyymm]['PV']?:0,'GPV'=>$n[$p4yyyymm]['GPV']?:0),
+					$p5yyyymm."" => array('PV'=>$n[$p5yyyymm]['PV']?:0,'GPV'=>$n[$p5yyyymm]['GPV']?:0),
+					$p6yyyymm."" => array('PV'=>$n[$p6yyyymm]['PV']?:0,'GPV'=>$n[$p6yyyymm]['GPV']?:0),
+					$p7yyyymm."" => array('PV'=>$n[$p7yyyymm]['PV']?:0,'GPV'=>$n[$p7yyyymm]['GPV']?:0),
+					$p8yyyymm."" => array('PV'=>$n[$p8yyyymm]['PV']?:0,'GPV'=>$n[$p8yyyymm]['GPV']?:0),
+					$p9yyyymm."" => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),
+					$p10yyyymm."" => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),
+					$p11yyyymm."" => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),
+				));
+			}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),"users"=>$allusers)));		
+}
+
 
 public function getup(){
 	ini_set('memory_limit', '-1');

@@ -744,6 +744,50 @@ $this->_render['layout'] = 'noHeaderFooter';
 		return $NodeDetails;
 	}
 
+ public function getChildsZero($user_id){
+	#Retrieving a Full Tree
+	/* 	SELECT node.user_id
+	FROM details AS node,
+			details AS parent
+	WHERE node.lft BETWEEN parent.lft AND parent.rgt
+		   AND parent.user_id = 3
+	ORDER BY node.lft;
+	
+	parent = db.details.findOne({user_id: ObjectId("50e876e49d5d0cbc08000000")});
+	query = {left: {$gt: parent.left, $lt: parent.right}};
+	select = {user_id: 1};
+	db.details.find(query,select).sort({left: 1})
+	 */
+		$ParentDetails = Users::find('all',array(
+			'conditions'=>array(
+			'mcaNumber' => $user_id,
+			'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC')
+			));
+		foreach($ParentDetails as $pd){
+			$left = $pd['left'];
+			$right = $pd['right'];
+		}
+		$yyyymm = date('Y-m');
+		$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	
+		$NodeDetails = Users::find('all',array(
+			'conditions' => array(
+				'left'=>array('$gt'=>$left),
+				'right'=>array('$lt'=>$right),
+					$yyyymm . '.PV' => 0,
+					$p1yyyymm . '.PV' =>array('$gt'=>0) ,
+				'Enable'=>'Yes'
+			),
+			'order'=>array('mcaName'=>'ASC')
+			)
+		);
+		return count($NodeDetails);
+	}
+
+
+
  public function getChildsNumber($user_id,$chars=null){
 	#Retrieving a Full Tree
 	/* 	SELECT node.user_id
