@@ -530,6 +530,7 @@ public function searchmca(){
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
 						'ValidTitle'=>$upline[$p1yyyymm]['ValidTitle'],
+						'PaidTitle'=>$upline[$p1yyyymm]['PaidTitle'],
 						'Mobile'=>$UserMobile,
 					));
 				}
