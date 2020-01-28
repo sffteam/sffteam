@@ -6,7 +6,7 @@
 <br>
 <input type="text" id="yyyymm" name="yyyymm" value="<?=gmdate('Y-m',time())?>" class="form-control">
 <input type="submit" name="submit" value="Submit" id="Submit" class="btn btn-primary">
-
+Remove  –  from data
 </form>
 </div>
 
