@@ -529,6 +529,7 @@ public function searchmca(){
 						'mcaName'=>$upline['mcaName'],
 						'mcaNumber'=>$upline['mcaNumber'],
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
+						'ValidTitle'=>$upline[$p1yyyymm]['ValidTitle'],
 						'Mobile'=>$UserMobile,
 					));
 				}
@@ -2452,6 +2453,7 @@ set_time_limit(0);
 									'Contact' => (string)$data[6],
 									'Presenter' => (string)$data[7],								
 								);
+//								print_r($data);
 							Events::create()->save($data);
 						}
 			}
