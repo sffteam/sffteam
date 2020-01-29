@@ -9,6 +9,8 @@ use app\models\X_personalitytests;
 use app\models\X_personalityusers;
 use app\models\X_personalityresults;
 
+use app\models\X_nptquestions;
+
 class PersonalityController extends \lithium\action\Controller {
 
 	protected function _init(){
@@ -170,5 +172,55 @@ public function assess($id=null,$json=false){
 			return compact('personalityusers','a','e','n','c','o','AnalysisA','AnalysisE','AnalysisC','AnalysisN','AnalysisO');
 		}
 }
+
+
+
+
+public function npt(){
+	
+	$questions = X_nptquestions::find('all',array(
+		'order'=>array('Question'=>'ASC')
+	));
+	$allquestions = array();
+	foreach($questions as $q){
+		array_push($allquestions,
+			array(
+				'Question'=>$q['Question'],
+				'QA'=>$q['QA'],
+				'AA'=>$q['AA'],
+				'QB'=>$q['QB'],
+				'AB'=>$q['AB'],
+			)
+		
+		);
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'questions'=>$allquestions)));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 ?>
