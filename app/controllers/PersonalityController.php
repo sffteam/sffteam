@@ -10,6 +10,7 @@ use app\models\X_personalityusers;
 use app\models\X_personalityresults;
 
 use app\models\X_nptquestions;
+use app\models\X_nptpersons;
 
 class PersonalityController extends \lithium\action\Controller {
 
@@ -201,7 +202,21 @@ public function npt(){
 
 
 
-
+public function persons(){
+	$persons = X_nptpersons::find('all',array(
+		'order'=>array('Name'=>'ASC')
+	));
+	$allpersons = array();
+	foreach($persons as $p){
+		array_push($allpersons,
+			array(
+				'Name'=>$p['Name'],
+				'Type'=>$p['Type'],
+			)
+		);
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'persons'=>$allpersons)));
+}
 
 
 
