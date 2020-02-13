@@ -188,8 +188,10 @@ public function npt(){
 			array(
 				'Question'=>$q['Question'],
 				'QA'=>$q['QA'],
+				'HA'=>$q['HA'],
 				'AA'=>$q['AA'],
 				'QB'=>$q['QB'],
+				'HB'=>$q['HB'],
 				'AB'=>$q['AB'],
 			)
 		
