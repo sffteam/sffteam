@@ -2619,12 +2619,9 @@ public function getdown(){
 }
 
 public function findzero($mcaNumber){
-	
 	ini_set('memory_limit', '-1');
-	
 	$dashboard = new DashboardController();
 	$Nodes = $dashboard->getChildsZero($mcaNumber);	
-	
 	return $Nodes;		
 }
 
