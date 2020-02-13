@@ -222,10 +222,10 @@ public function persons(){
 }
 
 public function register(){
+	print_r($this->request->data);
 	if($this->request->data){
-		$user = X_nptusers::create()->save(data);
+		$user = X_nptusers::create()->save($this->request->data);
 		return $this->render(array('json' => array("success"=>"Yes")));
-		
 	}
 	return $this->render(array('json' => array("success"=>"No")));
 }
