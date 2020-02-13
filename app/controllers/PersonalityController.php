@@ -11,6 +11,7 @@ use app\models\X_personalityresults;
 
 use app\models\X_nptquestions;
 use app\models\X_nptpersons;
+use app\models\X_nptusers;
 
 class PersonalityController extends \lithium\action\Controller {
 
@@ -220,7 +221,15 @@ public function persons(){
 	return $this->render(array('json' => array("success"=>"Yes",'persons'=>$allpersons)));
 }
 
-
+public function register(){
+	if($this->request-data){
+		$user = X_nptusers::create();
+		$id = $user->save($this->request-data);
+		return $this->render(array('json' => array("success"=>"Yes",'user'=>$id)));
+		
+	}
+	
+}
 
 
 
