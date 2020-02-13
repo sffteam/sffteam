@@ -783,7 +783,17 @@ $this->_render['layout'] = 'noHeaderFooter';
 			'order'=>array('mcaName'=>'ASC')
 			)
 		);
-		return count($NodeDetails);
+		$count = 0;
+		$zeroPV = 0;
+		foreach($NodeDetails as $nd){
+				$zeroPV = $zeroPV + $nd[$p1yyyymm]['PV'];
+				$count++;
+		}
+		$findZero = array(
+			'count'=>$count,
+			'zeroPV'=>$zeroPV
+		);
+		return $findZero;
 	}
 
 
