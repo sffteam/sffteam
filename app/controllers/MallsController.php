@@ -3474,13 +3474,31 @@ public function sendsmsdaily(){
 }
 
 
-function sum_index($arr, $col_name){
-    $sum = 0;
-    foreach ($arr as $item) {
-        $sum += $item[$col_name];
-    }
-    return $sum;
+public function cityuser(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$city = $this->request->data['city'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$left = $user['left'];
+		$right = $user['right'];
+	
+	$conditions = array(
+ 'left'=>array('$gt'=>$left),
+ 'right'=>array('$lt'=>$right),
+ 'Enable'=>'Yes',
+	'City'=>$city
+		);
+
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));					
 }
+
+
 //end of class
 }
 
