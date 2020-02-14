@@ -526,6 +526,7 @@ public function searchmca(){
 		
 //		$tree = $this->findTree($this->request->data['mcaNumber'],4);
 			$joinee = $this->findJoinee($this->request->data['mcaNumber']);
+			$team = $this->findTeam($this->request->data['mcaNumber']);
 			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
 			$lists = Lists::find('all',array(
@@ -541,7 +542,7 @@ public function searchmca(){
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes",'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'DetailJoinee'=>$joinee)));				
+			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'DetailJoinee'=>$joinee)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -549,6 +550,22 @@ public function searchmca(){
 	return $this->render(array('json' => array("success"=>"No")));				
 }
 
+public function findTeam($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+			$left = $user['left'];
+			$right = $user['right'];
+$team = Users::count('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	return $team;
+}
 public function findJoinee($mcaNumber){
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
@@ -702,6 +719,7 @@ public function searchdown(){
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
 				$joinee = count($this->findJoinee($u['mcaNumber']));
+				$team = $this->findTeam($u['mcaNumber']);
 				$findzero = $this->findZero($u['mcaNumber']);
 				
 			$lists = Lists::find('all',array(
@@ -732,6 +750,7 @@ public function searchdown(){
 				'Zone'=>$u['Zone'],
 				'City'=>$u['City'],
 				'lists'=>$dataLists,
+				'team'=>$team,
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
