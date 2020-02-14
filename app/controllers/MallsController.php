@@ -156,7 +156,6 @@ class MallsController extends \lithium\action\Controller {
 
  public function getprice(){
   $cart = $this->request->data;
-  //print_r($this->request->post);
   $value = 0;
   $totalvalue = 0;
   $wp = 0;
@@ -168,12 +167,6 @@ class MallsController extends \lithium\action\Controller {
    ));
 
    $settings = Settings::find('first');
-   // print_r("Code: ".$code);
-    // print_r("code: ".$product['code']);
-    // print_r("Name: ".$product['name']);
-    // print_r("DiscountType: ".$product['discountType']);
-    // print_r("Discount: ".$product['discount']);
-    // print_r("MRP: ".$product['MRP']);
     $walletpoints = round($product['BV']*$quantity*$settings['WalletPoints']/100,0);
     if($product['discountType']=="Rs"){
 					$totalPV = floatval(($product['PV']));
@@ -224,12 +217,6 @@ public function cartproducts(){
 			}
 			
    $settings = Settings::find('first');
-   // print_r("Code: ".$code);
-    // print_r("code: ".$product['code']);
-    // print_r("Name: ".$product['name']);
-    // print_r("DiscountType: ".$product['discountType']);
-    // print_r("Discount: ".$product['discount']);
-    // print_r("MRP: ".$product['MRP']);
     $walletpoints = round($product['BV']*$quantity*$settings['WalletPoints']/100,0);
     if($product['discountType']=="Rs"){
 					$totalPV = floatval(($product['PV']));
@@ -331,7 +318,7 @@ public function points(){
 			'Products'=>$ProductData,
 			'dateTime'=> new \MongoDate,
 		);
-//print_r($data);
+
 		$order = Orders::create();
 		$id = $order->save($data);
 
@@ -842,7 +829,7 @@ set_time_limit(0);
 									'Enable'=>(string)$data[28],
 								);
 								
-//					print_r($data);exit;
+
 								$user = Users::find("first",array(
 								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
 								));
@@ -851,7 +838,7 @@ set_time_limit(0);
 										if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
 											$this->addUserBuilders($data,$yyyymm);
-											//print_r($data);
+											
 										}
 									}
 								}else{
@@ -906,7 +893,7 @@ set_time_limit(0);
 		
 			if($data){
 			if($data['mcaNumber']!="" && $data["mcaName"]!=""){
-//				print_r($data['refer']);
+
 				$refer = Users::first(array(
 						'fields'=>array('left','mcaNumber','ancestors','mcaName'),
 							'conditions'=>array('mcaNumber'=>(string)$data['refer'])
@@ -1200,7 +1187,7 @@ set_time_limit(0);
 									'Enable'=>"Yes"
 								);
 								
-		//						print_r($data);
+		
 								$user = Users::find("first",array(
 								"conditions"=>array('mcaNumber'=>$data['mcaNumber'])
 								));
@@ -1209,7 +1196,7 @@ set_time_limit(0);
 										if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
 											$this->adduserjoinee($data,$yyyymm);
-											//print_r($data);
+		
 										}
 									}
 								}else{
@@ -2990,6 +2977,7 @@ public function getregion(){
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$region = $this->request->data['region'];
 	$yyyymm = date('Y-m');	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
@@ -2997,42 +2985,41 @@ public function getregion(){
 	$right = $user['right'];
 	
 	$conditions = array(
-			'left'=>array('$gt'=>$left),
-			'right'=>array('$lt'=>$right),
-			'Enable'=>'Yes',
+ 'left'=>array('$gt'=>$left),
+ 'right'=>array('$lt'=>$right),
+ 'Enable'=>'Yes',
 		);
 	
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
 	));
 
-	$joinMonth = array();
-		foreach ($users as $u){
-				if(!$this->in_array_r($u['Zone'],$u['Zone'])){
-					array_push($joinMonth, 
-						array(
-							$u['Zone']=>1 //$joinMonth[$u['Zone']+1]
-						)
-					);
-				}
-		}
-	
-		$sumArray = array();
 
-	foreach ($joinMonth as $k=>$subArray) {
-  foreach ($subArray as $id=>$value) {
-    $sumArray[$id]+=$value;
-  }
-	}
-	$Region = array();
-	foreach ($sumArray as $key => $val) {
-    array_push($Region,array(
-					'Region'=>$key,
-					'Value'=>$val
+	$r = "";
+	$down = array();
+	foreach ($users as $u){
+				array_push($down,array(
+					'Zone'=>$u['Zone'],
+					$u['Zone'].'PPV'=>$u[$p1yyyymm]['PV']?:0,
+					$u['Zone'].'PV'=>$u[$yyyymm]['PV']?:0
 				));
 	}
-	array_multisort($Region, SORT_ASC);
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));				
+	
+		$u = array_unique(array_column($down, 'Zone'));
+		$a = array_count_values(array_column($down,'Zone'));
+		
+		
+		$Zones = array();
+		foreach($a as $key=>$val){
+			$pv = array_sum(array_column($down,$key.'PV'));
+			$ppv = array_sum(array_column($down,$key.'PPV'));
+			array_push($Zones, array(
+				 $key.'PV' => $pv,
+					$key.'PPV' => $ppv
+			));
+		}
+
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));				
 }
 
 public function getstate(){
@@ -3041,6 +3028,7 @@ public function getstate(){
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$region = $this->request->data['region'];
 	$yyyymm = date('Y-m');	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
@@ -3055,33 +3043,37 @@ public function getstate(){
 		'conditions'=>$conditions,
 	));
 
-	$joinMonth = array();
-		foreach ($users as $u){
-				if(!$this->in_array_r($u['Zone']."-".$u['State'],$u['Zone']."-".$u['State'])){
-					array_push($joinMonth, 
-						array(
-							$u['Zone']."-".$u['State']=>1 //$joinMonth[$u['Zone']+1]
-						)
-					);
-				}
-		}
-	
-		$sumArray = array();
 
-	foreach ($joinMonth as $k=>$subArray) {
-  foreach ($subArray as $id=>$value) {
-    $sumArray[$id]+=$value;
-  }
-	}
-	$Region = array();
-	foreach ($sumArray as $key => $val) {
-    array_push($Region,array(
-					'Region'=>$key,
-					'Value'=>$val
+
+	$r = "";
+	$down = array();
+	foreach ($users as $u){
+				array_push($down,array(
+					'State'=>$u['State'],
+					$u['State'].'PPV'=>$u[$p1yyyymm]['PV'],
+					$u['State'].'PV'=>$u[$yyyymm]['PV']
 				));
 	}
-	array_multisort($Region, SORT_ASC);
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));				
+	
+
+	
+		$u = array_unique(array_column($down, 'State'));
+		$a = array_count_values(array_column($down,'State'));
+		
+		
+		$Zones = array();
+		foreach($a as $key=>$val){
+			$pv = array_sum(array_column($down,$key.'PV'));
+			$ppv = array_sum(array_column($down,$key.'PPV'));
+			array_push($Zones, array(
+				 $key.'PV' => $pv,
+					$key.'PPV' => $ppv
+			));
+		}
+
+
+
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));				
 }
 
 
@@ -3091,6 +3083,7 @@ public function getCity(){
 	$mcaNumber = $this->request->data['mcaNumber'];
 	$region = $this->request->data['region'];
 	$yyyymm = date('Y-m');	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
@@ -3104,6 +3097,41 @@ public function getCity(){
 		$users = Users::find('all',array(
 		'conditions'=>$conditions,
 	));
+
+	$r = "";
+	$down = array();
+	foreach ($users as $u){
+			if($u['State']=="Gujarat" && $u['City']=="Allahabad"){
+				array_push($down,array(
+					'City'=>'Ahmedabad',
+					$u['Ahmedabad'].'PPV'=>$u[$p1yyyymm]['PV'],
+					$u['Ahmedabad'].'PV'=>$u[$yyyymm]['PV']
+				));
+			}else{
+				array_push($down,array(
+					'City'=>$u['City'],
+					$u['City'].'PPV'=>$u[$p1yyyymm]['PV'],
+					$u['City'].'PV'=>$u[$yyyymm]['PV']
+				));
+			}
+	}
+	
+
+	
+		$u = array_unique(array_column($down, 'City'));
+		$a = array_count_values(array_column($down,'City'));
+		
+		
+		$Zones = array();
+		foreach($a as $key=>$val){
+			$pv = array_sum(array_column($down,$key.'PV'));
+			$ppv = array_sum(array_column($down,$key.'PPV'));
+			array_push($Zones, array(
+				 $key.'PV' => $pv,
+					$key.'PPV' => $ppv
+			));
+		}
+
 
 	$joinMonth = array();
 		foreach ($users as $u){
@@ -3132,7 +3160,7 @@ public function getCity(){
 				));
 	}
 	array_multisort($Region, SORT_ASC);
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Region)));		
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));		
 }
 
 
@@ -3386,7 +3414,7 @@ public function thismonths($mcaNumber = null,$date = null){
 	$right = $user['right'];
 	$yyyymm = date('Y-m');	
 	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
-	print_r($yyyymm);
+
 	$users = Users::find('all',array(
 		'conditions'=>array(
 			$yyyymm.'.today.PV'=>array('$gt'=>0),
@@ -3477,6 +3505,14 @@ public function sendsmsdaily(){
 	return $this->redirect('/malls/thismonths');		
 }
 
+
+function sum_index($arr, $col_name){
+    $sum = 0;
+    foreach ($arr as $item) {
+        $sum += $item[$col_name];
+    }
+    return $sum;
+}
 //end of class
 }
 
