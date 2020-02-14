@@ -3013,12 +3013,13 @@ public function getregion(){
 		foreach($a as $key=>$val){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
+			
 			array_push($Zones, array(
-				 $key => array('PV' => $pv, 'PPV' => $ppv)
+				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
 
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));				
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
 
 public function getstate(){
@@ -3065,13 +3066,11 @@ public function getstate(){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				 $key => array('PV' => $pv, 'PPV' => $ppv)
+				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
 
-
-
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));				
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
 
 
@@ -3125,39 +3124,11 @@ public function getCity(){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				$key => array('PV' => $pv, 'PPV' => $ppv)			
-				));
+				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+			));
 		}
 
-
-	$joinMonth = array();
-		foreach ($users as $u){
-			if($u['State']=="Gujarat" && $u['City']=="Allahabad"){
-				$u['City']="Ahmedabad";
-			}
-				if(!$this->in_array_r($u['Zone']."-".$u['State']."-".$u['City'],$u['Zone']."-".$u['State']."-".$u['City'])){
-					array_push($joinMonth, 
-						array(
-							$u['Zone']."-".$u['State']."-".$u['City']=>1 //$joinMonth[$u['Zone']+1]
-						)
-					);
-				}
-		}
-		$sumArray = array();
-	foreach ($joinMonth as $k=>$subArray) {
-  foreach ($subArray as $id=>$value) {
-    $sumArray[$id]+=$value;
-  }
-	}
-	$Region = array();
-	foreach ($sumArray as $key => $val) {
-    array_push($Region,array(
-					'Region'=>$key,
-					'Value'=>$val
-				));
-	}
-	array_multisort($Region, SORT_ASC);
-	return $this->render(array('json' => array("success"=>"Yes",'param'=>$a,'pv'=>$Zones)));		
+	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
 
 
