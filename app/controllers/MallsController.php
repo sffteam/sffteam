@@ -3014,8 +3014,7 @@ public function getregion(){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				 $key.'PV' => $pv,
-					$key.'PPV' => $ppv
+				 $key => array('PV' => $pv, 'PPV' => $ppv)
 			));
 		}
 
@@ -3066,8 +3065,7 @@ public function getstate(){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				 $key.'PV' => $pv,
-					$key.'PPV' => $ppv
+				 $key => array('PV' => $pv, 'PPV' => $ppv)
 			));
 		}
 
@@ -3127,9 +3125,8 @@ public function getCity(){
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				 $key.'PV' => $pv,
-					$key.'PPV' => $ppv
-			));
+				$key => array('PV' => $pv, 'PPV' => $ppv)			
+				));
 		}
 
 
