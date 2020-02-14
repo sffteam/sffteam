@@ -3493,6 +3493,7 @@ public function cityuser(){
 
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
+		'order'=>array('mcaName'=>array('ASC'=>true))
 	));
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));					
