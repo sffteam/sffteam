@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\tests\cases\security;
@@ -18,14 +19,14 @@ class HashTest extends \lithium\test\Unit {
 		$value = 'Lithium rocks!';
 
 		$expected = sha1($value);
-		$result = Hash::calculate($value, array('type' => 'sha1'));
+		$result = Hash::calculate($value, ['type' => 'sha1']);
 		$this->assertEqual($expected, $result);
 
-		$result = Hash::calculate($value, array('type' => 'sha1') + compact('salt'));
+		$result = Hash::calculate($value, ['type' => 'sha1'] + compact('salt'));
 		$this->assertEqual(sha1($salt . $value), $result);
-		$this->assertEqual(md5($value), Hash::calculate($value, array('type' => 'md5')));
+		$this->assertEqual(md5($value), Hash::calculate($value, ['type' => 'md5']));
 
-		$result = Hash::calculate($value, array('type' => 'md5') + compact('salt'));
+		$result = Hash::calculate($value, ['type' => 'md5'] + compact('salt'));
 		$this->assertEqual(md5($salt . $value), $result);
 
 		$sha256 = function($value) {
@@ -38,10 +39,10 @@ class HashTest extends \lithium\test\Unit {
 		};
 
 		try {
-			$result = Hash::calculate($value, array('type' => 'sha256'));
+			$result = Hash::calculate($value, ['type' => 'sha256']);
 			$this->assertEqual($sha256($value), $result);
 
-			$result = Hash::calculate($value, array('type' => 'sha256') + compact('salt'));
+			$result = Hash::calculate($value, ['type' => 'sha256'] + compact('salt'));
 			$this->assertEqual($sha256($salt . $value), $result);
 		} catch (Exception $e) {
 		}
@@ -93,16 +94,16 @@ class HashTest extends \lithium\test\Unit {
 	}
 
 	public function testCalculateArray() {
-		$data0 = array('foo' => 'bar');
-		$data1 = array('foo' => 'bar');
+		$data0 = ['foo' => 'bar'];
+		$data1 = ['foo' => 'bar'];
 
 		$result0 = Hash::calculate($data0);
 		$result1 = Hash::calculate($data1);
 
 		$this->assertEqual($result0, $result1);
 
-		$data0 = array('foo' => 'bar');
-		$data1 = array('foo' => 'bar', 'baz');
+		$data0 = ['foo' => 'bar'];
+		$data1 = ['foo' => 'bar', 'baz'];
 
 		$result0 = Hash::calculate($data0);
 		$result1 = Hash::calculate($data1);

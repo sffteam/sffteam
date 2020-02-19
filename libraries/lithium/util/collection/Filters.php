@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\util\collection;
@@ -88,7 +89,7 @@ class Filters extends \lithium\util\Collection {
 	 * @deprecated
 	 * @var array
 	 */
-	protected static $_lazyFilters = array();
+	protected static $_lazyFilters = [];
 
 	/**
 	 * This is the list of configuration settings that will be automatically applied to the
@@ -97,7 +98,7 @@ class Filters extends \lithium\util\Collection {
 	 * @deprecated
 	 * @var array
 	 */
-	protected $_autoConfig = array('data', 'class', 'method');
+	protected $_autoConfig = ['data', 'class', 'method'];
 
 	/**
 	 * The fully-namespaced class name of the class containing the method being filtered.
@@ -186,12 +187,12 @@ class Filters extends \lithium\util\Collection {
 	 *          executed first, and will be the last to return.
 	 * @return Returns the value returned by the first closure in `$options['data`]`.
 	 */
-	public static function run($class, $params, array $options = array()) {
+	public static function run($class, $params, array $options = []) {
 		$message  = '`\lithium\util\collection\Filters::run()` has been deprecated ';
 		$message .= 'in favor of `\lithium\aop\Filters::run()`';
 		trigger_error($message, E_USER_DEPRECATED);
 
-		$defaults = array('class' => null, 'method' => null, 'data' => array());
+		$defaults = ['class' => null, 'method' => null, 'data' => []];
 		$options += $defaults;
 
 		$callback = array_pop($options['data']);

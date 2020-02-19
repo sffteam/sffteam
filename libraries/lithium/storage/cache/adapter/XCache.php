@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\storage\cache\adapter;
@@ -32,13 +33,13 @@ trigger_error($message, E_USER_DEPRECATED);
  * A simple configuration can be accomplished as follows:
  *
  * ```
- * Cache::config(array(
- *     'default' => array(
+ * Cache::config([
+ *     'default' => [
  *         'adapter' => 'XCache',
  *         'username' => 'user',
  *         'password' => 'pass'
- *     )
- * ));
+ *     ]
+ * ]);
  * ```
  *
  * Note that the `username` and `password` configuration fields are only required if
@@ -65,11 +66,11 @@ class XCache extends \lithium\storage\cache\Adapter {
 	 *          to `+1 hour`.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$defaults = array(
+	public function __construct(array $config = []) {
+		$defaults = [
 			'scope' => null,
 			'expiry' => '+1 hour'
-		);
+		];
 		parent::__construct($config + $defaults);
 	}
 
@@ -120,7 +121,7 @@ class XCache extends \lithium\storage\cache\Adapter {
 		if ($this->_config['scope']) {
 			$keys = $this->_addScopePrefix($this->_config['scope'], $keys);
 		}
-		$results = array();
+		$results = [];
 
 		foreach ($keys as $key) {
 			$result = xcache_get($key);
@@ -207,7 +208,7 @@ class XCache extends \lithium\storage\cache\Adapter {
 		if ($admin && (!isset($this->_config['username']) || !isset($this->_config['password']))) {
 			return false;
 		}
-		$credentials = array();
+		$credentials = [];
 
 		if (isset($_SERVER['PHP_AUTH_USER'])) {
 			$credentials['username'] = $_SERVER['PHP_AUTH_USER'];

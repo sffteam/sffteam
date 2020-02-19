@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\test;
@@ -26,7 +27,7 @@ class Controller extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_context = array();
+	protected $_context = [];
 
 	/**
 	 * Magic method to make Controller callable.
@@ -38,10 +39,10 @@ class Controller extends \lithium\core\Object {
 	 * @return string
 	 * @filter
 	 */
-	public function __invoke($request, $dispatchParams, array $options = array()) {
-		$dispatchParamsDefaults = array('args' => array());
+	public function __invoke($request, $dispatchParams, array $options = []) {
+		$dispatchParamsDefaults = ['args' => []];
 		$dispatchParams += $dispatchParamsDefaults;
-		$defaults = array('format' => 'html', 'timeout' => 0);
+		$defaults = ['format' => 'html', 'timeout' => 0];
 		$options += (array) $request->query + $defaults;
 		$params = compact('request', 'dispatchParams', 'options');
 
@@ -62,12 +63,12 @@ class Controller extends \lithium\core\Object {
 			$this->_restoreCtrlContext();
 
 			$filters = Libraries::locate('test.filter');
-			$menu = Libraries::locate('tests', null, array(
+			$menu = Libraries::locate('tests', null, [
 				'filter' => '/cases|integration|functional/',
 				'exclude' => '/mocks/'
-			));
+			]);
 			sort($menu);
-			$menu = Set::expand(array_combine($menu, $menu), array('separator' => "\\"));
+			$menu = Set::expand(array_combine($menu, $menu), ['separator' => "\\"]);
 			$result = compact('request', 'report', 'filters', 'menu');
 			return $report->render('layout', $result);
 		});

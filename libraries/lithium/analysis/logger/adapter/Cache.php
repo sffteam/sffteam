@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\analysis\logger\adapter;
@@ -15,15 +16,15 @@ use lithium\util\Text;
  * `lithium\storage\Cache`. In order to use this adapter, you must first configure a cache adapter
  * for it to write to, as follows:
  * ```
- * lithium\storage\Cache::config(array(
- * 	'storage' => array('adapter' => 'Redis', 'host' => '127.0.0.1:6379')
- * ));```
+ * lithium\storage\Cache::config([
+ * 	'storage' => ['adapter' => 'Redis', 'host' => '127.0.0.1:6379']
+ * ]);```
  *
  * Then, you can configure the `Cache` logger with the `'storage'` config:
  * ```
- * lithium\analysis\Logger::config(array(
- * 	'debug' => array('adapter' => 'Cache', 'config' => 'storage')
- * ));
+ * lithium\analysis\Logger::config([
+ * 	'debug' => ['adapter' => 'Cache', 'config' => 'storage']
+ * ]);
  * ```
  *
  * You can then send messages to the logger which will be written to the cache store:
@@ -40,9 +41,9 @@ class Cache extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_classes = array(
+	protected $_classes = [
 		'cache' => 'lithium\storage\Cache'
-	);
+	];
 
 	/**
 	 * Constructor.
@@ -58,14 +59,14 @@ class Cache extends \lithium\core\Object {
 	 *          to `'log_{:priority}_{:timestamp}'`.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
+	public function __construct(array $config = []) {
 		$cache = $this->_classes['cache'];
 
-		$defaults = array(
+		$defaults = [
 			'config' => null,
 			'expiry' => $cache::PERSIST,
 			'key' => 'log_{:priority}_{:timestamp}'
-		);
+		];
 		parent::__construct($config + $defaults);
 	}
 
@@ -80,7 +81,7 @@ class Cache extends \lithium\core\Object {
 		$config = $this->_config + $this->_classes;
 
 		return function($params) use ($config) {
-			$params += array('timestamp' => strtotime('now'));
+			$params += ['timestamp' => strtotime('now')];
 			$key = $config['key'];
 			$key = is_callable($key) ? $key($params) : Text::insert($key, $params);
 

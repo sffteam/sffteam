@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\net;
@@ -28,7 +29,7 @@ class HostString {
 	 */
 	public static function parse($host) {
 		if ($host[0] === ':') {
-			return array('port' => (integer) substr($host, 1));
+			return ['port' => (integer) substr($host, 1)];
 		}
 		if ($host[0] === '[') {
 			if (($close = strpos($host, ']')) === false) {
@@ -38,20 +39,20 @@ class HostString {
 				if ($host[$close + 1] !== ':') {
 					throw new LogicException("Failed to parse host string `{$host}`.");
 				}
-				return array(
+				return [
 					'host' => substr($host, 1, $close - 1),
 					'port' => (integer) substr($host, $close + 2)
-				);
+				];
 			}
-			return array('host' => substr($host, 1, -1));
+			return ['host' => substr($host, 1, -1)];
 		}
 		if (($colon = strpos($host, ':')) !== false) {
-			return array(
+			return [
 				'host' => substr($host, 0, $colon),
 				'port' => (integer) substr($host, $colon + 1)
-			);
+			];
 		}
-		return array('host' => $host);
+		return ['host' => $host];
 	}
 
 	/**

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\test;
@@ -55,11 +56,11 @@ class Integration extends \lithium\test\Unit {
 	 * @param array $config Override the default URL to check.
 	 * @return boolean True if a network connection is established, false otherwise.
 	 */
-	protected function _hasNetwork($config = array()) {
-		$defaults = array(
+	protected function _hasNetwork($config = []) {
+		$defaults = [
 			'scheme' => 'http',
 			'host' => 'google.com'
-		);
+		];
 		$config += $defaults;
 
 		$url = "{$config['scheme']}://{$config['host']}";

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/mit-license.php The MIT License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\util;
@@ -74,7 +75,7 @@ class StringDeprecated {
 	 * @param array $options
 	 * @return string Returns a string of random bytes.
 	 */
-	public static function random($bytes, array $options = array()) {
+	public static function random($bytes, array $options = []) {
 		$message  = "lithium\util\String::random() has been deprecated in favor of ";
 		$message .= "lithium\security\Random::generate().";
 		trigger_error($message, E_USER_DEPRECATED);
@@ -93,7 +94,7 @@ class StringDeprecated {
 	 * @param array $options
 	 * @return string Returns a hashed string.
 	 */
-	public static function hash($string, array $options = array()) {
+	public static function hash($string, array $options = []) {
 		$message  = "lithium\util\String::hash() has been deprecated in favor of ";
 		$message .= "lithium\security\Hash::calculate().";
 		trigger_error($message, E_USER_DEPRECATED);
@@ -143,7 +144,7 @@ class StringDeprecated {
 	 * @param array $options
 	 * @return string
 	 */
-	public static function insert($str, array $data, array $options = array()) {
+	public static function insert($str, array $data, array $options = []) {
 		$message  = "lithium\util\String::insert() has been deprecated in favor of ";
 		$message .= "lithium\util\Text::insert().";
 		trigger_error($message, E_USER_DEPRECATED);
@@ -161,7 +162,7 @@ class StringDeprecated {
 	 * @param array $options
 	 * @return string The cleaned string.
 	 */
-	public static function clean($str, array $options = array()) {
+	public static function clean($str, array $options = []) {
 		$message  = "lithium\util\String::clean() has been deprecated in favor of ";
 		$message .= "lithium\util\Text::clean().";
 		trigger_error($message, E_USER_DEPRECATED);
@@ -196,7 +197,7 @@ class StringDeprecated {
 	 * @param array $options
 	 * @return array Returns an array of tokens.
 	 */
-	public static function tokenize($data, array $options = array()) {
+	public static function tokenize($data, array $options = []) {
 		$message  = "lithium\util\String::tokenize() has been deprecated in favor of ";
 		$message .= "lithium\util\Text::tokenize().";
 		trigger_error($message, E_USER_DEPRECATED);

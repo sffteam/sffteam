@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of Rad, Inc. (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\tests\cases\storage\session\adapter;
@@ -85,8 +86,8 @@ class MemoryTest extends \lithium\test\Unit {
 		$closure = $this->Memory->read();
 		$this->assertInternalType('callable', $closure);
 
-		$result = $closure(array('key' => null), null);
-		$expected = array('read_test' => 'value to be read');
+		$result = $closure(['key' => null], null);
+		$expected = ['read_test' => 'value to be read'];
 		$this->assertEqual($expected, $result);
 	}
 
@@ -165,7 +166,7 @@ class MemoryTest extends \lithium\test\Unit {
 		$this->Memory->_session['foobar'] = 'foo';
 		$closure = $this->Memory->clear();
 		$this->assertInternalType('callable', $closure);
-		$result = $closure(array(), null);
+		$result = $closure([], null);
 		$this->assertEmpty($this->Memory->_session);
 	}
 }

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\security;
@@ -56,8 +57,8 @@ class Random {
 	 *                resulting value will be base64-encoded, per the note above.
 	 * @return string Returns (an encoded) string of random bytes.
 	 */
-	public static function generate($bytes, array $options = array()) {
-		$defaults = array('encode' => null);
+	public static function generate($bytes, array $options = []) {
+		$defaults = ['encode' => null];
 		$options += $defaults;
 
 		$source = static::$_source ?: (static::$_source = static::_source());

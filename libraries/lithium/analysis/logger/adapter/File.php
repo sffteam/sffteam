@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\analysis\logger\adapter;
@@ -18,9 +19,9 @@ use lithium\core\Libraries;
  * ```
  * use lithium\analysis\Logger;
  *
- * Logger::config(array(
- * 	'simple' => array('adapter' => 'File')
- * ));
+ * Logger::config([
+ * 	'simple' => ['adapter' => 'File']
+ * ]);
  * Logger::write('debug', 'Something happened!');
  * ```
  *
@@ -51,13 +52,13 @@ class File extends \lithium\core\Object {
 	 *          `"{:timestamp} {:message}\n"`.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$defaults = array(
+	public function __construct(array $config = []) {
+		$defaults = [
 			'path' => Libraries::get(true, 'resources') . '/tmp/logs',
 			'timestamp' => 'Y-m-d H:i:s',
 			'file' => function($data, $config) { return "{$data['priority']}.log"; },
 			'format' => "{:timestamp} {:message}\n"
-		);
+		];
 		parent::__construct($config + $defaults);
 	}
 

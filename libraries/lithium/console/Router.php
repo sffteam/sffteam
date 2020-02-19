@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\console;
@@ -31,7 +32,7 @@ class Router extends \lithium\core\Object {
 	 * @return array $params
 	 */
 	public static function parse($request = null) {
-		$defaults = array('command' => null, 'action' => 'run', 'args' => array());
+		$defaults = ['command' => null, 'action' => 'run', 'args' => []];
 		$params = $request ? (array) $request->params + $defaults : $defaults;
 
 		if (!empty($request->argv)) {
@@ -52,7 +53,7 @@ class Router extends \lithium\core\Object {
 				$params['args'][] = $arg;
 			}
 		}
-		foreach (array('command', 'action') as $param) {
+		foreach (['command', 'action'] as $param) {
 			if (!empty($params['args'])) {
 				$params[$param] = array_shift($params['args']);
 			}

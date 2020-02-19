@@ -135,7 +135,7 @@ if (file_exists($file = LITHIUM_LIBRARY_PATH . '/autoload.php')) {
 }
 Libraries::add('li3_qrcode');
 Libraries::add('li3_pdf');
-Libraries::add('jpgraph', array( 	'bootstrap' => 'jpgraph_required.php' ));
+// Libraries::add('jpgraph', array( 	'bootstrap' => 'jpgraph_required.php' ));
 Libraries::add('swiftmailer', array(	'bootstrap' => 'swift_required.php'));
 Libraries::add('twilio', array(	'bootstrap' => 'sdk/src/Twilio/autoload.php'));
 

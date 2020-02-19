@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2013, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\aop;
@@ -83,8 +84,9 @@ use lithium\aop\Chain;
  * modified by any custom logic present before being returned from `run()`.
  * ```
  * use lithium\aop\Filters;
+ * use lithium\action\Dispatcher;
  *
- * Filters::apply('lithium\action\Dispatcher', 'run', function($params, $next) {
+ * Filters::apply(Dispatcher::class, 'run', function($params, $next) {
  * 	// Custom pre-dispatch logic goes here.
  * 	$response = $next($params);
  *
@@ -108,7 +110,7 @@ class Filters {
 	 * @see lithium\aop\Filters::_chain()
 	 * @var array
 	 */
-	protected static $_filters = array();
+	protected static $_filters = [];
 
 	/**
 	 * Holds `Chain` objects keyed by their primary class and method id.
@@ -117,12 +119,12 @@ class Filters {
 	 * @see lithium\aop\Filters::_chain()
 	 * @array
 	 */
-	protected static $_chains = array();
+	protected static $_chains = [];
 
 	/**
 	 * Lazily applies a filter to a method.
 	 *
-	 * Classes aliased via `class_alias()` are treated as entirely seperate from
+	 * Classes aliased via `class_alias()` are treated as entirely separate from
 	 * their original class.
 	 *
 	 * When calling apply after previous runs (rarely happens), this method will
@@ -149,7 +151,7 @@ class Filters {
 		list($id,) = static::_ids($class, $method);
 
 		if (!isset(static::$_filters[$id])) {
-			static::$_filters[$id] = array();
+			static::$_filters[$id] = [];
 		}
 		static::$_filters[$id][] = $filter;
 
@@ -255,7 +257,7 @@ class Filters {
 	 */
 	public static function clear($class = null, $method = null) {
 		if ($class === null && $method === null) {
-			static::$_filters = static::$_chains = array();
+			static::$_filters = static::$_chains = [];
 			return;
 		}
 
@@ -294,12 +296,12 @@ class Filters {
 	 */
 	protected static function _ids($class, $method) {
 		if (is_string($class)) {
-			return array('<' . ltrim($class, '\\') . ">::{$method}");
+			return ['<' . ltrim($class, '\\') . ">::{$method}"];
 		}
-		return array(
+		return [
 			'<' . get_class($class) . ' #' . spl_object_hash($class) . ">::{$method}",
 			'<' . get_class($class) . ">::{$method}"
-		);
+		];
 	}
 
 	/**
@@ -318,7 +320,7 @@ class Filters {
 		if (isset(static::$_chains[$ids[0]])) {
 			return static::$_chains[$ids[0]];
 		}
-		$filters = array();
+		$filters = [];
 
 		foreach ($ids as $id) {
 			if (isset(static::$_filters[$id])) {

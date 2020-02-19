@@ -1,8 +1,21 @@
 # Change Log
 
+## v1.1.1
+
+### Added
+
+- PHP 7.1 support
+
+### Fixed
+
+- Test report filters are now fully normalized before passing them into `Report`.
+- Removed debug code in exception handling of `Database` (Alex Bowers).
+
 ## v1.1.0
 
 ### Added
+
+- PHP 7.0 support
 
 - `Database` now supports the `NOT BETWEEN` operator. #1208 (Eric Cholis)
 
@@ -48,12 +61,16 @@
   special methods or properties defined. This is possible by entirely relying on a central
   filters manager and using `spl_object_hash()` internally.
 
+  **Simplified filters context.** By integrating PHP 5.5's new `::class` keyword with `use`,
+  references to the static context are now made with `Context::class`, removing the need
+  for a static `$self` and repeating the full class name across filters in the same file.
+
   **Simplified filters signature.** By using PHP 5.4's new context binding feature for
   closures, we were able to simplify the signature of filters - i.e. by dropping the
   `$self`.
 
   This - as a sideeffect - reduces the requirement of using `invokeMethod()` to access
-  protected members of the context. `$this` and `static` can be used to access
+  protected members of the context. `$this` and `Context::class` can be used to access
   the filtered object. Also makes better stacktraces.
 
   **Simplified chain advancing.**
@@ -111,12 +128,12 @@
 - `Cache` together with the `File` adapter can now be used to store BLOBs. 
 
   ```php
-  Cache::config(array(
-    'blob' => array(
+  Cache::config([
+    'blob' => [
       'adapter' => 'File', 
       'streams' => true // Enable this option for BLOB support.
-    )
-  ));
+    ]
+  ]);
   
   $stream = fopen('php://temp', 'wb');
   $pdf->generate()->store($stream); // some expensive action
@@ -165,10 +182,10 @@
 - Text form fields now support generating corresponding `<datalist>` elements for autocompletion.
 
   ```php
-  $this->form->field('region', array(
+  $this->form->field('region', [
       'type' => 'text',
-      'list' => array('foo', 'bar', 'baz')
-  ));
+      'list' => ['foo', 'bar', 'baz']
+  ]);
   ```
 
 - It is now guaranteed that `Random::generate()` will use a cryptographic strong RNG. It 
@@ -197,6 +214,16 @@
 - The bulitin test framework now handles circular references in expectations or results
   correctly. The display format of fails has been changed to that of `print_r()`.
 
+- Validator can now validate whole arrays:
+  ```
+  $value = array('complex' => true, 'foo' => 'bar');
+  Validator::add('arrayHasComplexFooKeys', function($value, $format, $options) {
+      return isset($value['complex'], $value['foo']);
+  });
+  ```
+
+- Switched to short array syntax.
+
 ### Changed
 
 - The `persist` option for the MongoDb adapter has been removed. Persistent connection
@@ -219,6 +246,15 @@
 - Instance filters are now not cleaned up automatically anymore, that
   is when the instance was destroyed, its filters went away with it.
 
+- `Inspector::properties()` and `Inspector::methdos()` now requires an instance when 
+  inspecting concrete classes.
+
+- When calculating test coverage dead code is not ignored anymore. `XDEBUG_CC_DEAD_CODE`
+  causes problems with PHP 7.0 + opcache and cannot be relieably used. 
+
+- The undocumented and deprecated `'servers'` option in the `Memcache` cache adapter has been
+  removed. `'host'` should be used in all cases.
+
 ### Deprecated
 
 - Multi-word console command arguments i.e. `--no-color` were made available as
@@ -226,6 +262,9 @@
 
 - The XCache caching adapter has been deprecated as it is not compatible with the wildly
   deployed OPcache and does not perform better.
+
+- The FirePhp logging adapter has been deprecated as Firebug's usage share is shrinking
+  in favor of builtin developer tools.
 
 - The builtin mocking framework (`lithium\test\Mocker`) has been deprecated as alternatives
   exist and it is not needed as a core test dependency. This takes the task of maintaining full
@@ -237,14 +276,16 @@
 
   ```php
   // deprecated usage
-  Session::config(array(
-    'default' => array(
-       'filters' => array(function($self, $params, $chain) { /* ... */ })
-    )
-  ));
+  Session::config([
+    'default' => [
+       'filters' => [function($self, $params, $chain) { /* ... */ }]
+    ]
+  ]);
 
   // always use this
-  Filters::apply('lithium\storage\Session', 'write', function($params, $next) { 
+  use lithium\storage\Session;
+
+  Filters::apply(Session::class, 'write', function($params, $next) { 
     /* ... */ 
   });
   ```
@@ -333,10 +374,60 @@
 - Fixed slug generation by `Inflector` for strings containing multibyte characters or
   (unprintable) whitespaces.
 
+- Added missing uppercase transliteration pairs used by `Inflector::slug()`.
+
 - Fixed edge case when using `Collection::prev()` and the collection contained
   a falsey value (i.e. `null`, `false`, `''`).
 
 - Fixed parsing certain exception details in `Database` i.e. `pgsql unknown role exception`.
+
+- Fixed retrieval of property default values in concrete classes through `Inspector`.
+
+- Fixed write through caching via `Cache::read()`. When passing in a closure for the `'write'`
+  option, the closure was called even when the key was already present in cache.
+
+  - Fixed and enabled modification of the default query options through `Model::query()`.
+
+## v1.0.3
+
+### Fixed
+
+- Fixed write through caching via `Cache::read()`. When passing in a closure for the `'write'`
+  option, the closure was called even when the key was already present in cache.
+
+- Fixed and enabled modification of the default query options through `Model::query()`.
+
+## v1.0.2
+
+### Deprecated
+
+- Brace globbing support has been deprecated in `Libraries`. This feature
+  cannot be reliably be provided crossplatform and will already not work
+  if `GLOB_BRACE` is not available. (reported by Aaron Santiago)
+
+### Fixed
+
+- Optimized searching for a library's namespaces has been reenabled. 
+
+- Per connection read preference settings for MongoDB were ignored. (Fitz Agard)
+
+## v1.0.1
+
+### Fixed
+
+- Result-less queries produced by performing a raw query 
+  i.e. `'SET SESSION group_concat_max_len = 1000000;'` are now handled correcly.
+
+- Fixes MySQL DSN socket support when a socket path is given in `'host'`. 
+
+- When using the model `count` finder without a `'conditions'` key, options
+  like `having`, `offset`, `group` were mistakenly interpreted as conditions.
+
+- Calculation queries returning no results at all, do not error out, but
+  return `null` now.
+
+- Extraction of translation tokens using context together with short array syntax
+  is now fully supported.
 
 ## v1.0.0
 
