@@ -1,14 +1,19 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\analysis\logger\adapter;
 
 use lithium\aop\Filters;
+
+$message  = 'The FirePhp logger adapter has been deprecated as Firebug is ';
+$message .= 'not in use that often anymore.';
+trigger_error($message, E_USER_DEPRECATED);
 
 /**
  * The `FirePhp` log adapter allows you to log messages to FirePHP.
@@ -23,9 +28,9 @@ use lithium\aop\Filters;
  * use lithium\analysis\Logger;
  * use lithium\aop\Filters;
  *
- * Logger::config(array(
- * 	'default' => array('adapter' => 'FirePhp')
- * ));
+ * Logger::config([
+ * 	'default' => ['adapter' => 'FirePhp']
+ * ]);
  *
  * Filters::apply('lithium\action\Dispatcher', '_call', function($params, $chain) {
  * 	if (isset($params['callable']->response)) {
@@ -62,10 +67,11 @@ use lithium\aop\Filters;
  * method for more information on how your message will be encoded.
  *
  * ```
- * Logger::debug(array('debug' => 'me'));
+ * Logger::debug(['debug' => 'me']);
  * Logger::debug(new \lithium\action\Response());
  * ```
  *
+ * @deprecated
  * @see lithium\action\Response
  * @see lithium\net\http\Message::headers()
  * @link http://www.firephp.org/ FirePHP
@@ -79,11 +85,11 @@ class FirePhp extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_headers = array(
+	protected $_headers = [
 		'X-Wf-Protocol-1' => 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2',
 		'X-Wf-1-Plugin-1' => 'http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/0.3',
 		'X-Wf-1-Structure-1' => 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1'
-	);
+	];
 
 	/**
 	 * This is a mapping table that maps Lithium log levels to FirePHP log levels as they
@@ -91,7 +97,7 @@ class FirePhp extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_levels = array(
+	protected $_levels = [
 		'emergency' => 'ERROR',
 		'alert'     => 'ERROR',
 		'critical'  => 'ERROR',
@@ -100,7 +106,7 @@ class FirePhp extends \lithium\core\Object {
 		'notice'    => 'INFO',
 		'info'      => 'INFO',
 		'debug'     => 'LOG'
-	);
+	];
 
 	/**
 	 * This self-incrementing counter allows the user to log more than one message per request.
@@ -117,7 +123,7 @@ class FirePhp extends \lithium\core\Object {
 	/**
 	 * Contains messages that have been written to the log before the bind() call.
 	 */
-	protected $_queue = array();
+	protected $_queue = [];
 
 	/**
 	 * Binds the response object to the logger and sets the required Wildfire
@@ -181,7 +187,7 @@ class FirePhp extends \lithium\core\Object {
 	protected function _format($type, $message) {
 		$key = 'X-Wf-1-1-1-' . $this->_counter++;
 
-		$content = array(array('Type' => $this->_levels[$type]), $message);
+		$content = [['Type' => $this->_levels[$type]], $message];
 		$content = json_encode($content);
 		$content = strlen($content) . '|' . $content . '|';
 

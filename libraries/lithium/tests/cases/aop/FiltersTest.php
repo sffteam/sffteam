@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\tests\cases\aop;
@@ -22,7 +23,7 @@ class FiltersTest extends \lithium\test\Unit {
 	}
 
 	public function testApplyAndRun() {
-		$params = array('message' => 'This ');
+		$params = ['message' => 'This '];
 
 		Filters::apply('foo\Bar', __FUNCTION__, function($params, $next) {
 			$params['message'] .= 'is a filter chain ';
@@ -45,7 +46,7 @@ class FiltersTest extends \lithium\test\Unit {
 		Filters::apply('\\' . 'foo\Bar', __FUNCTION__, function($params, $next) {
 			return $next($params) . 'bar';
 		});
-		$result = Filters::run('foo\Bar', __FUNCTION__, array(), function($params) {
+		$result = Filters::run('foo\Bar', __FUNCTION__, [], function($params) {
 			return 'foo';
 		});
 		$this->assertEqual('foobar', $result);
@@ -55,7 +56,7 @@ class FiltersTest extends \lithium\test\Unit {
 		Filters::apply('foo\Bar', __FUNCTION__, function($params, $next) {
 			return $next($params) . 'bar';
 		});
-		$result = Filters::run('\\' . 'foo\Bar', __FUNCTION__, array(), function($params) {
+		$result = Filters::run('\\' . 'foo\Bar', __FUNCTION__, [], function($params) {
 			return 'foo';
 		});
 		$this->assertEqual('foobar', $result);
@@ -68,9 +69,9 @@ class FiltersTest extends \lithium\test\Unit {
 			$count++;
 			return $next($params);
 		});
-		Filters::run('foo\Bar', __FUNCTION__, array(), function() {});
-		Filters::run('foo\Bar', __FUNCTION__, array(), function() {});
-		Filters::run('foo\Bar', __FUNCTION__, array(), function() {});
+		Filters::run('foo\Bar', __FUNCTION__, [], function() {});
+		Filters::run('foo\Bar', __FUNCTION__, [], function() {});
+		Filters::run('foo\Bar', __FUNCTION__, [], function() {});
 
 		$this->assertEqual(3, $count);
 	}
@@ -79,24 +80,24 @@ class FiltersTest extends \lithium\test\Unit {
 		Filters::apply('foo\Bar', __FUNCTION__, function($params, $next) {
 			return $next($params);
 		});
-		$result = Filters::run('foo\Bar', __FUNCTION__, array('foo' => 'bar'), function($params) {
+		$result = Filters::run('foo\Bar', __FUNCTION__, ['foo' => 'bar'], function($params) {
 			return $params;
 		});
-		$this->assertEqual(array('foo' => 'bar'), $result);
+		$this->assertEqual(['foo' => 'bar'], $result);
 
-		$result = Filters::run('foo\Bar', __FUNCTION__, array('foo' => 'baz'), function($params) {
+		$result = Filters::run('foo\Bar', __FUNCTION__, ['foo' => 'baz'], function($params) {
 			return $params;
 		});
-		$this->assertEqual(array('foo' => 'baz'), $result);
+		$this->assertEqual(['foo' => 'baz'], $result);
 
-		$result = Filters::run('foo\Bar', __FUNCTION__, array('qux' => 'foo'), function($params) {
+		$result = Filters::run('foo\Bar', __FUNCTION__, ['qux' => 'foo'], function($params) {
 			return $params;
 		});
-		$this->assertEqual(array('qux' => 'foo'), $result);
+		$this->assertEqual(['qux' => 'foo'], $result);
 	}
 
 	public function testDirectImplementationCall() {
-		$result = Filters::run('foo\Bar', __FUNCTION__, array('foo' => 'bar'), function() {
+		$result = Filters::run('foo\Bar', __FUNCTION__, ['foo' => 'bar'], function() {
 			return true;
 		});
 		$this->assertTrue($result);
@@ -128,13 +129,13 @@ class FiltersTest extends \lithium\test\Unit {
 	public function testRunWithStaticAndTracing() {
 		$class = 'lithium\tests\mocks\aop\MockStaticFiltered';
 
-		$result = MockStaticFiltered::methodTracing(array('Starting test'));
-		$expected = array(
+		$result = MockStaticFiltered::methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			"Inside method implementation of {$class}",
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 
 		Filters::apply($class, 'methodTracing', function($params, $next) {
@@ -144,15 +145,15 @@ class FiltersTest extends \lithium\test\Unit {
 			return $result;
 		});
 
-		$result = $class::methodTracing(array('Starting test'));
-		$expected = array(
+		$result = $class::methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			'Starting filter',
 			"Inside method implementation of {$class}",
 			'Ending filter',
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 
 		Filters::apply($class, 'methodTracing', function($params, $next) {
@@ -161,8 +162,8 @@ class FiltersTest extends \lithium\test\Unit {
 			$result[] = 'Ending inner filter';
 			return $result;
 		});
-		$result = $class::methodTracing(array('Starting test'));
-		$expected = array(
+		$result = $class::methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			'Starting filter',
@@ -171,7 +172,7 @@ class FiltersTest extends \lithium\test\Unit {
 			'Ending inner filter',
 			'Ending filter',
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 	}
 
@@ -192,13 +193,13 @@ class FiltersTest extends \lithium\test\Unit {
 	public function testRunWithInstanceAndTracing() {
 		$instance = new MockInstanceFiltered();
 
-		$result = $instance->methodTracing(array('Starting test'));
-		$expected = array(
+		$result = $instance->methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			"Inside method implementation",
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 
 		Filters::apply($instance, 'methodTracing', function($params, $next) {
@@ -208,15 +209,15 @@ class FiltersTest extends \lithium\test\Unit {
 			return $result;
 		});
 
-		$result = $instance->methodTracing(array('Starting test'));
-		$expected = array(
+		$result = $instance->methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			'Starting filter',
 			"Inside method implementation",
 			'Ending filter',
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 
 		Filters::apply($instance, 'methodTracing', function($params, $next) {
@@ -225,8 +226,8 @@ class FiltersTest extends \lithium\test\Unit {
 			$result[] = 'Ending inner filter';
 			return $result;
 		});
-		$result = $instance->methodTracing(array('Starting test'));
-		$expected = array(
+		$result = $instance->methodTracing(['Starting test']);
+		$expected = [
 			'Starting test',
 			'Starting outer method call',
 			'Starting filter',
@@ -235,7 +236,7 @@ class FiltersTest extends \lithium\test\Unit {
 			'Ending inner filter',
 			'Ending filter',
 			'Ending outer method call'
-		);
+		];
 		$this->assertEqual($expected, $result);
 	}
 

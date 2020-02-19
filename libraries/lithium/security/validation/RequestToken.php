@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\security\validation;
@@ -39,7 +40,7 @@ use lithium\util\Set;
  * 	if ($this->request->data && !RequestToken::check($this->request)) {
  * 		// Key didn't match the CSRF token. Regenerate the session token and
  * 		// prompt the user to retry the form submission.
- * 		RequestToken::get(array('regenerate' => true));
+ * 		RequestToken::get(['regenerate' => true]);
  * 		return;
  * 	}
  * 	// Handle a normal request...
@@ -56,9 +57,9 @@ class RequestToken {
 	 *
 	 * @var array
 	 */
-	protected static $_classes = array(
+	protected static $_classes = [
 		'session' => 'lithium\storage\Session'
-	);
+	];
 
 	/**
 	 * Used to get or reconfigure dependencies with custom classes.
@@ -68,9 +69,9 @@ class RequestToken {
 	 * @return array If `$config` is empty, returns an array with a `'classes'` key containing class
 	 *         dependencies. Otherwise returns `null`.
 	 */
-	public static function config(array $config = array()) {
+	public static function config(array $config = []) {
 		if (!$config) {
-			return array('classes' => static::$_classes);
+			return ['classes' => static::$_classes];
 		}
 
 		foreach ($config as $key => $val) {
@@ -98,13 +99,13 @@ class RequestToken {
 	 *                generating the token. Defaults to `'sha512'`.
 	 * @return string Returns a cryptographically-secure client session token.
 	 */
-	public static function get(array $options = array()) {
-		$defaults = array(
+	public static function get(array $options = []) {
+		$defaults = [
 			'regenerate' => false,
 			'sessionKey' => 'security.token',
 			'salt' => null,
 			'type' => 'sha512'
-		);
+		];
 		$options += $defaults;
 		$session = static::$_classes['session'];
 
@@ -124,7 +125,7 @@ class RequestToken {
 	 * @param array $options An array of options to be passed to `RequestToken::get()`.
 	 * @return string Returns a hashed key string for use with `RequestToken::check()`.
 	 */
-	public static function key(array $options = array()) {
+	public static function key(array $options = []) {
 		return Password::hash(static::get($options));
 	}
 
@@ -156,8 +157,8 @@ class RequestToken {
 	 * @return boolean Returns `true` if the hash key is a cryptographic match to the stored
 	 *         session token. Returns `false` on failure, which indicates a forged request attempt.
 	 */
-	public static function check($key, array $options = array()) {
-		$defaults = array('sessionKey' => 'security.token');
+	public static function check($key, array $options = []) {
+		$defaults = ['sessionKey' => 'security.token'];
 		$options += $defaults;
 		$session = static::$_classes['session'];
 

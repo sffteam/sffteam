@@ -1,1 +1,3 @@
-<script>window.BriefWidgetId = '4f169618-8699-41f7-9970-ce5a6bfa69ad';window.BriefUser = {firstName: '',lastName: '',email: '',avatarUrl: '',};(function() {var w = window;var d = document;function l() {var s = d.createElement('script');s.type = 'text/javascript';s.async = true;s.src = 'https://widget.letsbrief.com/widget/widget.min.js';d.head.appendChild(s);}if (w.attachEvent) {w.attachEvent('onload', l);} else {w.addEventListener('load', l, false);}})();</script>
+<?php
+phpinfo();
+?>

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\tests\cases\storage\cache\adapter;
@@ -54,7 +55,7 @@ class XCacheTest extends \lithium\test\Unit {
 	public function testSimpleWrite() {
 		$key = 'key';
 		$data = 'value';
-		$keys = array($key => $data);
+		$keys = [$key => $data];
 		$expiry = '+5 seconds';
 		$time = strtotime($expiry);
 
@@ -70,7 +71,7 @@ class XCacheTest extends \lithium\test\Unit {
 
 		$key = 'another_key';
 		$data = 'more_data';
-		$keys = array($key => $data);
+		$keys = [$key => $data];
 		$expiry = '+1 minute';
 		$time = strtotime($expiry);
 
@@ -87,11 +88,11 @@ class XCacheTest extends \lithium\test\Unit {
 
 	public function testWriteMulti() {
 		$expiry = '+1 minute';
-		$keys = array(
+		$keys = [
 			'key1' => 'data1',
 			'key2' => 'data2',
 			'key3' => 'data3'
-		);
+		];
 		$result = $this->XCache->write($keys, $expiry);
 		$this->assertTrue($result);
 
@@ -105,10 +106,10 @@ class XCacheTest extends \lithium\test\Unit {
 	}
 
 	public function testWriteExpiryDefault() {
-		$xCache = new XCache(array('expiry' => '+5 seconds'));
+		$xCache = new XCache(['expiry' => '+5 seconds']);
 		$key = 'default_key';
 		$data = 'value';
-		$keys = array($key => $data);
+		$keys = [$key => $data];
 		$time = strtotime('+5 seconds');
 
 		$result = $xCache->write($keys);
@@ -123,9 +124,9 @@ class XCacheTest extends \lithium\test\Unit {
 	}
 
 	public function testWriteNoExpiry() {
-		$keys = array('key1' => 'data1');
+		$keys = ['key1' => 'data1'];
 
-		$adapter = new XCache(array('expiry' => null));
+		$adapter = new XCache(['expiry' => null]);
 		$expiry = null;
 
 		$result = $adapter->write($keys, $expiry);
@@ -136,7 +137,7 @@ class XCacheTest extends \lithium\test\Unit {
 
 		xcache_unset('key1');
 
-		$adapter = new XCache(array('expiry' => Cache::PERSIST));
+		$adapter = new XCache(['expiry' => Cache::PERSIST]);
 		$expiry = Cache::PERSIST;
 
 		$result = $adapter->write($keys, $expiry);
@@ -166,7 +167,7 @@ class XCacheTest extends \lithium\test\Unit {
 	 * _page request_.
 	 */
 	public function testWriteExpiryExpires() {
-		$keys = array('key1' => 'data1');
+		$keys = ['key1' => 'data1'];
 		$expiry = '+5 seconds';
 		$this->XCache->write($keys, $expiry);
 
@@ -185,7 +186,7 @@ class XCacheTest extends \lithium\test\Unit {
 	 * _page request_.
 	 */
 	public function testWriteExpiryTtl() {
-		$keys = array('key1' => 'data1');
+		$keys = ['key1' => 'data1'];
 		$expiry = 5;
 		$this->XCache->write($keys, $expiry);
 
@@ -194,15 +195,15 @@ class XCacheTest extends \lithium\test\Unit {
 
 		xcache_unset('key1');
 
-		$keys = array('key1' => 'data1');
+		$keys = ['key1' => 'data1'];
 		$expiry = 1;
 		$this->XCache->write($keys, $expiry);
 	}
 
 	public function testWriteWithScope() {
-		$adapter = new XCache(array('scope' => 'primary'));
+		$adapter = new XCache(['scope' => 'primary']);
 
-		$keys = array('key1' => 'test1');
+		$keys = ['key1' => 'test1'];
 		$expiry = '+1 minute';
 		$adapter->write($keys, $expiry);
 
@@ -217,13 +218,13 @@ class XCacheTest extends \lithium\test\Unit {
 	public function testSimpleRead() {
 		$key = 'read_key';
 		$data = 'read data';
-		$keys = array($key);
+		$keys = [$key];
 		$time = strtotime('+1 minute');
 
 		$result = xcache_set($key, $data, 60);
 		$this->assertTrue($result);
 
-		$expected = array($key => $data);
+		$expected = [$key => $data];
 		$result = $this->XCache->read($keys);
 		$this->assertEqual($expected, $result);
 
@@ -232,13 +233,13 @@ class XCacheTest extends \lithium\test\Unit {
 
 		$key = 'another_read_key';
 		$data = 'read data';
-		$keys = array($key);
+		$keys = [$key];
 		$time = strtotime('+1 minute');
 
 		$result = xcache_set($key, $data, 60);
 		$this->assertTrue($result);
 
-		$expected = array($key => $data);
+		$expected = [$key => $data];
 		$result = $this->XCache->read($keys);
 		$this->assertEqual($expected, $result);
 
@@ -248,45 +249,45 @@ class XCacheTest extends \lithium\test\Unit {
 
 	public function testReadKeyThatDoesNotExist() {
 		$key = 'does_not_exist';
-		$keys = array($key);
+		$keys = [$key];
 
-		$expected = array();
+		$expected = [];
 		$result = $this->XCache->read($keys);
 		$this->assertIdentical($expected, $result);
 	}
 
 	public function testReadWithScope() {
-		$adapter = new XCache(array('scope' => 'primary'));
+		$adapter = new XCache(['scope' => 'primary']);
 
 		xcache_set('primary:key1', 'test1', 60);
 		xcache_set('key1', 'test2', 60);
 
-		$keys = array('key1');
-		$expected = array('key1' => 'test1');
+		$keys = ['key1'];
+		$expected = ['key1' => 'test1'];
 		$result = $adapter->read($keys);
 		$this->assertEqual($expected, $result);
 	}
 
 	public function testReadMulti() {
-		$keys = array(
+		$keys = [
 			'key1' => 'data1',
 			'key2' => 'data2',
 			'key3' => 'data3'
-		);
+		];
 		foreach ($keys as $key => $data) {
 			xcache_set($key, $data, 60);
 		}
 
-		$expected = array(
+		$expected = [
 			'key1' => 'data1',
 			'key2' => 'data2',
 			'key3' => 'data3'
-		);
-		$keys = array(
+		];
+		$keys = [
 			'key1',
 			'key2',
 			'key3'
-		);
+		];
 		$result = $this->XCache->read($keys);
 		$this->assertEqual($expected, $result);
 
@@ -297,9 +298,9 @@ class XCacheTest extends \lithium\test\Unit {
 
 	public function testWriteAndReadNull() {
 		$expiry = '+1 minute';
-		$keys = array(
+		$keys = [
 			'key1' => null
-		);
+		];
 		$result = $this->XCache->write($keys);
 		$this->assertTrue($result);
 
@@ -310,10 +311,10 @@ class XCacheTest extends \lithium\test\Unit {
 
 	public function testWriteAndReadNullMulti() {
 		$expiry = '+1 minute';
-		$keys = array(
+		$keys = [
 			'key1' => null,
 			'key2' => 'data2'
-		);
+		];
 		$result = $this->XCache->write($keys);
 		$this->assertTrue($result);
 
@@ -321,17 +322,17 @@ class XCacheTest extends \lithium\test\Unit {
 		$result = $this->XCache->read(array_keys($keys));
 		$this->assertEqual($expected, $result);
 
-		$keys = array(
+		$keys = [
 			'key1' => null,
 			'key2' => null
-		);
+		];
 		$result = $this->XCache->write($keys);
 		$this->assertTrue($result);
 	}
 
 	public function testDelete() {
 		$key = 'delete_key';
-		$keys = array($key);
+		$keys = [$key];
 		$data = 'data to delete';
 		$time = strtotime('+1 minute');
 
@@ -345,7 +346,7 @@ class XCacheTest extends \lithium\test\Unit {
 	public function testDeleteNonExistentKey() {
 		$key = 'delete_key';
 		$data = 'data to delete';
-		$keys = array($key);
+		$keys = [$key];
 		$time = strtotime('+1 minute');
 
 		$result = $this->XCache->delete($keys);
@@ -353,13 +354,13 @@ class XCacheTest extends \lithium\test\Unit {
 	}
 
 	public function testDeleteWithScope() {
-		$adapter = new XCache(array('scope' => 'primary'));
+		$adapter = new XCache(['scope' => 'primary']);
 
 		xcache_set('primary:key1', 'test1', 60);
 		xcache_set('key1', 'test2', 60);
 
-		$keys = array('key1');
-		$expected = array('key1' => 'test1');
+		$keys = ['key1'];
+		$expected = ['key1' => 'test1'];
 		$result = $adapter->delete($keys);
 		$this->assertEqual($expected, $result);
 
@@ -373,7 +374,7 @@ class XCacheTest extends \lithium\test\Unit {
 	public function testWriteReadAndDeleteRoundtrip() {
 		$key = 'write_read_key';
 		$data = 'write/read value';
-		$keys = array($key => $data);
+		$keys = [$key => $data];
 		$expiry = '+5 seconds';
 		$time = strtotime($expiry);
 
@@ -384,9 +385,9 @@ class XCacheTest extends \lithium\test\Unit {
 		$result = xcache_get($key);
 		$this->assertEqual($expected, $result);
 
-		$keys = array($key);
+		$keys = [$key];
 
-		$expected = array($key => $data);
+		$expected = [$key => $data];
 		$result = $this->XCache->read($keys);
 		$this->assertEqual($expected, $result);
 
@@ -456,7 +457,7 @@ class XCacheTest extends \lithium\test\Unit {
 	}
 
 	public function testDecrementWithScope() {
-		$adapter = new XCache(array('scope' => 'primary'));
+		$adapter = new XCache(['scope' => 'primary']);
 
 		xcache_set('primary:key1', 1, 60);
 		xcache_set('key1', 1, 60);
@@ -513,7 +514,7 @@ class XCacheTest extends \lithium\test\Unit {
 	}
 
 	public function testIncrementWithScope() {
-		$adapter = new XCache(array('scope' => 'primary'));
+		$adapter = new XCache(['scope' => 'primary']);
 
 		xcache_set('primary:key1', 1, 60);
 		xcache_set('key1', 1, 60);

@@ -27,68 +27,18 @@
       <input type="hidden" id="surl" name="surl" value="https://sff.team/mallsuccess" />
       <input type="hidden" id="furl" name="furl" value="https://sff.team/mallsuccess" />
       <input type="hidden" id="service_provider" name="service_provider" value="payu_paisa" />
-					<ul>
-						<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">Transaction ID</div>
-          <div class="item-input-wrap">
-												<input type="text" id="txnid" name="txnid"  placeholder="Transaction ID" value="<?=$txnid?>" readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">Amount</div>
-          <div class="item-input-wrap">
-												<input type="text"  id="amount" name="amount" placeholder="Amount" value="<?=$amount?>"  readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">MCA No#Rupees</div>
-          <div class="item-input-wrap">
-												<input type="text"  id="productinfo" name="productinfo" placeholder="Product Info" value="<?=$productinfo?>"  readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">Name</div>
-          <div class="item-input-wrap">
-												<input type="text" id="firstname" name="firstname" placeholder="First Name" value="<?=$firstname?>"  readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">Email</div>
-          <div class="item-input-wrap">
-												<input type="text" id="email" name="email" placeholder="Email ID" value="<?=$email?>"  readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				<li>
-      <div class="item-content item-input">
-        <div class="item-inner">
-          <div class="item-title item-label">Mobile</div>
-          <div class="item-input-wrap">
-												<input type="text" id="mobile" name="mobile" placeholder="Mobile/Cell Number" value="<?=$mobile?>"  readonly="readonly"/>
-          </div>
-        </div>
-      </div>
-    </li>
-				</ul>
+						<input type="hidden" id="txnid" name="txnid"  placeholder="Transaction ID" value="<?=$txnid?>" readonly="readonly"/>
+						<input type="hidden"  id="amount" name="amount" placeholder="Amount" value="<?=$amount?>"  readonly="readonly"/>
+						<input type="hidden"  id="productinfo" name="productinfo" placeholder="Product Info" value="<?=$productinfo?>"  readonly="readonly"/>
+						<input type="hidden" id="firstname" name="firstname" placeholder="First Name" value="<?=$firstname?>"  readonly="readonly"/>
+						<input type="hidden" id="email" name="email" placeholder="Email ID" value="<?=$email?>"  readonly="readonly"/>
+						<input type="hidden" id="mobile" name="mobile" placeholder="Mobile/Cell Number" value="<?=$mobile?>"  readonly="readonly"/>
+						<p>Transaction ID: <?=$txnid?><br>
+      Amount: <?=$amount?><br>
+						MCA No#Rupees: <?=$productinfo?><br>
+						Name: <?=$firstname?><br>
+						Email: <?=$email?><br>
+      Mobile: <?=$mobile?></p>
     <div>
 				    <button class="col button button-fill color-green" onclick="submitPayuForm()">Pay Rs. <?=number_format($amount,1)?></button>
 				</div>

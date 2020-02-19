@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\storage\session\adapter;
@@ -25,24 +26,36 @@ class Cookie extends \lithium\core\Object {
 	/**
 	 * Default settings for this session adapter.
 	 *
+	 * @link http://php.net/setcookie
 	 * @var array Keys are in direct correspondence with the parameters in the PHP-native
 	 *      `setcookie()` method. The only difference is that the `expire` value is a
 	 *      strtotime-compatible string instead of an epochal timestamp.
 	 */
-	protected $_defaults = array(
-		'expire' => '+2 days', 'path' => '/',
-		'domain' => '', 'secure' => false, 'httponly' => false
-	);
+	protected $_defaults = [
+		'expire' => '+2 days',
+		'path' => '/',
+		'domain' => '',
+		'secure' => false,
+		'httponly' => false,
+		'name' => null
+	];
 
 	/**
 	 * Constructor.
 	 *
 	 * Takes care of setting appropriate configurations for this object.
 	 *
-	 * @param array $config Optional configuration parameters.
+	 * @param array $config Configuration for this adapter. These settings are queryable
+	 *        through `Session::config('name')`. The available options are as follows:
+	 *        - `'expire'` _string_: Defaults to `'+2 days'`.
+	 *        - `'path'` _string_: Defaults to `'/'` and does not further restrict path access.
+	 *        - `'domain'` _string_: Defaults to `''` and does not further restrict domain access.
+	 *        - `'secure'` _boolean_: Defaults to `false`.
+	 *        - `'httponly'` _boolean_: Defaults to `false`.
+	 *        - `'name'` _string_: Defaults to the basename of the applications path.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
+	public function __construct(array $config = []) {
 		if (empty($config['name'])) {
 			$config['name'] = basename(Libraries::get(true, 'path')) . 'cookie';
 		}
@@ -97,14 +110,14 @@ class Cookie extends \lithium\core\Object {
 	 * @param array $options Options array. Not used in this adapter.
 	 * @return \Closure Function returning data in the session if successful, `null` otherwise.
 	 */
-	public function read($key = null, array $options = array()) {
+	public function read($key = null, array $options = []) {
 		return function($params) {
 			$key = $params['key'];
 			if (!$key) {
 				if (isset($_COOKIE[$this->_config['name']])) {
 					return $_COOKIE[$this->_config['name']];
 				}
-				return array();
+				return [];
 			}
 			if (strpos($key, '.') !== false) {
 				$key = explode('.', $key);
@@ -112,7 +125,7 @@ class Cookie extends \lithium\core\Object {
 				if (isset($_COOKIE[$this->_config['name']])) {
 					$result = $_COOKIE[$this->_config['name']];
 				} else {
-					$result = array();
+					$result = [];
 				}
 
 				foreach ($key as $k) {
@@ -137,7 +150,7 @@ class Cookie extends \lithium\core\Object {
 	 * @param array $options Options array.
 	 * @return \Closure Function returning boolean `true` on successful write, `false` otherwise.
 	 */
-	public function write($key, $value = null, array $options = array()) {
+	public function write($key, $value = null, array $options = []) {
 		$expire = (!isset($options['expire']) && empty($this->_config['expire']));
 		$cookieClass = __CLASS__;
 
@@ -149,7 +162,7 @@ class Cookie extends \lithium\core\Object {
 		return function($params) use (&$expires, $cookieClass) {
 			$key = $params['key'];
 			$value = $params['value'];
-			$key = array($key => $value);
+			$key = [$key => $value];
 			if (is_array($value)) {
 				$key = Set::flatten($key);
 			}
@@ -179,7 +192,7 @@ class Cookie extends \lithium\core\Object {
 	 * @param array $options Options array.
 	 * @return \Closure Function returning boolean `true` on successful delete, `false` otherwise.
 	 */
-	public function delete($key, array $options = array()) {
+	public function delete($key, array $options = []) {
 		$cookieClass = get_called_class();
 
 		return function($params) use ($cookieClass) {
@@ -192,7 +205,7 @@ class Cookie extends \lithium\core\Object {
 					$name = $key . '.' . $name;
 				}
 			} else {
-				$cookies = array($key);
+				$cookies = [$key];
 			}
 			foreach ($cookies as &$name) {
 				$result = setcookie(
@@ -218,8 +231,8 @@ class Cookie extends \lithium\core\Object {
 	 * @param array $options Options array. Not used fro this adapter method.
 	 * @return boolean True on successful clear, false otherwise.
 	 */
-	public function clear(array $options = array()) {
-		$options += array('destroySession' => true);
+	public function clear(array $options = []) {
+		$options += ['destroySession' => true];
 		$cookieClass = get_called_class();
 
 		return function($params) use ($options, $cookieClass) {

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2013, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\aop;
@@ -17,7 +18,7 @@ namespace lithium\aop;
  * While the first added filter is called with the input first, and last in
  * receiving the result.
  *
- * ```
+ * ```asciiart
  *        │                ▲
  *        │                │
  * ┌──────┼────────────────┼──────┐
@@ -62,7 +63,7 @@ class Chain {
 	 *
 	 * @var array
 	 */
-	protected $_filters = array();
+	protected $_filters = [];
 
 	/**
 	 * The current implementation.
@@ -81,12 +82,12 @@ class Chain {
 	 *         - `'method'` _array_: Depreacted. Here for BC.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$config += array(
-			'filters' => array(),
+	public function __construct(array $config = []) {
+		$config += [
+			'filters' => [],
 			'class' => null,
 			'method' => null
-		);
+		];
 		$this->_filters = $config['filters'];
 		$this->_class = $config['class'];
 		$this->_method = $config['method'];

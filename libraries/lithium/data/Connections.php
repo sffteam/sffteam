@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\data;
@@ -33,7 +34,7 @@ class Connections extends \lithium\core\Adaptable {
 	 *
 	 * @var `lithium\util\Collection`
 	 */
-	protected static $_configurations = array();
+	protected static $_configurations = [];
 
 	/**
 	 * Libraries::locate() compatible path to adapters for this class.
@@ -47,34 +48,34 @@ class Connections extends \lithium\core\Adaptable {
 	 *
 	 * For example:
 	 * ```
-	 * Connections::add('default', array(
+	 * Connections::add('default', [
 	 *	'type' => 'database',
 	 *	'adapter' => 'MySql',
 	 *	'host' => 'localhost',
 	 *	'login' => 'root',
 	 *	'password' => '',
 	 *	'database' => 'my_blog'
-	 * ));
+	 * ]);
 	 * ```
 	 *
 	 * or
 	 *
 	 * ```
-	 * Connections::add('couch', array(
+	 * Connections::add('couch', [
 	 *	'type' => 'http',
 	 *	'adapter' => 'CouchDb',
 	 *	'host' => '127.0.0.1',
 	 *	'port' => 5984
-	 * ));
+	 * ]);
 	 * ```
 	 *
 	 * or
 	 *
 	 * ```
-	 * Connections::add('mongo', array(
+	 * Connections::add('mongo', [
 	 *	'type' => 'MongoDb',
 	 *	'database' => 'my_app'
-	 * ));
+	 * ]);
 	 * ```
 	 *
 	 * @see lithium\data\Model::$_meta
@@ -98,11 +99,11 @@ class Connections extends \lithium\core\Adaptable {
 	 * @return array Returns the final post-processed connection information, as stored in the
 	 *         internal configuration array used by `Connections`.
 	 */
-	public static function add($name, array $config = array()) {
-		$defaults = array(
+	public static function add($name, array $config = []) {
+		$defaults = [
 			'type'     => null,
 			'adapter'  => null
-		);
+		];
 		return static::$_configurations[$name] = $config + $defaults;
 	}
 
@@ -124,7 +125,7 @@ class Connections extends \lithium\core\Adaptable {
 	 * $configurations = Connections::get();
 	 *
 	 * // Gets the configuration array for the connection named 'db'
-	 * $config = Connections::get('db', array('config' => true));
+	 * $config = Connections::get('db', ['config' => true]);
 	 *
 	 * // Gets the instance of the connection object, configured with the settings defined for
 	 * // this object in Connections::add()
@@ -132,7 +133,7 @@ class Connections extends \lithium\core\Adaptable {
 	 *
 	 * // Gets the connection object, but only if it has already been built.
 	 * // Otherwise returns null.
-	 * $dbConnection = Connections::get('db', array('autoCreate' => false));
+	 * $dbConnection = Connections::get('db', ['autoCreate' => false]);
 	 * ```
 	 *
 	 * @param string $name The name of the connection to get, as defined in the first parameter of
@@ -144,10 +145,10 @@ class Connections extends \lithium\core\Adaptable {
 	 *          configuration, instead of the connection itself.
 	 * @return mixed A configured instance of the connection, or an array of the configuration used.
 	 */
-	public static function get($name = null, array $options = array()) {
+	public static function get($name = null, array $options = []) {
 		static $mockAdapter;
 
-		$defaults = array('config' => false, 'autoCreate' => true);
+		$defaults = ['config' => false, 'autoCreate' => true];
 		$options += $defaults;
 
 		if ($name === false) {
@@ -183,11 +184,11 @@ class Connections extends \lithium\core\Adaptable {
 	 * @param array $paths
 	 * @return object
 	 */
-	protected static function _class($config, $paths = array()) {
+	protected static function _class($config, $paths = []) {
 		if (!$config['adapter']) {
 			$config['adapter'] = $config['type'];
 		} else {
-			$paths = array_merge(array("adapter.data.source.{$config['type']}"), (array) $paths);
+			$paths = array_merge(["adapter.data.source.{$config['type']}"], (array) $paths);
 		}
 		return parent::_class($config, $paths);
 	}

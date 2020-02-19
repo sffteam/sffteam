@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\security;
@@ -23,15 +24,15 @@ class Hash {
 	 * Examples:
 	 * ```
 	 * // Calculates a secure hash over string `'foo'`.
-	 * Hash::calculate('foo'));
+	 * Hash::calculate('foo');
 	 *
 	 * // It is possible to hash non-scalar data, too.
-	 * Hash::calculate(array('foo' => 'bar'));        // serializes before hashing
+	 * Hash::calculate(['foo' => 'bar']);             // serializes before hashing
 	 * Hash::calculate(new Foo());                    // -- " --
 	 * Hash::calculate(function() { return 'bar'; }); // uses `spl_object_hash()`
 	 *
 	 * // Also allows for quick - non secure - hashing of arbitrary data.
-	 * Hash::calculate(array('foo' => 'bar'), array('type' => 'crc32b'));
+	 * Hash::calculate(['foo' => 'bar'], ['type' => 'crc32b']);
 	 * ```
 	 *
 	 * @link http://php.net/hash
@@ -50,16 +51,16 @@ class Hash {
 	 *          Defaults to `false`.
 	 * @return string Returns a hash calculated over given data.
 	 */
-	public static function calculate($data, array $options = array()) {
+	public static function calculate($data, array $options = []) {
 		if (!is_scalar($data)) {
 			$data = ($data instanceof Closure) ? spl_object_hash($data) : serialize($data);
 		}
-		$defaults = array(
+		$defaults = [
 			'type' => 'sha512',
 			'salt' => false,
 			'key' => false,
 			'raw' => false
-		);
+		];
 		$options += $defaults;
 
 		if ($options['salt']) {

@@ -1,9 +1,10 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * li₃: the most RAD framework for PHP (http://li3.me)
  *
- * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
- * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ * Copyright 2016, Union of RAD. All rights reserved. This source
+ * code is distributed under the terms of the BSD 3-Clause License.
+ * The full license text can be found in the LICENSE.txt file.
  */
 
 namespace lithium\tests\cases\util\collection;
@@ -26,7 +27,7 @@ class FiltersTest extends \lithium\test\Unit {
 	public function testRun() {
 		error_reporting(($original = error_reporting()) & ~E_USER_DEPRECATED);
 
-		$options = array('method' => __FUNCTION__, 'class' => __CLASS__, 'data' => array(
+		$options = ['method' => __FUNCTION__, 'class' => __CLASS__, 'data' => [
 			function($self, $params, $chain) {
 				$params['message'] .= 'is a filter chain ';
 				return $chain->next($self, $params, $chain);
@@ -38,8 +39,8 @@ class FiltersTest extends \lithium\test\Unit {
 			function($self, $params, $chain) {
 				return $params['message'] . 'of the ' . $self . ' class.';
 			}
-		));
-		$result = Filters::run('foo\Bar', array('message' => 'This '), $options);
+		]];
+		$result = Filters::run('foo\Bar', ['message' => 'This '], $options);
 		$expected = 'This is a filter chain in the testRun method of the';
 		$expected .= ' foo\Bar class.';
 		$this->assertEqual($expected, $result);
@@ -50,15 +51,15 @@ class FiltersTest extends \lithium\test\Unit {
 	public function testRunWithoutChain() {
 		error_reporting(($original = error_reporting()) & ~E_USER_DEPRECATED);
 
-		$options = array('method' => __FUNCTION__, 'class' => __CLASS__, 'data' => array(
+		$options = ['method' => __FUNCTION__, 'class' => __CLASS__, 'data' => [
 			function($self, $params, $chain) {
 				return $chain->next($self, $params, null);
 			},
 			function() {
 				return 'This is a filter chain that calls $chain->next() without the $chain argument.';
 			}
-		));
-		$result = Filters::run('foo\Bar', array(), $options);
+		]];
+		$result = Filters::run('foo\Bar', [], $options);
 		$expected = 'This is a filter chain that calls $chain->next() without the $chain argument.';
 		$this->assertEqual($expected, $result);
 
