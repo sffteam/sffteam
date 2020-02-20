@@ -704,7 +704,7 @@ public function searchdown(){
 	
 	if($this->request->data){
 		$users = Users::find('all',array(
-			'conditions'=>array('refer'=>$this->request->data['mcaNumber'],$yyyymm=>array('$exists'=>false)),
+			'conditions'=>array('refer'=>$this->request->data['mcaNumber'],$yyyymm=>array('$exists'=>true)),
 			'order'=>array($yyyymm.'.GPV'=>'DESC',$pyyyymm.'.GPV'=>'DESC')
 			));
 		if(count($users)>0){
