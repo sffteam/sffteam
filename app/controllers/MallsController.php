@@ -554,12 +554,14 @@ public function findTeam($mcaNumber){
 		$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 		));
+		$yyyymm = date('Y-m');
 			$left = $user['left'];
 			$right = $user['right'];
-$team = Users::count('all',array('conditions'=>
+			$team = Users::count('all',array('conditions'=>
 			array(
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
+							$yyyymm=>array('$exists'=>true),
 						'Enable'=>'Yes'
 			)
 			)
@@ -3520,10 +3522,28 @@ public function cityuser(){
 }
 
 public function findterminated(){
-	
-	
-	
-	
+ini_set('memory_limit', '-1');
+	if($this->request->data){
+			$mcaNumber = $this->request->data['mcaNumber'];
+			$user = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>$mcaNumber)
+			));
+			$left = $user['left'];
+			$right = $user['right'];
+			$yyyymm = date('Y-m');
+			
+			$users = Users::find('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$yyyymm=>array('$exists'=>false),
+						'Enable'=>'Yes'
+			),
+			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			)
+	);		
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));					
 }
 
 
