@@ -704,7 +704,7 @@ public function searchdown(){
 	
 	if($this->request->data){
 		$users = Users::find('all',array(
-			'conditions'=>array('refer'=>$this->request->data['mcaNumber']),
+			'conditions'=>array('refer'=>$this->request->data['mcaNumber'],$yyyymm=>array('$exists'=>true)),
 			'order'=>array($yyyymm.'.GPV'=>'DESC',$pyyyymm.'.GPV'=>'DESC')
 			));
 		if(count($users)>0){
@@ -1622,6 +1622,7 @@ Users::update(
 			$data = array(
 				'mcaName'=>(string)$data["mcaName"],
 				'mcaNumber'=>(string)$data["mcaNumber"],
+				'refer'=>(string)$data["refer"],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
 					$yyyymm.'.InActive'=>(integer)$data['InActive'],
@@ -3516,6 +3517,13 @@ public function cityuser(){
 	));
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));					
+}
+
+public function findterminated(){
+	
+	
+	
+	
 }
 
 
