@@ -3540,6 +3540,7 @@ ini_set('memory_limit', '-1');
 						'Enable'=>'Yes'
 			),
 			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'order'=>array('mcaName'=>'ASC')
 			)
 	);		
 	}
