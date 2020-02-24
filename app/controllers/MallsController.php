@@ -689,7 +689,7 @@ public function sendotp(){
 				'mcaNumber'=>(string)$mcaNumber,
 				)
 			));
-			
+	
 			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));		
@@ -3540,6 +3540,7 @@ ini_set('memory_limit', '-1');
 						'Enable'=>'Yes'
 			),
 			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'order'=>array('mcaName'=>'ASC')
 			)
 	);		
 	}
