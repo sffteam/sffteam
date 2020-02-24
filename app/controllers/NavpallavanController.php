@@ -25,20 +25,20 @@ class NavpallavanController extends \lithium\action\Controller {
 		
 		$mobile = $this->request->data['mobile'];
 		
-	 $user = N_Users::find('first',array(
+	 $user = N_users::find('first',array(
    'conditions'=>array(
 				'mobile'=>(string)$mobile,
 				)
 		));
 		if(count($user)==1){
-			$mobile = "+91".$this->request->data['mobile'];
+			$mobile = "+91".$this->request->data;
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	
 			$data = array(
 				'otp' => $otp,
 				'mobile'=>$mobile,
 			);
-			$conditions = array("mobile"=>(string)$mobile);
+			$conditions = array("mobile"=>(string)$this->request->data);
 
 			N_users::update($data,$conditions);
 			$function = new Functions();
@@ -47,7 +47,7 @@ class NavpallavanController extends \lithium\action\Controller {
 			$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
 			$user = N_users::find('first',array(
    'conditions'=>array(
-				'mobile'=>(string)$mobile,
+				'mobile'=>(string)$this->request->data,
 				)
 			));
 				return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
