@@ -689,7 +689,7 @@ public function sendotp(){
 				'mcaNumber'=>(string)$mcaNumber,
 				)
 			));
-			
+	
 			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));		
