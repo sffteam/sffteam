@@ -31,24 +31,22 @@ class NavpallavanController extends \lithium\action\Controller {
 				)
 		));
 		if(count($user)==1){
-			$mobile = "+91".$this->request->data;
+			$mobile = "+91".$this->request->data['mobile'];
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	
 			$data = array(
 				'otp' => $otp,
-				'mobile'=>$mobile,
-			);
-			$conditions = array("mobile"=>(string)$this->request->data);
-
+				);
+			
+			$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+			
 			N_users::update($data,$conditions);
 			$function = new Functions();
 			$msg = "". $otp . " is the OTP for Navpallavan to register in the app";
 			$returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
 			$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
 			$user = N_users::find('first',array(
-   'conditions'=>array(
-				'mobile'=>(string)$this->request->data,
-				)
+   'conditions'=>$conditions
 			));
 				return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
 		}else{
