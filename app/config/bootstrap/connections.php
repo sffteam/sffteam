@@ -28,7 +28,7 @@ use lithium\data\Connections;
 
  Connections::add('default_Navpallavan', array(
  	'type' => CONNECTIONNAVPALLAVAN_TYPE,
- 	'host' => array(CONNECTIONNAVPALLAN,
+ 	'host' => array(CONNECTIONNAVPALLAVAN,
 		),
 //	'replicaSet' => true,
 	'database' => CONNECTIONNAVPALLAVAN_DB,
