@@ -27,13 +27,13 @@ use lithium\data\Connections;
  ));
 
  Connections::add('default_Navpallavan', array(
- 	'type' => CONNECTIONNAVPALLAN_TYPE,
+ 	'type' => CONNECTIONNAVPALLAVAN_TYPE,
  	'host' => array(CONNECTIONNAVPALLAN,
 		),
 //	'replicaSet' => true,
-	'database' => CONNECTIONNAVPALLAN_DB,
-	'login' => CONNECTIONNAVPALLAN_USER,
-	'password' => CONNECTIONNAVPALLAN_PASS,	
+	'database' => CONNECTIONNAVPALLAVAN_DB,
+	'login' => CONNECTIONNAVPALLAVAN_USER,
+	'password' => CONNECTIONNAVPALLAVAN_PASS,	
 //	'setSlaveOkay' => true,
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
