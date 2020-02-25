@@ -205,11 +205,13 @@ public function findteam(){
 			array_push($MyUsers,array(
 				'mobile'=>$lu['mobile'],
 				'name'=>$lu['name'],
+				'company'=>$lu['company'],
 				));
 		}
 			array_push($MyUsers,array(
 				'mobile'=>$user['mobile'],
 				'name'=>$user['name'],
+				'company'=>$user['company'],
 				));
 		return $this->render(array('json' => array("success"=>"Yes",'users'=>$MyUsers)));		
 	}
