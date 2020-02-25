@@ -94,7 +94,95 @@ public function getinfo(){
 		}
 }
 
+public function adduser(){
+	if($this->request->data){
+				$data = array(
+									'mobile' => $this->request->data['mobile'],
+									'email' => strtolower($this->request->data['email']),
+									'name' => ucwords($this->request->data['name']),
+									'DateJoin' => new \MongoDate(),
+									'refer' => $this->request->data['refer_mobile'],
+									'role'=>$this->request->data['role'],
+									'company'=>$this->request->data['company'],
+        );
+				$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+				$user = N_users::find('first',array(
+					'conditions'=>$conditions
+				));
+				
+				if(count($user)==0){
+					if($this->addUserJoin($data)==true){
+						$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+						$user = N_users::find('first',array(
+							'conditions'=>$conditions
+						));
+						return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+					}else{
+						return $this->render(array('json' => array("success"=>"No")));		
+					}
+				}else{
+						return $this->render(array('json' => array("success"=>"No")));		
+				}
+	}
+}
 
+function addUserJoin($data){
+	if($data){
+			if($data['mobile']!="" && $data["name"]!=""){
+					$refer = N_users::first(array(
+						'conditions'=>array('mobile'=>(string)$data['refer'])
+					));
+				if(count($refer)>0){
+						$refer_ancestors = $refer['ancestors'];
+							$ancestors = array();
+							if(count($refer_ancestors)>0){
+								foreach ($refer_ancestors as $ra){
+									array_push($ancestors, $ra);
+								}
+							}
+					$refer_mobile = (string) $refer['mobile'];
+
+					array_push($ancestors,$refer_mobile);
+					
+					$refer_left = (integer)$refer['left'];
+					$refer_left_inc = (integer)$refer['left'];
+					
+					N_users::update(
+						array(
+							'$inc' => array('right' => (integer)2)
+						),
+						array('right' => array('>'=>(integer)$refer_left_inc)),
+						array('multi' => true)
+					);
+					N_users::update(
+						array(
+							'$inc' => array('left' => (integer)2)
+						),
+						array('left' => array('>'=>(integer)$refer_left_inc)),
+						array('multi' => true)
+					);
+					
+					$newData = array(
+							'mobile' => (string)$data['mobile'],
+							'email' => strtolower($data['email']),
+							'name' => ucwords($data['name']),
+							'DateJoin' => $data['DateJoin'],
+							'refer' => (string)$data['refer'],
+							'role'=>$data['role'],
+							'company'=>$data['company'],
+							'left'=>(integer)($refer_left+1),
+							'right'=>(integer)($refer_left+2),
+							'ancestors'=> $ancestors,
+					);
+					
+					N_users::create()->save($newData);
+					return true;
+				}else{
+					return false;
+				}
+			}
+	}	
+}
 
 }
 ?>
