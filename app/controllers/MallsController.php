@@ -2837,8 +2837,8 @@ public function getlevel(){
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 			'Enable'=>'Yes',
-			$pyyyymm.'.GrossPV'=>array('$gt'=>(integer)$gpv,'$lte'=>(integer)$lpv),
-			$pyyyymm.'.Percent'=>array('$lt'=>(integer)22),
+			$yyyymm.'.GrossPV'=>array('$gte'=>(integer)$gpv,'$lt'=>(integer)$lpv),
+			$yyyymm.'.Percent'=>array('$lt'=>(integer)22),
 		);
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
@@ -2856,8 +2856,8 @@ public function getlevel(){
 			'GrossPV'=>$u[$yyyymm]['GrossPV'],
 			'PV'=>$u[$pyyyymm]['PV'],
 			'mobile'=>$mobile['Mobile']?:"",
-			'LevelUp'=>((integer)$lpv-(integer)$u[$pyyyymm]['GrossPV']),
-			'yyyymm'=>$pyyyymm,
+			'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
+			'yyyymm'=>$yyyymm,
 			));
 		
 	}
