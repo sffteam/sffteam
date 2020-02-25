@@ -184,5 +184,38 @@ function addUserJoin($data){
 	}	
 }
 
+public function findteam(){
+	if($this->request->data){
+		$mobile = $this->request->data['mobile'];
+		$user = N_users::find('first',array(
+			'conditions'=>array('mobile'=>(string)$mobile)
+		));
+		$left = $user['left'];
+		$right = $user['right'];
+		$MyUsers = array();
+		$ListUsers = N_users::find('all',array(
+		'conditions'=>array(
+				'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+		),
+		'order'=>array('name'=>'ASC')
+	));
+	
+		foreach($ListUsers as $lu){
+			array_push($MyUsers,array(
+				'mobile'=>$lu['mobile'],
+				'name'=>$lu['name'],
+				));
+		}
+			array_push($MyUsers,array(
+				'mobile'=>$user['mobile'],
+				'name'=>$user['name'],
+				));
+		return $this->render(array('json' => array("success"=>"Yes",'users'=>$MyUsers)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
+
+
 }
 ?>
