@@ -195,7 +195,7 @@ public function findteam(){
 		$MyUsers = array();
 		$ListUsers = N_users::find('all',array(
 		'conditions'=>array(
-				'left'=>array('$gt'=>$left),
+			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
 		),
 		'order'=>array('name'=>'ASC')
@@ -217,6 +217,8 @@ public function findteam(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
+
+
 
 
 }
