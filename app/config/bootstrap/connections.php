@@ -38,6 +38,18 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
+ Connections::add('default_Rbitcoin', array(
+ 	'type' => CONNECTIONRBITCOIN_TYPE,
+ 	'host' => array(CONNECTIONRBITCOIN,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONRBITCOIN_DB,
+	'login' => CONNECTIONRBITCOIN_USER,
+	'password' => CONNECTIONRBITCOIN_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
+	
  Connections::add('default_Modicare', array(
  	'type' => CONNECTIONMODICARE_TYPE,
  	'host' => array(CONNECTIONMODICARE,
