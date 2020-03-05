@@ -38,7 +38,7 @@ class RbitcoinController extends \lithium\action\Controller {
 			
 			R_users::update($data,$conditions);
 			$function = new Functions();
-			$msg = "". $otp . " is the OTP for Navpallavan to register in the app";
+			$msg = "". $otp . " is the OTP for rBitcoin to register in the app";
 			$returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
 			$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
 			$user = R_users::find('first',array(
