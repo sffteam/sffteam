@@ -227,9 +227,9 @@ public function savedata(){
 		'mobile'=>(string)$this->request->data['mobile'],
 	);
 	R_users::update($data,$conditions);
-	$user = R_users::find('first',$array(
-		'conditions'=>$conditions
-	))
+	$user = R_users::find('first',array(
+		'conditions'=> $conditions
+	));
 	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
 }
 
