@@ -55,7 +55,7 @@ class RbitcoinController extends \lithium\action\Controller {
 	return $this->render(array('json' => array("success"=>"No")));		
 	}
 	
-	public function verifyotp(){
+	public function verifyotp(){ 
 		if($this->request->data){
 		
 			$mobile = $this->request->data['mobile'];
@@ -217,7 +217,21 @@ public function findteam(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
-
+public function savedata(){
+	$data = array(
+		'name'=>$this->request->data['name'],
+		'email'=>$this->request->data['email'],
+		'company'=>$this->request->data['company'],
+	);
+	$conditions = array(
+		'mobile'=>(string)$this->request->data['mobile'],
+	);
+	R_users::update($data,$conditions);
+	$user = R_users::find('first',$array(
+		'conditions'=>$conditions
+	))
+	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+}
 
 
 }
