@@ -27,7 +27,10 @@ class RbitcoinController extends \lithium\action\Controller {
 				)
 		));
 		if(count($user)==1){
-			$mobile = "+91".$this->request->data['mobile'];
+			$mobile = $this->request->data['mobile'];
+			if(substr($mobile,0,1)!="+"){
+				return $this->render(array('json' => array("success"=>"No")));		
+			}
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	
 			$data = array(
