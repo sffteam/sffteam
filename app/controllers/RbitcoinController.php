@@ -20,7 +20,9 @@ class RbitcoinController extends \lithium\action\Controller {
 		if($this->request->data){
 		
 		$mobile = $this->request->data['mobile'];
-		
+			if(substr($mobile,0,1)!="+"){
+				return $this->render(array('json' => array("success"=>"No")));		
+			}
 	 $user = R_users::find('first',array(
    'conditions'=>array(
 				'mobile'=>(string)$mobile,
@@ -28,15 +30,12 @@ class RbitcoinController extends \lithium\action\Controller {
 		));
 		if(count($user)==1){
 			$mobile = $this->request->data['mobile'];
-			if(substr($mobile,0,1)!="+"){
-				return $this->render(array('json' => array("success"=>"No")));		
-			}
+			
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	
 			$data = array(
 				'otp' => $otp,
 				);
-			
 			$conditions = array("mobile"=>(string)$this->request->data['mobile']);
 			
 			R_users::update($data,$conditions);
@@ -49,7 +48,24 @@ class RbitcoinController extends \lithium\action\Controller {
 			));
 				return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
 		}else{
-				return $this->render(array('json' => array("success"=>"No")));		
+				$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+				$ga = new GoogleAuthenticator();
+				$otp = $ga->getCode($ga->createSecret(64));	
+				
+				$data = array(
+					'mobile' = $this->request->data['mobile'],
+					'otp' => $otp,
+				);
+				R_users::create()->save($data);
+				$function = new Functions();
+				$msg = "". $otp . " is the OTP for rBitcoin to register in the app";
+				$returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
+				$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
+				$user = R_users::find('first',array(
+					'conditions'=>$conditions
+					));
+				return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
+				
 		}
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
