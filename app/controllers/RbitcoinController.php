@@ -53,7 +53,7 @@ class RbitcoinController extends \lithium\action\Controller {
 				$otp = $ga->getCode($ga->createSecret(64));	
 				
 				$data = array(
-					'mobile' = $this->request->data['mobile'],
+					'mobile' => $this->request->data['mobile'],
 					'otp' => $otp,
 				);
 				R_users::create()->save($data);
