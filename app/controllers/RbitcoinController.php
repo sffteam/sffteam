@@ -278,17 +278,22 @@ public function saveaddress(){
 			));
 			$addresses = array();
 			foreach($user['addresses'] as $a){
-				
-				
-				array_push($addresses, array(
+					array_push($addresses, array(
+						'address'=>(string)$a['address'],
+						'sec'=>(string)$a['sec'],
+					));
+	
+			}
+			
+			array_push($addresses, 
+				array(
 					'address'=>(string)$this->request->data['addr'],
 					'sec'=>(string)$this->request->data['sec'],
 				));
-				
-			}
 			$data = array(
 				'addresses'=>$addresses
 			);
+			//print_r($data);
 			R_users::update($data,$conditions);
 			$user = R_users::find('first',array(
 				'conditions'=> $conditions,
