@@ -244,9 +244,25 @@ public function savedata(){
 	);
 	R_users::update($data,$conditions);
 	$user = R_users::find('first',array(
-		'conditions'=> $conditions
+		'conditions'=> $conditions,
+		'fields'=>array('name','email','company','role'),
 	));
 	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+}
+
+public function getaddress(){
+	if($this->request->data){
+		$conditions = array(
+		'mobile'=>(string)$this->request->data['mobile'],
+	);
+	R_users::update($data,$conditions);
+	$user = R_users::find('first',array(
+		'conditions'=> $conditions,
+		'fields'=>array('name','email','company','role'),
+	));
+		return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
 }
 
 
