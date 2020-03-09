@@ -200,36 +200,20 @@ function addUserJoin($data){
 	}	
 }
 
-public function findteam(){
+public function findaddresses(){
 	if($this->request->data){
 		$mobile = $this->request->data['mobile'];
 		$user = R_users::find('first',array(
 			'conditions'=>array('mobile'=>(string)$mobile)
 		));
-		$left = $user['left'];
-		$right = $user['right'];
-		$MyUsers = array();
-		$ListUsers = R_users::find('all',array(
-		'conditions'=>array(
-			'left'=>array('$gt'=>$left),
-			'right'=>array('$lt'=>$right),
-		),
-		'order'=>array('name'=>'ASC')
-	));
-	
-		foreach($ListUsers as $lu){
-			array_push($MyUsers,array(
-				'mobile'=>$lu['mobile'],
-				'name'=>$lu['name'],
-				'company'=>$lu['company'],
+		$addresses = array();
+			foreach($user['addresses'] as $a){
+					array_push($addresses, array(
+						'address'=>(string)$a['address'],
 				));
-		}
-			array_push($MyUsers,array(
-				'mobile'=>$user['mobile'],
-				'name'=>$user['name'],
-				'company'=>$user['company'],
-				));
-		return $this->render(array('json' => array("success"=>"Yes",'users'=>$MyUsers)));		
+			}
+		
+		return $this->render(array('json' => array("success"=>"Yes",'addresses'=>$addresses)));		
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
