@@ -258,9 +258,10 @@ public function getaddress(){
 	R_users::update($data,$conditions);
 	$user = R_users::find('first',array(
 		'conditions'=> $conditions,
-		'fields'=>array('name','email','company','role'),
+		'fields'=>array('name','email','company','role','addresses'),
 	));
-		return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+	
+		return $this->render(array('json' => array("success"=>"Yes",'user'=>$user,'addresses'=>count($user['addresses']))));		
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
