@@ -79,11 +79,12 @@ class RbitcoinController extends \lithium\action\Controller {
 			$conditions = array("mobile"=>(string)$this->request->data['mobile'],'otp'=>(string)$this->request->data['otp']);
 			
 			$user = R_users::find('first',array(
-   'conditions'=>$conditions
+   'conditions'=>$conditions,
+			'fields'=>array('name','email','company','role','addresses'),
 		));
 		
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));		
+			return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user,'addresses'=>count($user['addresses']))));		
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));		
 		}
