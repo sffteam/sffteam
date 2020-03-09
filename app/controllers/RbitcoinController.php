@@ -267,6 +267,35 @@ public function getaddress(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
-
+public function saveaddress(){
+		if($this->request->data){
+			$conditions = array(
+			'mobile'=>(string)$this->request->data['mobile'],
+			);
+			$user = R_users::find('first',array(
+				'conditions'=> $conditions,
+				'fields'=>array('name','email','company','role','addresses'),
+			));
+			$addresses = array();
+			foreach($user['addresses'] as $a){
+				
+				
+				array_push($addresses, array(
+					'address'=>(string)$this->request->data['addr'],
+					'sec'=>(string)$this->request->data['sec'],
+				));
+				
+			}
+			$data = array(
+				'addresses'=>$addresses
+			);
+			R_users::update($data,$conditions);
+			$user = R_users::find('first',array(
+				'conditions'=> $conditions,
+				'fields'=>array('name','email','company','role','addresses'),
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'user'=>$user,'addresses'=>count($user['addresses']))));		
+		}
+	}
 }
 ?>
