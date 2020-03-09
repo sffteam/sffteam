@@ -251,6 +251,23 @@ public function getaddress(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
+public function getlastaddress(){
+	if($this->request->data){
+		$conditions = array(
+		'mobile'=>(string)$this->request->data['mobile'],
+		);
+		$user = R_users::find('first',array(
+		'conditions'=> $conditions,
+		'fields'=>array('addresses'),
+	));
+		foreach($user['addresses'] as $a){
+						$address=(string)$a['address'];
+		}
+	return $this->render(array('json' => array("success"=>"Yes",'address'=>$address)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
+
 public function saveaddress(){
 		if($this->request->data){
 			$conditions = array(
