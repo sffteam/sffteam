@@ -296,6 +296,7 @@ public function saveaddress(){
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'user'=>$user,'addresses'=>count($user['addresses']))));		
 		}
+		return $this->render(array('json' => array("success"=>"No")));		
 	}
 }
 ?>
