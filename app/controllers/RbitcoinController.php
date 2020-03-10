@@ -5,6 +5,7 @@ use \lithium\template\View;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\models\R_users;
+use app\models\R_methods;
 
 class RbitcoinController extends \lithium\action\Controller {
 
@@ -304,5 +305,25 @@ public function saveaddress(){
 		}
 		return $this->render(array('json' => array("success"=>"No")));		
 	}
+	
+public function methods(){
+	$methods = R_methods::find('all',array(
+		'order'=>array('name'=>'ASC')
+	));
+	return $this->render(array('json' => array("success"=>"Yes",'methods'=>$methods)));		
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 ?>
