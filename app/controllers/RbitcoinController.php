@@ -340,7 +340,7 @@ public function posttrade(){
 	
 }
 	
-public buysell(){
+public function gettrades(){
 	if($this->request->data){
 		$trades = R_trades::find('all',array(
 			'conditions' =>array('post'=>(string)$this->request->data['post'])
