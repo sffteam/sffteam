@@ -6,6 +6,7 @@ use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\models\R_users;
 use app\models\R_methods;
+use app\models\R_trades;
 
 class RbitcoinController extends \lithium\action\Controller {
 
@@ -56,6 +57,7 @@ class RbitcoinController extends \lithium\action\Controller {
 				$data = array(
 					'mobile' => $this->request->data['mobile'],
 					'otp' => $otp,
+					'DateTime'=>new \MongoDate,
 				);
 				R_users::create()->save($data);
 				$function = new Functions();
@@ -314,7 +316,29 @@ public function methods(){
 }
 	
 	
+public function posttrade(){
+		if($this->request->data){
+			
+		$data = array(
+			
+			'post'=>$this->request->data['post'],
+			'transfer'=>$this->request->data['transfer'],
+			'currency'=>$this->request->data['currency'],
+			'margin'=>$this->request->data['margin'],
+			'minimum'=>$this->request->data['minimum'],
+			'maximum'=>$this->request->data['maximum'],
+			'tradeTerms'=>$this->request->data['tradeTerms'],
+			'DateTime'=>new \MongoDate,
+		);	
+		$conditions = array(
+		'mobile'=>$this->request->data['mobile'],
+		);
+		R_trades::create()->save($data);
+			return $this->render(array('json' => array("success"=>"Yes")));		
+		}
+	return $this->render(array('json' => array("success"=>"No")));		
 	
+}
 	
 	
 	
