@@ -343,7 +343,8 @@ public function posttrade(){
 public function gettrades(){
 	if($this->request->data){
 		$trades = R_trades::find('all',array(
-			'conditions' =>array('post'=>(string)$this->request->data['post'])
+			'conditions' =>array('post'=>(string)$this->request->data['post']),
+			'order'=>array('margin'=>'ASC');
 		));
 		
 		return $this->render(array('json' => array("success"=>"Yes",'trades'=>$trades)));		
