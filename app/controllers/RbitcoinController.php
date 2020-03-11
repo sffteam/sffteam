@@ -320,7 +320,7 @@ public function posttrade(){
 		if($this->request->data){
 			
 		$data = array(
-			
+			'mobile'=>$this->request->data['mobile'],
 			'post'=>$this->request->data['post'],
 			'transfer'=>$this->request->data['transfer'],
 			'currency'=>$this->request->data['currency'],
@@ -340,7 +340,16 @@ public function posttrade(){
 	
 }
 	
-	
+public buysell(){
+	if($this->request->data){
+		$trades = R_trades::find('all',array(
+			'conditions' =>array('post'=>(string)$this->request->data['post'])
+		));
+		
+		return $this->render(array('json' => array("success"=>"Yes",'trades'=>$trades)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 	
 	
 	
