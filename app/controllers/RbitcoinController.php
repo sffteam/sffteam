@@ -352,7 +352,17 @@ public function gettrades(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 	
-	
+public function deletetrade(){
+	if($this->request->data){
+			$conditions = array(
+			'mobile'=>(string)$this->request->data['mobile'],
+			'_id'=>(string)$this->request->data['_id']
+			);
+		R_trades::remove($conditions);
+		return $this->render(array('json' => array("success"=>"Yes")));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 	
 	
 	
