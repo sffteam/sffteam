@@ -339,6 +339,30 @@ public function posttrade(){
 	return $this->render(array('json' => array("success"=>"No")));		
 	
 }
+public function posttradeedit(){
+		if($this->request->data){
+			
+		$data = array(
+			'mobile'=>$this->request->data['mobile'],
+			'post'=>$this->request->data['post'],
+			'transfer'=>$this->request->data['transfer'],
+			'currency'=>$this->request->data['currency'],
+			'margin'=>$this->request->data['margin'],
+			'minimum'=>$this->request->data['minimum'],
+			'maximum'=>$this->request->data['maximum'],
+			'tradeTerms'=>$this->request->data['tradeTerms'],
+			'DateTime'=>new \MongoDate,
+		);
+		$conditions = array(
+		'mobile'=>$this->request->data['mobile'],
+		'_id'=>$this->request->data['_id'],
+		);
+		R_trades::update($data,$conditions);
+			return $this->render(array('json' => array("success"=>"Yes")));		
+		}
+	return $this->render(array('json' => array("success"=>"No")));		
+	
+}
 	
 public function gettrades(){
 	if($this->request->data){
