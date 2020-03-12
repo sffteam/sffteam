@@ -351,7 +351,19 @@ public function gettrades(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
-	
+public function gettrade(){
+	if($this->request->data){
+		$trade = R_trades::find('all',array(
+			'conditions' =>array(
+				'_id'=>(string)$this->request->data['_id'],
+				'mobile'=>(string)$this->request->data['mobile'],
+			),
+		));
+		
+		return $this->render(array('json' => array("success"=>"Yes",'trade'=>$trade)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 public function deletetrade(){
 	if($this->request->data){
 			$conditions = array(
