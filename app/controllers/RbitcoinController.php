@@ -415,7 +415,7 @@ public function savebank(){
 			'bankBranchName'=>(string)$this->request->data['bankBranchName'],
 			'bankUPI'=>(string)$this->request->data['bankUPI'],
 		);
-		R_trades::update($data,$conditions);
+		R_users::update($data,$conditions);
 			return $this->render(array('json' => array("success"=>"Yes")));		
 		}
 	return $this->render(array('json' => array("success"=>"No")));		
