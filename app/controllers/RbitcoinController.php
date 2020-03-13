@@ -400,7 +400,27 @@ public function deletetrade(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 	
+public function savebank(){
+	if($this->request->data){
+		$conditions = array(
+			'mobile'=>(string)$this->request->data['mobile'],
+		);
+		$data = array(
+			'bankName'=>(string)$this->request->data['bankName'],
+			'bankBankName'=>(string)$this->request->data['bankBankName'],
+			'bankAccount'=>(string)$this->request->data['bankAccount'],
+			'bankType'=>(string)$this->request->data['bankType'],
+			'bankIFSC'=>(string)$this->request->data['bankIFSC'],
+			'bankBranchCity'=>(string)$this->request->data['bankBranchCity'],
+			'bankBranchName'=>(string)$this->request->data['bankBranchName'],
+			'bankUPI'=>(string)$this->request->data['bankUPI'],
+		);
+		R_trades::update($data,$conditions);
+			return $this->render(array('json' => array("success"=>"Yes")));		
+		}
+	return $this->render(array('json' => array("success"=>"No")));		
 	
+}
 	
 	
 	
