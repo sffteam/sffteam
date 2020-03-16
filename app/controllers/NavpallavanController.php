@@ -263,8 +263,8 @@ public function rawmaterials(){
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
 		}
 	
-}
-	}
+		}
+	
 	
 	
 	return $this->render(array('json' => array("success"=>"No")));		
