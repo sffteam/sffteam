@@ -256,16 +256,24 @@ public function rawmaterials(){
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
 		}
+		
 		if($this->request->data['post']=='single'){
 			$raw = N_prices::find('first',array(
 					'conditions'=>array('_id'=>(string)$this->request->data['_id'])
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
 		}
-	
+		
+		if($this->request->data['post']=='delete'){
+			
+			$conditions = array(
+				'_id'=>(string)$this->request->data['_id'],
+			);
+			R_prices::remove($conditions);
+			
+			return $this->render(array('json' => array("success"=>"Yes")));		
 		}
-	
-	
+	}	
 	
 	return $this->render(array('json' => array("success"=>"No")));		
 }
