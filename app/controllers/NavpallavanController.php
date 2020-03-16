@@ -5,6 +5,8 @@ use \lithium\template\View;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\models\N_users;
+use app\models\N_prices;
+use app\models\N_recipes;
 
 class NavpallavanController extends \lithium\action\Controller {
 
@@ -218,6 +220,48 @@ public function findteam(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
+public function rawmaterials(){
+	if($this->request->data){
+		
+		if($this->request->data['post']=="get"){
+			$raw = N_prices::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
+		}
+		
+		if($this->request->data['post']=="add"){
+			$data = array(
+				"Name"=>(string)ucfirst($this->request->data['rawName']),
+				"Price"=>(integer)$this->request->data['rawPrice']
+			);
+			N_prices::create()->save($data);
+			$raw = N_prices::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
+		}
+		
+		if($this->request->data['post']=="edit"){
+			$data = array(
+				"Name"=>(string)ucfirst($this->request->data['rawName']),
+				"Price"=>(integer)$this->request->data['rawPrice']
+			);
+			$conditions = array(
+				'_id'=>(string)$this->request->data['_id'],
+			);
+			N_prices::update($data,$conditons);
+			$raw = N_prices::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
+		}
+		
+	}
+	
+	
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 
 
 
