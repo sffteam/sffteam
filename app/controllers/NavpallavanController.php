@@ -263,7 +263,17 @@ public function rawmaterials(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
-
+public function rawmaterial(){
+	if($this->request->data){
+		
+		
+			$raw = N_prices::find('first',array(
+					'conditions'=>array('_id'=>(string)$this->request->data['_id'])
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
+		}
+	
+}
 
 }
 ?>
