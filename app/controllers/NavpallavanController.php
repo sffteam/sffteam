@@ -269,7 +269,7 @@ public function rawmaterials(){
 			$conditions = array(
 				'_id'=>(string)$this->request->data['_id'],
 			);
-			R_prices::remove($conditions);
+			N_prices::remove($conditions);
 			
 			return $this->render(array('json' => array("success"=>"Yes")));		
 		}
