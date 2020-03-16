@@ -225,7 +225,7 @@ public function getmobiles(){
 			'Enable'=>'Yes'
 		 ),
 		 'fields'=>array('mcaNumber', 'mcaName'),
-			'limit'=>100,
+		//	'limit'=>100,
 			'order'=>array($yyyymm.'.PV'=>'DESC')
 	 ));
 	return $this->render(array('json' => array("success"=>"Yes",'mobiles'=>$mobile)));			
