@@ -250,7 +250,7 @@ public function rawmaterials(){
 			$conditions = array(
 				'_id'=>(string)$this->request->data['_id'],
 			);
-			N_prices::update($data,$conditons);
+			N_prices::update($data,$conditions);
 			$raw = N_prices::find('all',array(
 				'order'=>array('Name'=>'ASC')
 			));
