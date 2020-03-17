@@ -278,6 +278,63 @@ public function rawmaterials(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
+public function products(){
+	if($this->request->data){
+		
+		if($this->request->data['post']=="get"){
+			$products = N_recipes::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
+		}
+		
+		if($this->request->data['post']=="add"){
+			$data = array(
+				"Name"=>(string)ucfirst($this->request->data['prodName']),
+				"Price"=>(integer)$this->request->data['prodPrice']
+			);
+			N_recipes::create()->save($data);
+			$products = N_recipes::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
+		}
+		
+		if($this->request->data['post']=="edit"){
+			$data = array(
+				"Name"=>(string)ucfirst($this->request->data['prodName']),
+				"Price"=>(integer)$this->request->data['prodPrice']
+			);
+			$conditions = array(
+				'_id'=>(string)$this->request->data['_id'],
+			);
+			N_recipes::update($data,$conditions);
+			$products = N_recipes::find('all',array(
+				'order'=>array('Name'=>'ASC')
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'raw'=>$products)));		
+		}
+		
+		if($this->request->data['post']=='single'){
+			$product = N_recipes::find('first',array(
+					'conditions'=>array('_id'=>(string)$this->request->data['_id'])
+			));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($product),'product'=>$product)));		
+		}
+		
+		if($this->request->data['post']=='delete'){
+			
+			$conditions = array(
+				'_id'=>(string)$this->request->data['_id'],
+			);
+			N_recipes::remove($conditions);
+			
+			return $this->render(array('json' => array("success"=>"Yes")));		
+		}
+	}	
+	
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 
 
 }
