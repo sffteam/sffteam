@@ -428,7 +428,9 @@ public function getbank(){
 		$conditions = array(
 			'mobile'=>(string)$this->request->data['mobile'],
 		);
-		$user = R_users::find('first',$conditions);
+		$user = R_users::find('first',array(
+			'conditions'=>$conditions
+		));
 	}
 	return $this->render(array('json' => array("success"=>"No","user"=>$user)));		
 }
