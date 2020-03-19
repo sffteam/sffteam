@@ -8,6 +8,7 @@ use app\models\R_users;
 use app\models\R_methods;
 use app\models\R_trades;
 
+
 class RbitcoinController extends \lithium\action\Controller {
 
 	 protected function _init() {
@@ -422,7 +423,15 @@ public function savebank(){
 	
 }
 	
-	
+public function getbank(){
+	if($this->request->data){
+		$conditions = array(
+			'mobile'=>(string)$this->request->data['mobile'],
+		);
+		$user = R_users::find('first',$conditions);
+	}
+	return $this->render(array('json' => array("success"=>"No","user"=>$user)));		
+}
 	
 	
 }
