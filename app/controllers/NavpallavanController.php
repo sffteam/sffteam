@@ -312,7 +312,7 @@ public function products(){
 			$products = N_recipes::find('all',array(
 				'order'=>array('Name'=>'ASC')
 			));
-			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'raw'=>$products)));		
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
 		}
 		
 		if($this->request->data['post']=='single'){
