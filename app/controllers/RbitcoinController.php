@@ -7,6 +7,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\models\R_users;
 use app\models\R_methods;
 use app\models\R_trades;
+use app\models\R_commissions;
 
 
 class RbitcoinController extends \lithium\action\Controller {
@@ -435,6 +436,11 @@ public function getbank(){
 	return $this->render(array('json' => array("success"=>"No","user"=>$user)));		
 }
 	
+	
+public function commission(){
+	$commission = R_commissions::find('first');
+	return $this->render(array('json' => array("success"=>"Yes",'commission'=>$commission)));		
+}
 	
 }
 ?>
