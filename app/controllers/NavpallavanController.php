@@ -64,6 +64,7 @@ class NavpallavanController extends \lithium\action\Controller {
 			$mobile = $this->request->data['mobile'];
 			$otp = $this->request->data['otp'];
 			$conditions = array("mobile"=>(string)$this->request->data['mobile'],'otp'=>(string)$this->request->data['otp']);
+
 			
 			$user = N_users::find('first',array(
    'conditions'=>$conditions
@@ -207,12 +208,14 @@ public function findteam(){
 			array_push($MyUsers,array(
 				'mobile'=>$lu['mobile'],
 				'name'=>$lu['name'],
+				'_id'=>$lu['_id'],
 				'company'=>$lu['company'],
 				));
 		}
 			array_push($MyUsers,array(
 				'mobile'=>$user['mobile'],
 				'name'=>$user['name'],
+				'_id'=>$user['_id'],
 				'company'=>$user['company'],
 				));
 		return $this->render(array('json' => array("success"=>"Yes",'users'=>$MyUsers)));		
@@ -225,6 +228,7 @@ public function rawmaterials(){
 		
 		if($this->request->data['post']=="get"){
 			$raw = N_prices::find('all',array(
+				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
 				'order'=>array('Name'=>'ASC')
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
@@ -232,11 +236,13 @@ public function rawmaterials(){
 		
 		if($this->request->data['post']=="add"){
 			$data = array(
+				'user_id'=>(string($this->request->data['user_id'])),
 				"Name"=>(string)ucfirst($this->request->data['rawName']),
 				"Price"=>(integer)$this->request->data['rawPrice']
 			);
 			N_prices::create()->save($data);
 			$raw = N_prices::find('all',array(
+				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
 				'order'=>array('Name'=>'ASC')
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
@@ -244,6 +250,7 @@ public function rawmaterials(){
 		
 		if($this->request->data['post']=="edit"){
 			$data = array(
+				'user_id'=>(string($this->request->data['user_id'])),
 				"Name"=>(string)ucfirst($this->request->data['rawName']),
 				"Price"=>(integer)$this->request->data['rawPrice']
 			);
@@ -252,6 +259,7 @@ public function rawmaterials(){
 			);
 			N_prices::update($data,$conditions);
 			$raw = N_prices::find('all',array(
+				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
 				'order'=>array('Name'=>'ASC')
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
@@ -259,7 +267,9 @@ public function rawmaterials(){
 		
 		if($this->request->data['post']=='single'){
 			$raw = N_prices::find('first',array(
-					'conditions'=>array('_id'=>(string)$this->request->data['_id'])
+					'conditions'=>array(
+					'_id'=>(string)$this->request->data['_id']
+					)
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
 		}
