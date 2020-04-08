@@ -215,7 +215,7 @@ public function findteam(){
 			array_push($MyUsers,array(
 				'mobile'=>$user['mobile'],
 				'name'=>$user['name'],
-				'_id'=>(string>$user['_id'],
+				'_id'=>(string)$user['_id'],
 				'company'=>$user['company'],
 				));
 		return $this->render(array('json' => array("success"=>"Yes",'users'=>$MyUsers)));		
