@@ -268,7 +268,8 @@ public function rawmaterials(){
 		if($this->request->data['post']=='single'){
 			$raw = N_prices::find('first',array(
 					'conditions'=>array(
-					'_id'=>(string)$this->request->data['_id']
+					'_id'=>(string)$this->request->data['_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
 					)
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($raw),'raw'=>$raw)));		
