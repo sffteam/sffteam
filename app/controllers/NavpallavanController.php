@@ -297,7 +297,12 @@ public function products(){
 				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
 				'order'=>array('Name'=>'ASC')
 			));
-			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
+			$raw = N_prices::find('all',array(
+				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
+				'order'=>array('Name'=>'ASC')
+			));
+			
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products,'raw'=>$raw)));		
 		}
 		
 		if($this->request->data['post']=="add"){
