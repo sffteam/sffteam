@@ -294,6 +294,7 @@ public function products(){
 		
 		if($this->request->data['post']=="get"){
 			$products = N_recipes::find('all',array(
+				'conditions'=>array('user_id'=>(string)$this->request->data['user_id']),
 				'order'=>array('Name'=>'ASC')
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
