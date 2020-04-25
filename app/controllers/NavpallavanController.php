@@ -309,6 +309,7 @@ public function products(){
 			$data = array(
 				'user_id'=>(string)($this->request->data['user_id']),
 				"Name"=>(string)ucfirst($this->request->data['prodName']),
+				"Ingrediants"=>array(),
 				"Price"=>(integer)$this->request->data['prodPrice']
 			);
 			N_recipes::create()->save($data);
