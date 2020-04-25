@@ -307,6 +307,7 @@ public function products(){
 		
 		if($this->request->data['post']=="add"){
 			$data = array(
+				'user_id'=>(string)($this->request->data['user_id']),
 				"Name"=>(string)ucfirst($this->request->data['prodName']),
 				"Price"=>(integer)$this->request->data['prodPrice']
 			);
@@ -319,6 +320,7 @@ public function products(){
 		
 		if($this->request->data['post']=="edit"){
 			$data = array(
+				'user_id'=>(string)($this->request->data['user_id']),
 				"Name"=>(string)ucfirst($this->request->data['prodName']),
 				"Price"=>(integer)$this->request->data['prodPrice']
 			);
