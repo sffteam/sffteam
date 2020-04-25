@@ -236,7 +236,7 @@ public function rawmaterials(){
 		
 		if($this->request->data['post']=="add"){
 			$data = array(
-				'user_id'=>(string($this->request->data['user_id'])),
+				'user_id'=>(string)($this->request->data['user_id'])),
 				"Name"=>(string)ucfirst($this->request->data['rawName']),
 				"Price"=>(integer)$this->request->data['rawPrice']
 			);
