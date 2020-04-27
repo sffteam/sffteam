@@ -469,5 +469,59 @@ public function addRecipeProduct(){
 	
 	return $this->render(array('json' => array("success"=>"Yes",'raw'=>$raw,"recipe"=>$recipe)));		
 }
+
+
+
+public function deleteRecipeProduct(){
+	if($this->request->data){
+		$raw = N_prices::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['recipe_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)
+		));
+		
+		$recipe = N_recipes::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['product_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)		
+		));
+		
+		
+				$ingrediants = array();
+				$data = array();
+				$i = 0;
+				foreach($recipe['Ingrediants'] as $k=>$v){
+					if($k!=$raw['Name']){
+							$ingrediants = array(
+									(string)ucfirst($k)=> (integer)$v
+							);
+						$data = array_merge( $data,$ingrediants);
+					}
+						$i++;
+				}
+			
+		$conditions = array(
+				'_id'=>(string)$this->request->data['product_id'],
+				'user_id'=>(string)$this->request->data['user_id'],
+	);
+ N_recipes::update(array('Ingrediants'=>$data),$conditions);
+	
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'raw'=>$raw,"recipe"=>$recipe)));		
+}
+
+
+
+
+
+
+
+
+
+
+
 }
 ?>
