@@ -474,12 +474,6 @@ public function addRecipeProduct(){
 
 public function deleteRecipeProduct(){
 	if($this->request->data){
-		$raw = N_prices::find('first',array(
-			'conditions'=>array(
-					'_id'=> (string)$this->request->data['recipe_id'],
-					'user_id'=>(string)$this->request->data['user_id'],
-			)
-		));
 		
 		$recipe = N_recipes::find('first',array(
 			'conditions'=>array(
@@ -493,7 +487,7 @@ public function deleteRecipeProduct(){
 				$data = array();
 				$i = 0;
 				foreach($recipe['Ingrediants'] as $k=>$v){
-					if($k!=$raw['Name']){
+					if($k!=$this->request->data['recipe']){
 							$ingrediants = array(
 									(string)ucfirst($k)=> (integer)$v
 							);
