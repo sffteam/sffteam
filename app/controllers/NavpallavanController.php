@@ -302,6 +302,7 @@ public function products(){
 				'order'=>array('Name'=>'ASC')
 			));
 			
+			
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products,'raw'=>$raw)));		
 		}
 		
@@ -316,6 +317,8 @@ public function products(){
 			$products = N_recipes::find('all',array(
 				'order'=>array('Name'=>'ASC')
 			));
+			
+			
 			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products)));		
 		}
 		
@@ -424,6 +427,100 @@ foreach($recipe['Ingrediants'] as $k=>$v){
 	return $this->render(array('json' => array("success"=>"Yes",'recipe'=>$recipe,'Ingrediants'=>$data)));		
 	
 }
+
+public function addRecipeProduct(){
+	if($this->request->data){
+		$raw = N_prices::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['recipe_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)
+		));
+		
+		$recipe = N_recipes::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['product_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)		
+		));
+		
+		
+				$ingrediants = array();
+				$data = array();
+				$i = 0;
+				foreach($recipe['Ingrediants'] as $k=>$v){
+							$ingrediants = array(
+									(string)ucfirst($k)=> (integer)$v
+							);
+						$data = array_merge( $data,$ingrediants);
+						$i++;
+				}
+			$ingrediants = array(
+					(string)ucfirst($raw['Name'])=> 0
+			);
+			$data = array_merge( $data,$ingrediants);
+		$conditions = array(
+				'_id'=>(string)$this->request->data['product_id'],
+				'user_id'=>(string)$this->request->data['user_id'],
+	);
+ N_recipes::update(array('Ingrediants'=>$data),$conditions);
+	
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'raw'=>$raw,"recipe"=>$recipe)));		
+}
+
+
+
+public function deleteRecipeProduct(){
+	if($this->request->data){
+		$raw = N_prices::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['recipe_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)
+		));
+		
+		$recipe = N_recipes::find('first',array(
+			'conditions'=>array(
+					'_id'=> (string)$this->request->data['product_id'],
+					'user_id'=>(string)$this->request->data['user_id'],
+			)		
+		));
+		
+		
+				$ingrediants = array();
+				$data = array();
+				$i = 0;
+				foreach($recipe['Ingrediants'] as $k=>$v){
+					if($k!=$raw['Name']){
+							$ingrediants = array(
+									(string)ucfirst($k)=> (integer)$v
+							);
+						$data = array_merge( $data,$ingrediants);
+					}
+						$i++;
+				}
+			
+		$conditions = array(
+				'_id'=>(string)$this->request->data['product_id'],
+				'user_id'=>(string)$this->request->data['user_id'],
+	);
+ N_recipes::update(array('Ingrediants'=>$data),$conditions);
+	
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'raw'=>$raw,"recipe"=>$recipe)));		
+}
+
+
+
+
+
+
+
+
+
 
 
 }
