@@ -8,6 +8,7 @@ use app\models\N_users;
 use app\models\N_prices;
 use app\models\N_recipes;
 use app\models\N_products;
+use app\models\N_sales;
 
 class NavpallavanController extends \lithium\action\Controller {
 
@@ -529,7 +530,24 @@ public function getproduct(){
 	return $this->render(array('json' => array("success"=>"Yes",'product'=>$product)));		
 }
 
-
+public function saveSales(){
+	if($this->request->data){
+		$data = array(
+			'user_id'=>$this->request->data['user_id'],
+			'product_id'=>$this->request->data['product_id'],
+			'product_name'=>$this->request->data['product_name'],
+			'product_description'=>$this->request->data['product_description'],
+			'product_netweight'=>$this->request->data['product_netweight'],
+			'product_unit'=>$this->request->data['product_unit'],
+			'product_mrp'=>$this->request->data['product_mrp'],
+			'saleDate'=>$this->request->data['saleDate'],
+			'product_quantity'=>$this->request->data['product_quantity'],
+			'product_value'=>$this->request->data['product_value'],
+		);
+			N_sales::create()->save($data);
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
 
 
 }
