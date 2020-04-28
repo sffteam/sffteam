@@ -512,14 +512,22 @@ public function deleteRecipeProduct(){
 
 public function skulist(){
 	$skus = N_products::find('all'
-	//, array( 		'order'=>array('Product Description'=>'ASC') 	)
+		,array('order'=>array('Product Description'=>'ASC'))
 	);
 	
 	return $this->render(array('json' => array("success"=>"Yes",'products'=>$skus)));		
 }
 
 
-
+public function getproduct(){
+	if($this->request->data){
+		$product = N_products::find('all'
+			, array('conditions'=>array('_id'=>$this->request->data['id']) 	)
+		);
+		
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'product'=>$product)));		
+}
 
 
 
