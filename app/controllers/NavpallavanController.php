@@ -7,6 +7,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\models\N_users;
 use app\models\N_prices;
 use app\models\N_recipes;
+use app\models\N_products;
 
 class NavpallavanController extends \lithium\action\Controller {
 
@@ -509,7 +510,13 @@ public function deleteRecipeProduct(){
 
 
 
-
+public function skulist(){
+	$skus = N_products::find('all'
+	//, array( 		'order'=>array('Product Description'=>'ASC') 	)
+	);
+	
+	return $this->render(array('json' => array("success"=>"Yes",'skus'=>$skus)));		
+}
 
 
 
