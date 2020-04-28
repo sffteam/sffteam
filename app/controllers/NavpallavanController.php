@@ -515,7 +515,7 @@ public function skulist(){
 	//, array( 		'order'=>array('Product Description'=>'ASC') 	)
 	);
 	
-	return $this->render(array('json' => array("success"=>"Yes",'skus'=>$skus)));		
+	return $this->render(array('json' => array("success"=>"Yes",'products'=>$skus)));		
 }
 
 
