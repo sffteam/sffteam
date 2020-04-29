@@ -2,6 +2,7 @@
 namespace app\controllers;
 use lithium\storage\Session;
 use \lithium\template\View;
+use lithium\data\Connections;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\models\N_users;
@@ -531,6 +532,8 @@ public function getproduct(){
 }
 
 public function saveSales(){
+	$timestamp = strtotime($this->request->data['saleDate']);
+	
 	if($this->request->data){
 		$data = array(
 			'user_id'=>$this->request->data['user_id'],
@@ -540,13 +543,59 @@ public function saveSales(){
 			'product_netweight'=>$this->request->data['product_netweight'],
 			'product_unit'=>$this->request->data['product_unit'],
 			'product_mrp'=>$this->request->data['product_mrp'],
-			'saleDate'=>$this->request->data['saleDate'],
+			'saleDate'=>date("Y-m-d", $timestamp),
+			'DateTime'=>$timestamp,
 			'product_quantity'=>$this->request->data['product_quantity'],
 			'product_value'=>$this->request->data['product_value'],
 		);
 			N_sales::create()->save($data);
 	}
 	return $this->render(array('json' => array("success"=>"Yes")));		
+}
+
+
+public function getSales(){
+	  $mongodb = Connections::get('default_Navpallavan')->connection;
+			var_dump($mongodb);
+
+			$results = $mongodb->n_sales->aggregate([
+            [ '$project' => [
+                'minute' => (object)[
+                    '0' => [ '$year'       => '$ts' ],
+                    '1' => [ '$month'      => '$ts' ],
+                    '2' => [ '$dayOfMonth' => '$ts' ],
+                ],
+                'ts'  => 1,
+                'bid' => 1,
+                'ask' => 1,
+            ]],
+            [ '$sort' => [ 'ts' => 1 ] ],
+            [ '$group' => [
+                '_id'       => '$minute',
+                'ts'        => [ '$first' => '$ts'  ],
+                'bid_open'  => [ '$first' => '$bid' ],
+                'bid_close' => [ '$last'  => '$bid' ],
+                'bid_high'  => [ '$max'   => '$bid' ],
+                'bid_low'   => [ '$min'   => '$bid' ],
+                'bid_avg'   => [ '$avg'   => '$bid' ],
+            ]],
+            [ '$sort' => [ 'ts' => 1 ] ],
+            [ '$skip' => $skip ],
+            [ '$limit' => $limit ],
+            [ '$project' => [
+                '_id' => '$ts',
+                'bid' => [
+                    'open'  => '$bid_open',
+                    'close' => '$bid_close',
+                    'high'  => '$bid_high',
+                    'low'   => '$bid_low',
+                    'avg'   => '$bid_avg',
+                ]
+            ]],
+        ]);
+
+
+			return $this->render(array('json' => array("success"=>"Yes")));		
 }
 
 
