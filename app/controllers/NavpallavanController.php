@@ -551,9 +551,12 @@ public function saveSales(){
 			'product_netweight'=>$this->request->data['product_netweight'],
 			'product_unit'=>$this->request->data['product_unit'],
 			'product_mrp'=>$this->request->data['product_mrp'],
+			'product_fran_mrp'=>$this->request->data['product_fran_mrp'],
+			'franchise_id'=>$this->request->data['franchise_id'],
 			'saleDate'=>date("Y-m-d", $timestamp),
 			'DateTime'=>$timestamp,
 			'product_quantity'=>$this->request->data['product_quantity'],
+			'product_value'=>$this->request->data['product_value'],
 			'product_value'=>$this->request->data['product_value'],
 		);
 			N_sales::create()->save($data);
