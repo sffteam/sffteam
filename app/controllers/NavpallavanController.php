@@ -569,7 +569,7 @@ public function getSales(){
 	  $mongodb = Connections::get('default_Navpallavan');
 			var_dump($mongodb);
 
-$results = $mongodb->command(array(
+		$results = $mongodb->command(array(
  'aggregate' => 'n_sales',
  'pipeline' => array( 
         array( 
@@ -586,6 +586,42 @@ $results = $mongodb->command(array(
 			return $this->render(array('json' => array("success"=>"Yes",'results'=>$results)));		
 }
 
-
+public function findSales(){
+	if($this->request->data){
+		$franchise_id = $this->request->data['franchise_id'];
+		
+		$user_id = $this->request->data['user_id']	;
+		$selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
+		// print_r($selectDateRange);
+		// var_dump(gmdate('Y-m-d',strtotime(selectDateRange[0])));
+		// var_dump(gmdate('Y-m-d',strtotime(selectDateRange[1])));
+		// print_r($franchise_id);
+		// print_r($user_id);
+		
+		if($franchise_id=="All"){
+			$conditions = array(
+				'DateTime' => array('$gte'=>strtotime(selectDateRange[0]),'$lte'=>strtotime(selectDateRange[1])),
+				'user_id'=>(string)$user_id
+			);
+		}else{
+			$conditions = array(
+				'DateTime' => array('$gte'=>strtotime(selectDateRange[0]),'$lte'=>strtotime(selectDateRange[1])),
+				'franchise_id'=>(string)$franchise_id,
+				'user_id'=>(string)$user_id
+			);
+		}
+		
+		
+		$results = N_sales::find('all',array(
+			'conditions'=>$conditions,
+			'order'=>array('DateTime'=>'ASC'),
+			'limit'=>10,
+			'find'=>0
+		));
+		
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results)));		
+	
+}
 }
 ?>
