@@ -524,11 +524,19 @@ public function skulist(){
 public function getproduct(){
 	if($this->request->data){
 		$product = N_products::find('all'
-			, array('conditions'=>array('_id'=>$this->request->data['id']) 	)
+			, array('conditions'=>array('_id'=>(string)$this->request->data['id']) 	)
 		);
-		
+	$user = N_users::find('first',array(
+		'conditions'=>array('_id'=>(string)$this->request->data['user_id'])
+	));
+	
+	$franchises = N_users::find('all',array(
+		'conditions'=>array('refer'=>$user['mobile'])
+	));
+	
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'product'=>$product)));		
+	
+	return $this->render(array('json' => array("success"=>"Yes",'product'=>$product,'franchises'=>$franchises)));		
 }
 
 public function saveSales(){
@@ -555,47 +563,24 @@ public function saveSales(){
 
 
 public function getSales(){
-	  $mongodb = Connections::get('default_Navpallavan')->connection;
+	  $mongodb = Connections::get('default_Navpallavan');
 			var_dump($mongodb);
 
-			$results = $mongodb->n_sales->aggregate([
-            [ '$project' => [
-                'minute' => (object)[
-                    '0' => [ '$year'       => '$ts' ],
-                    '1' => [ '$month'      => '$ts' ],
-                    '2' => [ '$dayOfMonth' => '$ts' ],
-                ],
-                'ts'  => 1,
-                'bid' => 1,
-                'ask' => 1,
-            ]],
-            [ '$sort' => [ 'ts' => 1 ] ],
-            [ '$group' => [
-                '_id'       => '$minute',
-                'ts'        => [ '$first' => '$ts'  ],
-                'bid_open'  => [ '$first' => '$bid' ],
-                'bid_close' => [ '$last'  => '$bid' ],
-                'bid_high'  => [ '$max'   => '$bid' ],
-                'bid_low'   => [ '$min'   => '$bid' ],
-                'bid_avg'   => [ '$avg'   => '$bid' ],
-            ]],
-            [ '$sort' => [ 'ts' => 1 ] ],
-            [ '$skip' => $skip ],
-            [ '$limit' => $limit ],
-            [ '$project' => [
-                '_id' => '$ts',
-                'bid' => [
-                    'open'  => '$bid_open',
-                    'close' => '$bid_close',
-                    'high'  => '$bid_high',
-                    'low'   => '$bid_low',
-                    'avg'   => '$bid_avg',
-                ]
-            ]],
-        ]);
-
-
-			return $this->render(array('json' => array("success"=>"Yes")));		
+$results = $mongodb->command(array(
+ 'aggregate' => 'n_sales',
+ 'pipeline' => array( 
+        array( 
+       '$group' => array( 
+        '_id' => array(
+            'year'=>'$year($DateTime)',
+        'month'=>'$month($DateTime)',
+        'day'=>'$dayOfMonth($DateTime)',
+    ),
+            'sum' => array( '$sum' => '$product_quantity') ,
+                ),                      
+              ))));
+														
+			return $this->render(array('json' => array("success"=>"Yes",'results'=>$results)));		
 }
 
 
