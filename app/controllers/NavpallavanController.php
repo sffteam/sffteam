@@ -555,10 +555,10 @@ public function saveSales(){
 			'product_fran_mrp'=>$this->request->data['product_fran_mrp'],
 			'franchise_id'=>$this->request->data['franchise_id'],
 			'saleDate'=>date("Y-m-d", $timestamp),
-			'DateTime'=>$timestamp,
+			'DateTime'=>new MongoDate($timestamp),
 			'product_quantity'=>$this->request->data['product_quantity'],
 			'product_value'=>$this->request->data['product_value'],
-			'product_value'=>$this->request->data['product_value'],
+			'product_fran_value'=>$this->request->data['product_quantity']*$this->request->data['product_fran_mrp'],
 		);
 			N_sales::create()->save($data);
 	}
