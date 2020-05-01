@@ -613,22 +613,22 @@ public function findSales(){
 		}
 		
 		
-		$resultsa = N_sales::find('all',array(
+		$results = N_sales::find('all',array(
 			'conditions'=>$conditions,
 			'order'=>array('DateTime'=>'ASC'),
-			'limit'=>10,
-			'find'=>0
+			// 'limit'=>10,
+			// 'find'=>0
 		));
-		$results = array(
-			'startDate'=>$selectDateRange[0],
-			'endDate'=>$selectDateRange[1],
-			'UTCstartDate'=>strtotime($selectDateRange[0]),
-			'UTCendDate'=>strtotime($selectDateRange[1]),
-			'franchise'=>$franchise_id,
-			'conditions'=>$conditions,
-		);
+		// $results = array(
+			// 'startDate'=>$selectDateRange[0],
+			// 'endDate'=>$selectDateRange[1],
+			// 'UTCstartDate'=>strtotime($selectDateRange[0]),
+			// 'UTCendDate'=>strtotime($selectDateRange[1]),
+			// 'franchise'=>$franchise_id,
+			// 'conditions'=>$conditions,
+		// );
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'4'=>$resultsa)));		
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results)));		
 	
 }
 }
