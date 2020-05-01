@@ -611,13 +611,15 @@ public function findSales(){
 				'user_id'=>(string)$user_id
 			);
 		}
-		
+		$count = N_sales::count(array(
+			'conditions'=>$conditions,
+		));
 		
 		$results = N_sales::find('all',array(
 			'conditions'=>$conditions,
 			'order'=>array('DateTime'=>'ASC'),
-			// 'limit'=>10,
-			// 'find'=>0
+			 'limit'=>10,
+			 'page'=>0
 		));
 		// $results = array(
 			// 'startDate'=>$selectDateRange[0],
@@ -628,7 +630,7 @@ public function findSales(){
 			// 'conditions'=>$conditions,
 		// );
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results)));		
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
 	
 }
 }
