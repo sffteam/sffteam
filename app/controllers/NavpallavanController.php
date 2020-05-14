@@ -659,5 +659,53 @@ public function findSales(){
 	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
 	
 }
+
+
+public function findOrders(){
+	if($this->request->data){
+		$franchise_id = $this->request->data['franchise_id'];
+		
+		$user_id = $this->request->data['user_id']	;
+		$selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
+		// print_r($selectDateRange);
+		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[0])));
+		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[1])));
+		// print_r($franchise_id);
+		// print_r($user_id);
+		
+		if($franchise_id=="All"){
+			$conditions = array(
+				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
+				'user_id'=>(string)$user_id
+			);
+		}else{
+			$conditions = array(
+				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
+				'franchise_id'=>(string)$franchise_id,
+				'user_id'=>(string)$user_id
+			);
+		}
+		$count = N_orders::count(array(
+			'conditions'=>$conditions,
+		));
+		
+		$results = N_orders::find('all',array(
+			'conditions'=>$conditions,
+			'order'=>array('DateTime'=>'ASC'),
+			 'limit'=>10,
+			 'page'=>0
+		));
+		// $results = array(
+			// 'startDate'=>$selectDateRange[0],
+			// 'endDate'=>$selectDateRange[1],
+			// 'UTCstartDate'=>strtotime($selectDateRange[0]),
+			// 'UTCendDate'=>strtotime($selectDateRange[1]),
+			// 'franchise'=>$franchise_id,
+			// 'conditions'=>$conditions,
+		// );
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
+	
+}
 }
 ?>
