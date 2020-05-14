@@ -72,6 +72,8 @@ class MallsController extends \lithium\action\Controller {
     'AG' => 'Agriculture',
     'AC' => 'Auto Care',
     'HL' => 'Wellness',
+    'WA' => 'Watches',				
+				'MG' => 'Technology',
 				'00' => 'Others',
     '60' => 'Extra',
 				);
@@ -1932,24 +1934,22 @@ set_time_limit(0);
 								$data = array(
 									'Code' => (string)$data[0],
 									'Name' => ucwords(strtolower((string)$data[1])),
-									'MRP'=> $data[2],
-									'DP'=> $data[3],
-									'BV'=> $data[4],
-									'PV'=> $data[5],
+									'MRP'=> (float)$data[2],
+									'DP'=> (float)$data[3],
+									'BV'=> (float)$data[4],
+									'PV'=> (float)$data[5],
+									'Essential'=> (string)$data[6],
 									);
-									print_r($data['Code'].": ".$data['Name']."<br>");
+									print_r($data);
 							$product = Malls::find("first",array(
-								"conditions"=>array('Code'=>$data['Code'])
+								"conditions"=>array('Code'=>(string)$data['Code'])
 							));
 							if(count($product)!=1){
-									if($data['Code']!=""){
-										if((int)$data['Code']>0){
-      					Malls::create()->save($data);
-										}
-									}
+										Malls::create()->save($data);
 								}else{
-									$conditions = array('Code'=>$data['Code']);
+									$conditions = array('Code'=>(string)$data['Code']);
 										Malls::update($data,$conditions);
+										print_r("Update");
         }
 			
 							}

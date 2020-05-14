@@ -10,6 +10,7 @@ use app\models\N_prices;
 use app\models\N_recipes;
 use app\models\N_products;
 use app\models\N_sales;
+use app\models\N_orders;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -565,6 +566,31 @@ public function saveSales(){
 	return $this->render(array('json' => array("success"=>"Yes")));		
 }
 
+
+public function saveOrders(){
+	$timestamp = strtotime($this->request->data['saleDate']);
+	
+	if($this->request->data){
+		$data = array(
+			'user_id'=>$this->request->data['user_id'],
+			'product_id'=>$this->request->data['product_id'],
+			'product_name'=>$this->request->data['product_name'],
+			'product_description'=>$this->request->data['product_description'],
+			'product_netweight'=>$this->request->data['product_netweight'],
+			'product_unit'=>$this->request->data['product_unit'],
+			'product_mrp'=>$this->request->data['product_mrp'],
+			'product_fran_mrp'=>$this->request->data['product_fran_mrp'],
+			'franchise_id'=>$this->request->data['franchise_id'],
+			'orderDate'=>date("Y-m-d", $timestamp),
+			'DateTime'=>new MongoDate($timestamp),
+			'product_quantity'=>$this->request->data['product_quantity'],
+			'product_value'=>$this->request->data['product_value'],
+			'product_fran_value'=>$this->request->data['product_quantity']*$this->request->data['product_fran_mrp'],
+		);
+			N_orders::create()->save($data);
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
 
 public function getSales(){
 	  $mongodb = Connections::get('default_Navpallavan');
