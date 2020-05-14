@@ -676,13 +676,15 @@ public function findOrders(){
 		if($franchise_id=="All"){
 			$conditions = array(
 				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
-				'user_id'=>(string)$user_id
+				'user_id'=>(string)$user_id,
+				'fulfilled'=>null
 			);
 		}else{
 			$conditions = array(
 				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
 				'franchise_id'=>(string)$franchise_id,
-				'user_id'=>(string)$user_id
+				'user_id'=>(string)$user_id,
+				'fulfilled'=>null
 			);
 		}
 		$count = N_orders::count(array(
@@ -692,8 +694,8 @@ public function findOrders(){
 		$results = N_orders::find('all',array(
 			'conditions'=>$conditions,
 			'order'=>array('DateTime'=>'ASC'),
-			 'limit'=>10,
-			 'page'=>0
+//			 'limit'=>10,
+//			 'page'=>0
 		));
 		// $results = array(
 			// 'startDate'=>$selectDateRange[0],
@@ -707,5 +709,52 @@ public function findOrders(){
 	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
 	
 }
+
+
+public function converttoSales(){
+	if($this->request->data){
+		$user_id = $this->request->data['user_id']	;
+		$_id = $this->request->data['_id']	;
+		$conditions = array(
+				'_id' => (string)$_id,
+				'user_id'=>(string)$user_id,
+				'fulfilled'=>null
+			);
+		$order = N_orders::find('first',array(
+			'conditions'=>$conditions
+		));
+		
+		$data = array(
+			'user_id'=>$order['user_id'],
+			'product_id'=>$order['product_id'],
+			'product_name'=>$order['product_name'],
+			'product_description'=>$order['product_description'],
+			'product_netweight'=>$order['product_netweight'],
+			'product_unit'=>$order['product_unit'],
+			'product_mrp'=>$order['product_mrp'],
+			'product_fran_mrp'=>$order['product_fran_mrp'],
+			'franchise_id'=>$order['franchise_id'],
+			'saleDate'=>$order['orderDate'],
+			'DateTime'=>new MongoDate(),
+			'product_quantity'=>$order['product_quantity'],
+			'product_value'=>$order['product_value'],
+			'product_fran_value'=>$order['product_quantity']*$order['product_fran_mrp'],
+		);
+			N_sales::create()->save($data);
+		
+		$data = array(
+			'fulfilled'=>'Yes'
+		);
+		
+		N_orders::update($data,$conditions);
+		
+		return $this->render(array('json' => array("success"=>"Yes",'results'=>$order,'count'=>$conditions)));		
+		
+		
+	}
+}
+
+
+
 }
 ?>
