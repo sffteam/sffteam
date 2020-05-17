@@ -765,7 +765,22 @@ public function converttoSales(){
 	}
 }
 
-
+public function franchise(){
+	if($this->request->data){
+		$user_id = $this->request->data['user_id']	;
+		$user = N_users::find('first',array(
+			'conditions'=>array('_id'=>(string)$user_id)
+		));
+		$Mobile = $user['mobile'];
+		
+		$users = N_users::find('all',array(
+			'conditions'=>array('refer'=>$Mobile)
+		));
+		
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));		
+}
 
 }
 ?>
