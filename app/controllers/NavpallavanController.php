@@ -700,7 +700,7 @@ public function findOrders(){
 			));
 			
 			$data = array(
-				'franchise_Name'=>$franchise['Name'],
+				'franchise_Name'=>$franchise['name'],
 				'product_description'=>$r['product_description'],
 				'product_quantity'=>$r['product_quantity'],
 				'orderDate'=>$r['orderDate'],
