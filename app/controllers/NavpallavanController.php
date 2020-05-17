@@ -619,11 +619,6 @@ public function findSales(){
 		
 		$user_id = $this->request->data['user_id']	;
 		$selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
-		// print_r($selectDateRange);
-		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[0])));
-		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[1])));
-		// print_r($franchise_id);
-		// print_r($user_id);
 		
 		if($franchise_id=="All"){
 			$conditions = array(
@@ -644,19 +639,30 @@ public function findSales(){
 		$results = N_sales::find('all',array(
 			'conditions'=>$conditions,
 			'order'=>array('DateTime'=>'ASC'),
-			 'limit'=>10,
-			 'page'=>0
+//			 'limit'=>10,
+//			 'page'=>0
 		));
-		// $results = array(
-			// 'startDate'=>$selectDateRange[0],
-			// 'endDate'=>$selectDateRange[1],
-			// 'UTCstartDate'=>strtotime($selectDateRange[0]),
-			// 'UTCendDate'=>strtotime($selectDateRange[1]),
-			// 'franchise'=>$franchise_id,
-			// 'conditions'=>$conditions,
-		// );
+		
+				$allresults = array();
+		foreach($results as $r){
+			$franchise_id = $r['franchise_id'];
+			$franchise = N_users::find('first',array(
+				'conditions'=>array('_id'=>(string)$franchise_id)
+			));
+			
+			$data = array(
+				'franchise_Name'=>$franchise['name'],
+				'product_description'=>$r['product_description'],
+				'product_quantity'=>$r['product_quantity'],
+				'orderDate'=>$r['orderDate'],
+				'product_value'=>$r['product_value'],
+				'_id'=>$r['_id'],
+				'franchise_id'=>$r['franchise_id']
+			);
+			array_push($allresults,$data);
+		}
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$allresults,'count'=>$count)));		
 	
 }
 
