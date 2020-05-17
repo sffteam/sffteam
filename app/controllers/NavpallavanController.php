@@ -844,8 +844,17 @@ public function getstock(){
 //			usort($os, 'product_name');
 //			usort($os, 'date_compare'); 
 			
-			$os = $this->sortmulti ($os, 'product_name', 'asc', FALSE, true);
 			
+			
+			//$os = $this->sortmulti ($os, 'product_name', 'asc', FALSE, true);
+			
+			$sort = array();
+				foreach($os as $k=>$v) {
+					$sort['product_name'][$k] = $v['product_name'];
+					$sort['Date'][$k] = $v['Date'];
+				}
+			
+			array_multisort($sort['product_name'], SORT_ASC, $sort['Date'], SORT_ASC,$os);
 			
 		return $this->render(array('json' => array("success"=>"Yes",'orders'=>$os)));		
 }
