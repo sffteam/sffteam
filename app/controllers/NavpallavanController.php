@@ -667,11 +667,6 @@ public function findOrders(){
 		
 		$user_id = $this->request->data['user_id']	;
 		$selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
-		// print_r($selectDateRange);
-		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[0])));
-		// var_dump(gmdate('Y-m-d',strtotime($selectDateRange[1])));
-		// print_r($franchise_id);
-		// print_r($user_id);
 		
 		if($franchise_id=="All"){
 			$conditions = array(
@@ -697,16 +692,26 @@ public function findOrders(){
 //			 'limit'=>10,
 //			 'page'=>0
 		));
-		// $results = array(
-			// 'startDate'=>$selectDateRange[0],
-			// 'endDate'=>$selectDateRange[1],
-			// 'UTCstartDate'=>strtotime($selectDateRange[0]),
-			// 'UTCendDate'=>strtotime($selectDateRange[1]),
-			// 'franchise'=>$franchise_id,
-			// 'conditions'=>$conditions,
-		// );
+		$allresults = array();
+		foreach($results as $r){
+			$franchise_id = $r['franchise_id'];
+			$franchise = N_users::find('first',array(
+				'conditions'=>array('_id'=>(string)$franchise_id)
+			));
+			
+			$data = array(
+				'franchise_Name'=>$franchise['Name'],
+				'product_description'=>$r['product_description'],
+				'product_quantity'=>$r['product_quantity'],
+				'orderDate'=>$r['orderDate'],
+				'product_value'=>$r['product_value'],
+				'_id'=>$r['_id'],
+				'franchise_id'=>$r['franchise_id']
+			);
+			array_push($allresults,$data);
+		}
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'results'=>$results,'count'=>$count)));		
+	return $this->render(array('json' => array("success"=>"Yes",'results'=>$allresults,'count'=>$count)));		
 	
 }
 
