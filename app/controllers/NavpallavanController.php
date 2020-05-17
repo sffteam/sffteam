@@ -654,7 +654,7 @@ public function findSales(){
 				'franchise_Name'=>$franchise['name'],
 				'product_description'=>$r['product_description'],
 				'product_quantity'=>$r['product_quantity'],
-				'orderDate'=>$r['orderDate'],
+				'saleDate'=>$r['saleDate'],
 				'product_value'=>$r['product_value'],
 				'_id'=>$r['_id'],
 				'franchise_id'=>$r['franchise_id']
