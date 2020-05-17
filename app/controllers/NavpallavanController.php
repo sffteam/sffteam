@@ -782,5 +782,119 @@ public function franchise(){
 	return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));		
 }
 
+
+public function getstock(){
+	$selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
+				$conditions = array(
+				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
+				'franchise_id'=>(string)$this->request->data['franchise_id'],
+				'user_id'=>(string)$this->request->data['user_id']
+			);
+			$orders = N_orders::find('all',array(
+				'conditions'=>$conditions,
+				'order'=>array('DateTime'=>'ASC'),
+			));
+			$sales = N_sales::find('all',array(
+				'conditions'=>$conditions,
+				'order'=>array('DateTime'=>'ASC'),
+			));			
+			
+			$os = array();
+			
+			foreach($orders as $o){
+				$order = array(
+						"user_id"=>$o['user_id'],
+						"product_id"=>$o['product_id'],
+						"product_name"=>$o['product_name'],
+						"product_description"=>$o['product_description'],
+						"product_netweight"=>$o['product_netweight'],
+						"product_unit"=>$o['product_unit'],
+						"product_mrp"=>$o['product_mrp'],
+						"product_fran_mrp"=>$o['product_fran_mrp'],
+						"franchise_id"=>$o['franchise_id'],
+						"Date"=>$o['orderDate'],
+						'Type'=>'order',
+						"DateTime"=>$o['DateTime'],
+						"product_quantity"=>$o['product_quantity'],
+						"product_value"=>$o['product_value'],
+						"product_fran_value"=>$o['product_fran_value'],
+				);
+				array_push($os,$order);
+			}
+			foreach($sales as $s){
+				$sale = array(
+						"user_id"=>$s['user_id'],
+						"product_id"=>$s['product_id'],
+						"product_name"=>$s['product_name'],
+						"product_description"=>$s['product_description'],
+						"product_netweight"=>$s['product_netweight'],
+						"product_unit"=>$s['product_unit'],
+						"product_mrp"=>$s['product_mrp'],
+						"product_fran_mrp"=>$s['product_fran_mrp'],
+						"franchise_id"=>$s['franchise_id'],
+						"Date"=>$s['saleDate'],
+						'Type'=>'sale',
+						"DateTime"=>$s['DateTime'],
+						"product_quantity"=>$s['product_quantity'],
+						"product_value"=>$s['product_value'],
+						"product_fran_value"=>$s['product_fran_value'],
+				);
+				array_push($os,$sale);
+			}								
+//			usort($os, 'product_name');
+//			usort($os, 'date_compare'); 
+			
+			$os = $this->sortmulti ($os, 'product_name', 'asc', FALSE, true);
+			
+			
+		return $this->render(array('json' => array("success"=>"Yes",'orders'=>$os)));		
+}
+
+function querySort ($x, $y) {
+    return strcasecmp($x['query'], $y['query']);
+}
+function date_compare($a, $b)
+{
+    $t1 = strtotime($a['Date']);
+    $t2 = strtotime($b['Date']);
+    return $t1 - $t2;
+}    
+
+function sortmulti ($array, $index, $order, $natsort=FALSE, $case_sensitive=FALSE) {
+         if(is_array($array) && count($array)>0) {
+             foreach(array_keys($array) as $key) { 
+                $temp[$key]=$array[$key][$index];
+             }
+             if(!$natsort) {
+                 if ($order=='asc') {
+                     asort($temp);
+                 } else {    
+                     arsort($temp);
+                 }
+             }
+             else 
+             {
+                 if ($case_sensitive===true) {
+                     natsort($temp);
+                 } else {
+                     natcasesort($temp);
+                 }
+                if($order!='asc') { 
+                 $temp=array_reverse($temp,TRUE);
+                }
+             }
+             foreach(array_keys($temp) as $key) { 
+                 if (is_numeric($key)) {
+                     $sorted[]=$array[$key];
+                 } else {    
+                     $sorted[$key]=$array[$key];
+                 }
+             }
+             return $sorted;
+         }
+     return $sorted;
+ }
+
+
 }
 ?>
