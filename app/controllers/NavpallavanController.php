@@ -788,6 +788,7 @@ public function getstock(){
 				$conditions = array(
 				'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
 				'franchise_id'=>(string)$this->request->data['franchise_id'],
+				'product_id'=>(string)$this->request->data['product_id'],
 				'user_id'=>(string)$this->request->data['user_id']
 			);
 			$orders = N_orders::find('all',array(
