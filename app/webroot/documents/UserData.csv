@@ -1,0 +1,9 @@
+UserName,UserCompany,FranName,FranCompany,product_name,product_description,product_netweight,product_unit,product_mrp,product_fran_mrp,Date,Type,DateTime,Opening,product_quantity,Closing,product_value,product_fran_value
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-01,sale,"0.48000000 -846700",0,10,-10,320,260
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-06,sale,"0.48000000 -414700",-10,100,-110,3200,2600
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-11,order,"0.48000000 17300",-110,2,-108,64,52
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-11,order,"0.48000000 17300",-108,15,-93,480,390
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-13,order,"0.48000000 190100",-93,3,-90,96,78
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-14,order,"0.48000000 276500",-90,10,-80,320,260
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-14,order,"0.48000000 276500",-80,100,20,3200,2600
+Himanshu,"Marwar Cakebake","Hari Om Foods Jodhpur","Marwar Cakebake - Hari Om Foods Jodhpur",,"BHAJI PAV- 400 GRAM",400,Grams,32,26,2020-05-14,sale,"0.88500000 311317",20,10,10,320,260
