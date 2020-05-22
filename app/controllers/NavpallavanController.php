@@ -787,7 +787,7 @@ public function getstock(){
 	$startDate = '2020-05-01';
 	$endDate = $this->request->data['selectDateRange']	;
 				$conditions = array(
-				'DateTime' => array('$gte'=>new MongoDate(strtotime($startDate)),'$lte'=>new MongoDate($endDate))),
+				'DateTime' => array('$gte'=>new MongoDate(strtotime($startDate)),'$lte'=>new MongoDate(strtotime($endDate))),
 				'franchise_id'=>(string)$this->request->data['franchise_id'],
 				'product_id'=>(string)$this->request->data['product_id'],
 				'user_id'=>(string)$this->request->data['user_id']
