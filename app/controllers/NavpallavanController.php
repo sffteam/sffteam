@@ -806,7 +806,7 @@ foreach($data as $d){
 		'UserCompany'=>$mainUser['company'],
 		'FranName'=>$franUser['name'],
 		'FranCompany'=>$franUser['company'],
-		'product_name'=>$data['product_name'],
+		'product_name'=>$d['product_name'],
 		'product_description'=>$d['product_description'],
 		'product_netweight'=>$d['product_netweight'],
 		'product_unit'=>$d['product_unit'],
@@ -826,7 +826,7 @@ foreach($data as $d){
 	
 }
 
-	$filename = "UserData.csv";
+	$filename = $data[0]['franchise_id'].$d['product_name']."UserData.csv";
 	
 	$pathFile = LITHIUM_APP_PATH . "/webroot/documents/" . $filename;
 
