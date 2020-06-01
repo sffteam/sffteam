@@ -30,4 +30,8 @@
 	<div class="row">
 		<div class="col"><img src="https://sff.team/img/products/<?=$product['Code']?>.jpg" width="80%"></div>
 	</div>
+	<div class="row">
+		<iframe id="StepVideo"  src="https://www.youtube.com/embed/<?=$product['Video']?>"></iframe> 
+	</div>
+	<p>&nbsp;</p>	
 </div>

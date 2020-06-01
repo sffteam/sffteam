@@ -62,3 +62,10 @@ ul.a {
   color: #ffccff;
   opacity: 1;
 }
+#StepVideo {
+  left: 0;
+  top: 0;
+		min-width:80vw;
+		width:80vw;
+		height:400px;
+}
