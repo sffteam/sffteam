@@ -11,6 +11,7 @@ use app\models\N_recipes;
 use app\models\N_products;
 use app\models\N_sales;
 use app\models\N_orders;
+use app\models\N_customers;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -967,6 +968,13 @@ function sortmulti ($array, $index, $order, $natsort=FALSE, $case_sensitive=FALS
      return $sorted;
  }
 
+
+public function customers(){
+	$customers = N_customers::find('all',array(
+		'order'=>array('name'=>'ASC')
+	));
+		return $this->render(array('json' => array("success"=>"Yes",'customers'=>$customers)));		
+}
 
 }
 ?>
