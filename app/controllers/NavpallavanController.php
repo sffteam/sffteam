@@ -976,5 +976,40 @@ public function customers(){
 		return $this->render(array('json' => array("success"=>"Yes",'customers'=>$customers)));		
 }
 
+public function addcustomer(){
+
+	if($this->request->data){
+				$data = array(
+									'mobile' => $this->request->data['mobile'],
+									'name' => ucwords($this->request->data['name']),
+									'DateJoin' => new \MongoDate(),
+									'dateBirth' => $this->request->data['dateBirth'],
+        );
+				$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+				$user = N_customers::find('first',array(
+					'conditions'=>$conditions
+				));
+				
+				if(count($user)==0){
+					if($this->addCustomer($data)==true){
+						$conditions = array("mobile"=>(string)$this->request->data['mobile']);
+						$customer = N_customers::find('first',array(
+							'conditions'=>$conditions
+						));
+						return $this->render(array('json' => array("success"=>"Yes",'customer'=>$customer)));		
+					}else{
+						return $this->render(array('json' => array("success"=>"No")));		
+					}
+				}else{
+						return $this->render(array('json' => array("success"=>"No")));		
+				}
+	}
+
+}
+function addCustomer($data){
+	if($data){
+		N_customers::create()->save($data);
+	}
+	return true;
 }
 ?>
