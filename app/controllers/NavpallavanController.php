@@ -1006,10 +1006,11 @@ public function addcustomer(){
 	}
 
 }
-function addCustomerNow($data){
-	if($data){
-		N_customers::create()->save($data);
+	public function addCustomerNow($data){
+		if($data){
+			N_customers::create()->save($data);
+		}
+		return true;
 	}
-	return true;
 }
 ?>
