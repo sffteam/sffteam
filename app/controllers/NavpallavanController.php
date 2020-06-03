@@ -991,7 +991,7 @@ public function addcustomer(){
 				));
 				
 				if(count($user)==0){
-					if($this->addCustomer($data)==true){
+					if($this->addCustomerNow($data)==true){
 						$conditions = array("mobile"=>(string)$this->request->data['mobile']);
 						$customer = N_customers::find('first',array(
 							'conditions'=>$conditions
@@ -1006,7 +1006,7 @@ public function addcustomer(){
 	}
 
 }
-function addCustomer($data){
+function addCustomerNow($data){
 	if($data){
 		N_customers::create()->save($data);
 	}
