@@ -1071,7 +1071,15 @@ public function sendsms(){
 	
 }
 
-
+public function savemessage(){
+	$data = array(
+		'message' =>$this->request->data['message'],
+		'user_id' =>$this->request->data['user_id'],
+	);
+	N_messages::create()->save($data);
+	return $this->render(array('json' => array("success"=>"Yes")));		
+	
+}
 
 
 
