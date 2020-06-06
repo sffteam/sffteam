@@ -13,6 +13,7 @@ use app\models\N_sales;
 use app\models\N_orders;
 use app\models\N_customers;
 use app\models\N_messages;
+use app\models\N_smses;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -1063,6 +1064,15 @@ public function sendsms(){
 	
 
 	$msg = "Hi, " . $customer['name'] . " ".$message['message'] ;
+	
+	
+	$data = array(
+		'msg'=> $msg,
+		'mobile'=>$mobile,
+		'DateSent' => new \MongoDate(),
+	);
+	N_smses::create()->save($data);
+	
 	
 	$function = new Functions();
 	$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
