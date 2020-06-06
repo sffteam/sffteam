@@ -1045,6 +1045,39 @@ public function getmessage(){
 		return $this->render(array('json' => array("success"=>"Yes",'message'=>$message,'customer'=>$customer)));		
 }
 
+public function sendsms(){
+	
+		$message = N_messages::find('first',array(
+		'conditions'=>array(
+			'_id'=>(string)$this->request->data['message_id'],
+			'user_id'=>(string)$this->request->data['user_id'],
+			)
+	));	
+	$customer = N_customers::find('first',array(
+		'conditions'=>array(
+			'_id'=>(string)$this->request->data['customer_id'],
+			'user_id'=>(string)$this->request->data['user_id'],
+			)
+	));	
+	$mobile = "+91".$customer['mobile'];
+	
+
+	$msg = "Hi, " . $customer['name'] . " ".$message['message'] ;
+	
+	$function = new Functions();
+	$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
+	return $this->render(array('json' => array("success"=>"Yes",'mobile'=>$mobile,'msg'=>$msg)));		
+	
+	
+}
+
+
+
+
+
+
+
+
 }
 
 
