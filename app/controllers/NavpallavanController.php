@@ -985,6 +985,7 @@ public function addcustomer(){
 									'name' => ucwords($this->request->data['name']),
 									'DateJoin' => new \MongoDate(),
 									'dateBirth' => $this->request->data['dateBirth'],
+									'user_id' => $this->request->data['user_id'],
         );
 				$conditions = array("mobile"=>(string)$this->request->data['mobile']);
 				$user = N_customers::find('first',array(
@@ -1018,7 +1019,14 @@ public function messages(){
 	$messages = N_messages::find('all',array(
 		'order'=>array('title'=>'ASC')
 	));
-		return $this->render(array('json' => array("success"=>"Yes",'messages'=>$messages)));		
+	$customer = N_customers::find('first',array(
+		'conditions'=>array(
+			'_id'=>(string)$this->request->data['customer_id'],
+			'user_id'=>(string)$this->request->data['user_id'],
+			)
+	));
+	
+		return $this->render(array('json' => array("success"=>"Yes",'messages'=>$messages,'customer'=>$customer)));		
 }
 
 
