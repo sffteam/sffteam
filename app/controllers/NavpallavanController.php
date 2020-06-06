@@ -1029,7 +1029,21 @@ public function messages(){
 		return $this->render(array('json' => array("success"=>"Yes",'messages'=>$messages,'customer'=>$customer)));		
 }
 
-
+public function getmessage(){
+	$message = N_messages::find('first',array(
+		'conditions'=>array(
+			'_id'=>(string)$this->request->data['message_id'],
+			'user_id'=>(string)$this->request->data['user_id'],
+			)
+	));	
+	$customer = N_customers::find('first',array(
+		'conditions'=>array(
+			'_id'=>(string)$this->request->data['customer_id'],
+			'user_id'=>(string)$this->request->data['user_id'],
+			)
+	));	
+		return $this->render(array('json' => array("success"=>"Yes",'message'=>$message,'customer'=>$customer)));		
+}
 
 }
 
