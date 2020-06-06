@@ -12,6 +12,7 @@ use app\models\N_products;
 use app\models\N_sales;
 use app\models\N_orders;
 use app\models\N_customers;
+use app\models\N_messages;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -1012,5 +1013,17 @@ public function addcustomer(){
 		}
 		return true;
 	}
+
+public function messages(){
+	$messages = N_messages::find('all',array(
+		'order'=>array('title'=>'ASC')
+	));
+		return $this->render(array('json' => array("success"=>"Yes",'messages'=>$messages)));		
 }
+
+
+
+}
+
+
 ?>
