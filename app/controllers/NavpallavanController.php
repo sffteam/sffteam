@@ -971,7 +971,7 @@ function sortmulti ($array, $index, $order, $natsort=FALSE, $case_sensitive=FALS
 
 public function customers(){
 	$customers = N_customers::find('all',array(
-		'order'=>array('name'=>'ASC')
+		'order'=>array('dateBirth'=>'ASC','name'=>'ASC')
 	));
 		return $this->render(array('json' => array("success"=>"Yes",'customers'=>$customers)));		
 }
