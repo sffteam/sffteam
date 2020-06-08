@@ -654,7 +654,7 @@ public function findSales(){
 			));
 			
 			$data = array(
-				'franchise_Name'=>$franchise['name'],
+				'franchise_Name'=>$franchise['name']?:"Customer",
 				'product_description'=>$r['product_description'],
 				'product_quantity'=>$r['product_quantity'],
 				'saleDate'=>$r['saleDate'],
