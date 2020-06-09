@@ -757,6 +757,7 @@ public function searchdown(){
 				'team'=>$team,
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
+					'ExtraPV'=>$u[$yyyymm]['ExtraPV']?:0,
 					'BV'=>$u[$yyyymm]['BV']?:0,
 					'GBV'=>$u[$yyyymm]['GBV']?:0,
 					'GPV'=>$u[$yyyymm]['GPV']?:0,
@@ -774,6 +775,7 @@ public function searchdown(){
 				),
 				$pyyyymm => array(
 					'PV'=>$u[$pyyyymm]['PV']?:0,
+					'ExtraPV'=>$u[$pyyyymm]['ExtraPV']?:0,
 					'BV'=>$u[$pyyyymm]['BV']?:0,
 					'GBV'=>$u[$pyyyymm]['GBV']?:0,
 					'GPV'=>$u[$pyyyymm]['GPV']?:0,
