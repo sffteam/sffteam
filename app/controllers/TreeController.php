@@ -10,6 +10,7 @@ class TreeController extends \lithium\action\Controller {
  }
 
 public function index($mcaNumber = null,$yyyymm=null){
+	ini_set('max_execution_time', '0');
 $this->_render['layout'] = 'noHeaderFooter';
  
 			$selfline = Users::find('first',array(
