@@ -24,7 +24,7 @@ $i = 1; $j = 0;
 foreach($allusers as $user) {
 //print_r($user);
  ?>
-							[{v:'<?=$user['mcaNumber']?>', f:'<?=$i;?><br><b style="font-size:14px;color:red"><a href="/dashboard/users/<?=$user['mcaNumber']?>"><?=$user['mcaName']?></a></b><br>GBV: <?=$user['GBV']?><br>PBV: <?=$user['PBV']?><br><a href="/dashboard/updateUser/<?=$user['mcaNumber']?>">DP. <?=$user['DP']?></a><br><a href="/dashboard/usertree/<?=$user['mcaNumber']?>"><?=$user['mcaNumber']?></a>'}, '<?=$user['refer']?>',''],
+							[{v:'<?=$user['mcaNumber']?>', f:'<?=$i;?><br><b style="font-size:14px;color:red"><a href="/dashboard/users/<?=$user['mcaNumber']?>"><?=$user['mcaName']?></a></b><br>GBV: <?=$user['GBV']?><br>PBV: <?=$user['PV']?><br><a href="/dashboard/updateUser/<?=$user['mcaNumber']?>">DP. <?=$user['DP']?></a><br><a href="/dashboard/usertree/<?=$user['mcaNumber']?>"><?=$user['mcaNumber']?></a>'}, '<?=$user['refer']?>',''],
 <?php
 $i++;
 } ?>
