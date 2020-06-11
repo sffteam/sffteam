@@ -3630,6 +3630,24 @@ public function getinner(){
 		'order'=>array('mcaName'=>'ASC')
 	));
  $allusers = array();
+		array_push($allusers,array(
+				'mcaName'=>$user['mcaName'],
+				'mcaNumber'=>$user['mcaNumber'],
+				'DateJoin'=>$user['DateJoin'],
+				$yyyymm => array('PV'=>$user[$yyyymm]['PV']?:0,'GPV'=>$user[$yyyymm]['GPV']?:0,'PGPV'=>$user[$yyyymm]['PGPV']?:0),
+				$p1yyyymm => array('PV'=>$user[$p1yyyymm]['PV']?:0,'GPV'=>$user[$p1yyyymm]['GPV']?:0,'PGPV'=>$user[$p1yyyymm]['PGPV']?:0),
+				$p2yyyymm => array('PV'=>$user[$p2yyyymm]['PV']?:0,'GPV'=>$user[$p2yyyymm]['GPV']?:0,'PGPV'=>$user[$p2yyyymm]['PGPV']?:0),
+				$p3yyyymm => array('PV'=>$user[$p3yyyymm]['PV']?:0,'GPV'=>$user[$p3yyyymm]['GPV']?:0,'PGPV'=>$user[$p3yyyymm]['PGPV']?:0),				
+				$p4yyyymm => array('PV'=>$user[$p4yyyymm]['PV']?:0,'GPV'=>$user[$p3yyyymm]['GPV']?:0,'PGPV'=>$user[$p4yyyymm]['PGPV']?:0),				
+				$p5yyyymm => array('PV'=>$user[$p5yyyymm]['PV']?:0,'GPV'=>$user[$p5yyyymm]['GPV']?:0,'PGPV'=>$user[$p5yyyymm]['PGPV']?:0),				
+				$p6yyyymm => array('PV'=>$user[$p6yyyymm]['PV']?:0,'GPV'=>$user[$p6yyyymm]['GPV']?:0,'PGPV'=>$user[$p6yyyymm]['PGPV']?:0),				
+				$p7yyyymm => array('PV'=>$user[$p7yyyymm]['PV']?:0,'GPV'=>$user[$p7yyyymm]['GPV']?:0,'PGPV'=>$user[$p7yyyymm]['PGPV']?:0),				
+				$p8yyyymm => array('PV'=>$user[$p8yyyymm]['PV']?:0,'GPV'=>$user[$p8yyyymm]['GPV']?:0,'PGPV'=>$user[$p8yyyymm]['PGPV']?:0),				
+				$p9yyyymm => array('PV'=>$user[$p9yyyymm]['PV']?:0,'GPV'=>$user[$p9yyyymm]['GPV']?:0,'PGPV'=>$user[$p9yyyymm]['PGPV']?:0),				
+				$p10yyyymm => array('PV'=>$user[$p10yyyymm]['PV']?:0,'GPV'=>$user[$p10yyyymm]['GPV']?:0,'PGPV'=>$user[$p10yyyymm]['PGPV']?:0),				
+				$p11yyyymm => array('PV'=>$user[$p11yyyymm]['PV']?:0,'GPV'=>$user[$p11yyyymm]['GPV']?:0,'PGPV'=>$user[$p11yyyymm]['PGPV']?:0),				
+			)
+		);	
 	foreach($users as $n){
 		array_push($allusers,array(
 				'mcaName'=>$n['mcaName'],
