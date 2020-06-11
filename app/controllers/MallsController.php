@@ -3629,6 +3629,8 @@ public function getinner(){
 		'conditions'=>$conditions,
 		'order'=>array('mcaName'=>'ASC')
 	));
+	$joineeInner = $this->findJoineeInner($mcaNumber);	
+	
  $allusers = array();
 		array_push($allusers,array(
 				'mcaName'=>$user['mcaName'],
@@ -3646,9 +3648,12 @@ public function getinner(){
 				$p9yyyymm => array('PV'=>$user[$p9yyyymm]['PV']?:0,'GPV'=>$user[$p9yyyymm]['GPV']?:0,'PGPV'=>$user[$p9yyyymm]['PGPV']?:0),				
 				$p10yyyymm => array('PV'=>$user[$p10yyyymm]['PV']?:0,'GPV'=>$user[$p10yyyymm]['GPV']?:0,'PGPV'=>$user[$p10yyyymm]['PGPV']?:0),				
 				$p11yyyymm => array('PV'=>$user[$p11yyyymm]['PV']?:0,'GPV'=>$user[$p11yyyymm]['GPV']?:0,'PGPV'=>$user[$p11yyyymm]['PGPV']?:0),				
+				'countjoinee'=>count($joineeInner),
 			)
 		);	
 	foreach($users as $n){
+		
+		$joineeInner = $this->findJoineeInner($n['mcaNumber']);	
 		array_push($allusers,array(
 				'mcaName'=>$n['mcaName'],
 				'mcaNumber'=>$n['mcaNumber'],
@@ -3665,15 +3670,42 @@ public function getinner(){
 				$p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0,'PGPV'=>$n[$p9yyyymm]['PGPV']?:0),				
 				$p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0,'PGPV'=>$n[$p10yyyymm]['PGPV']?:0),				
 				$p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0,'PGPV'=>$n[$p11yyyymm]['PGPV']?:0),				
+				'countjoinee'=>count($joineeInner),
 			)
 		);	
 	}
 	
 	}
-	
-	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$user, 'users'=>$allusers)));					
+		
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users), 'users'=>$allusers)));					
 }
 
+public function findJoineeInner($mcaNumber){
+	$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+	));
+	$yyyymm = date('Y-m');
+	$pyyyymm = date('Y-m', strtotime('first day of last month'));
+	$dateJoin = date('M Y');
+	$left = $user['left'];
+	$right = $user['right'];
+	$joinee = Users::find('all',array('conditions'=>
+			array(
+						'DateJoin'=>array('like'=>'/'.$dateJoin.'/'),
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+						'Enable'=>'Yes',
+						$yyyymm.'.PV'=>array('$gte'=>90)
+						
+			),
+			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'order'=>array('DateJoin'=>'ASC')
+			)
+	);
+	
+//	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'Detail'=>$joinee)));				
+	return $joinee;
+}
 
 
 //end of class
