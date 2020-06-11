@@ -3607,7 +3607,25 @@ public function getinner(){
 	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
 	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
 	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+			$left = $user['left'];
+			$right = $user['right'];
+			$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Inner.Enabled'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+		'order'=>array('mcaName'=>'ASC')
+	));
+	}
 	
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$user, 'users'=>$users)));					
 }
 
 
