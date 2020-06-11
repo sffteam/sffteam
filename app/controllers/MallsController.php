@@ -3607,6 +3607,12 @@ public function getinner(){
 	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
 	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
 	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	$p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+	$p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+	$p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+	$p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+	$p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
+
 	if($this->request->data){
 		$mcaNumber = $this->request->data['mcaNumber'];
 		$user = Users::find('first',array(
@@ -3623,9 +3629,31 @@ public function getinner(){
 		'conditions'=>$conditions,
 		'order'=>array('mcaName'=>'ASC')
 	));
+ $allusers = array();
+	foreach($users as $n){
+		array_push($allusers,array(
+				'mcaName'=>$n['mcaName'],
+				'mcaNumber'=>$n['mcaNumber'],
+				'DateJoin'=>$n['DateJoin'],
+				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0,'PGPV'=>$n[$p1yyyymm]['PGPV']?:0),
+				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0,'PGPV'=>$n[$p2yyyymm]['PGPV']?:0),
+				$p3yyyymm => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0,'PGPV'=>$n[$p3yyyymm]['PGPV']?:0),				
+				$p4yyyymm => array('PV'=>$n[$p4yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0,'PGPV'=>$n[$p4yyyymm]['PGPV']?:0),				
+				$p5yyyymm => array('PV'=>$n[$p5yyyymm]['PV']?:0,'GPV'=>$n[$p5yyyymm]['GPV']?:0,'PGPV'=>$n[$p5yyyymm]['PGPV']?:0),				
+				$p6yyyymm => array('PV'=>$n[$p6yyyymm]['PV']?:0,'GPV'=>$n[$p6yyyymm]['GPV']?:0,'PGPV'=>$n[$p6yyyymm]['PGPV']?:0),				
+				$p7yyyymm => array('PV'=>$n[$p7yyyymm]['PV']?:0,'GPV'=>$n[$p7yyyymm]['GPV']?:0,'PGPV'=>$n[$p7yyyymm]['PGPV']?:0),				
+				$p8yyyymm => array('PV'=>$n[$p8yyyymm]['PV']?:0,'GPV'=>$n[$p8yyyymm]['GPV']?:0,'PGPV'=>$n[$p8yyyymm]['PGPV']?:0),				
+				$p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0,'PGPV'=>$n[$p9yyyymm]['PGPV']?:0),				
+				$p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0,'PGPV'=>$n[$p10yyyymm]['PGPV']?:0),				
+				$p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0,'PGPV'=>$n[$p11yyyymm]['PGPV']?:0),				
+			)
+		);	
 	}
 	
-	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$user, 'users'=>$users)));					
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$user, 'users'=>$allusers)));					
 }
 
 
