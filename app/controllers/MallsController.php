@@ -3635,7 +3635,7 @@ public function getinner(){
 				'mcaName'=>$n['mcaName'],
 				'mcaNumber'=>$n['mcaNumber'],
 				'DateJoin'=>$n['DateJoin'],
-				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0),
+				$yyyymm => array('PV'=>$n[$yyyymm]['PV']?:0,'GPV'=>$n[$yyyymm]['GPV']?:0,'PGPV'=>$n[$yyyymm]['PGPV']?:0),
 				$p1yyyymm => array('PV'=>$n[$p1yyyymm]['PV']?:0,'GPV'=>$n[$p1yyyymm]['GPV']?:0,'PGPV'=>$n[$p1yyyymm]['PGPV']?:0),
 				$p2yyyymm => array('PV'=>$n[$p2yyyymm]['PV']?:0,'GPV'=>$n[$p2yyyymm]['GPV']?:0,'PGPV'=>$n[$p2yyyymm]['PGPV']?:0),
 				$p3yyyymm => array('PV'=>$n[$p3yyyymm]['PV']?:0,'GPV'=>$n[$p3yyyymm]['GPV']?:0,'PGPV'=>$n[$p3yyyymm]['PGPV']?:0),				
