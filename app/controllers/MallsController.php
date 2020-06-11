@@ -1234,6 +1234,48 @@ set_time_limit(0);
 	}
 }
 
+public function uploadinner(){
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($data);
+							$row++;
+								$data = array(
+									'Inner'=>array(
+									'email' => (string)$data[0],
+									'mobile'=>(string)$data[1],
+									'mcaNumber'=>(string)$data[3],
+									),
+								);
+								
+		
+								$user = Users::find("first",array(
+								"conditions"=>array('mcaNumber'=>(string)$data['Inner']['mcaNumber'])
+								));
+								
+								if(count($user)==1){
+									if($data['Inner']['mcaNumber']!=""){
+										$conditions = array('mcaNumber'=>(string)$data['Inner']['mcaNumber']);
+										
+										Users::update($data,$conditions);
+									}
+								}
+						}
+						fclose($handle);
+			}
+	}
+}
 
 public function uploadactive(){
 set_time_limit(0);
