@@ -925,15 +925,156 @@ public function getstock($csv=null){
 			}
 }
 
-function querySort ($x, $y) {
-    return strcasecmp($x['query'], $y['query']);
+
+public function getstockall($csv=null){
+	$startDate = '2020-05-01';
+	$endDate = $this->request->data['selectDateRange']	;
+	
+			
+		
+		$products = N_products::find('all',array(
+				'order'=>array('ProductName'=>ASC)
+		));
+	
+		$os = array();
+	
+		foreach($products as $p){
+			
+			
+			$conditions = array(
+				'DateTime' => array('$gte'=>new MongoDate(strtotime($startDate)),'$lte'=>new MongoDate(strtotime($endDate))),
+				'franchise_id'=>(string)$this->request->data['franchise_id'],
+				'user_id'=>(string)$this->request->data['user_id'],
+				'product_id'=>(string)$p['_id'],
+			);
+		
+			$orders = N_orders::find('all',array(
+				'conditions'=>$conditions,
+				'order'=>array('product_id'=>'ASC','DateTime'=>'ASC'),
+			));
+				foreach($orders as $o){
+				$order = array(
+						"user_id"=>$o['user_id'],
+						"product_id"=>$o['product_id'],
+						"product_name"=>$o['product_name'],
+						"product_description"=>$o['product_description'],
+						"product_netweight"=>$o['product_netweight'],
+						"product_unit"=>$o['product_unit'],
+						"product_mrp"=>$o['product_mrp'],
+						"product_fran_mrp"=>$o['product_fran_mrp'],
+						"franchise_id"=>$o['franchise_id'],
+						"Date"=>$o['orderDate'],
+						'Type'=>'order',
+						"DateTime"=>$o['DateTime'],
+						"product_quantity"=>$o['product_quantity'],
+						"product_value"=>$o['product_value'],
+						"product_fran_value"=>$o['product_fran_value'],
+				);
+				array_push($os,$order);
+			}
+			
+			$sales = N_sales::find('all',array(
+				'conditions'=>$conditions,
+				'order'=>array('product_id'=>'ASC','DateTime'=>'ASC'),
+			));			
+			foreach($sales as $s){
+				$sale = array(
+						"user_id"=>$s['user_id'],
+						"product_id"=>$s['product_id'],
+						"product_name"=>$s['product_name'],
+						"product_description"=>$s['product_description'],
+						"product_netweight"=>$s['product_netweight'],
+						"product_unit"=>$s['product_unit'],
+						"product_mrp"=>$s['product_mrp'],
+						"product_fran_mrp"=>$s['product_fran_mrp'],
+						"franchise_id"=>$s['franchise_id'],
+						"Date"=>$s['saleDate'],
+						'Type'=>'sale',
+						"DateTime"=>$s['DateTime'],
+						"product_quantity"=>$s['product_quantity'],
+						"product_value"=>$s['product_value'],
+						"product_fran_value"=>$s['product_fran_value'],
+				);
+				array_push($os,$sale);
+			}								
+		}
+			
+			$sort = array();
+				foreach($os as $k=>$v) {
+					$sort['product_name'][$k] = $v['product_name'];
+					$sort['Date'][$k] = $v['Date'];
+				}
+			
+			array_multisort($sort['product_name'], SORT_ASC, $sort['Date'], SORT_ASC,$os);
+		
+		// create last date stock
+		$product_name = "";
+		$opening = 0;
+		$dataallOS = array();
+		foreach ($os as $o){
+			if($product_name!=$o['product_name']){
+					$product_name = $o['product_name'];
+					if($o['Type']=='sale'){
+							$closing = $opening - $o['product_quantity'];
+							$dataos = array(
+								'product_name'=>$o['product_name'],
+								'Date'=>$o['Date'],
+								'Type'=>$o['Type'],
+								'Quantity'=>$o['product_quantity'],
+								'Closing'=>$closing,
+							);
+							
+					}else{
+							$closing = $opening + $o['product_quantity'];
+							$dataos = array(
+								'product_name'=>$o['product_name'],
+								'Date'=>$o['Date'],
+								'Type'=>$o['Type'],
+								'Quantity'=>$o['product_quantity'],
+								'Closing'=>$closing,
+							);
+							
+					}
+			}else{
+					if($o['Type']=='sale'){
+							$closing = $opening - $o['product_quantity'];
+							$dataos = array(
+								'product_name'=>$o['product_name'],
+								'Date'=>$o['Date'],
+								'Type'=>$o['Type'],
+								'Quantity'=>$o['product_quantity'],
+								'Closing'=>$closing,
+							);							
+							
+					}else{
+							$closing = $opening + $o['product_quantity'];
+							$dataos = array(
+								'product_name'=>$o['product_name'],
+								'Date'=>$o['Date'],
+								'Type'=>$o['Type'],
+								'Quantity'=>$o['product_quantity'],
+								'Closing'=>$closing,
+							);							
+							
+					}
+			}
+			$opening = $closing;
+			
+			array_push($dataallOS,$dataos);
+			
+		}
+			
+		// create end
+			
+			if($csv == null){
+				return $this->render(array('json' => array("success"=>"Yes",'orders'=>$dataallOS)));		
+			}else{
+				return $os;
+			}
 }
-function date_compare($a, $b)
-{
-    $t1 = strtotime($a['Date']);
-    $t2 = strtotime($b['Date']);
-    return $t1 - $t2;
-}    
+
+
+
 
 function sortmulti ($array, $index, $order, $natsort=FALSE, $case_sensitive=FALSE) {
          if(is_array($array) && count($array)>0) {
