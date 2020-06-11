@@ -842,8 +842,67 @@ foreach($data as $d){
 	fclose($fp);
 	
 	return $this->render(array('json' => array("success"=>"Yes",'os'=>$filename)));		
+}
+
+public function getcsvall(){
+	$data = $this->getstockall('Y');
+	$mainUser = N_users::find('first',array(
+		'conditions'=>array('_id'=>$data[0]['user_id']))
+	);
+	$franUser = N_users::find('first',array(
+		'conditions'=>array('_id'=>$data[0]['franchise_id']))
+	);
+
+$datanew = array();
+$opening = 0;
+foreach($data as $d){
+	if($d['Type']=='sale'){
+		$closing = $opening - $d['product_quantity'];
+	}else{
+		$closing = $opening + $d['product_quantity'];
+	}
+	$xd = array(
+		'UserName'=>$mainUser['name'],
+		'UserCompany'=>$mainUser['company'],
+		'FranName'=>$franUser['name'],
+		'FranCompany'=>$franUser['company'],
+		'product_name'=>$d['product_name'],
+		'product_description'=>$d['product_description'],
+		'product_netweight'=>$d['product_netweight'],
+		'product_unit'=>$d['product_unit'],
+		'product_mrp'=>$d['product_mrp'],
+		'product_fran_mrp'=>$d['product_fran_mrp'],
+		'Date'=>$d['Date'],
+		'Type'=>$d['Type'],
+		'DateTime'=>$d['DateTime'],
+		'Opening'=>$opening,
+		'product_quantity'=>$d['product_quantity'],
+		'Closing'=>$closing,
+		'product_value'=>$d['product_value'],
+		'product_fran_value'=>$d['product_fran_value'],
+	);
+	$opening = $closing;
+	array_push($datanew,$xd);
 	
 }
+
+	$filename = $data[0]['franchise_id'].$d['product_name']."UserData.csv";
+	
+	$pathFile = LITHIUM_APP_PATH . "/webroot/documents/" . $filename;
+
+	$fp = fopen($pathFile, 'w+');
+	$header = array_keys($datanew[0]);
+	fputcsv($fp,$header);
+	foreach ( $datanew as $line ) {
+    fputcsv($fp, $line);
+		}
+	fclose($fp);
+	
+	return $this->render(array('json' => array("success"=>"Yes",'os'=>$filename)));		
+}
+
+
+
 public function getstock($csv=null){
 	$startDate = '2020-05-01';
 	$endDate = $this->request->data['selectDateRange']	;
