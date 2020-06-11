@@ -1256,6 +1256,8 @@ set_time_limit(0);
 									'email' => (string)$data[0],
 									'mobile'=>(string)$data[1],
 									'mcaNumber'=>(string)$data[3],
+									'Enabled'=>(string)$data[4],
+									'DateJoin'=> new \MongoDate
 									),
 								);
 								
@@ -1267,7 +1269,6 @@ set_time_limit(0);
 								if(count($user)==1){
 									if($data['Inner']['mcaNumber']!=""){
 										$conditions = array('mcaNumber'=>(string)$data['Inner']['mcaNumber']);
-										
 										Users::update($data,$conditions);
 									}
 								}
@@ -3596,6 +3597,19 @@ ini_set('memory_limit', '-1');
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));					
 }
+
+public function getinner(){
+	ini_set('memory_limit', '-1');
+	$yyyymm = date('Y-m');
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+	$p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+	$p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+	$p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+	$p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+	$p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+	
+}
+
 
 
 //end of class
