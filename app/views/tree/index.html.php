@@ -27,7 +27,7 @@ foreach($allusers as $user) {
 	$mcaNumber = $user['mcaNumber'];
 	$refer = $user['refer'];
  ?>
-							[{v:'<?=$mcaNumber?>', f:'<?php if($user['PV']>0){?><?=$i;?><br><b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>"><?=$user['mcaName']?></b><br>GPV: <?=$user['GPV']?><br>PV: <?=$user['PV']?><br><a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>"><?=$mcaNumber?></a><?php }else{?><?=$i?><br><?=$user['mcaName']?><br>GPV: <?=$user['GPV']?><br><?=$mcaNumber?><?php }?>'}, '<?=$refer?>',''],
+							[{v:'<?=$mcaNumber?>', f:'<?php if($user['PV']>0){?><b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>"><?=$user['mcaName']?></b><br>PGPV: <?=$user['PGPV']?><br>GPV: <?=$user['GPV']?><br>PV: <?=$user['PV']?><br><a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>"><?=$mcaNumber?></a><?php }else{?><?=$i?><br><?=$user['mcaName']?><br>PGPV: <?=$user['PGPV']?><br>GPV: <?=$user['GPV']?><br><?=$mcaNumber?><?php }?>'}, '<?=$refer?>',''],
 <?php
 //}else{
 //	$refer = $user['mcaNumber'];
