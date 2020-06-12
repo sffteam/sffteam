@@ -3627,7 +3627,7 @@ public function getinner(){
 		);
 	$users = Users::find('all',array(
 		'conditions'=>$conditions,
-		'order'=>array('mcaName'=>'ASC')
+//		'order'=>array('mcaName'=>'ASC')
 	));
 	$joineeInner = $this->findJoineeInner($mcaNumber);	
 	
