@@ -9,7 +9,7 @@ class TreeController extends \lithium\action\Controller {
   $this->_render['layout'] = 'noHeaderFooter';
  }
 
-public function index($mcaNumber = null,$yyyymm=null){
+public function index($mcaNumber = null,$yyyymm=null,$D=null ){
 	ini_set('max_execution_time', '0');
 	ini_set("memory_limit", "-1");
 
@@ -34,17 +34,29 @@ $this->_render['layout'] = 'noHeaderFooter';
      'GPV'=>$user[$yyyymm]['GPV'],
 					'InActive'=>$user[$yyyymm]['InActive']
 				));				
-			
-			$users = Users::find('all',array(
+			if($D==null){
+				$users = Users::find('all',array(
 					'conditions'=>array(
 						'left'=>array('$gt'=>$user['left']),
 						'right'=>array('$lt'=>$user['right']),
-						//$yyyymm.'.InActive'=>array('$lte'=>6)
 					),
 					'order'=>array(
 					'mcaName'=>'ASC'
 					)
 			));
+			}else{
+				$users = Users::find('all',array(
+					'conditions'=>array(
+						'left'=>array('$gt'=>$user['left']),
+						'right'=>array('$lt'=>$user['right']),
+						$yyyymm.'.Level'=>22
+					),
+					'order'=>array(
+					'mcaName'=>'ASC'
+					)
+			));	
+			}
+			
 			
 			
 			foreach($users as $u){
@@ -80,7 +92,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'Days'=>(string)round((time()-strtotime($self['DateJoin']))/60/60/24,0)
 			);
 
-			return compact('allusers','level','selfline','yyyymm');	
+			return compact('allusers','level','selfline','yyyymm','D');	
 
  }
 
