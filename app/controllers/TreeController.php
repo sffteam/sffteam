@@ -41,7 +41,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 						'right'=>array('$lt'=>$user['right']),
 					),
 					'order'=>array(
-					'mcaName'=>'ASC'
+					//'mcaName'=>'ASC'
 					)
 			));
 			}else{
@@ -52,7 +52,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 						$yyyymm.'.Level'=>22
 					),
 					'order'=>array(
-					'mcaName'=>'ASC'
+					//'mcaName'=>'ASC'
 					)
 			));	
 			}
