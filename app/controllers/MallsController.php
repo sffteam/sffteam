@@ -3704,7 +3704,6 @@ public function findJoineeInner($mcaNumber){
 			'order'=>array('DateJoin'=>'ASC')
 			)
 	);
-	
 //	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'Detail'=>$joinee)));				
 	return $joinee;
 }
@@ -3733,10 +3732,39 @@ public function sendsmsall(){
 		$mobile = "+91".$u['Inner']['mobile'];
 		$function->twilio_api($mobile,$message);
 	}
-	
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
 }
+
+
+public function sendemailall(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$message = $this->request->data['message'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+			$left = $user['left'];
+			$right = $user['right'];
+			$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Inner.Enabled'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+//		'order'=>array('mcaName'=>'ASC')
+	));
+	$function = new Functions();
+		foreach($users as $u){
+			$email = $u['Inner']['email'];
+			$message = compact('message');
+			$function->sendEmailTo($email,$message,'malls','email','TheUnstoppableYou','schooloffinancialfreedom@gmail.com',null,null,null,null);
+		}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
+}
+
 
 //end of class
 }
