@@ -3794,6 +3794,24 @@ public function sendemailonly(){
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
 }
 
+public function sendsmsprospect(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$message = $this->request->data['message'];
+		$mobile = $this->request->data['mobile'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+	$function = new Functions();
+		$message = $message . "\n--".$user['mcaName']. "\n+91".$user['Inner']['mobile'];
+		$mobile = "+91".$mobile;
+		$function->twilio_api($mobile,$message);
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
+}
+
+
+
 
 //end of class
 }
