@@ -3739,6 +3739,22 @@ public function sendsmsall(){
 }
 
 
+public function sendsmsonly(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$message = $this->request->data['message'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+	$function = new Functions();
+		$message = $message . "\n--".$user['mcaName'];
+		$mobile = "+91".$this->request->data['mobile'];
+		$function->twilio_api($mobile,$message);
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
+}
+
+
 public function sendemailall(){
 	if($this->request->data){
 		$mcaNumber = $this->request->data['mcaNumber'];
@@ -3763,6 +3779,17 @@ public function sendemailall(){
 			$message = compact('message');
 			$function->sendEmailTo($email,$message,'malls','email','TheUnstoppableYou','schooloffinancialfreedom@gmail.com',null,null,null,null);
 		}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
+}
+
+public function sendemailonly(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$email = $this->request->data['email'];
+		$message = $this->request->data['message'];
+		$function = new Functions();
+		$function->sendEmailTo($email,$message,'malls','email','TheUnstoppableYou','schooloffinancialfreedom@gmail.com',null,null,null,null);
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
 }
