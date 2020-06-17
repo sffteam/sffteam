@@ -3747,7 +3747,7 @@ public function sendsmsonly(){
 			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
 		));
 	$function = new Functions();
-		$message = $message . "\n--".$user['mcaName'];
+		$message = $message . "\n--".$user['mcaName']. "\n+91".$user['Inner']['mobile'];
 		$mobile = "+91".$this->request->data['mobile'];
 		$function->twilio_api($mobile,$message);
 	}
