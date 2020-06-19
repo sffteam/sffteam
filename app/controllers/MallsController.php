@@ -768,6 +768,7 @@ public function searchdown(){
 					'RollUpPV'=>$u[$yyyymm]['RollUpPV']?:0,
 					'Legs'=>$u[$yyyymm]['Legs']?:0,
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
+					'Percent'=>$u[$yyyymm]['Percent']?:"",
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 					'Joinee'=>$joinee,
 					'FindZero'=>$findzero,
