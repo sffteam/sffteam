@@ -60,7 +60,7 @@ $i++;
 			</style>
 <div style="padding:10px;margin:auto;width:100vw">
 <div style="margin:auto;border:1px solid gray">
-<a href="/tree/index/<?=$selfline['refer']?>/<?=$yyyymm?>/<?=$D?>"><?=$selfline['refer']?></a>
+<!-- <a href="/tree/index/<?=$selfline['refer']?>/<?=$yyyymm?>/<?=$D?>"><?=$selfline['refer']?></a> -->
   <div id="chart_div" style="font-size:12px"></div>
 </div>
 </div>
