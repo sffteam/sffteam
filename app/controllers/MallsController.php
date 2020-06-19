@@ -787,6 +787,7 @@ public function searchdown(){
 					'RollUpPV'=>$u[$pyyyymm]['RollUpPV']?:0,
 					'Legs'=>$u[$pyyyymm]['Legs']?:0,
 					'QDLegs'=>$u[$pyyyymm]['QDLegs']?:0,
+					'Percent'=>$u[$pyyyymm]['Percent']?:0,
 					'ValidTitle'=>$u[$pyyyymm]['ValidTitle']?:"",
 					'InActive' => $u[$pyyyymm]['InActive']?:"",
 					),
