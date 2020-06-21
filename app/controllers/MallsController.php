@@ -3819,7 +3819,30 @@ public function sendsmsprospect(){
 	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users))));	
 }
 
+public function innermethod(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$method = $this->request->data['method'];
 
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+			$left = $user['left'];
+			$right = $user['right'];
+			$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Inner.Enabled'=>'Yes',
+		);
+		$fields = array($method,'mcaName','mcaNumber','DateJoin');
+		$users = Users::find('all',array(
+		'conditions'=>$conditions,
+		'fields' =>$fields
+	));
+		
+		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));	
+	}
+}
 
 
 //end of class
