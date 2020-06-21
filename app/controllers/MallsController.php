@@ -3834,10 +3834,11 @@ public function innermethod(){
 			'right'=>array('$lt'=>$right),
 			'Inner.Enabled'=>'Yes',
 		);
-		$fields = array($method,'mcaName','mcaNumber','DateJoin');
+		$fields = array($method,'mcaName','mcaNumber','DateJoin','Inner.mobile');
 		$users = Users::find('all',array(
 		'conditions'=>$conditions,
-		'fields' =>$fields
+		'fields' =>$fields,
+		
 	));
 		
 		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));	
