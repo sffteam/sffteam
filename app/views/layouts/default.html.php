@@ -9,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		    <meta name="google-site-verification"
              content="<meta name="google-site-verification" content="cLDl46AZJd2ep3rFTKVvD1Rn7Y6eHZdVjnP7rEhABv0" />" />
- 
+			<meta name="google-site-verification" content="eofcpF-pSWgNJ_JQ2IgXyP34_XOGnFiTde_MxqsDEX4" /> 
 		
   <meta name="generator" content="<?=COMPANY_URL?>">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
