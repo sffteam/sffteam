@@ -31,6 +31,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'refer'=>$user['refer'],
      'PV'=>$user[$yyyymm]['PV'],
      'PGPV'=>$user[$yyyymm]['PGPV'],
+					'GrossPV'=>$user[$yyyymm]['GrossPV'],
      'GPV'=>$user[$yyyymm]['GPV'],
 					'InActive'=>$user[$yyyymm]['InActive']
 				));				
@@ -68,6 +69,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'refer'=>$u['refer'],
      'PV'=>$u[$yyyymm]['PV'],
 					'PGPV'=>$u[$yyyymm]['PGPV'],
+					'GrossPV'=>$u[$yyyymm]['GrossPV'],
      'GPV'=>$u[$yyyymm]['GPV'],
 					'InActive'=>$u[$yyyymm]['InActive']
     ));				
@@ -87,6 +89,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'referName'=>$self['refer_name'],
     'PV'=>$self[$yyyymm]['PV'],
 				'PGPV'=>$self[$yyyymm]['PGPV'],
+				'GrossPV'=>$self[$yyyymm]['GrossPV'],
     'GPV'=>$self[$yyyymm]['GPV'],
 				'InActive'=>$self[$yyyymm]['InActive'],
 				'Days'=>(string)round((time()-strtotime($self['DateJoin']))/60/60/24,0)
