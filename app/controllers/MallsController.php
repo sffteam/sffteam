@@ -528,6 +528,8 @@ public function searchmca(){
 		
 //		$tree = $this->findTree($this->request->data['mcaNumber'],4);
 			$joinee = $this->findJoinee($this->request->data['mcaNumber']);
+			
+			
 			$team = $this->findTeam($this->request->data['mcaNumber']);
 			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
@@ -572,7 +574,7 @@ public function findTeam($mcaNumber){
 }
 public function findJoinee($mcaNumber){
 	$user = Users::find('first',array(
-		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
 	));
 	$yyyymm = date('Y-m');
 	$pyyyymm = date('Y-m', strtotime('first day of last month'));
@@ -591,8 +593,21 @@ public function findJoinee($mcaNumber){
 			)
 	);
 	
-//	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'Detail'=>$joinee)));				
-	return $joinee;
+	$DetailJoinee = array();
+	foreach($joinee as $j){
+		array_push($DetailJoinee,
+				array(
+					'mcaNumber'=>$j['mcaNumber'],
+					'mcaName'=>$j['mcaName'],
+					'DateJoin'=>$j['DateJoin'],
+					'PV'=>$j[$yyyymm]['PV'],
+				)
+		);
+		
+	}
+	
+//	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'joinee'=>$DetailJoinee)));				
+	return $DetailJoinee;
 }
 
 public function findTree($mcaNumber,$level){
@@ -725,14 +740,6 @@ public function searchdown(){
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
 				$joinee = $this->findJoinee($u['mcaNumber']);
 				
-				$DetailJoinee = array();
-				foreach($joinee as $j){
-						array_push($DetailJoinee, array(
-						'PV'=>$j[$yyyymm]['PV'],
-						));
-				}
-				
-				
 				$team = $this->findTeam($u['mcaNumber']);
 				$findzero = $this->findZero($u['mcaNumber']);
 				
@@ -781,7 +788,7 @@ public function searchdown(){
 					'Percent'=>$u[$yyyymm]['Percent']?:"",
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 					'Joinee'=>count($joinee),
-					'DetailJoinee'=>$DetailJoinee,
+					'DetailJoinee'=>$joinee,
 					'FindZero'=>$findzero,
 					'InActive' => $u[$yyyymm]['InActive']?:"",
 				),
@@ -3726,8 +3733,22 @@ public function findJoineeInner($mcaNumber){
 			'order'=>array('DateJoin'=>'ASC')
 			)
 	);
+	
+	$DetailJoinee = array();
+	foreach($joinee as $j){
+		array_push($DetailJoinee,
+				array(
+					'mcaNumber'=>$j['mcaNumber'],
+					'mcaName'=>$j['mcaName'],
+					'DateJoin'=>$j['DateJoin'],
+					'PV'=>$j[$yyyymm]['PV'],
+				)
+		);
+		
+	}
+	
 //	return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'Detail'=>$joinee)));				
-	return $joinee;
+	return $DetailJoinee;
 }
 
 
