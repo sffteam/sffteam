@@ -574,6 +574,7 @@ public function findJoinee($mcaNumber){
 	$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
 	));
+	$yyyymm = date('Y-m');
 	$pyyyymm = date('Y-m', strtotime('first day of last month'));
 	$dateJoin = date('M Y');
 	$left = $user['left'];
@@ -585,7 +586,7 @@ public function findJoinee($mcaNumber){
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes'
 			),
-			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV'),
 			'order'=>array('DateJoin'=>'ASC')
 			)
 	);
@@ -722,7 +723,16 @@ public function searchdown(){
 				));
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
-				$joinee = count($this->findJoinee($u['mcaNumber']));
+				$joinee = $this->findJoinee($u['mcaNumber']);
+				
+				$DetailJoinee = array();
+				foreach($joinee as $j){
+						array_push($DetailJoinee, array(
+						'PV'=>$j[$yyyymm]['PV'],
+						));
+				}
+				
+				
 				$team = $this->findTeam($u['mcaNumber']);
 				$findzero = $this->findZero($u['mcaNumber']);
 				
@@ -770,7 +780,8 @@ public function searchdown(){
 					'QDLegs'=>$u[$yyyymm]['QDLegs']?:0,
 					'Percent'=>$u[$yyyymm]['Percent']?:"",
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
-					'Joinee'=>$joinee,
+					'Joinee'=>count($joinee),
+					'DetailJoinee'=>$DetailJoinee,
 					'FindZero'=>$findzero,
 					'InActive' => $u[$yyyymm]['InActive']?:"",
 				),
@@ -3711,7 +3722,7 @@ public function findJoineeInner($mcaNumber){
 						$yyyymm.'.PV'=>array('$gte'=>90)
 						
 			),
-			'fields'=>array('mcaNumber','mcaName','DateJoin'),
+			'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV'),
 			'order'=>array('DateJoin'=>'ASC')
 			)
 	);
