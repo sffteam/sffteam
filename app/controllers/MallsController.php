@@ -740,7 +740,9 @@ public function searchdown(){
 				));
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
+				
 				$joinee = $this->findJoinee($u['mcaNumber']);
+				$joineePV = 0;
 				foreach($joinee as $j){
 					$joineePV = $joineePV + $j['PV'];
 				}
@@ -793,7 +795,7 @@ public function searchdown(){
 					'Percent'=>$u[$yyyymm]['Percent']?:"",
 					'ValidTitle'=>$u[$yyyymm]['ValidTitle']?:"",
 					'Joinee'=>count($joinee),
-					'JoineePV'=>$joineePV,
+					'joineePV'=>$joineePV,
 					'FindZero'=>$findzero,
 					'InActive' => $u[$yyyymm]['InActive']?:"",
 				),
