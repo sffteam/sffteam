@@ -741,6 +741,7 @@ public function searchdown(){
 				$yyyymm = date('Y-m');
 				$pyyyymm = date('Y-m', strtotime('first day of last month'));
 				$joinee = $this->findJoinee($u['mcaNumber']);
+				$joineePV = 0;
 				foreach($joinee as $j){
 					$joineePV = $joineePV + $j['PV'];
 				}
