@@ -83,7 +83,7 @@ $i++;
 </div>
 <ul>
 <?php foreach($allusers as $user) {?>
-	<?php if(strpos($user['PaidTitle'], "Non") == false){echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "</li>";}?>
+	<?php if(strpos($user['PaidTitle'], "Non") !== false){}elseif($user['PaidTitle']!=""){echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "</li>";}?>
 <?php }?>
 </ul>
 </div>
