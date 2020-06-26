@@ -26,8 +26,26 @@ foreach($allusers as $user) {
 //if($user['PV']>0){
 	$mcaNumber = $user['mcaNumber'];
 	$refer = $user['refer'];
+	//print_r($user['ValidTitle']);
  ?>
-							[{v:'<?=$mcaNumber?>', f:'<?php if($user['PV']>0){?><b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>"><?=$user['mcaName']?></b><br>PGPV: <?=$user['PGPV']?><br>GPV: <?=$user['GPV']?><br>CGPV: <?=$user['GrossPV']?><br>PV: <?=$user['PV']?><br><a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a><?php }else{?><?=$i?><br><?=$user['mcaName']?><br>PGPV: <?=$user['PGPV']?><br>GPV: <?=$user['GPV']?><br>CGPV: <?=$user['GrossPV']?><br><?=$mcaNumber?><?php }?>'}, '<?=$refer?>',''],
+							[{v:'<?=$mcaNumber?>', f:'\
+							<?php if($user['PV']>0){?>\
+								<b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>">\
+									<?=$user['mcaName']?></b><br>\
+									PGPV: <?=$user['PGPV']?><br>\
+									GPV: <?=$user['GPV']?><br>\
+									CGPV: <?=$user['GrossPV']?><br>\
+									PV: <?=$user['PV']?><br>\
+									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
+									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>\
+								<?php }else{?>\
+									<?=$i?><br>\
+									<?=$user['mcaName']?><br>\
+									PGPV: <?=$user['PGPV']?><br>\
+									GPV: <?=$user['GPV']?><br>\
+									CGPV: <?=$user['GrossPV']?><br>\
+									<?=$mcaNumber?><?php }?>\
+									'}, '<?=$refer?>',''],
 <?php
 //}else{
 //	$refer = $user['mcaNumber'];
@@ -63,6 +81,11 @@ $i++;
 <!-- <a href="/tree/index/<?=$selfline['refer']?>/<?=$yyyymm?>/<?=$D?>"><?=$selfline['refer']?></a> -->
   <div id="chart_div" style="font-size:12px"></div>
 </div>
+<ul>
+<?php foreach($allusers as $user) {?>
+	<?php if(strpos($user['PaidTitle'], "Non") == false){echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "</li>";}?>
+<?php }?>
+</ul>
 </div>
 <?php
 function moneyFormatIndia($num){

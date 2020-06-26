@@ -33,7 +33,8 @@ $this->_render['layout'] = 'noHeaderFooter';
      'PGPV'=>$user[$yyyymm]['PGPV'],
 					'GrossPV'=>$user[$yyyymm]['GrossPV'],
      'GPV'=>$user[$yyyymm]['GPV'],
-					'InActive'=>$user[$yyyymm]['InActive']
+					'InActive'=>$user[$yyyymm]['InActive'],
+					'PaidTitle'=>$user[$yyyymm]['PaidTitle']
 				));				
 			if($D==null){
 				$users = Users::find('all',array(
@@ -71,7 +72,8 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'PGPV'=>$u[$yyyymm]['PGPV'],
 					'GrossPV'=>$u[$yyyymm]['GrossPV'],
      'GPV'=>$u[$yyyymm]['GPV'],
-					'InActive'=>$u[$yyyymm]['InActive']
+					'InActive'=>$u[$yyyymm]['InActive'],
+					'PaidTitle'=>$u[$yyyymm]['PaidTitle']
     ));				
 			}
 			$self = Users::find('first', array(
@@ -92,6 +94,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'GrossPV'=>$self[$yyyymm]['GrossPV'],
     'GPV'=>$self[$yyyymm]['GPV'],
 				'InActive'=>$self[$yyyymm]['InActive'],
+				'PaidTitle'=>$self[$yyyymm]['PaidTitle'],
 				'Days'=>(string)round((time()-strtotime($self['DateJoin']))/60/60/24,0)
 			);
 
