@@ -2153,6 +2153,45 @@ public function getbuilders(){
 	
 }
 
+public function getqualified(){
+
+	ini_set('memory_limit', '-1');
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$yyyymm = date('Y-m');		
+		$dashboard = new DashboardController();
+		$Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");
+	 $users = array();
+  foreach($Nodes as $n){
+			$mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
+			));
+			if($n[$yyyymm]["PGPV"]>1){
+				if(strpos($n[$yyyymm]["PaidTitle"],"Non")!==false){}else{
+				array_push($users,
+					array(
+						'mcaNumber'=>$n['mcaNumber'],
+						'mcaName'=>$n['mcaName'],
+						'PV'=>$n[$yyyymm]['PV']?:0,
+						'GPV'=>$n[$yyyymm]['GPV']?:0,
+						'PGPV'=>$n[$yyyymm]['PGPV']?:0,
+						'RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
+						'PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
+						'Region'=>$n['Zone'].'-'.$n['City']?:"",
+						'Mobile'=>$mobile['Mobile']?:"",
+						'Level'=>$n[$yyyymm]['Level']?:"",
+					)
+				);
+				}
+			}
+		}
+		return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));		
+
+	}
+	
+}
+
+
 public function blankmobile(){
 	$mobiles = Mobiles::find('all',array(
 		'conditions' => array('Mobile'=>array('$ne'=>null))
@@ -3883,6 +3922,7 @@ public function innermethod(){
 		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));	
 	}
 }
+
 
 
 //end of class
