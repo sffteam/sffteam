@@ -23,10 +23,19 @@
 				.sz5{font-size:calc(1em + 5vw)}
 				.sz6{font-size:calc(1em + 6vw)}
 				.sz7{font-size:calc(1em + 7vw)}
+				.wrapper {
+  background-image: url();
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: auto;
+}
 				</style>
   </head>
   <body class="page-content" style="background-color:#eee">
     <div data-section-wrapper="1" style="text-align:center">
+				<div class="wrapper"></div>
+				<img src="https://sff.team/img/TheUnStoppableYou-F.png" width="100%" height="auto">
 				<h1 class="Big sz6">Product Categories</h1>
 				<div class="row responsive block" >
 				<?php foreach($categories as $c){?>
