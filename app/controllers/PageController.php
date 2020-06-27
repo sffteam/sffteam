@@ -173,7 +173,9 @@ class PageController extends \lithium\action\Controller {
 	public function preview($cat=null){
 		
 		
-				$categories = X_categories::find('all',array());
+				$categories = X_categories::find('all',array(
+					'conditions'=>array('bundle'=>'asset'),
+				));
 				
 				$products = X_assets::find('all',array(
 					'conditions'=>array('category_id'=>(integer)$cat)
