@@ -61,6 +61,16 @@ use lithium\data\Connections;
 //	'setSlaveOkay' => true,
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
+	Connections::add('mysql', [
+		'type' => 'database',
+		'adapter' => CONNECTIONMYSQL_TYPE,
+		'host' => CONNECTIONMYSQL,
+		'login' => CONNECTIONMYSQL_USER,
+		'password' => CONNECTIONMYSQL_PASS,
+		'database' => CONNECTIONMYSQL_DB,
+		'encoding' => 'UTF-8',
+		'strict' => false
+	]);
 
 
 ?>
