@@ -28,13 +28,21 @@
   <body class="page-content" style="background-color:#eee">
     <div data-section-wrapper="1" style="text-align:center">
 				<h1 class="Big sz6">Product Categories</h1>
-				<div class="row responsive block">
+				<div class="row responsive block" >
 				<?php foreach($categories as $c){?>
-					<div class=" col-50 Share sz1 "><a  style="color-black" href="/page/preview/<?=$c->id?>"><?=$c->title?></a></div>
+					<div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><a  style="color-black" href="/page/preview/<?=$c->id?>"><?=$c->title?></a></div>
 				<?php } ?>
 				</div>
 				<hr>
-				<h3 class="Noteble sz1"><?=$category?></h3>
+				<div class="block">
+				<h1 class="Big sz4 bg-color-black text-color-white padding" >Ask yourself these questions:</h1>
+				<h1 class="Big sz4">Can I earn by doing business of these products?</h1>
+				<h1 class="Big sz5">How can I market these products online?</h1>
+				<h1 class="Big sz5">Is there a system which I will learn & earn?</h1>
+				<a href="/s/forms/preview/1" class="Big sz2 button button-fill button-small button-round padding color-red">I want to know more!</a>
+				</div>
+				<hr>
+				<h3 class="Big sz1"><?=$category?></h3>
 				<div class="row responsive block ">
 				
 				<?php
@@ -46,6 +54,16 @@
 					</div>
 				<?php } ?>
 				</div>
+				<hr>
+				<div class="block">
+				<h1 class="Big sz4 bg-color-black text-color-white padding" >Ask yourself these questions:</h1>
+				<h1 class="Big sz4">Can I earn by doing business of these products?</h1>
+				<h1 class="Big sz5">How can I market these products online?</h1>
+				<h1 class="Big sz5">Is there a system which I will learn & earn?</h1>
+
+				<a href="/s/forms/preview/1" class="Big sz2 button button-fill button-small button-round padding color-red">I want to know more!</a>
+				</div>
+				<hr>
 				
     </div>
   </body>
