@@ -6,7 +6,7 @@ use app\models\X_categories;
 use app\models\Malls;
 
 
-class CircleController extends \lithium\action\Controller {
+class PageController extends \lithium\action\Controller {
 
  protected function _init() {
 			parent::_init();
@@ -168,6 +168,21 @@ class CircleController extends \lithium\action\Controller {
 				}
 		}
 		return $this->render(array('json' => array("success"=>"Yes",'categories'=>$data)));		
+	}
+
+	public function preview($cat=null){
+		
+		
+				$categories = X_categories::find('all',array());
+				
+				$products = X_assets::find('all',array(
+					'conditions'=>array('category_id'=>(integer)$cat)
+				));
+				$category = X_categories::find('first',array(
+						'conditions'=>array('id'=>(integer)$cat)
+				));
+		return compact('categories','products','category');
+		
 	}
 
 
