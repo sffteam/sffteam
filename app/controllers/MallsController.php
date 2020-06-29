@@ -3306,7 +3306,7 @@ public function getCity(){
 			$bv = array_sum(array_column($down,$key.'BV'));
 			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
-			$ppv = array_sum(array_column($down,$key.'PBV'));
+			$ppv = array_sum(array_column($down,$key.'PPV'));
 			$epv = array_sum(array_column($down,$key.'ExtraPV'));
 			$pepv = array_sum(array_column($down,$key.'PExtraPV'));
 			array_push($Zones, array(
