@@ -3144,7 +3144,9 @@ public function getregion(){
 					$u['Zone'].'PBV'=>$u[$p1yyyymm]['BV']?:0,
 					$u['Zone'].'BV'=>$u[$yyyymm]['BV']?:0,
 					$u['Zone'].'PPV'=>$u[$p1yyyymm]['PV']?:0,
-					$u['Zone'].'PV'=>$u[$yyyymm]['PV']?:0
+					$u['Zone'].'PV'=>$u[$yyyymm]['PV']?:0,
+					$u['Zone'].'ExtraPV'=>$u[$yyyymm]['ExtraPV']?:0,
+					$u['Zone'].'PExtraPV'=>$u[$p1yyyymm]['ExtraPV']?:0,
 				));
 	}
 	
@@ -3158,9 +3160,10 @@ public function getregion(){
 			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
-			
+			$epv = array_sum(array_column($down,$key.'ExtraPV'));
+			$pepv = array_sum(array_column($down,$key.'PExtraPV'));
 			array_push($Zones, array(
-				 $key => array('BV' => $bv, 'PBV' => $pbv,'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv,'PV' => $pv, 'PPV' => $ppv,'EPV' => $epv, 'PEPV' => $pepv, 'users'=>$val)
 			));
 		}
 
@@ -3208,6 +3211,8 @@ public function getstate(){
 					$u['State'].'BV'=>$u[$yyyymm]['BV'],
 					$u['State'].'PPV'=>$u[$p1yyyymm]['PV'],
 					$u['State'].'PV'=>$u[$yyyymm]['PV'],
+					$u['State'].'ExtraPV'=>$u[$yyyymm]['ExtraPV'],
+					$u['State'].'PExtraPV'=>$u[$p1yyyymm]['ExtraPV'],
 				));
 	}
 	
@@ -3223,9 +3228,10 @@ public function getstate(){
 			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
-			
+			$epv = array_sum(array_column($down,$key.'ExtraPV'));
+			$pepv = array_sum(array_column($down,$key.'PExtraPV'));
 			array_push($Zones, array(
-				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'EPV' => $epv, 'PEPV' => $pepv, 'users'=>$val)
 			));
 		}
 
@@ -3272,7 +3278,10 @@ public function getCity(){
 					$u['Ahmedabad'].'PBV'=>$u[$p1yyyymm]['BV'],
 					$u['Ahmedabad'].'BV'=>$u[$yyyymm]['BV'],
 					$u['Ahmedabad'].'PPV'=>$u[$p1yyyymm]['PV'],
-					$u['Ahmedabad'].'PV'=>$u[$yyyymm]['PV'],				));
+					$u['Ahmedabad'].'PV'=>$u[$yyyymm]['PV'],
+					$u['Ahmedabad'].'ExtraPV'=>$u[$yyyymm]['ExtraPV'],
+					$u['Ahmedabad'].'PExtraPV'=>$u[$p1yyyymm]['ExtraPV'],
+					));
 			}else{
 				array_push($down,array(
 					'City'=>$u['City'],
@@ -3280,6 +3289,8 @@ public function getCity(){
 					$u['City'].'BV'=>$u[$yyyymm]['BV'],
 					$u['City'].'PPV'=>$u[$p1yyyymm]['PV'],
 					$u['City'].'PV'=>$u[$yyyymm]['PV'],
+					$u['City'].'ExtraPV'=>$u[$yyyymm]['ExtraPV'],
+					$u['City'].'PExtraPV'=>$u[$p1yyyymm]['ExtraPV'],
 				));
 			}
 	}
@@ -3295,9 +3306,11 @@ public function getCity(){
 			$bv = array_sum(array_column($down,$key.'BV'));
 			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
-			$ppv = array_sum(array_column($down,$key.'PPV'));
+			$ppv = array_sum(array_column($down,$key.'PBV'));
+			$epv = array_sum(array_column($down,$key.'ExtraPV'));
+			$pepv = array_sum(array_column($down,$key.'PExtraPV'));
 			array_push($Zones, array(
-				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'EPV' => $epv, 'PEPV' => $pepv, 'users'=>$val)
 			));
 		}
 			$sort = array();
