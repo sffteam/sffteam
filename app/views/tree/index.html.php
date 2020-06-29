@@ -32,12 +32,12 @@ foreach($allusers as $user) {
 							<?php if($user['PV']>0){?>\
 								<b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>">\
 									<?=$user['mcaName']?></b><br>\
+									PV: <?=$user['PV']?><br>\
 									PGPV: <?=$user['PGPV']?><br>\
+									RollUpPV: <?=$user['RollUpPV']?><br>\
 									PGBV: <?=$user['PGBV']?><br>\
 									GPV: <?=$user['GPV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
-									PV: <?=$user['PV']?><br>\
-									RollUpPV: <?=$user['RollUpPV']?><br>\
 									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>\
 								<?php }else{?>\
