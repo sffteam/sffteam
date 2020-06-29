@@ -3141,6 +3141,8 @@ public function getregion(){
 	foreach ($users as $u){
 				array_push($down,array(
 					'Zone'=>$u['Zone'],
+					$u['Zone'].'PBV'=>$u[$p1yyyymm]['BV']?:0,
+					$u['Zone'].'BV'=>$u[$yyyymm]['BV']?:0,
 					$u['Zone'].'PPV'=>$u[$p1yyyymm]['PV']?:0,
 					$u['Zone'].'PV'=>$u[$yyyymm]['PV']?:0
 				));
@@ -3152,22 +3154,24 @@ public function getregion(){
 		
 		$Zones = array();
 		foreach($a as $key=>$val){
+			$bv = array_sum(array_column($down,$key.'BV'));
+			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			
 			array_push($Zones, array(
-				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv,'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
 
 			$sort = array();
 				foreach($Zones as $k=>$v) {
 					foreach($v as $kk=>$vv){
-						$sort['PV'][$kk] = $vv['PV'];
+						$sort['BV'][$kk] = $vv['BV'];
 					}
 				}
 
-			array_multisort($sort['PV'], SORT_DESC, $Zones);
+			array_multisort($sort['BV'], SORT_DESC, $Zones);
 
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
@@ -3200,8 +3204,10 @@ public function getstate(){
 	foreach ($users as $u){
 				array_push($down,array(
 					'State'=>$u['State'],
+					$u['State'].'PBV'=>$u[$p1yyyymm]['BV'],
+					$u['State'].'BV'=>$u[$yyyymm]['BV'],
 					$u['State'].'PPV'=>$u[$p1yyyymm]['PV'],
-					$u['State'].'PV'=>$u[$yyyymm]['PV']
+					$u['State'].'PV'=>$u[$yyyymm]['PV'],
 				));
 	}
 	
@@ -3213,20 +3219,23 @@ public function getstate(){
 		
 		$Zones = array();
 		foreach($a as $key=>$val){
+			$bv = array_sum(array_column($down,$key.'BV'));
+			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
+			
 			array_push($Zones, array(
-				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
 
 			$sort = array();
 				foreach($Zones as $k=>$v) {
 					foreach($v as $kk=>$vv){
-						$sort['PV'][$kk] = $vv['PV'];
+						$sort['BV'][$kk] = $vv['BV'];
 					}
 				}
-			array_multisort($sort['PV'], SORT_DESC, $Zones);
+			array_multisort($sort['BV'], SORT_DESC, $Zones);
 
 
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
@@ -3248,7 +3257,7 @@ public function getCity(){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
-//			'Enable'=>'Yes',
+			'Enable'=>'Yes',
 		)	;
 		$users = Users::find('all',array(
 		'conditions'=>$conditions,
@@ -3260,14 +3269,17 @@ public function getCity(){
 			if($u['State']=="Gujarat" && $u['City']=="Allahabad"){
 				array_push($down,array(
 					'City'=>'Ahmedabad',
+					$u['Ahmedabad'].'PBV'=>$u[$p1yyyymm]['BV'],
+					$u['Ahmedabad'].'BV'=>$u[$yyyymm]['BV'],
 					$u['Ahmedabad'].'PPV'=>$u[$p1yyyymm]['PV'],
-					$u['Ahmedabad'].'PV'=>$u[$yyyymm]['PV']
-				));
+					$u['Ahmedabad'].'PV'=>$u[$yyyymm]['PV'],				));
 			}else{
 				array_push($down,array(
 					'City'=>$u['City'],
+					$u['City'].'PBV'=>$u[$p1yyyymm]['BV'],
+					$u['City'].'BV'=>$u[$yyyymm]['BV'],
 					$u['City'].'PPV'=>$u[$p1yyyymm]['PV'],
-					$u['City'].'PV'=>$u[$yyyymm]['PV']
+					$u['City'].'PV'=>$u[$yyyymm]['PV'],
 				));
 			}
 	}
@@ -3280,19 +3292,21 @@ public function getCity(){
 		
 		$Zones = array();
 		foreach($a as $key=>$val){
+			$bv = array_sum(array_column($down,$key.'BV'));
+			$pbv = array_sum(array_column($down,$key.'PBV'));
 			$pv = array_sum(array_column($down,$key.'PV'));
 			$ppv = array_sum(array_column($down,$key.'PPV'));
 			array_push($Zones, array(
-				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
+				 $key => array('BV' => $bv, 'PBV' => $pbv, 'PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
 			$sort = array();
 				foreach($Zones as $k=>$v) {
 					foreach($v as $kk=>$vv){
-						$sort['PV'][$kk] = $vv['PV'];
+						$sort['BV'][$kk] = $vv['BV'];
 					}
 				}
-			array_multisort($sort['PV'], SORT_DESC, $Zones);
+			array_multisort($sort['BV'], SORT_DESC, $Zones);
 
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
