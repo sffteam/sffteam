@@ -37,6 +37,7 @@ foreach($allusers as $user) {
 									CGPV: <?=$user['GrossPV']?><br>\
 									PV: <?=$user['PV']?><br>\
 									RollUpPV: <?=$user['RollUpPV']?><br>\
+									GBV: <?=$user['GBV']?><br>\
 									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>\
 								<?php }else{?>\
