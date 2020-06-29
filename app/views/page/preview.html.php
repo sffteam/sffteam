@@ -46,8 +46,8 @@
 				<div class="block">
 				<h1 class="Big sz4 bg-color-black text-color-white padding" >Ask yourself these questions:</h1>
 				<h1 class="Big sz4">Can I earn by doing business of these products?</h1>
-				<h1 class="Big sz5">How can I market these products online?</h1>
-				<h1 class="Big sz5">Is there a system which I will learn & earn?</h1>
+				<h1 class="Big sz4">How can I market these products online?</h1>
+				<h1 class="Big sz4">Is there a system which I will learn & earn?</h1>
 				<a href="/s/forms/preview/1" class="Big sz2 button button-fill button-small button-round padding color-red">I want to know more!</a>
 				</div>
 				<hr>
@@ -67,9 +67,8 @@
 				<div class="block">
 				<h1 class="Big sz4 bg-color-black text-color-white padding" >Ask yourself these questions:</h1>
 				<h1 class="Big sz4">Can I earn by doing business of these products?</h1>
-				<h1 class="Big sz5">How can I market these products online?</h1>
-				<h1 class="Big sz5">Is there a system which I will learn & earn?</h1>
-
+				<h1 class="Big sz4">How can I market these products online?</h1>
+				<h1 class="Big sz4">Is there a system which I will learn & earn?</h1>
 				<a href="/s/forms/preview/1" class="Big sz2 button button-fill button-small button-round padding color-red">I want to know more!</a>
 				</div>
 				<hr>

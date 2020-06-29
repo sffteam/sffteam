@@ -1359,6 +1359,7 @@ set_time_limit(0);
 										}
 									}
 								}else{
+
         }
 						}
 						fclose($handle);
@@ -1592,6 +1593,7 @@ Users::update(
 			}
 			}
 	}
+
 
 	public function adduserEnrolment($data,$yyyymm){
 		
@@ -3158,6 +3160,15 @@ public function getregion(){
 			));
 		}
 
+			$sort = array();
+				foreach($Zones as $k=>$v) {
+					foreach($v as $kk=>$vv){
+						$sort['PV'][$kk] = $vv['PV'];
+					}
+				}
+
+			array_multisort($sort['PV'], SORT_DESC, $Zones);
+
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
 
@@ -3209,6 +3220,15 @@ public function getstate(){
 			));
 		}
 
+			$sort = array();
+				foreach($Zones as $k=>$v) {
+					foreach($v as $kk=>$vv){
+						$sort['PV'][$kk] = $vv['PV'];
+					}
+				}
+			array_multisort($sort['PV'], SORT_DESC, $Zones);
+
+
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
 
@@ -3228,7 +3248,7 @@ public function getCity(){
 	$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
-			'Enable'=>'Yes',
+//			'Enable'=>'Yes',
 		)	;
 		$users = Users::find('all',array(
 		'conditions'=>$conditions,
@@ -3266,6 +3286,13 @@ public function getCity(){
 				 $key => array('PV' => $pv, 'PPV' => $ppv, 'users'=>$val)
 			));
 		}
+			$sort = array();
+				foreach($Zones as $k=>$v) {
+					foreach($v as $kk=>$vv){
+						$sort['PV'][$kk] = $vv['PV'];
+					}
+				}
+			array_multisort($sort['PV'], SORT_DESC, $Zones);
 
 	return $this->render(array('json' => array("success"=>"Yes",'param'=>$Zones)));				
 }
