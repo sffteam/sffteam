@@ -36,6 +36,7 @@ foreach($allusers as $user) {
 									PGPV: <?=$user['PGPV']?><br>\
 									RollUpPV: <?=$user['RollUpPV']?><br>\
 									PGBV: <?=$user['PGBV']?><br>\
+									GBV: <?=$user['GBV']?><br>\
 									GPV: <?=$user['GPV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
