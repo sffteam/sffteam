@@ -207,7 +207,12 @@ class PageController extends \lithium\action\Controller {
 		
 		return compact('data');
 	}
-	
+	public function recruitment(){
+		
+		
+		
+		return compact('data');
+	}
 //end of functions
 }
 ?>
