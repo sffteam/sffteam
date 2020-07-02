@@ -4038,7 +4038,7 @@ public function createpage(){
 					X_pages::update($data,$conditions);
 			}
 			$shortURL = $x->shorturl(str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])));
-			array_push($short,array('shortURL'=>"https://sff.team/x/go/".$shortURL,'longURL'=>"https://circle.sff.team/page/preview/".str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName']))));
+			array_push($short,array('shortURL'=>"https://sff.team/x/go/".$shortURL,'longURL'=>"https://circle.sff.team/".strtolower($p->title)."/".str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName']))));
 		}
 
 
