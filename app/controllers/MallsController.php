@@ -30,6 +30,7 @@ use app\models\Seminars;
 use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
+use app\models\X_pages;
 use \MongoRegex;
 
 class MallsController extends \lithium\action\Controller {
@@ -3153,7 +3154,6 @@ public function getregion(){
 		$u = array_unique(array_column($down, 'Zone'));
 		$a = array_count_values(array_column($down,'Zone'));
 		
-		
 		$Zones = array();
 		foreach($a as $key=>$val){
 			$bv = array_sum(array_column($down,$key.'BV'));
@@ -3977,6 +3977,80 @@ public function innermethod(){
 	}
 }
 
+
+public function createpage(){
+
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+		$pages = X_pages::find('all',array(
+			'conditions'=>array('category_id'=>33,'no_index'=>1)
+		));
+		
+		$x = new XController();
+		$short = array();
+		foreach($pages as $p){
+			$data = array(
+			 "category_id" =>$p->category_id, 
+				"translation_parent_id"=>$p->translation_parent_id, 
+				"variant_parent_id"=>$p->variant_parent_id, 
+				"is_published"=>$p->is_published, 
+				"date_added"=>gmdate('Y-m-d h:i:s'), 
+				"created_by"=>$p->created_by, 
+				"created_by_user"=>$p->created_by_user, 
+				"date_modified"=>gmdate('Y-m-d h:i:s'),
+				"modified_by"=>$p->modified_by, 
+				"modified_by_user"=>$p->modified_by_user, 
+				"checked_out"=>$p->checked_out, 
+				"checked_out_by"=>$p->checked_out_by, 
+				"checked_out_by_user"=>$p->checked_out_by_user, 
+				"title"=>$p->title, 
+				"alias"=>str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])), 
+				"template"=>$p->template, 
+				"custom_html"=>$p->custom_html, 
+				"content"=>$p->content, 
+				"publish_up"=>$p->publish_up, 
+				"publish_down"=>$p->publish_down, 
+				"hits"=>0, 
+				"unique_hits"=>0, 
+				"variant_hits"=>0, 
+				"revision"=>1, 
+				"meta_description"=>$p->meta_description, 
+				"redirect_type"=>$p->redirect_type, 
+				"redirect_url"=>$p->redirect_url, 
+				"is_preference_center"=>0, 
+				"no_index"=>0, 
+				"lang"=>$p->lang, 
+				"variant_settings"=>$p->variant_settings, 
+				"variant_start_date"=>$p->variant_start_date,
+			);
+			
+			$page = X_pages::find('first',array(
+				'conditions'=>array('alias'=>str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])))
+			));
+			
+			if(count($page)===0){
+					X_pages::create()->save($data);
+			}else{
+				$conditions = array('alias'=>str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])));
+					X_pages::update($data,$conditions);
+			}
+			$shortURL = $x->shorturl(str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])));
+			array_push($short,array('shortURL'=>"https://sff.team/x/go/".$shortURL,'longURL'=>"https://circle.sff.team/page/preview/".str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName']))));
+		}
+
+
+
+
+	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($user),'data'=>$short)));	
+	
+	
+	}
+	
+	
+}
 
 
 //end of class

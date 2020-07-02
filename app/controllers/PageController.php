@@ -3,8 +3,9 @@ namespace app\controllers;
 
 use app\models\X_assets;
 use app\models\X_categories;
+use app\models\X_pages;
 use app\models\Malls;
-
+use app\controllers\XController;
 
 class PageController extends \lithium\action\Controller {
 
@@ -213,6 +214,15 @@ class PageController extends \lithium\action\Controller {
 		
 		return compact('data');
 	}
+	
+	public function shorturl($longURL=null){
+		$x = new XController();
+		return $x->shorturl($longURL);
+		
+	}
+	
+	
+	
 //end of functions
 }
 ?>
