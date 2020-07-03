@@ -4064,6 +4064,11 @@ public function createimage(){
 }
 
 public function myfiles($mcaNumber){
+  $this->_render['layout'] = '';	
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+	}
+	
 	$dir    = '/tmp';
 	$targetFolder = '/app/webroot/img/posts/';
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
@@ -4075,7 +4080,13 @@ public function myfiles($mcaNumber){
 					array_push($myfiles,array('file'=>$f));
 			}
 	}
+
+
+	if($this->request->data){
+		return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles)));	
+	}else{
 	return $myfiles;
+	}
 }
 
 function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
