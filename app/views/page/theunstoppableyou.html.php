@@ -23,13 +23,14 @@
 				.sz5{font-size:calc(1em + 5vw)}
 				.sz6{font-size:calc(1em + 6vw)}
 				.sz7{font-size:calc(1em + 7vw)}
+
 				.wrapper {
-  background-image: url();
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 100%;
-  height: auto;
-}
+						background-image: url();
+						background-repeat: no-repeat;
+						background-size: 100% 100%;
+						width: 100%;
+						height: auto;
+				}
 
 .iFrame-video{
 	position: relative;
