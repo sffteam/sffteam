@@ -30,6 +30,7 @@ use app\models\Seminars;
 use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
+use app\models\Urls;
 use app\models\X_pages;
 use app\models\Posts;
 use \MongoRegex;
@@ -4032,7 +4033,7 @@ public function createpage(){
 				'conditions'=>array('alias'=>str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])))
 			));
 			
-			if(count($page)===0){
+			if(count($page)==0){
 					X_pages::create()->save($data);
 			}else{
 				$conditions = array('alias'=>str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])));
@@ -4164,7 +4165,17 @@ public function findpost(){
 					'mcaNumber'=>$mcaNumber
 				)
 		));
-	return $this->render(array('json' => array("success"=>"Yes",'post'=>$post)));
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+		
+		$name = str_replace(" ","-",strtolower($user['mcaName']));
+		
+		$shortURLs = Urls::find('all',array(
+			'conditions'=>array('URL'=>array('$regex'=>$name))
+		));
+		
+	return $this->render(array('json' => array("success"=>"Yes",'post'=>$post,'shortURL'=>$shortURLs)));
 	}
 }
 
