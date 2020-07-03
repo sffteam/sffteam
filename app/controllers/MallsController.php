@@ -4063,7 +4063,7 @@ public function createimage(){
 	
 }
 
-function myfiles($mcaNumber){
+public function myfiles($mcaNumber){
 	$dir    = '/tmp';
 	$targetFolder = '/app/webroot/img/posts/';
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
