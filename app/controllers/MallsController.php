@@ -31,6 +31,7 @@ use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
 use app\models\X_pages;
+use app\models\Posts;
 use \MongoRegex;
 
 class MallsController extends \lithium\action\Controller {
@@ -4052,12 +4053,20 @@ public function createimage(){
 	$mcaNumber = $this->request->data['mymcaNumber'];
 	$designation = $this->request->data['myDesignation'];
 	$quote = $this->request->data['myQuote'];
-	
 	$file = $this->createimageinstantly($img1,$img2,$name,$designation, $quote, $mcaNumber);
 	
+	$data = array(
+		'Background'=>$img1,
+		'Footer'=>$img2,
+		'mcaName'=>$name,
+		'mcaNumber'=>$mcaNumber,
+		'Designation'=>$designation,
+		'Quote'=>$quote,
+		'File'=>$file
+	);
+	
+	Posts::create()->save($data);
 	$myfiles = $this->myfiles($mcaNumber);
-	
-	
 	return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles)));	
 	}
 	
