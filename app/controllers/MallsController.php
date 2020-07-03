@@ -4062,12 +4062,14 @@ public function createimage(){
 function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
 		$x=$y=600;
 		header('Content-Type: image/png');
-		$targetFolder = '/app/webroot/img/post/';
+		$imageFolder = '/app/webroot/img/post/';
+		$targetFolder = '/app/webroot/img/posts/';
 		$fontFolder = '/';
+		$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
 		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 		
-		$img1 = $targetPath.$img1;
-		$img2 = $targetPath.$img2;
+		$img1 = $imagePath.$img1;
+		$img2 = $imagePath.$img2;
 
 
 		$outputImage = imagecreatetruecolor(600, 600);
