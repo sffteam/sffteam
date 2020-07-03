@@ -4040,17 +4040,66 @@ public function createpage(){
 			$shortURL = $x->shorturl(str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName'])),str_replace(" ","-",strtolower($p->title)));
 			array_push($short,array('shortURL'=>"https://sff.team/x/go/".$shortURL,'longURL'=>"https://circle.sff.team/".str_replace(" ","-",strtolower($p->title))."/".str_replace(" ","-",strtolower($p->title).'-'.strtolower($user['mcaName']))));
 		}
+		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($user),'data'=>$short)));	
+		}
+	}
 
-
-
-
-	return $this->render(array('json' => array("success"=>"Yes",'count'=>count($user),'data'=>$short)));	
+public function createimage(){
+	if($this->request->data){
+	$img1 = $this->request->data['img1'];
+	$img2 = $this->request->data['img2'];
+	$name = $this->request->data['name'];
+	$designation = $this->request->data['designation'];
+	$quote = $this->request->data['quote'];
 	
-	
+	$file = $this->createimageinstantly($img1,$img2,$name,$designation, $quote);
+	return $this->render(array('json' => array("success"=>"Yes",'file'=>$file)));	
 	}
 	
-	
 }
+
+function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote=""){
+		$x=$y=600;
+		header('Content-Type: image/png');
+		$targetFolder = '/app/webroot/img/post/';
+		$fontFolder = '/';
+		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+		
+		$img1 = $targetPath.$img1;
+		$img2 = $targetPath.$img2;
+
+
+		$outputImage = imagecreatetruecolor(600, 600);
+
+		// set background to white
+		$white = imagecolorallocate($outputImage, 255, 255, 255);
+		$black = imagecolorallocate($outputImage, 0, 0, 0);
+		imagefill($outputImage, 0, 0, $white);
+
+		$first = imagecreatefrompng($img1);
+		$second = imagecreatefrompng($img2);
+
+		//imagecopyresized ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h )
+		imagecopyresized($outputImage,$first,0,0,0,0, $x, $y,$x,$y);
+		imagecopyresized($outputImage,$second,0,500,0,0, $x, $y,$x,$y);
+//		imagecopyresized($outputImage,$third,200,200,0,0, 100, 100, 204, 148);
+
+		// Add the text
+		//imagettftext ( resource $image , float $size , float $angle , int $x , int $y , int $color , string $fontfile , string $text )
+		//$white = imagecolorallocate($im, 255, 255, 255);
+		$text = 'School Name Here';
+		$font =  $fontFolder . 'arial.ttf';
+		
+		imagettftext($outputImage, 24, 0, 10, 540, $white, './fonts/Raleway-Black.ttf', $name); 
+		imagettftext($outputImage, 20, 0, 10, 580, $white, './fonts/Raleway-Medium.ttf', $designation); 
+		
+		imagettftext($outputImage, 24, 0, 12, 102, $black, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));
+		imagettftext($outputImage, 24, 0, 10, 100, $white, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));		
+		$filename=$targetPath .round(microtime(true)).'.png';
+		imagepng($outputImage, $filename);
+		imagedestroy($outputImage);
+		return $filename;
+	}
 
 
 //end of class
