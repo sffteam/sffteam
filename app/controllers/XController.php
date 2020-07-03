@@ -15,9 +15,10 @@ class XController extends \lithium\action\Controller {
 					'Short'=>$shortURL
 				);
 			$url = Urls::find('first',array(
-				'Short'=>$shortURL
+				'conditions'=>array('Short'=>(string)$shortURL)
 			));
-			if($url['Short']!=$shortURL){
+			
+			if(count($url)!=0){}else{
 				Urls::create()->save($data);
 			}
 				return $shortURL;	
