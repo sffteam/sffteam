@@ -4046,19 +4046,20 @@ public function createpage(){
 
 public function createimage(){
 	if($this->request->data){
-	$img1 = $this->request->data['img1'];
-	$img2 = $this->request->data['img2'];
-	$name = $this->request->data['name'];
-	$designation = $this->request->data['designation'];
-	$quote = $this->request->data['quote'];
+	$img1 = $this->request->data['myBackground'];
+	$img2 = $this->request->data['myFooter'];
+	$name = $this->request->data['myName'];
+	$mcaNumber = $this->request->data['mymcaNumber'];
+	$designation = $this->request->data['myDesignation'];
+	$quote = $this->request->data['myQuote'];
 	
-	$file = $this->createimageinstantly($img1,$img2,$name,$designation, $quote);
+	$file = $this->createimageinstantly($img1,$img2,$name,$designation, $quote, $mcaNumber);
 	return $this->render(array('json' => array("success"=>"Yes",'file'=>$file)));	
 	}
 	
 }
 
-function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote=""){
+function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
 		$x=$y=600;
 		header('Content-Type: image/png');
 		$targetFolder = '/app/webroot/img/post/';
@@ -4095,8 +4096,8 @@ function createimageinstantly($img1="",$img2="",$name="", $designation="", $quot
 		
 		imagettftext($outputImage, 24, 0, 12, 102, $black, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));
 		imagettftext($outputImage, 24, 0, 10, 100, $white, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));		
-		$filename=$targetPath .round(microtime(true)).'.png';
-		imagepng($outputImage, $filename);
+		$filename=round(microtime(true)).'.png';
+		imagepng($outputImage, $targetPath . $mcaNumber."-".$filename);
 		imagedestroy($outputImage);
 		return $filename;
 	}
