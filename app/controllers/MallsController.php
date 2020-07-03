@@ -4054,9 +4054,28 @@ public function createimage(){
 	$quote = $this->request->data['myQuote'];
 	
 	$file = $this->createimageinstantly($img1,$img2,$name,$designation, $quote, $mcaNumber);
-	return $this->render(array('json' => array("success"=>"Yes",'file'=>$file)));	
+	
+	$myfiles = $this->myfiles($mcaNumber);
+	
+	
+	return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles)));	
 	}
 	
+}
+
+function myfiles($mcaNumber){
+	$dir    = '/tmp';
+	$targetFolder = '/app/webroot/img/posts/';
+	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+	$files = scandir($targetPath);
+	$myfiles = array();
+	foreach($files as $f){
+			$filemcaNumber = substr($f,0,8);
+			if($filemcaNumber===$mcaNumber){
+					array_push($myfiles,array('file'=>$f));
+			}
+	}
+	return $myfiles;
 }
 
 function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
