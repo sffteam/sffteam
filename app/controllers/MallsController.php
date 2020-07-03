@@ -4096,8 +4096,8 @@ function createimageinstantly($img1="",$img2="",$name="", $designation="", $quot
 		
 		imagettftext($outputImage, 24, 0, 12, 102, $black, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));
 		imagettftext($outputImage, 24, 0, 10, 100, $white, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));		
-		$filename=round(microtime(true)).'.png';
-		imagepng($outputImage, $targetPath . $mcaNumber."-".$filename);
+		$filename=$mcaNumber."-".round(microtime(true)).'.png';
+		imagepng($outputImage, $targetPath . $filename);
 		imagedestroy($outputImage);
 		return $filename;
 	}
