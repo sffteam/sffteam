@@ -4062,12 +4062,14 @@ public function createimage(){
 function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
 		$x=$y=600;
 		header('Content-Type: image/png');
-		$targetFolder = '/app/webroot/img/post/';
+		$imageFolder = '/app/webroot/img/post/';
+		$targetFolder = '/app/webroot/img/posts/';
 		$fontFolder = '/';
+		$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
 		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 		
-		$img1 = $targetPath.$img1;
-		$img2 = $targetPath.$img2;
+		$img1 = $imagePath.$img1;
+		$img2 = $imagePath.$img2;
 
 
 		$outputImage = imagecreatetruecolor(600, 600);
@@ -4096,8 +4098,8 @@ function createimageinstantly($img1="",$img2="",$name="", $designation="", $quot
 		
 		imagettftext($outputImage, 24, 0, 12, 102, $black, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));
 		imagettftext($outputImage, 24, 0, 10, 100, $white, './fonts/Gobold Bold.otf', wordwrap($quote,35,"\n",true));		
-		$filename=round(microtime(true)).'.png';
-		imagepng($outputImage, $targetPath . $mcaNumber."-".$filename);
+		$filename=$mcaNumber."-".round(microtime(true)).'.png';
+		imagepng($outputImage, $targetPath . $filename);
 		imagedestroy($outputImage);
 		return $filename;
 	}
