@@ -4064,9 +4064,9 @@ public function createimage(){
 }
 
 public function myfiles($mcaNumber){
-	
+  $this->_render['layout'] = '';	
 	if($this->request->data){
-		$mcaNumber = $this->request->data['mcaNumber']
+		$mcaNumber = $this->request->data['mcaNumber'];
 	}
 	
 	$dir    = '/tmp';
