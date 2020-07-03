@@ -4153,6 +4153,21 @@ function createimageinstantly($img1="",$img2="",$name="", $designation="", $quot
 		return $filename;
 	}
 
+public function findpost(){
+	if($this->request->data){	
+		$imageFile = $this->request->data['imageFile'];
+		$mcaNumber = $this->request->data['mcaNumber'];
+		
+		$post = Posts::find('first',array(
+			'conditions'=>array(
+					'File'=>$imageFile,
+					'mcaNumber'=>$mcaNumber
+				)
+		));
+	return $this->render(array('json' => array("success"=>"Yes",'post'=>$post)));
+	}
+}
+
 
 //end of class
 }
