@@ -32,19 +32,36 @@
 						height: auto;
 				}
 
-.iFrame-video{
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
-}
-.iFrame-video iframe{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
+			.iFrame-video{
+				position: relative;
+				padding-bottom: 56.25%; /* 16:9 */
+				padding-top: 25px;
+				height: 0;
+			}
+			.iFrame-video iframe{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		.wrap {
+				width: 150px;
+				height: 150px;
+				background: #eee;
+		}
+		.wrap * {
+				width: 100%;
+				height: 100%;
+		}
+		.s-inner {
+		}
+		.s-inner > figure {
+				display: block;
+				margin: 0;
+		}
+		.s-inner > figure > img {
+		}
 				</style>
   </head>
   <body class="page-content" style="background-color:#eee">
@@ -93,9 +110,23 @@
 </div>
 
 <p>The successful persons have completed this course and earned a 6 figure income in just a year.</p>
-
 				</div>
 				<hr>
+				<div class="block">
+				<h2 class="Big sz3">Our Leaders</h2>
+					<div class="row">
+						<div class="col wrap margin-bottom">
+								<div class="s-inner">
+								<figure>
+									<img src="https://sff.team/img/team/Amit-Purvi-Doshi.jpg" width="100%" height="100%">
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
 				<div class="block">
 				<h1 class="Big sz4 bg-color-black text-color-white padding" >We ask you:</h1>
 				<h1 class="Big sz4">Do you have dreams, real achievable dreams?</h1>
