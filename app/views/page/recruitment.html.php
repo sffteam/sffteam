@@ -96,6 +96,87 @@
 						<li>All the training we provide is FREE. You do not have for pay anything for the preview or the training period</li>
 					</ul>
 				</div>
+<!----- Leaders --->
+				<hr>
+				<div class="block row">
+				<h2 class="Big sz3">Our Leaders</h2>
+					
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Amit-Purvi-Doshi.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Purvi Amit Doshi</strong> <br><span  class="Big sz1">Share Market Consultant - Mumbai</span></span>
+					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Naushad-Lightwala.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Naushad Lightwala</strong> <br><span  class="Big sz1">Singer, Musician, Film Director, Artist - Ahmedabad</span></span>
+					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Vasantha-Dantam.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Vasantha Dantam</strong> <br><span  class="Big sz1">Cost Accountant, Coach, Teenage and Parenting Expert - Hyderabad</span></span>
+					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Roopa-Shah.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Roopa Shah</strong> <br><span  class="Big sz1">Image Consultant, Corporate Trainer, Speaker - Mumbai</span></span>
+					</div>
+					<hr>										
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Paras-Sonal-Dixit.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Sonal Paras Dixit</strong> <br><span  class="Big sz1">CEO, Palm Green Club - Ahmedabad, Chapatee.com</span></span>
+					</div>
+					<hr>
+
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Sita-Raman.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Sita Raman</strong> <br><span  class="Big sz1">KeyNote Speaker, Cofounder: Uexcelerate, Founder: KraftsIndia, Success Coach</span></span>
+					</div>
+					<hr>				
+
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Mala-Shah.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Mala Shah</strong> <br><span  class="Big sz1">Entreprenure - Hotelier, Mount Abu</span></span>
+					</div>
+					<hr>					
+					
+					
+				</div>
+<!----- --->
 			<h3 class="Oswald sz4 text-align-center">Did you decide?</h3>
 			<span  class="Big sz2 button button-fill button-small button-round padding color-red">I want to be Leader!</span>
 				<h1 class="Oswald block sz7 text-align-center">THE UNSTOPPABLE YOU</h1>
@@ -103,6 +184,6 @@
 					<div class="block">
 						<script type="text/javascript" src="//circle.sff.team/form/generate.js?id=1"></script>
 					</div>
-    
+    </div>
   </body>
 </html>
