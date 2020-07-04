@@ -32,6 +32,8 @@ use app\models\Messages;
 use app\models\Points;
 use app\models\Urls;
 use app\models\X_pages;
+use app\models\X_page_hits;
+
 use app\models\X_leads;
 use app\models\Posts;
 use \MongoRegex;
@@ -4181,10 +4183,28 @@ public function findpost(){
 }
 
 public function clients(){
-		$leads = X_leads::find('all',array(
-			'conditions'=>array('id'=>array('$gt'=>200))
-		));
-	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads)));
+		 $leads = X_leads::find('all',array(
+			 'conditions'=>array(
+					'id'=>array('>'=>200),
+					'phone'=>array('!='=>""),
+					)
+		 ));
+			$data = array();
+			foreach($leads as $l){
+//				print_r($l->id);
+				$pagehit = X_page_hits::find('all',array(
+					'conditions'=>array(
+						'lead_id'=>$l->id,
+					)
+				));
+				array_push($data,array(
+					'email'=>$l->email,
+					'mobile'=>$l->phone,
+					'page'=>$pagehit->url
+				));
+				
+			}
+	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$data)));
 }
 
 
