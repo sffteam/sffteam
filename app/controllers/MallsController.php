@@ -4207,7 +4207,7 @@ public function clients(){
 				));
 				}
 			}
-	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$data)));
+	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads,'data'=>$data)));
 }
 
 
