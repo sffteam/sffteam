@@ -8,7 +8,7 @@ class XController extends \lithium\action\Controller {
 
 	public function shorturl($longURL=null,$title=null){
 			if($longURL){
-				$longURL =  "https://circle.sff.team/the-unstoppable-you/".urlencode(strtolower($longURL));
+				$longURL =  "http://circle.sff.team/the-unstoppable-you/".urlencode(strtolower($longURL));
 				$shortURL = substr(sha1($longURL),0,6);
 				$data = array(
 					'URL'=>$longURL,

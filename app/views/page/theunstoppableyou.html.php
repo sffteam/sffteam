@@ -46,8 +46,8 @@
 				height: 100%;
 			}
 		.wrap {
-				width: 150px;
-				height: 150px;
+				width: 400px;
+				height: 400px;
 				background: #eee;
 		}
 		.wrap * {
@@ -111,19 +111,95 @@
 
 <p>The successful persons have completed this course and earned a 6 figure income in just a year.</p>
 				</div>
+
+<!----- Leaders --->
 				<hr>
-				<div class="block">
+				<div class="block row">
 				<h2 class="Big sz3">Our Leaders</h2>
-					<div class="row">
-						<div class="col wrap margin-bottom">
+					
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
 								<div class="s-inner">
-								<figure>
 									<img src="https://sff.team/img/team/Amit-Purvi-Doshi.jpg" width="100%" height="100%">
-								</figure>
 							</div>
+								
 						</div>
+						<span><strong  class="Big sz3">Purvi Amit Doshi</strong> <br><span  class="Big sz1">Share Market Consultant - Mumbai</span></span>
 					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Naushad-Lightwala.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Naushad Lightwala</strong> <br><span  class="Big sz1">Singer, Musician, Film Director, Artist - Ahmedabad</span></span>
+					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Vasantha-Dantam.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Vasantha Dantam</strong> <br><span  class="Big sz1">Cost Accountant, Coach, Teenage and Parenting Expert - Hyderabad</span></span>
+					</div>
+					<hr>
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Roopa-Shah.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Roopa Shah</strong> <br><span  class="Big sz1">Image Consultant, Corporate Trainer, Speaker - Mumbai</span></span>
+					</div>
+					<hr>										
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Paras-Sonal-Dixit.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Sonal Paras Dixit</strong> <br><span  class="Big sz1">CEO, Palm Green Club - Ahmedabad, Chapatee.com</span></span>
+					</div>
+					<hr>
+
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Sita-Raman.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Sita Raman</strong> <br><span  class="Big sz1">KeyNote Speaker, Cofounder: Uexcelerate, Founder: KraftsIndia, Success Coach</span></span>
+					</div>
+					<hr>				
+
+					<div class="col-100">
+						<div class=" wrap margin-bottom">
+								<div class="s-inner">
+									<img src="https://sff.team/img/team/Mala-Shah.jpg" width="100%" height="100%">
+							</div>
+								
+						</div>
+						<span><strong  class="Big sz3">Mala Shah</strong> <br><span  class="Big sz1">Entreprenure - Hotelier, Mount Abu</span></span>
+					</div>
+					<hr>					
+					
+					
 				</div>
+<!----- --->
+
+
+
+
+
+
+
 
 
 
