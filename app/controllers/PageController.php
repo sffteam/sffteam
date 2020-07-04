@@ -209,10 +209,10 @@ class PageController extends \lithium\action\Controller {
 		return compact('data');
 	}
 	public function recruitment(){
-		
-		
-		
-		return compact('data');
+			return compact('data');
+	}
+	public function discovery(){
+			return compact('data');
 	}
 	
 	public function shorturl($longURL=null){
