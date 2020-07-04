@@ -4197,12 +4197,15 @@ public function clients(){
 						'lead_id'=>$l->id,
 					)
 				));
+				
+				foreach($pagehit as $p){
+					
 				array_push($data,array(
 					'email'=>$l->email,
 					'mobile'=>$l->phone,
-					'page'=>$pagehit->url
+					'page'=>$p->url
 				));
-				
+				}
 			}
 	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$data)));
 }
