@@ -4210,6 +4210,20 @@ public function clients(){
 	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads,'data'=>$data)));
 }
 
+public function registration(){
+		$mcaNumber = $this->request->data['mcaNumber'];	
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+		
+		$name = str_replace(" ","-",strtolower($user['mcaName']));
+		
+		$shortURLs = Urls::find('all',array(
+			'conditions'=>array('URL'=>array('$regex'=>$name))
+		));
+	return $this->render(array('json' => array("success"=>"Yes",'data'=>$shortURLs)));
+}
+
 
 //end of class
 }
