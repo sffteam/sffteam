@@ -32,6 +32,7 @@ use app\models\Messages;
 use app\models\Points;
 use app\models\Urls;
 use app\models\X_pages;
+use app\models\X_leads;
 use app\models\Posts;
 use \MongoRegex;
 
@@ -4177,6 +4178,13 @@ public function findpost(){
 		
 	return $this->render(array('json' => array("success"=>"Yes",'post'=>$post,'shortURL'=>$shortURLs)));
 	}
+}
+
+public function clients(){
+		$leads = X_leads::find('all',array(
+			'conditions'=>array('id'=>array('$gt'=>200))
+		));
+	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads)));
 }
 
 
