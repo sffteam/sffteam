@@ -4265,7 +4265,7 @@ public function saveleadinfo(){
 			'facebook'=>$this->request->data['facebook'],
 			'stage_id'=>$this->request->data['stage_id'],
 		);
-		
+		$conditions = array('id'=>id);
 		X_leads::update($data,$conditions);
 
 		$lead_id = $this->request->data['lead_id'];
