@@ -4253,17 +4253,17 @@ public function saveleadinfo(){
 	if($this->request->data){
 		$id=$this->request->data['lead_id'];
 		$data = array(
-			'firstname'=>$this->request->data['firstname'];
-			'lastname'=>$this->request->data['lastname'];
-			'address1'=>$this->request->data['address1'];			
-			'address2'=>$this->request->data['address2'];			
-			'city'=>$this->request->data['city'];
-			'zipcode'=>$this->request->data['zipcode'];			
-			'email'=>$this->request->data['email'];
-			'mobile'=>$this->request->data['mobile'];
-			'phone'=>$this->request->data['phone'];
-			'facebook'=>$this->request->data['facebook'];				
-			'stage_id'=>$this->request->data['stage_id'];
+			'firstname'=>$this->request->data['firstname'],
+			'lastname'=>$this->request->data['lastname'],
+			'address1'=>$this->request->data['address1'],			
+			'address2'=>$this->request->data['address2'],			
+			'city'=>$this->request->data['city'],
+			'zipcode'=>$this->request->data['zipcode'],
+			'email'=>$this->request->data['email'],
+			'mobile'=>$this->request->data['mobile'],
+			'phone'=>$this->request->data['phone'],
+			'facebook'=>$this->request->data['facebook'],
+			'stage_id'=>$this->request->data['stage_id'],
 		);
 		
 		X_leads::update($data,$conditions);
