@@ -31,11 +31,13 @@ use app\models\Prospects;
 use app\models\Messages;
 use app\models\Points;
 use app\models\Urls;
+use app\models\Posts;
+
 use app\models\X_pages;
 use app\models\X_page_hits;
-
 use app\models\X_leads;
-use app\models\Posts;
+use app\models\X_stages;
+
 use \MongoRegex;
 
 class MallsController extends \lithium\action\Controller {
@@ -4183,31 +4185,41 @@ public function findpost(){
 }
 
 public function clients(){
-		 $leads = X_leads::find('all',array(
-			 'conditions'=>array(
-					'id'=>array('>'=>200),
-					'phone'=>array('!='=>""),
-					)
-		 ));
-			$data = array();
-			foreach($leads as $l){
-//				print_r($l->id);
-				$pagehit = X_page_hits::find('all',array(
-					'conditions'=>array(
-						'lead_id'=>$l->id,
-					)
+			if($this->request->data){
+				$user = Users::find('first',array(
+					'conditions'=>array('mcaNumber'=>(string)$this->request->data['mcaNumber'])
 				));
 				
-				foreach($pagehit as $p){
-					
-				array_push($data,array(
-					'email'=>$l->email,
-					'mobile'=>$l->phone,
-					'page'=>$p->url
-				));
+				if(count($user)!=0){
+						$username = str_replace(" ","-",strtolower($user['mcaName']));
 				}
+			
+			$pages = X_pages::find('all',array(
+				'conditions'=>array('OR'=>array('alias'=>array('LIKE'=>'%'.$username)))
+			));
+			$page_id = array();
+			foreach($pages as $p){
+					array_push($page_id,$p->id);
 			}
-	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads,'data'=>$data)));
+			
+			$pagehits = X_page_hits::find('all',array(
+				'conditions'=>array('OR'=>array('page_id'=>array('=' => $page_id)))
+			));
+			
+//			x_lead_stages_change_logs
+			$lead_id = array();
+			foreach($pagehits as $ph){
+					array_push($lead_id,$ph->lead_id);
+			}
+			
+			$leads = X_leads::find('all',array(
+				'conditions'=>array(
+					'OR'=>array('id'=>array('=' => $lead_id),'phone'=>array('<>'=>'null')),
+					)
+			));
+			$stages = X_stages::find('all');
+			}
+	return $this->render(array('json' => array("success"=>"Yes",'leads'=>$leads,'stages'=>$stages)));
 }
 
 public function registration(){
