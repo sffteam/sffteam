@@ -4244,8 +4244,9 @@ public function getleadinfo(){
 		$lead = X_leads::find('first',array(
 			'conditions'=>array('id'=>$lead_id)
 		));
+		$stages = X_stages::find('all');
 	}
-	return $this->render(array('json' => array("success"=>"Yes",'lead'=>$lead)));
+	return $this->render(array('json' => array("success"=>"Yes",'lead'=>$lead,'stages'=>$stages)));
 	
 }
 
