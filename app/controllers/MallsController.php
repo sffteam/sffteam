@@ -4215,7 +4215,8 @@ public function clients(){
 			$leads = X_leads::find('all',array(
 				'conditions'=>array(
 					'OR'=>array('id'=>array('=' => $lead_id),'phone'=>array('<>'=>'null')),
-					)
+					),
+					'order'=>array('id'=>'DESC')
 			));
 			$stages = X_stages::find('all');
 			}
