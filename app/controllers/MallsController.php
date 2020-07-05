@@ -4237,6 +4237,19 @@ public function registration(){
 	return $this->render(array('json' => array("success"=>"Yes",'data'=>$shortURLs)));
 }
 
+public function getleadinfo(){
+	
+	if($this->request->data){
+		$lead_id = $this->request->data['id'];
+		$lead = X_leads::find('first',array(
+			'conditions'=>array('id'=>$lead_id)
+		));
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'lead'=>$lead)));
+	
+}
+
+
 
 //end of class
 }
