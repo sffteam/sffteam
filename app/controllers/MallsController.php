@@ -4287,7 +4287,7 @@ public function deletepost(){
 		$finalFile = $targetPath . $imageFile;		
 		unlink($finalFile);
 		$conditions = array('File'=>$imageFile);
-		Posts::remove();
+		Posts::remove($conditions);
 		return $this->render(array('json' => array("success"=>"Yes",'file'=>$finalFile)));
 	}
 }
