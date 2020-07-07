@@ -4281,14 +4281,14 @@ public function saveleadinfo(){
 
 public function deletepost(){
 	if($this->request->data){
-		$targetFolder = '/app/webroot/img/posts/';
-		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+		$targetFolder = '/webroot/img/posts/';
+		$targetPath = LITHIUM_APP_PATH . $targetFolder;
 		$imageFile = $this->request->data['imageFile'];
 		$finalFile = $targetPath . $imageFile;		
 		unlink($finalFile);
-		$conditions = array('File'=>$imageFile);
+		$conditions = array('File'=>(string)$imageFile);
 		Posts::remove($conditions);
-		return $this->render(array('json' => array("success"=>"Yes",'file'=>$finalFile)));
+		return $this->render(array('json' => array("success"=>"Yes",'file'=>$finalFile,'image'=>$imageFile)));
 	}
 }
 
