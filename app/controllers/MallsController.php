@@ -4279,6 +4279,19 @@ public function saveleadinfo(){
 	return $this->render(array('json' => array("success"=>"Yes",'lead'=>$lead,'stages'=>$stages)));
 }
 
+public function deletepost(){
+	if($this->request->data){
+		$targetFolder = '/app/webroot/img/posts/';
+		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+		$imageFile = $this->request->data['imageFile'];
+		$finalFile = $targetPath . $imageFile;		
+		unlink($finalFile);
+		$conditions = array('File'=>$imageFile);
+		Posts::remove();
+		return $this->render(array('json' => array("success"=>"Yes",'file'=>$finalFile)));
+	}
+}
+
 
 //end of class
 }
