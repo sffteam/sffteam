@@ -4283,7 +4283,7 @@ public function deletepost(){
 	if($this->request->data){
 		$targetFolder = '/webroot/img/posts/';
 		$targetPath = LITHIUM_APP_PATH . $targetFolder;
-		$imageFile = $this->request->data['imageFile'];
+		$imageFile = str_replace("https://sff.team/img/posts/","",$this->request->data['imageFile']);
 		$finalFile = $targetPath . $imageFile;		
 		unlink($finalFile);
 		$conditions = array('File'=>(string)$imageFile);
