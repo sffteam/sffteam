@@ -1313,7 +1313,27 @@ set_time_limit(0);
 										$conditions = array('mcaNumber'=>(string)$data['Inner']['mcaNumber']);
 										Users::update($data,$conditions);
 									}
+									$name = $user['mcaName'];
 								}
+								
+								$data = array(
+									'mcaNumber' => (string)$data['Inner']['mcaNumber'],
+									'Mobile' => (string)(string)$data['Inner']['mobile'],
+									'mcaName' => $name
+								);
+								
+								$mobileUser = Mobiles::find('first',array(
+										'conditions'=>array('mcaNumber'=>(string)$data[3])
+								));
+								
+								if(count($mobileUser)==1){
+									$conditions = array('mcaNumber'=>(string)$data['Inner']['mcaNumber']);
+									Mobiles::update($data,$conditions);
+								}else{
+									Mobiles::create()->save($data);
+								}
+								
+								
 						}
 						fclose($handle);
 			}
