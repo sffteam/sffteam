@@ -823,6 +823,13 @@ public function searchdown(){
 					'Percent'=>$u[$pyyyymm]['Percent']?:0,
 					'ValidTitle'=>$u[$pyyyymm]['ValidTitle']?:"",
 					'InActive' => $u[$pyyyymm]['InActive']?:"",
+					'Gross' => $u[$pyyyymm]['Gross']?:0,					
+					'APB' => $u[$pyyyymm]['APB']?:0,					
+					'DB' => $u[$pyyyymm]['DB']?:0,					
+					'LPB' => $u[$pyyyymm]['LPB']?:0,					
+					'TF' => $u[$pyyyymm]['TF']?:0,					
+					'CF' => $u[$pyyyymm]['CF']?:0,					
+					'HF' => $u[$pyyyymm]['HF']?:0,					
 					),
 				'count'=>$count
 				));
