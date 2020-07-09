@@ -4161,8 +4161,8 @@ function createimageinstantly($img1="",$img2="",$name="", $designation="", $quot
 		$black = imagecolorallocate($outputImage, 0, 0, 0);
 		imagefill($outputImage, 0, 0, $white);
 
-		$first = imagecreatefromjpeg($img1);
-		$second = imagecreatefromjpeg($img2);
+		$first = imagecreatefrompng($img1);
+		$second = imagecreatefrompng($img2);
 
 		//imagecopyresized ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h )
 		imagecopyresized($outputImage,$first,0,0,0,0, $x, $y,$x,$y);
