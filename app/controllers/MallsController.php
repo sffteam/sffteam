@@ -1290,30 +1290,29 @@ set_time_limit(0);
 			$row = 1;
 
 			if (($handle = fopen($tmpName, "r")) !== FALSE) {
-						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-							$num = count($data);
+						while (($datax = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($datax);
 							$row++;
 								$data = array(
 									'Inner'=>array(
-									'email' => (string)$data[0],
-									'mobile'=>(string)$data[1],
-									'mcaBusinessName'=>(string)$data[2],
-									'mcaNumber'=>(string)$data[3],
-									'Enabled'=>(string)$data[4],
+									'email' => (string)$datax[0],
+									'mobile'=>(string)$datax[1],
+									'mcaBusinessName'=>(string)$datax[2],
+									'mcaNumber'=>(string)$datax[3],
+									'Enabled'=>(string)$datax[4],
 									'DateJoin'=> new \MongoDate
 									),
 								);
 								
-		
-								$user = Users::find("first",array(
-								"conditions"=>array('mcaNumber'=>(string)$data['Inner']['mcaNumber'])
+								
+								$user = Users::find('first',array(
+								'conditions'=>array('mcaNumber'=>(string)$datax[3])
 								));
 								
 								if(count($user)==1){
-									if($data['Inner']['mcaNumber']!=""){
+
 										$conditions = array('mcaNumber'=>(string)$data['Inner']['mcaNumber']);
 										Users::update($data,$conditions);
-									}
 									$name = $user['mcaName'];
 								}
 								
