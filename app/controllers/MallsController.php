@@ -4341,6 +4341,24 @@ public function saveUserImage(){
 	}
 		return $this->render(array('json' => array("success"=>"Yes",'image'=>$data)));
 }
+
+public function useUserImage(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+			$targetFolder = '/app/webroot/img/user/';
+			$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+			$files = scandir($targetPath);
+			$myfiles = array();
+					foreach($files as $f){
+					$filemcaNumber = substr($f,6,8);
+					if($filemcaNumber===$mcaNumber){
+							array_push($myfiles,array('file'=>$f));
+					}
+			}
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'image'=>$myfiles)));
+}
+
 //end of class
 }
 
