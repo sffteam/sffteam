@@ -4319,7 +4319,28 @@ public function deletepost(){
 	}
 }
 
-
+public function saveUserImage(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$base64 = $this->request->data['avatar'];
+		
+		$img = str_replace('data:image/png;base64,', '', $base64);
+		$img = str_replace(' ', '+', $img);
+		$fileData = base64_decode($img);
+		//saving
+		$imageFolder = '/app/webroot/img/user/';		
+		$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+		$fileName = $imagePath . 'photo-'.$mcaNumber.'-'.round(microtime(true)).'.png';
+		file_put_contents($fileName, $fileData);
+		
+		$data = array(
+			'mcaNumber'=>$mcaNumber,
+			'image'=>$fileName
+		);
+	
+	}
+		return $this->render(array('json' => array("success"=>"Yes",'image'=>$data)));
+}
 //end of class
 }
 
