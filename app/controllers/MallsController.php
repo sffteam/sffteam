@@ -4144,7 +4144,7 @@ public function myfiles($mcaNumber=null){
 function createimageinstantly($img1="",$img2="",$name="", $designation="", $quote="", $mcaNumber=""){
 		$x=$y=600;
 		header('Content-Type: image/png');
-		$imageFolder = '/app/webroot/img/post/';
+		$imageFolder = '/app/webroot/';
 		$targetFolder = '/app/webroot/img/posts/';
 		$fontFolder = '/';
 		$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
