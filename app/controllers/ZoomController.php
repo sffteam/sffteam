@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\Zooms;
 
 class ZoomController extends \lithium\action\Controller {
 
@@ -14,7 +15,14 @@ class ZoomController extends \lithium\action\Controller {
 
 	public function user() {
 		
-			return $this->render(array('json' => array("success"=>"Yes",'data'=>$this->request-data)));
+  $content = file_get_contents("php://input", false, stream_context_create($arrContextOptions));
+  $update = json_decode($content, true);
+  
+		
+		if (isset($update["applicationId"])) {
+			Zooms::create()->save($update);	
+		}
+			return $this->render(array('json' => array("success"=>"Yes")));
  }
 
 	
