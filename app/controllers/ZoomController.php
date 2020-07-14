@@ -18,9 +18,9 @@ class ZoomController extends \lithium\action\Controller {
   $content = file_get_contents("php://input", false, stream_context_create($arrContextOptions));
   $update = json_decode($content, true);
   
-		
+		Zooms::create()->save($update);	
 		if (isset($update["applicationId"])) {
-			Zooms::create()->save($update);	
+			
 		}
 			return $this->render(array('json' => array("success"=>"Yes")));
  }
