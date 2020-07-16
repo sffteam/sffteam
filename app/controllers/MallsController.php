@@ -4363,8 +4363,39 @@ public function useUserImage(){
 
 public function zoom(){
 	
+	date_default_timezone_set('Asia/Kolkata');
+	$zooms = Zooms::find('all',
+		array(
+		'order'=>array('_id'=>'DESC'),
+		'limit'=>200
+		)
+	);
 	
-	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$zooms)));
+	$data = array();
+	foreach($zooms as $z){
+		if($z['payload']['object']['participant']['join_time']!=null || $z['payload']['object']['participant']['leave_time']!=null ){
+			if($z['payload']['object']['participant']['join_time']==null){
+					$join_time = "";
+			}else{
+				$join_time = date('Y-M-d H:i',strtotime($z['payload']['object']['participant']['join_time']));
+				}
+			if($z['payload']['object']['participant']['leave_time']==null){
+					$leave_time = "";
+			}else{
+				$leave_time = date('Y-M-d H:i',strtotime($z['payload']['object']['participant']['leave_time']));
+				}
+						
+		array_push($data, array(
+			'JoinDateTime' => $join_time,
+			'LeaveDateTime' => $leave_time,
+			'UserName'=>$z['payload']['object']['participant']['user_name'],
+			'Event'=>$z['event']
+			
+		));
+		}
+	}
+	
+	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$data,'z'=>$zooms)));
 	
 }
 
