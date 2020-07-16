@@ -4421,22 +4421,22 @@ public function zoom(){
 					$newLeaveTime = $d['LeaveTime'];
 				}
 				
-				if($oldDate==$newDate){
-					if($oldName==$newName){
-						if($oldJoinTime==$newJoinTime){
+				 if($oldDate==$newDate){
+					// if($oldName==$newName){
+						// if($oldJoinTime==$newJoinTime){
 							array_push($allData,array(
 								'Date'=>$newDate,
 								'userName'=>$newName,
 //								'timeLeave'=>$newLeaveTime,
 								'timeJoin'=>$newJoinTime,
 							));
-						}
-					}
-				}
-				$oldDate = $newDate;
-				$oldName = $newName;
-				$oldJoinTime = $newJoinTime;
-				$oldLeaveTime = $newLeaveTime;
+						// }
+				// $oldJoinTime = $newJoinTime;
+				// $oldLeaveTime = $newLeaveTime;
+					// }
+				// $oldName = $newName;	
+				 }
+				 $oldDate = $newDate;
 		}
 		
 	}
