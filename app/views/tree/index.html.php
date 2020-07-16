@@ -40,7 +40,7 @@ foreach($allusers as $user) {
 									GPV: <?=$user['GPV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
-									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>">All</a>\
+									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a>\
 								<?php }else{?>\
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
@@ -50,7 +50,7 @@ foreach($allusers as $user) {
 									GPV: <?=$user['GPV']?><br>\
 									GBV: <?=$user['GBV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
-									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>">All</a><?php }?>\
+									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><?php }?>\
 									'}, '<?=$refer?>',''],
 <?php
 //}else{
