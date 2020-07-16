@@ -32,6 +32,7 @@ use app\models\Messages;
 use app\models\Points;
 use app\models\Urls;
 use app\models\Posts;
+use app\models\Zooms;
 
 use app\models\X_pages;
 use app\models\X_page_hits;
@@ -4358,6 +4359,15 @@ public function useUserImage(){
 	}
 	return $this->render(array('json' => array("success"=>"Yes",'image'=>$myfiles)));
 }
+
+
+public function zoom(){
+	
+	
+	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$zooms)));
+	
+}
+
 
 //end of class
 }
