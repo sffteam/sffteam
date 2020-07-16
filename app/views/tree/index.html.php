@@ -45,8 +45,10 @@ foreach($allusers as $user) {
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
 									PGPV: <?=$user['PGPV']?><br>\
+									RollUpPV: <?=$user['RollUpPV']?><br>\
 									PGBV: <?=$user['PGBV']?><br>\
 									GPV: <?=$user['GPV']?><br>\
+									GBV: <?=$user['GBV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/<?=$D?>">All</a><?php }?>\
 									'}, '<?=$refer?>',''],
