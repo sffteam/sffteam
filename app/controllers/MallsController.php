@@ -4365,9 +4365,11 @@ public function zoom(){
 	
 	date_default_timezone_set('Asia/Kolkata');
 	$zooms = Zooms::find('all',
+		
 		array(
+		'conditions'=>array('payload.object.participant.user_name'=>array('$ne'=>'Nilam Doctor')),
 		'order'=>array('_id'=>'DESC'),
-		'limit'=>200
+		'limit'=>1000
 		)
 	);
 	
@@ -4375,27 +4377,71 @@ public function zoom(){
 	foreach($zooms as $z){
 		if($z['payload']['object']['participant']['join_time']!=null || $z['payload']['object']['participant']['leave_time']!=null ){
 			if($z['payload']['object']['participant']['join_time']==null){
+					$join_date = "";
 					$join_time = "";
 			}else{
-				$join_time = date('Y-M-d H:i',strtotime($z['payload']['object']['participant']['join_time']));
+				$join_date = date('Y-M-d',strtotime($z['payload']['object']['participant']['join_time']));
+				$join_time = date('H:i',strtotime($z['payload']['object']['participant']['join_time']));
 				}
 			if($z['payload']['object']['participant']['leave_time']==null){
 					$leave_time = "";
+					$leave_date = "";
 			}else{
-				$leave_time = date('Y-M-d H:i',strtotime($z['payload']['object']['participant']['leave_time']));
+				$leave_date = date('Y-M-d',strtotime($z['payload']['object']['participant']['leave_time']));
+				$leave_time = date('H:i',strtotime($z['payload']['object']['participant']['leave_time']));
 				}
 						
 		array_push($data, array(
-			'JoinDateTime' => $join_time,
-			'LeaveDateTime' => $leave_time,
+			'JoinTime' => $join_time,
+			'LeaveTime' => $leave_time,
+			'JoinDate' => $join_date,
+			'LeaveDate' => $leave_date,
 			'UserName'=>$z['payload']['object']['participant']['user_name'],
 			'Event'=>$z['event']
-			
 		));
 		}
+		
+		$oldDate = "";
+		$oldName = "";
+		$oldLeaveTime = "";
+		$allData = array();
+		foreach($data as $d){
+				if($d['JoinDate']==""){
+					
+				}else{
+					$newDate = $d['JoinDate'];
+					$newName = $d['UserName'];
+					$newJoinTime = $d['JoinTime'];
+				}
+				if($d['LeaveDate']==""){
+					
+				}else{
+					$newDate = $d['LeaveDate'];
+					$newName = $d['UserName'];
+					$newLeaveTime = $d['LeaveTime'];
+				}
+				
+				if($oldDate==$newDate){
+					if($oldName==$newName){
+						if($oldJoinTime==$newJoinTime){
+							array_push($allData,array(
+								'Date'=>$newDate,
+								'userName'=>$newName,
+//								'timeLeave'=>$newLeaveTime,
+								'timeJoin'=>$newJoinTime,
+							));
+						}
+					}
+				}
+				$oldDate = $newDate;
+				$oldName = $newName;
+				$oldJoinTime = $newJoinTime;
+				$oldLeaveTime = $newLeaveTime;
+		}
+		
 	}
 	
-	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$data,'z'=>$zooms)));
+	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$allData)));
 	
 }
 
