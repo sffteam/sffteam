@@ -4367,7 +4367,10 @@ public function zoom(){
 	$zooms = Zooms::find('all',
 		
 		array(
-		'conditions'=>array('payload.object.participant.user_name'=>array('$ne'=>'Nilam Doctor')),
+		'conditions'=>array(
+			'payload.object.participant.user_name'=>array('$ne'=>'Nilam Doctor'),
+			'payload.object.participant.join_time'=>array('$ne'=>''),
+			),
 		'order'=>array('_id'=>'DESC'),
 		'limit'=>1000
 		)
