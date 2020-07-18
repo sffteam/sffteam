@@ -2341,6 +2341,7 @@ public function getkyc(){
 		
 		$left = $user['left'];
 		$right = $user['right'];
+		$yyyymm = date('Y-m');
 		
 		$kycUsers = array();
 		$ListUsers = Users::find('all',array(
@@ -2360,6 +2361,7 @@ public function getkyc(){
 						array_push($kycUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
+							'PV'=>$lu[$yyyymm]['PV'],
 							'DateJoin'=>$lu['DateJoin'],
 							'KYC'=>$lu['KYC']?:'',
 							'Mobile'=>$mobile['Mobile']?:""
