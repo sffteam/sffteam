@@ -2350,7 +2350,7 @@ public function getkyc(){
 						'Enable'=>'Yes',
 						'KYC'=>array('$ne'=>'Approved')
 					),
-					'order'=>array('mcaName'=>'ASC')
+					'order'=>array('KYC'=>'DESC','mcaName'=>'ASC',)
 				));
 		//		print_r(count($ListUsers));
 				foreach($ListUsers as $lu){
@@ -2360,6 +2360,7 @@ public function getkyc(){
 						array_push($kycUsers,array(
 							'mcaNumber'=>$lu['mcaNumber'],
 							'mcaName'=>$lu['mcaName'],
+							'DateJoin'=>$lu['DateJoin'],
 							'KYC'=>$lu['KYC']?:'',
 							'Mobile'=>$mobile['Mobile']?:""
 							));
