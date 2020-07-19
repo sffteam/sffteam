@@ -242,6 +242,7 @@ public function addmobile(){
 			'mcaNumber'=>$this->request->data['mcaNumber'],
 			'mcaName'=>$name['mcaName'],
 			'Mobile'=>$this->request->data['Mobile'],
+			'Email'=>$this->request->data['email'],
 		);
 		Mobiles::create()->save($data);
 		
