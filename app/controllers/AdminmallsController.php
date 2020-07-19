@@ -219,7 +219,7 @@ public function getmobiles(){
 	
 	$yyyymm = date('Y-m');
 	$yyyy = date('Y');
-	print_r($yyyy);
+	
 	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );	
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
