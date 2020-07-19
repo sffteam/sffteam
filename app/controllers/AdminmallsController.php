@@ -218,15 +218,15 @@ public function getmobiles(){
 	}
 	
 	$yyyymm = date('Y-m');
-	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );	
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
 			'mcaNumber'=>array('$nin'=>$next),
 			'Enable'=>'Yes'
 		 ),
-		 'fields'=>array('mcaNumber', 'mcaName'),
+		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV'),
 		//	'limit'=>100,
-			'order'=>array($yyyymm.'.PV'=>'DESC')
+			'order'=>array($p1yyyymm.'.PV'=>'DESC')
 	 ));
 	return $this->render(array('json' => array("success"=>"Yes",'mobiles'=>$mobile)));			
 }
