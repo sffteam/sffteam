@@ -224,7 +224,7 @@ public function getmobiles(){
 			'mcaNumber'=>array('$nin'=>$next),
 			'Enable'=>'Yes'
 		 ),
-		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV'),
+		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV', 'DateJoin'),
 		//	'limit'=>100,
 			'order'=>array($p1yyyymm.'.PV'=>'DESC')
 	 ));
