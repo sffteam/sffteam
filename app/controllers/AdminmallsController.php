@@ -234,6 +234,33 @@ public function getmobiles(){
 	return $this->render(array('json' => array("success"=>"Yes",'mobiles'=>$mobile)));			
 }
 
+public function getmobilesjoin(){
+	$numbers = Mobiles::find('all',array(
+		'fields'=>array('mcaNumber')
+	));
+	$next = array();
+	foreach($numbers as $n){
+		array_push($next,$n['mcaNumber']);
+	}
+	
+	$yyyymm = date('Y-m');
+	$yyyy = date('Y');
+	$yyyyMM = date('M Y');
+	
+	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );	
+	 $mobile = Users::find('all',array(
+		 'conditions'=>array(
+			'mcaNumber'=>array('$nin'=>$next),
+			'DateJoin'=>array('$regex'=>$yyyyMM,'$options'=>'i'),
+			'Enable'=>'Yes'
+		 ),
+		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV', 'DateJoin'),
+		//	'limit'=>100,
+			'order'=>array($p1yyyymm.'.PV'=>'DESC')
+	 ));
+	return $this->render(array('json' => array("success"=>"Yes",'mobiles'=>$mobile)));			
+}
+
 public function addmobile(){
 	if($this->request->data){
 		$name = Users::find('first',array(
