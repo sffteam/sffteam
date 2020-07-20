@@ -25,7 +25,11 @@ class ZoomController extends \lithium\action\Controller {
 			return $this->render(array('json' => array("success"=>"Yes")));
  }
 
-	
+public function oauth(){
+	 $content = file_get_contents("php://input", false, stream_context_create($arrContextOptions));
+		$update = json_decode($content, true);
+		return $this->render(array('json' => array("success"=>$update)));
+}	
 	
 //end of functions
 }
