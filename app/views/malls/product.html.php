@@ -34,13 +34,13 @@
 		<iframe id="StepVideo"  src="https://www.youtube.com/embed/<?=$product['Video']?>"></iframe> 
 	</div>
 	<div class="row">
-		<div class="col"><?=$product['Description'];?></div>
+		<div class="col"><?php echo $product['Description'];?></div>
 	</div>
 	<div class="row">
-		<div class="col"><?=$product['h_Description'];?></div>
+		<div class="col"><?php echo $product['h_Description'];?></div>
 	</div>
 	<div class="row">
-		<div class="col"><?=$product['g_Description'];?></div>
+		<div class="col"><?php echo $product['g_Description'];?></div>
 	</div>
 	<p>&nbsp;</p>	
 </div>
