@@ -4600,7 +4600,7 @@ public function zoom(){
 		
 		
 		$mcaNumber = $this->request->data['mcaNumber'];
-		print_r($dataCircle);
+		
 		$Circle = array('Circle'=>$dataCircle);
 		$conditions = array('mcaNumber'=>$this->request->data['mcaNumber']);
 		Users::update($Circle,$conditions);
