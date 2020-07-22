@@ -4608,9 +4608,22 @@ public function zoom(){
 	
 	$circles = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber),
+		'fields'=>array('Circle','mcaNumber','mcaName'),
 	));
 	
-		return $this->render(array('json' => array("success"=>"Yes",'users'=>$circles)));
+		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$circles['Circle'])));
+	}
+	
+	
+	public function previouscircle(){
+		if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber),
+			'fields'=>array('Circle','mcaNumber','mcaName'),
+		));
+		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$user['Circle'])));
+		}
 	}
 //end of class
 }
