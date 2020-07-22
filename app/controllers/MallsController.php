@@ -4558,7 +4558,7 @@ public function zoom(){
 				'Romance'=>$c['Romance']?:0,
 				'Recreation'=>$c['Recreation']?:0,
 				'Contribution'=>$c['Contribution']?:0,
-				'PersonalGrowth'=>$c['PersonalGrowth']?:0,
+				'PresonalGrowth'=>$c['PresonalGrowth']?:0,
 				'Spiritual'=>$c['Spiritual']?:0,
 				'CircleDate'=>$c['CircleDate']?:0,
 				);
@@ -4574,7 +4574,7 @@ public function zoom(){
 				'Romance'=>$this->request->data['Romance']?:0,
 				'Recreation'=>$this->request->data['Recreation']?:0,
 				'Contribution'=>$this->request->data['Contribution']?:0,
-				'PersonalGrowth'=>$this->request->data['PersonalGrowth']?:0,
+				'PresonalGrowth'=>$this->request->data['PresonalGrowth']?:0,
 				'Spiritual'=>$this->request->data['Spiritual']?:0,
 				'CircleDate'=>$this->request->data['CircleDate']?:0,
 			);
@@ -4590,7 +4590,7 @@ public function zoom(){
 				'Romance'=>$this->request->data['Romance']?:0,
 				'Recreation'=>$this->request->data['Recreation']?:0,
 				'Contribution'=>$this->request->data['Contribution']?:0,
-				'PersonalGrowth'=>$this->request->data['PersonalGrowth']?:0,
+				'PresonalGrowth'=>$this->request->data['PresonalGrowth']?:0,
 				'Spiritual'=>$this->request->data['Spiritual']?:0,
 				'CircleDate'=>$this->request->data['CircleDate']?:0,
 			);
