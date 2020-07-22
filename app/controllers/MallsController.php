@@ -1404,6 +1404,90 @@ set_time_limit(0);
 }
 
 
+public function checkTerminated(){
+set_time_limit(0);
+		if($this->request->data){
+			$file = $this->request->data['file'];	
+			
+			if($_FILES['file']['tmp_name'] == 0){	
+				$name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+			}
+			$row = 1;
+			$allmca = array();
+			if (($handle = fopen($tmpName, "r")) !== FALSE) {
+						while (($datax = fgetcsv($handle, 1000, ",")) !== FALSE) {
+							$num = count($datax);
+							$row++;
+								array_push($allmca,$datax[1]);
+						}
+			}
+			$terminated 	= Users::find('all',array(
+		'conditions'=>array(
+			'mcaNumber'=>array('$nin'=>$allmca),
+			'Enable'=>'Yes',
+		)
+	));
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($terminated),'data'=>$terminated)));			
+		}
+
+		return compact('data');
+}
+
+public function list100pv(){
+	$yyyymm = date('Y-m');
+	
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$user = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+		));
+			$left = $user['left'];
+			$right = $user['right'];
+			$conditions = array(
+			'left'=>array('$gt'=>$left),
+			'right'=>array('$lt'=>$right),
+			'Inner.Enabled'=>'Yes',
+		);
+	$users = Users::find('all',array(
+		'conditions'=>$conditions,
+	));
+	
+	$inner = array($this->request->data['mcaNumber']);
+	foreach($users as $u){
+		array_push($inner,$u['mcaNumber']);
+	}
+//	print_r($inner);
+	
+	$list 	= Users::find('all',array(
+		'conditions'=>array(
+			$yyyymm.'.PV'=>array('$gte'=>100),
+			'mcaNumber'=>array('$nin'=>$inner),
+			'Enable'=>'Yes',
+		),
+		'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV'),
+	));
+
+	$allusers = array();
+	foreach($list as $l){
+				$mobile = Mobiles::find('first',array(
+					'conditions'=>array('mcaNumber'=>$l['mcaNumber'])
+				));
+		array_push($allusers,array(
+			'mcaNumber'=>$l['mcaNumber'],
+			'mcaName'=>$l['mcaName'],
+			'DateJoin'=>$l['DateJoin'],
+			'PV'=>$l[$yyyymm]['PV'],
+			'mobile'=>$mobile['Mobile'],
+		));
+		
+	}
+
+	}
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),'data'=>$allusers)));			
+}
 
 
 public function uploadEnrolment(){
