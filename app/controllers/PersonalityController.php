@@ -13,6 +13,8 @@ use app\models\X_nptquestions;
 use app\models\X_nptpersons;
 use app\models\X_nptusers;
 
+use app\models\Users;
+
 class PersonalityController extends \lithium\action\Controller {
 
 	protected function _init(){
@@ -224,7 +226,16 @@ public function persons(){
 public function register(){
 	print_r($this->request->data);
 	if($this->request->data){
+		
 		$user = X_nptusers::create()->save($this->request->data);
+		if($this->request->data['mcaNumber']){
+			$conditions = array('mcaNumber'=>$this->request->data['mcaNumber']);
+			$data = array(
+				'Personality'=>$this->request->data
+			);
+			Users::update($data,$conditions);
+		}
+		
 		return $this->render(array('json' => array("success"=>"Yes")));
 	}
 	return $this->render(array('json' => array("success"=>"No")));
