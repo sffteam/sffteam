@@ -4092,7 +4092,7 @@ public function innermethod(){
 		$users = Users::find('all',array(
 		'conditions'=>$conditions,
 		'fields' =>$fields,
-		
+		'order'=>array('mcaName'=>'ASC')
 	));
 		
 		return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users),'users'=>$users)));	
