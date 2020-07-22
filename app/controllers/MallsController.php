@@ -4611,7 +4611,7 @@ public function zoom(){
 		'fields'=>array('Circle','mcaNumber','mcaName'),
 	));
 	
-		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$circles['Circle'])));
+		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$circles)));
 	}
 	
 	
@@ -4622,7 +4622,7 @@ public function zoom(){
 			'conditions'=>array('mcaNumber'=>$mcaNumber),
 			'fields'=>array('Circle','mcaNumber','mcaName'),
 		));
-		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$user['Circle'])));
+		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$user)));
 		}
 	}
 //end of class
