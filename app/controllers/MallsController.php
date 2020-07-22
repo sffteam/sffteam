@@ -4533,9 +4533,85 @@ public function zoom(){
 	
 	return $this->render(array('json' => array("success"=>"Yes",'zoom'=>$allData)));
 	
-}
+	}
 
-
+	public function circleoflife(){
+	if($this->request->data){
+		$mcaNumber = $this->request->data['mcaNumber'];
+		$circles = Users::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber),
+			'fields'=>array('Circle'),
+		));
+		$dataCircle = array();
+		$data = array();
+		if($circles['Circle']){
+			
+			foreach($circles['Circle'] as $c){
+				
+				$data = array(
+				'SelfImage'=>$c['SelfImage']?:0,
+				'Business'=>$c['Business']?:0,
+				'Finance'=>$c['Finance']?:0,
+				'Health'=>$c['Health']?:0,
+				'Social'=>$c['Social']?:0,
+				'Family'=>$c['Family']?:0,
+				'Romance'=>$c['Romance']?:0,
+				'Recreation'=>$c['Recreation']?:0,
+				'Contribution'=>$c['Contribution']?:0,
+				'PersonalGrowth'=>$c['PersonalGrowth']?:0,
+				'Spiritual'=>$c['Spiritual']?:0,
+				'CircleDate'=>$c['CircleDate']?:0,
+				);
+				array_push($dataCircle,$data);
+			}
+			$datanew = array(
+				'SelfImage'=>$this->request->data['SelfImage']?:0,
+				'Business'=>$this->request->data['Business']?:0,
+				'Finance'=>$this->request->data['Finance']?:0,
+				'Health'=>$this->request->data['Health']?:0,
+				'Social'=>$this->request->data['Social']?:0,
+				'Family'=>$this->request->data['Family']?:0,
+				'Romance'=>$this->request->data['Romance']?:0,
+				'Recreation'=>$this->request->data['Recreation']?:0,
+				'Contribution'=>$this->request->data['Contribution']?:0,
+				'PersonalGrowth'=>$this->request->data['PersonalGrowth']?:0,
+				'Spiritual'=>$this->request->data['Spiritual']?:0,
+				'CircleDate'=>$this->request->data['CircleDate']?:0,
+			);
+			array_push($dataCircle,$datanew);
+		}else{
+			$data = array(
+				'SelfImage'=>$this->request->data['SelfImage']?:0,
+				'Business'=>$this->request->data['Business']?:0,
+				'Finance'=>$this->request->data['Finance']?:0,
+				'Health'=>$this->request->data['Health']?:0,
+				'Social'=>$this->request->data['Social']?:0,
+				'Family'=>$this->request->data['Family']?:0,
+				'Romance'=>$this->request->data['Romance']?:0,
+				'Recreation'=>$this->request->data['Recreation']?:0,
+				'Contribution'=>$this->request->data['Contribution']?:0,
+				'PersonalGrowth'=>$this->request->data['PersonalGrowth']?:0,
+				'Spiritual'=>$this->request->data['Spiritual']?:0,
+				'CircleDate'=>$this->request->data['CircleDate']?:0,
+			);
+			array_push($dataCircle,$data);
+		}
+		
+		
+		
+		$mcaNumber = $this->request->data['mcaNumber'];
+		print_r($dataCircle);
+		$Circle = array('Circle'=>$dataCircle);
+		$conditions = array('mcaNumber'=>$this->request->data['mcaNumber']);
+		Users::update($Circle,$conditions);
+	}
+	
+	$circles = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber),
+	));
+	
+		return $this->render(array('json' => array("success"=>"Yes",'users'=>$circles)));
+	}
 //end of class
 }
 
