@@ -4084,8 +4084,8 @@ public function innermethod(){
 			$left = $user['left'];
 			$right = $user['right'];
 			$conditions = array(
-			'left'=>array('$gt'=>$left),
-			'right'=>array('$lt'=>$right),
+			'left'=>array('$gte'=>$left),
+			'right'=>array('$lte'=>$right),
 			'Inner.Enabled'=>'Yes',
 		);
 		$fields = array($method,'mcaName','mcaNumber','DateJoin','Inner.mobile');
