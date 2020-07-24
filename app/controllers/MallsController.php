@@ -12,6 +12,7 @@ use app\models\Contacts;
 use app\models\Distributors;
 use app\models\Tools;
 use app\models\Audios;
+use app\models\Baselines;
 use app\models\Swipers;
 use app\models\Rewards;
 use app\models\Templates;
@@ -4625,6 +4626,21 @@ public function zoom(){
 		return $this->render(array('json' => array("success"=>"Yes",'circles'=>$user)));
 		}
 	}
+
+	public function baselines(){
+			$baselines = Baselines::find('all',array(
+			
+			));
+		return $this->render(array('json' => array("success"=>"Yes",'baselines'=>$baselines)));
+	}
+
+
+
+
+
+
+
+
 //end of class
 }
 
