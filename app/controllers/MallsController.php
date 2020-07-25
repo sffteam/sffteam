@@ -4638,9 +4638,12 @@ public function zoom(){
 		if($this->request->data){
 			$mcaNumber = $this->request->data['mcaNumber'];
 			$baseline = $this->request->data['baselines'];
+			$DateTest = $this->request->data['DateTest'];
 			$explode = str_replace("<br>", ": ",explode(",",$baseline));
 			$data = array(
-				'Baseline'=>$explode
+				'Baseline'=>array(
+						'DateTest'=>$DateTest,
+						'Text' => $explode)
 			);
 			$conditions = array('mcaNumber'=>$mcaNumber);
 			Users::update($data,$conditions);
@@ -4648,7 +4651,16 @@ public function zoom(){
 		return $this->render(array('json' => array("success"=>"Yes",'data'=>$data)));
 	}
 
-
+public function getBaseLine(){
+		if($this->request->data){
+			$mcaNumber = $this->request->data['mcaNumber'];
+			$user = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>(string)$mcaNumber),
+				'fields'=>array('mcaNumber','mcaName','Baseline')
+			));
+		}
+		return $this->render(array('json' => array("success"=>"Yes",'data'=>$user)));
+}
 
 
 
