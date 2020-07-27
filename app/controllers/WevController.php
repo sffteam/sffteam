@@ -24,6 +24,9 @@ class WevController extends \lithium\action\Controller {
 		return $this->render(array('json' => array("success"=>"Yes",'data'=>$user)));
 	}
 
+	public function uploadvideo(
+	return $this->render(array('json' => array("success"=>"Yes",'data'=>$this->request->data)));
+	)
 
 
 
