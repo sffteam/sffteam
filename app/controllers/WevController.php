@@ -58,7 +58,7 @@ public function savevideo(){
 		$videoFolder = '/app/webroot/img/videos/';		
 		$videoPath = $_SERVER['DOCUMENT_ROOT'] . $videoFolder;
 		$videoTime = round(microtime(true));
-		$fileName = $videoPath . 'photo-'.$mcaNumber.'-'.$videoTime.'.mp4';
+		$fileName = $videoPath . $mcaNumber.'-'.$videoTime.'.mp4';
 		file_put_contents($fileName, $fileData);
 		
 		$data = array(
