@@ -64,7 +64,7 @@ public function savevideo(){
 		$data = array(
 			'mcaNumber'=>$mcaNumber,
 			'image'=> $fileName,
-			'DateTime' => new \MongoDate;
+			'DateTime' => new \MongoDate,
 			'VideoTime'=>$videoTime
 		);
 		Videos::create()->save($data);
