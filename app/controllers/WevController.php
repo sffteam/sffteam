@@ -47,6 +47,11 @@ class WevController extends \lithium\action\Controller {
 	}
 
 public function savevideo(){
+
+	ini_set('max_input_time', -1);
+	ini_set('max_execution_time', -1);
+	ini_set('memory_limit','-1');
+
 	if($this->request->data){
 		$mcaNumber = $this->request->data['VideomcaNumber'];
 		$base64 = $this->request->data['outputVideo'];
