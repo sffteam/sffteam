@@ -15,6 +15,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=5.5.0",
-        "unionofrad/lithium": "^1.1"
+        "unionofrad/lithium": "^1.1",
+								"twilio/sdk": "4.11.0",
+								"google/apiclient": "^2.7"
     }
 }
