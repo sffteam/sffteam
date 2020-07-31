@@ -4776,6 +4776,7 @@ public function zoom(){
 			$baseline = $this->request->data['baselines'];
 			$DateTest = $this->request->data['DateTest'];
 			$explode = str_replace("<br>", ": ",explode(",",$baseline));
+			$explode = str_replace(",", ": ",explode(",",$baseline));
 			$data = array(
 				'Baseline'=>array(
 						'DateTest'=>$DateTest,
