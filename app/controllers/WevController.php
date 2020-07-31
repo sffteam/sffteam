@@ -6,7 +6,7 @@ use \lithium\data\Model;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
-//use app\extensions\action\Google;
+use app\extensions\action\Google;
 use lithium\data\Connections;
 use \MongoRegex;
 use app\models\Videos;
