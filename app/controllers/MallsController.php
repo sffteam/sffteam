@@ -543,6 +543,9 @@ public function searchmca(){
 			}
 			
 			$team = $this->findTeam($this->request->data['mcaNumber']);
+			$pteam = $this->findPTeam($this->request->data['mcaNumber']);
+			$active = $this->findActive($this->request->data['mcaNumber']);
+			$pactive = $this->findPActive($this->request->data['mcaNumber']);
 			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
 			$lists = Lists::find('all',array(
@@ -558,7 +561,7 @@ public function searchmca(){
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
+			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'pteam'=>$pteam,'active'=>$active,'pactive'=>$pactive,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -578,6 +581,67 @@ public function findTeam($mcaNumber){
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 							$yyyymm=>array('$exists'=>true),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	return $team;
+}
+
+
+public function findActive($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$yyyymm = date('Y-m');
+			$left = $user['left'];
+			$right = $user['right'];
+			$active = Users::count('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$yyyymm.'.PV'=>array('$gt'=>0),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	
+	return $active;
+}
+
+public function findPActive($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
+			$left = $user['left'];
+			$right = $user['right'];
+			$active = Users::count('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$pyyyymm.'.PV'=>array('$gt'=>0),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	return $active;
+}
+
+
+public function findPTeam($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
+			$left = $user['left'];
+			$right = $user['right'];
+			$team = Users::count('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$pyyyymm=>array('$exists'=>true),
 						'Enable'=>'Yes'
 			)
 			)
@@ -758,6 +822,9 @@ public function searchdown(){
 				}
 				
 				$team = $this->findTeam($u['mcaNumber']);
+				$pteam = $this->findPTeam($u['mcaNumber']);
+				$active = $this->findActive($u['mcaNumber']);
+				$pactive = $this->findPActive($u['mcaNumber']);				
 				$findzero = $this->findZero($u['mcaNumber']);
 				
 			$lists = Lists::find('all',array(
@@ -789,6 +856,9 @@ public function searchdown(){
 				'City'=>$u['City'],
 				'lists'=>$dataLists,
 				'team'=>$team,
+				'pteam'=>$pteam,				
+				'active'=>$active,				
+				'pactive'=>$pactive,				
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'ExtraPV'=>$u[$yyyymm]['ExtraPV']?:0,
