@@ -545,6 +545,8 @@ public function searchmca(){
 			$team = $this->findTeam($this->request->data['mcaNumber']);
 			$pteam = $this->findPTeam($this->request->data['mcaNumber']);
 			$active = $this->findActive($this->request->data['mcaNumber']);
+			$activePV = $this->findActivePV($this->request->data['mcaNumber']);
+			$activePPV = $this->findActivePPV($this->request->data['mcaNumber']);
 			$pactive = $this->findPActive($this->request->data['mcaNumber']);
 			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
@@ -561,7 +563,7 @@ public function searchmca(){
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'pteam'=>$pteam,'active'=>$active,'pactive'=>$pactive,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
+			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'pteam'=>$pteam,'active'=>$active,'activePV'=>$activePV,'activePPV'=>$activePPV,'pactive'=>$pactive,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -588,7 +590,6 @@ public function findTeam($mcaNumber){
 	return $team;
 }
 
-
 public function findActive($mcaNumber){
 		$user = Users::find('first',array(
 		'conditions'=>array('mcaNumber'=>$mcaNumber)
@@ -607,6 +608,51 @@ public function findActive($mcaNumber){
 	);
 	
 	return $active;
+}
+
+public function findActivePV($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$yyyymm = date('Y-m');
+			$left = $user['left'];
+			$right = $user['right'];
+			$active = Users::all('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$yyyymm.'.PV'=>array('$gt'=>0),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	$activePV = 0;
+	foreach($active as $a){
+		$activePV = $activePV + $a[$yyyymm]['PV'];
+	}
+	return $activePV;
+}
+public function findActivePPV($mcaNumber){
+		$user = Users::find('first',array(
+		'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		$pyyyymm = date('Y-m', strtotime('first day of last month'));
+			$left = $user['left'];
+			$right = $user['right'];
+			$active = Users::all('all',array('conditions'=>
+			array(
+						'left'=>array('$gt'=>$left),
+						'right'=>array('$lt'=>$right),
+							$pyyyymm.'.PV'=>array('$gt'=>0),
+						'Enable'=>'Yes'
+			)
+			)
+	);
+	$activePV = 0;
+	foreach($active as $a){
+		$activePV = $activePV + $a[$pyyyymm]['PV'];
+	}
+	return $activePV;
 }
 
 public function findPActive($mcaNumber){
@@ -824,6 +870,8 @@ public function searchdown(){
 				$team = $this->findTeam($u['mcaNumber']);
 				$pteam = $this->findPTeam($u['mcaNumber']);
 				$active = $this->findActive($u['mcaNumber']);
+				$activePV = $this->findActivePV($u['mcaNumber']);
+				$activePPV = $this->findActivePPV($u['mcaNumber']);
 				$pactive = $this->findPActive($u['mcaNumber']);				
 				$findzero = $this->findZero($u['mcaNumber']);
 				
@@ -859,6 +907,9 @@ public function searchdown(){
 				'pteam'=>$pteam,				
 				'active'=>$active,				
 				'pactive'=>$pactive,				
+				'activepv'=>$activePV,				
+				'activeppv'=>$activePPV,				
+
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'ExtraPV'=>$u[$yyyymm]['ExtraPV']?:0,
