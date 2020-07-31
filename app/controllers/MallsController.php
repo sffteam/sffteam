@@ -545,8 +545,13 @@ public function searchmca(){
 			$team = $this->findTeam($this->request->data['mcaNumber']);
 			$pteam = $this->findPTeam($this->request->data['mcaNumber']);
 			$active = $this->findActive($this->request->data['mcaNumber']);
-			$activePV = $this->findActivePV($this->request->data['mcaNumber']);
-			$activePPV = $this->findActivePPV($this->request->data['mcaNumber']);
+			$activePVBV = $this->findActivePV($this->request->data['mcaNumber']);
+			$activePPVBV = $this->findActivePPV($this->request->data['mcaNumber']);
+			$activePV = $activePVBV['PV'];
+			$activeBV = $activePVBV['BV'];
+			$activePPV = $activePPVBV['PV'];
+			$activePBV = $activePPVBV['BV'];
+
 			$pactive = $this->findPActive($this->request->data['mcaNumber']);
 			$findzero = $this->findZero($this->request->data['mcaNumber']);
 			
@@ -563,7 +568,7 @@ public function searchmca(){
 			
 			
 		if(count($user)==1){
-			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'pteam'=>$pteam,'active'=>$active,'activePV'=>$activePV,'activePPV'=>$activePPV,'pactive'=>$pactive,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
+			return $this->render(array('json' => array("success"=>"Yes",'team'=>$team,'pteam'=>$pteam,'active'=>$active,'activePV'=>$activePV,'activePPV'=>$activePPV,'activeBV'=>$activeBV,'activePBV'=>$activePBV,'pactive'=>$pactive,'lists'=>$dataLists,"tree"=>$tree,"user"=>$user,"mobile"=>$mobile,'joinee'=>count($joinee),'findzero'=>$findzero,'joineePV'=>$joineePV)));				
 		}else{
 			return $this->render(array('json' => array("success"=>"No")));				
 		}
@@ -627,10 +632,12 @@ public function findActivePV($mcaNumber){
 			)
 	);
 	$activePV = 0;
+	$activeBV = 0;
 	foreach($active as $a){
 		$activePV = $activePV + $a[$yyyymm]['PV'];
+		$activeBV = $activeBV + $a[$yyyymm]['BV'];
 	}
-	return $activePV;
+	return array('PV'=>$activePV,'BV'=>$activeBV);
 }
 public function findActivePPV($mcaNumber){
 		$user = Users::find('first',array(
@@ -649,10 +656,12 @@ public function findActivePPV($mcaNumber){
 			)
 	);
 	$activePV = 0;
+	$activeBV = 0;
 	foreach($active as $a){
 		$activePV = $activePV + $a[$pyyyymm]['PV'];
+		$activeBV = $activeBV + $a[$pyyyymm]['BV'];
 	}
-	return $activePV;
+	return array('PV'=>$activePV,'BV'=>$activeBV);
 }
 
 public function findPActive($mcaNumber){
@@ -870,8 +879,13 @@ public function searchdown(){
 				$team = $this->findTeam($u['mcaNumber']);
 				$pteam = $this->findPTeam($u['mcaNumber']);
 				$active = $this->findActive($u['mcaNumber']);
-				$activePV = $this->findActivePV($u['mcaNumber']);
-				$activePPV = $this->findActivePPV($u['mcaNumber']);
+				$activePVBV = $this->findActivePV($u['mcaNumber']);
+				$activePPVBV = $this->findActivePPV($u['mcaNumber']);
+				$activePV = $activePVBV['PV'];
+				$activeBV = $activePVBV['BV'];
+				$activePPV = $activePPVBV['PV'];
+				$activePBV = $activePPVBV['BV'];
+				
 				$pactive = $this->findPActive($u['mcaNumber']);				
 				$findzero = $this->findZero($u['mcaNumber']);
 				
@@ -909,7 +923,8 @@ public function searchdown(){
 				'pactive'=>$pactive,				
 				'activepv'=>$activePV,				
 				'activeppv'=>$activePPV,				
-
+				'activebv'=>$activeBV,
+				'activepbv'=>$activePBV,								
 					$yyyymm=>array(
 					'PV'=>$u[$yyyymm]['PV']?:0,
 					'ExtraPV'=>$u[$yyyymm]['ExtraPV']?:0,
