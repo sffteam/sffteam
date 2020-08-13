@@ -32,10 +32,15 @@ class WevController extends \lithium\action\Controller {
 		return $this->render(array('json' => array("success"=>"No")));
 	}
 	public function getvideos(){
+		if($this->request->data){
 			$videos = Videos::find('all',array(
-				'limit'=>3
+				'limit'=>5,
+				'offset'=>$this->request->data['skip'],
+				'order'=>array('_id'=>'ASC'),
 			));
 			return $this->render(array('json' => array("success"=>"Yes",'videos'=>$videos)));
+		}
+		return $this->render(array('json' => array("success"=>"No")));
 	}
 
 
