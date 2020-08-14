@@ -1950,7 +1950,7 @@ Users::update(
 					'Enable'=>$data['Enable'],
 
 			);
-print_r($data['mcaName'].": ".$data[$yyyymm]['PV']."<br>\n");
+print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
 			Users::create()->save($data);
 			
 		}
