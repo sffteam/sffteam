@@ -34,6 +34,7 @@ class WevController extends \lithium\action\Controller {
 	public function getvideos(){
 		if($this->request->data){
 			$videos = Videos::find('all',array(
+				'conditions'=>array('approved'=>'Yes'),
 //				'limit'=>5,
 				'offset'=>$this->request->data['skip'],
 				'order'=>array('_id'=>'ASC'),
