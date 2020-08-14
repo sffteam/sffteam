@@ -1812,7 +1812,7 @@ Users::update(
 						'Date'=> new \MongoDate()
 					);
 					print_r($data['mcaName'].': PV');
-					print_r($today['PV'])."<br>";
+					print_r($today['PV'])."<br>\n";
 				}else{
 					$today = array(
 						'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
@@ -1950,7 +1950,7 @@ Users::update(
 					'Enable'=>$data['Enable'],
 
 			);
-//print_r($data);
+print_r($data['mcaName'].": ".$data[$yyyymm]['PV']."<br>\n");
 			Users::create()->save($data);
 			
 		}
