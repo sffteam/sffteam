@@ -945,7 +945,7 @@ public function searchdown(){
 					'Joinee'=>count($joinee),
 					'joineePV'=>$joineePV,
 					'FindZero'=>$findzero,
-					'InActive' => $u[$yyyymm]['InActive']?:"",
+					'InActive' => (integer)$u[$yyyymm]['InActive']?:"",
 				),
 				$pyyyymm => array(
 					'PV'=>$u[$pyyyymm]['PV']?:0,
@@ -962,7 +962,7 @@ public function searchdown(){
 					'QDLegs'=>$u[$pyyyymm]['QDLegs']?:0,
 					'Percent'=>$u[$pyyyymm]['Percent']?:0,
 					'ValidTitle'=>$u[$pyyyymm]['ValidTitle']?:"",
-					'InActive' => $u[$pyyyymm]['InActive']?:"",
+					'InActive' => (integer)$u[$pyyyymm]['InActive']?:0,
 					'Gross' => $u[$pyyyymm]['Gross']?:0,					
 					'APB' => $u[$pyyyymm]['APB']?:0,					
 					'DB' => $u[$pyyyymm]['DB']?:0,					
@@ -2773,7 +2773,7 @@ function getnotactive(){
 		$conditions = array(
 			'left'=>array('$gt'=>$left),
 			'right'=>array('$lt'=>$right),
-			$pyyyymm.'.InActive'=>array('$gt'=>0),
+			$pyyyymm.'.InActive'=>null,
 			'Enable'=>'Yes'
 		);	
 
