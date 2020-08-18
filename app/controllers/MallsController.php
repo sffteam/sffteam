@@ -509,7 +509,7 @@ public function searchmca(){
 			$mobile = array('Mobile'=>$findmobile['Mobile']);
 		}
 	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
-
+	$p0yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 		$tree=array();
 		foreach($user['ancestors'] as $key=>$val){
 				$upline = Users::find('first',array(
@@ -530,6 +530,8 @@ public function searchmca(){
 						'Percent'=>$upline[$p1yyyymm]['Percent'],
 						'ValidTitle'=>$upline[$p1yyyymm]['ValidTitle'],
 						'PaidTitle'=>$upline[$p1yyyymm]['PaidTitle'],
+						'PPV'=>$upline[$p1yyyymm]['PV'],
+						'PV'=>$upline[$p0yyyymm]['PV'],
 						'Mobile'=>$UserMobile,
 					));
 				}
