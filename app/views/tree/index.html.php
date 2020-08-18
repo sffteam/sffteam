@@ -41,6 +41,8 @@ foreach($allusers as $user) {
 									CGPV: <?=$user['GrossPV']?><br>\
 									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a>\
+									<?=$user['DateJoin']?><br>\
+									Days: <?=$user['Days']?><br>\
 								<?php }else{?>\
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
@@ -50,7 +52,7 @@ foreach($allusers as $user) {
 									GPV: <?=$user['GPV']?><br>\
 									GBV: <?=$user['GBV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
-									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><?php }?>\
+									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br><?=$user['DateJoin']?><br>Days: <?=$user['Days']?><?php }?>\
 									'}, '<?=$refer?>',''],
 <?php
 //}else{

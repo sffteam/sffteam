@@ -37,7 +37,9 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'GBV'=>$user[$yyyymm]['GBV'],
 					'RollUpPV'=>$user[$yyyymm]['RollUpPV'],					
 					'InActive'=>$user[$yyyymm]['InActive'],
-					'PaidTitle'=>$user[$yyyymm]['PaidTitle']
+					'PaidTitle'=>$user[$yyyymm]['PaidTitle'],
+					'DateJoin'=>$user['DateJoin'],
+					'Days'=>(string)round((time()-strtotime($user['DateJoin']))/60/60/24,0)
 				));				
 			if($D==null){
 				$users = Users::find('all',array(
@@ -79,7 +81,9 @@ $this->_render['layout'] = 'noHeaderFooter';
      'GPV'=>$u[$yyyymm]['GPV'],
 					'GBV'=>$u[$yyyymm]['GBV'],
 					'InActive'=>$u[$yyyymm]['InActive'],
-					'PaidTitle'=>$u[$yyyymm]['PaidTitle']
+					'PaidTitle'=>$u[$yyyymm]['PaidTitle'],
+					'DateJoin'=>$u['DateJoin'],
+					'Days'=>(string)round((time()-strtotime($u['DateJoin']))/60/60/24,0)
     ));				
 			}
 			$self = Users::find('first', array(
