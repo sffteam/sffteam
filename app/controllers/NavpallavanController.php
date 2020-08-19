@@ -1343,7 +1343,20 @@ public function savecustomersales(){
 	return $this->render(array('json' => array("success"=>"Yes")));		
 }
 
-
+public function m_getproducts(){
+	
+	if($this->request->data){
+	$products = N_products::find('all',array(
+		'conditions'=>array(
+			'MarwarCategory'=>$this->request->data['category'],
+			'user_id'=>(string)$this->request->data['user_id']
+			)
+	));
+	
+	return $this->render(array('json' => array("success"=>"Yes","count"=>count($products),"products"=>$products)));		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 
 
 }
