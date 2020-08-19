@@ -1365,6 +1365,7 @@ public function m_getprice(){
   $totalvalue = 0;
 		$totalquantity = 0;
   foreach ($cart as $code => $quantity){
+			
    $product = N_products::find('first',array(
     'conditions'=>array('GTIN'=>(string)$code)
    ));
@@ -1380,6 +1381,37 @@ public function m_getprice(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
+
+public function m_cartproducts(){
+	 $cart = $this->request->data;
+  $CartProducts = array();
+		foreach ($cart as $code => $quantity){
+			if($code!="X"){
+				$product = N_products::find('first',array(
+					'conditions'=>array('GTIN'=>(string)$code)
+				));
+			}
+			if(count($product)>0){
+				array_push($CartProducts,array(
+				'Product Description' => $product['Product Description'],
+				'GTIN' => $product['GTIN'],
+				'FSSAI' => $product['Regulatory Data Fssai Lic No'],
+				'HS Code' => $product['HS Code'],
+				'MRP:Pan India' => $product['MRP:Pan India'],
+				'Quantity'=> (integer)$quantity,
+				'Value'=>$quantity*$product['MRP:Pan India'],
+				));
+			}
+				$totalquantity = $totalquantity + $quantity;
+    $totalvalue = floatval($product['MRP:Pan India']*$quantity); 
+				$value = $value + $totalvalue;
+
+		}
+	 return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"quantity"=>$totalquantity,"CartProducts"=>$CartProducts)));
+ 
+}
+
+
 
 }
 ?>
