@@ -1358,6 +1358,28 @@ public function m_getproducts(){
 	return $this->render(array('json' => array("success"=>"No")));		
 }
 
+public function m_getprice(){
+	if($this->request->data){
+		$cart = $this->request->data;
+  $value = 0;
+  $totalvalue = 0;
+		$totalquantity = 0;
+  foreach ($cart as $code => $quantity){
+   $product = N_products::find('first',array(
+    'conditions'=>array('GTIN'=>(string)$code)
+   ));
+				$totalquantity = $totalquantity + $quantity;
+    $totalvalue = floatval($product['MRP:Pan India']*$quantity); 
+				$value = $value + $totalvalue;
+			}
+   
+  
+   
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"quantity"=>$totalquantity)));		
+		
+	}
+	return $this->render(array('json' => array("success"=>"No")));		
+}
 
 }
 ?>
