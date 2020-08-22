@@ -111,5 +111,10 @@ class ProductsController extends \lithium\action\Controller {
   return compact('allcategories','product');
   
  }
+	
+	public function change(){
+		  $this->_render['layout'] = '';
+		
+	}
 }
 ?>
