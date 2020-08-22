@@ -112,7 +112,7 @@ class ProductsController extends \lithium\action\Controller {
   
  }
 	
-	public function change(){
+	public function testimonials(){
 		  $this->_render['layout'] = '';
 		
 	}
