@@ -4087,7 +4087,8 @@ public function findJoineeInner($mcaNumber){
 						'left'=>array('$gt'=>$left),
 						'right'=>array('$lt'=>$right),
 						'Enable'=>'Yes',
-						$yyyymm.'.PV'=>array('$gte'=>90)
+						'Inner.Enabled'=>'Yes',
+						$yyyymm.'.PV'=>array('$gte'=>80)
 						
 			),
 			'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV'),
