@@ -10,7 +10,7 @@ use app\models\Distributors;
 
  class TelegramController extends \lithium\action\Controller {
  public function run($botURL){
-		
+		return 1;
 if($botURL != TELEGRAM){return "False";}
 define('API_URL', 'https://api.telegram.org/bot'.TELEGRAM.'/');
 define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(LITHIUM_APP_PATH))) . '/app/webroot');
@@ -23,7 +23,7 @@ define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(
   $content = file_get_contents("php://input", false, stream_context_create($arrContextOptions));
   $update = json_decode($content, true);
   $parse_mode="HTML";
-
+		
 if (isset($update["message"])) {
 	
   $this->processMessage($update["message"]);
