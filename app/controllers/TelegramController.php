@@ -24,7 +24,6 @@ define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(
   $update = json_decode($content, true);
   $parse_mode="HTML";
 
-	print_r($content);	
 if (isset($update["message"])) {
 	
   $this->processMessage($update["message"]);
@@ -286,6 +285,7 @@ Select one from DP, Events, MCA, Name
 ";
 $parse_mode="HTML";
 //$userName = $inlineQuery["from"]["first_name"]. " " . $inlineQuery["from"]["last_name"]. " (".$inlineQuery["from"]["username"].")";
+		$this->apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "Done", "parse_mode"=>$parse_mode));
     if (strpos(strtolower($text), "mca") === 0){
       $commands = split(" ", $text);
       $ReplyText = $this->getMCA($commands[1],$userName);
