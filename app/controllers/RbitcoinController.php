@@ -95,6 +95,7 @@ class RbitcoinController extends \lithium\action\Controller {
 		}
 		return $this->render(array('json' => array("success"=>"No")));		
 	}
+		return $this->render(array('json' => array("success"=>"No")));		
 }
 
 public function getinfo(){
