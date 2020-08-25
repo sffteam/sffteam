@@ -1814,7 +1814,8 @@ Users::update(
 						'Date'=> new \MongoDate()
 					);
 					print_r($data['mcaName'].': PV');
-					print_r($today['PV'])."<br>\n";
+					print_r($today['PV']);
+					print_r("\n";
 				}else{
 					$today = array(
 						'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
