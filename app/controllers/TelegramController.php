@@ -2,7 +2,8 @@
 namespace app\controllers; 
 use app\models\Telegrams; 
 use app\models\Users; 
-use app\models\Products;
+use app\models\Malls;
+use app\models\Mobiles;
 use app\models\Distributors;
 
 // API TOKEN 
@@ -642,8 +643,16 @@ $name = $name . " ".$commands[$i];
 			'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
 		));
 		$count = $this->countChilds($mcaNumber);
+		if(count($user)==1){
+		$mobile = Mobiles::find('first',array(
+			'conditions'=>array('mcaNumber'=>$mcaNumber)
+		));
+		}else{
+			$mobile="";
+			
+		}
 		$thismonth = date('Y-m',time());
-	$text = "Hi ".$userName.",
+		$text = "Hi ".$userName.",
 MCA Number Search: <b>".$mcaNumber."</b>
 ";
 
@@ -654,9 +663,9 @@ MCA Number Search: <b>".$mcaNumber."</b>
 ";
 			$text = $text . "Joining Date: ".$user['DateJoin']. "
 ";
-//			$text = $text . "Downline: ".$count. "
-//";
-			$text = $text . "Mobile: +91".$user['Mobile']. "
+			$text = $text . "Downline: ".$count. "
+";
+			$text = $text . "Mobile: +91".$mobile. "
 ";
 			// $text = $text . "Valid Title: ".$user[$thismonth]['ValidTitle']. "
 // ";
