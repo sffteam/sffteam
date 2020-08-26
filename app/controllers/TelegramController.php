@@ -11,7 +11,7 @@ use app\models\Distributors;
 
  class TelegramController extends \lithium\action\Controller {
  public function run($botURL){
-//		return 1;
+		return true;
 	
 	if($botURL != TELEGRAM){return "False";}
 define('API_URL', 'https://api.telegram.org/bot'.TELEGRAM.'/');
