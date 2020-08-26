@@ -665,7 +665,7 @@ MCA Number Search: <b>".$mcaNumber."</b>
 ";
 			$text = $text . "Downline: ".$count. "
 ";
-			$text = $text . "Mobile: +91".$mobile. "
+			$text = $text . "Mobile: +91".$mobile['Mobile']. "
 ";
 			// $text = $text . "Valid Title: ".$user[$thismonth]['ValidTitle']. "
 // ";
