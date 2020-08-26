@@ -11,7 +11,7 @@ use app\models\Distributors;
 
  class TelegramController extends \lithium\action\Controller {
  public function run($botURL){
-		
+			return true;
 if($botURL != TELEGRAM){return "False";}
 define('API_URL', 'https://api.telegram.org/bot'.TELEGRAM.'/');
 define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(LITHIUM_APP_PATH))) . '/app/webroot');
@@ -701,7 +701,9 @@ MCA Number Search: <b>".$mcaNumber."</b>
 public function getName($mcaName){
 		setlocale(LC_MONETARY, 'en_IN');
 		$users = Users::find('all',array(
-					'conditions'=>array('mcaName'=>array('$regex'=>trim($mcaName),'$options'=>'i')),
+					'conditions'=>array(
+						'mcaName'=>array('$regex'=>trim($mcaName),'$options'=>'i'),
+						'Enabled'='Yes'),
      'order'=>array('mcaName'=>'ASC')
 			));
 		
