@@ -10,7 +10,7 @@ use app\models\Distributors;
 
  class TelegramController extends \lithium\action\Controller {
  public function run($botURL){
-		
+		return true;
 if($botURL != TELEGRAM){return "False";}
 define('API_URL', 'https://api.telegram.org/bot'.TELEGRAM.'/');
 define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(LITHIUM_APP_PATH))) . '/app/webroot');
@@ -23,7 +23,7 @@ define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(
   $content = file_get_contents("php://input", false, stream_context_create($arrContextOptions));
   $update = json_decode($content, true);
   $parse_mode="HTML";
-
+		
 if (isset($update["message"])) {
 	
   $this->processMessage($update["message"]);
@@ -285,7 +285,7 @@ Select one from DP, Events, MCA, Name
 ";
 $parse_mode="HTML";
 //$userName = $inlineQuery["from"]["first_name"]. " " . $inlineQuery["from"]["last_name"]. " (".$inlineQuery["from"]["username"].")";
-		$this->apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "Done", "parse_mode"=>$parse_mode));
+		$this->apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => $message, "parse_mode"=>$parse_mode));
     if (strpos(strtolower($text), "mca") === 0){
       $commands = split(" ", $text);
       $ReplyText = $this->getMCA($commands[1],$userName);
