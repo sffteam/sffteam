@@ -673,22 +673,22 @@ MCA Number Search: <b>".$mcaNumber."</b>
 // ";
 			// $text = $text . "Percent: ".$user[$thismonth]['Percent']. "%
 // ";
-			// $text = $text . "PBV: ".$this->moneyFormatIndia($user[$thismonth]['BV']). "
-// ";
-			// $text = $text . "GBV: ".$this->moneyFormatIndia($user[$thismonth]['GBV']). "
-// ";
-			// $text = $text . "TGBV: ".$this->moneyFormatIndia($user[$thismonth]['TGBV']). "
-// ";
-			// $text = $text . "TCGBV: ".$this->moneyFormatIndia($user[$thismonth]['TCGBV']). "
-// ";
-			// $text = $text . "PGBV: ".$this->moneyFormatIndia($user[$thismonth]['PGBV']). "
-// ";
-			// $text = $text . "Roll Up: ".$this->moneyFormatIndia($user[$thismonth]['Rollup']). "
-// ";
-			// $text = $text . "Legs: ".$user[$thismonth]['Legs']. "
-// ";
-			// $text = $text . "Qualified Director Legs: ".$user[$thismonth]['QDLegs']. "
-// ";
+			 $text = $text . "PBV: ".$this->moneyFormatIndia($user[$thismonth]['BV']). "
+";
+			$text = $text . "GBV: ".$this->moneyFormatIndia($user[$thismonth]['GBV']). "
+";
+			$text = $text . "TGBV: ".$this->moneyFormatIndia($user[$thismonth]['TGBV']). "
+";
+			$text = $text . "TCGBV: ".$this->moneyFormatIndia($user[$thismonth]['TCGBV']). "
+";
+			$text = $text . "PGBV: ".$this->moneyFormatIndia($user[$thismonth]['PGBV']). "
+";
+			$text = $text . "Roll Up: ".$this->moneyFormatIndia($user[$thismonth]['Rollup']). "
+";
+			$text = $text . "Legs: ".$user[$thismonth]['Legs']. "
+";
+			$text = $text . "Qualified Director Legs: ".$user[$thismonth]['QDLegs']. "
+";
 			// $text = $text . "NEFT: ".$user[$thismonth]['NEFT']. "
 // ";
 			// $text = $text . "Aadhar: ".$user[$thismonth]['Aadhar']. "
