@@ -10,7 +10,7 @@ use app\models\Distributors;
 
  class TelegramController extends \lithium\action\Controller {
  public function run($botURL){
-		return 1;
+		return true;
 if($botURL != TELEGRAM){return "False";}
 define('API_URL', 'https://api.telegram.org/bot'.TELEGRAM.'/');
 define('LITHIUM_WEBROOT_PATH', str_replace("\\","/",str_replace("F:","",dirname(LITHIUM_APP_PATH))) . '/app/webroot');
@@ -285,7 +285,7 @@ Select one from DP, Events, MCA, Name
 ";
 $parse_mode="HTML";
 //$userName = $inlineQuery["from"]["first_name"]. " " . $inlineQuery["from"]["last_name"]. " (".$inlineQuery["from"]["username"].")";
-		$this->apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "Done", "parse_mode"=>$parse_mode));
+		$this->apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => $message, "parse_mode"=>$parse_mode));
     if (strpos(strtolower($text), "mca") === 0){
       $commands = split(" ", $text);
       $ReplyText = $this->getMCA($commands[1],$userName);
