@@ -1324,7 +1324,7 @@ public function savemessage(){
 
 public function savefranchisesales(){
 	
-	$timestamp = strtotime($this->request->data['saleDateCustomer']);
+	$timestamp = strtotime($this->request->data['saleDateFranchaise']);
 	
 	if($this->request->data){
 			$franchise_id = $this->request->data['franchise_id'];
