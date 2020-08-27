@@ -525,6 +525,18 @@ public function skulist(){
 	return $this->render(array('json' => array("success"=>"Yes",'products'=>$skus)));		
 }
 
+public function franchises(){
+	if($this->request->data){
+			$user = N_users::find('first',array(
+				'conditions'=>array('_id'=>(string)$this->request->data['user_id'])
+			));
+		$franchises = N_users::find('all',array(
+		'conditions'=>array('refer'=>$user['mobile'])
+	));
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'franchises'=>$franchises)));		
+}
+
 
 public function getproduct(){
 	if($this->request->data){
