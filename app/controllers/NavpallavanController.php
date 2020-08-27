@@ -1327,7 +1327,7 @@ public function savefranchisesales(){
 	$timestamp = strtotime($this->request->data['saleDateCustomer']);
 	
 	if($this->request->data){
-			$franchise_id = $this->request->data['customer_id'];
+			$franchise_id = $this->request->data['franchise_id'];
 			$franchise = N_users::find('first',array(
 				'conditions'=>array('_id'=>(string)$franchise_id_id)
 			));
