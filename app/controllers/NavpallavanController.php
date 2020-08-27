@@ -537,6 +537,14 @@ public function franchises(){
 	return $this->render(array('json' => array("success"=>"Yes",'franchises'=>$franchises)));		
 }
 
+public function getfranchise(){
+	if($this->request->data){
+			$user = N_users::find('first',array(
+				'conditions'=>array('_id'=>(string)$this->request->data['franchise_id'])
+			));
+	}
+	return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));		
+}
 
 public function getproduct(){
 	if($this->request->data){
