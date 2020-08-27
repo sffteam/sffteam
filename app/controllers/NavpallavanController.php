@@ -1352,7 +1352,7 @@ public function savefranchisesales(){
 							'saleDate'=>date("Y-m-d", $timestamp),
 							'DateTime'=>new MongoDate($timestamp),
 							'product_quantity'=>$v,
-							'product_value'=> ($v*$product['MRP:Pan India']),
+							'product_value'=> ($v*$product['FranchiseMRP']),
 							'product_fran_value'=>0,
 						);		
 						
