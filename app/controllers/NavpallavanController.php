@@ -1313,6 +1313,48 @@ public function savemessage(){
 	
 }
 
+
+public function savefranchisesales(){
+	
+	$timestamp = strtotime($this->request->data['saleDateCustomer']);
+	
+	if($this->request->data){
+			$franchise_id = $this->request->data['customer_id'];
+			$franchise = N_users::find('first',array(
+				'conditions'=>array('_id'=>(string)$franchise_id_id)
+			));
+		foreach($this->request->data as $k=>$v){
+				if(substr($k,0,1)=="x"){
+					if($v==""){}else{
+					$productcode = substr($k,1);
+					
+						$product = N_products::find('first',array(
+							'conditions'=>array('_id'=>(string)$productcode)
+						));
+							$data = array(
+							'user_id'=>$this->request->data['user_id'],
+							'product_id'=>$product['_id'],
+							'product_name'=>$product['Product Name'],
+							'product_description'=>$product['Product Description'],
+							'product_netweight'=>$product['Net Weight'],
+							'product_unit'=>$product['Measurement Unit of Dimension'],
+							'product_mrp'=>$product['MRP:Pan India'],
+							'product_fran_mrp'=>$product['FranchiseMRP'],
+							'franchise_id'=>$franchise_id,
+							'saleDate'=>date("Y-m-d", $timestamp),
+							'DateTime'=>new MongoDate($timestamp),
+							'product_quantity'=>$v,
+							'product_value'=> ($v*$product['MRP:Pan India']),
+							'product_fran_value'=>0,
+						);		
+						
+						N_sales::create()->save($data);			
+					}
+				}
+		}
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
 public function savecustomersales(){
 	
 	$timestamp = strtotime($this->request->data['saleDateCustomer']);
