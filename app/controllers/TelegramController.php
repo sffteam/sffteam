@@ -704,7 +704,7 @@ public function getName($mcaName){
 		$users = Users::find('all',array(
 					'conditions'=>array(
 						'mcaName'=>array('$regex'=>trim($mcaName),'$options'=>'i'),
-						'Enabled'='Yes'),
+						'Enabled'=>'Yes'),
      'order'=>array('mcaName'=>'ASC')
 			));
 		
