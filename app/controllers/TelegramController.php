@@ -722,7 +722,12 @@ Name Search: <b>".$mcaName."</b>
 ";
 			$text = $text . "Joining Date: ".$user['DateJoin']. "
 ";
-			$text = $text . "Mobile: +91".$user['Mobile']. "
+
+		$findmobile = Mobiles::find('first',array(
+			'conditions'=>array('mcaNumber'=>$user['mcaNumber'])
+		));
+
+			$text = $text . "Mobile: +91".$findmobile['Mobile']. "
 ";
    $text = $text . "
 ";
