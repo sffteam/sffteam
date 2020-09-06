@@ -4810,6 +4810,18 @@ public function saveProspects(){
  return $this->render(array('json' => array("success"=>"Yes")));
 }
 
+public function getProspects(){
+ if($this->request->data){
+  $prospects = Prospects::find('all',array(
+   'conditions'=>array(
+   'mcaNumber'=>$this->request->data['mcaNumber'],
+   'Joined'=>array('$exists'=>false)
+   )
+  ));
+  return $this->render(array('json' => array("success"=>"Yes",'prospects'=>$prospects)));
+ }
+ return $this->render(array('json' => array("success"=>"No")));
+}
 
 //end of class
 }
