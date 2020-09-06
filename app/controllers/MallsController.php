@@ -34,6 +34,7 @@ use app\models\Points;
 use app\models\Urls;
 use app\models\Posts;
 use app\models\Zooms;
+use app\models\Objections;
 
 use app\models\X_pages;
 use app\models\X_page_hits;
@@ -4818,7 +4819,9 @@ public function getProspects(){
    'Joined'=>array('$exists'=>false)
    )
   ));
-  return $this->render(array('json' => array("success"=>"Yes",'prospects'=>$prospects)));
+  $objections = Objections::find('all');
+  
+  return $this->render(array('json' => array("success"=>"Yes",'prospects'=>$prospects,'objections'=>$objections)));
  }
  return $this->render(array('json' => array("success"=>"No")));
 }
