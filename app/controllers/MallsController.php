@@ -4826,10 +4826,14 @@ public function getProspects(){
  return $this->render(array('json' => array("success"=>"No")));
 }
 
-public function getChecks(){
+public function getChecks($mcaNumber = null){
+
  if($this->request->data){
+  $mcaNumber = $this->request->data['mcaNumber'];
+ }
+ 
   $user = Users::find('first',array(
-  'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+  'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
    $yyyymm = date('Y-m');
    $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
@@ -4847,19 +4851,21 @@ public function getChecks(){
      'fields'=>array('mcaName','mcaNumber','refer',$p1yyyymm.'.Gross',$p2yyyymm.'.Gross',$p3yyyymm.'.Gross',$p1yyyymm.'.GBV',$p2yyyymm.'.GBV',$p3yyyymm.'.GBV')
     )
  );
-
-  return $this->render(array('json' => array("success"=>"Yes",
-   'user.mcaNumber'=>$user['mcaNumber'],
+ $me = array(   'user.mcaNumber'=>$user['mcaNumber'],
    'user.mcaName'=>$user['mcaName'],
-   'user.'.$p1yyyymm.'GBV' =>$user[$p1yyyymm]['GBV'],
-   'user.'.$p2yyyymm.'GBV' =>$user[$p2yyyymm]['GBV'],
-   'user.'.$p3yyyymm.'GBV' =>$user[$p3yyyymm]['GBV'],
-   'user.'.$p1yyyymm.'Gross' =>$user[$p1yyyymm]['Gross'],
-   'user.'.$p2yyyymm.'Gross' =>$user[$p2yyyymm]['Gross'],
-   'user.'.$p3yyyymm.'Gross' =>$user[$p3yyyymm]['Gross'],
+   'user.'.$p1yyyymm.'.GBV' =>$user[$p1yyyymm]['GBV'],
+   'user.'.$p2yyyymm.'.GBV' =>$user[$p2yyyymm]['GBV'],
+   'user.'.$p3yyyymm.'.GBV' =>$user[$p3yyyymm]['GBV'],
+   'user.'.$p1yyyymm.'.Gross' =>$user[$p1yyyymm]['Gross'],
+   'user.'.$p2yyyymm.'.Gross' =>$user[$p2yyyymm]['Gross'],
+   'user.'.$p3yyyymm.'.Gross' =>$user[$p3yyyymm]['Gross']);
+  // $this->_render['layout'] = 'noHeaderFooter';
+  // return compact('me','team');
+  return $this->render(array('json' => array("success"=>"Yes",
+   'user'=>$me,
    'team'=>$team)));
 
- }
+ 
 }
 
 //end of class
