@@ -4892,7 +4892,10 @@ public function getTargets(){
   'user.'.$p1yyyymm.'.Level' =>$user[$p1yyyymm]['Level']?:0,
   'user.'.$p2yyyymm.'.Level' =>$user[$p2yyyymm]['Level']?:0,
   'user.'.$p3yyyymm.'.Level' =>$user[$p3yyyymm]['Level']?:0,
-
+  'user.'.$yyyymm.'.Percent' =>$user[$yyyymm]['Precent']?:0,
+  'user.'.$p1yyyymm.'.Precent' =>$user[$p1yyyymm]['Precent']?:0,
+  'user.'.$p2yyyymm.'.Precent' =>$user[$p2yyyymm]['Precent']?:0,
+  'user.'.$p3yyyymm.'.Precent' =>$user[$p3yyyymm]['Precent']?:0,
   'user.'.$yyyymm.'.PV' =>$user[$yyyymm]['PV']?:0,
   'user.'.$p1yyyymm.'.PV' =>$user[$p1yyyymm]['PV']?:0,
   'user.'.$p2yyyymm.'.PV' =>$user[$p2yyyymm]['PV']?:0,
