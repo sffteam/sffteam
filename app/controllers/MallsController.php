@@ -4859,9 +4859,9 @@ public function getChecks($mcaNumber = null){
    'user.'.$p1yyyymm.'.Gross' =>$user[$p1yyyymm]['Gross'],
    'user.'.$p2yyyymm.'.Gross' =>$user[$p2yyyymm]['Gross'],
    'user.'.$p3yyyymm.'.Gross' =>$user[$p3yyyymm]['Gross'],
-   'user.'.$p1yyyymm.'.Percent' =>$user[$p1yyyymm]['Percent'],
-   'user.'.$p2yyyymm.'.Percent' =>$user[$p2yyyymm]['Percent'],
-   'user.'.$p3yyyymm.'.Percent' =>$user[$p3yyyymm]['Percent'],);
+   'user.'.$p1yyyymm.'.Percent' =>$user[$p1yyyymm]['Level'],
+   'user.'.$p2yyyymm.'.Percent' =>$user[$p2yyyymm]['Level'],
+   'user.'.$p3yyyymm.'.Percent' =>$user[$p3yyyymm]['Level'],);
   // $this->_render['layout'] = 'noHeaderFooter';
   // return compact('me','team');
   return $this->render(array('json' => array("success"=>"Yes",
