@@ -4871,6 +4871,53 @@ public function getChecks($mcaNumber = null){
  
 }
 
+public function getTargets(){
+ if($this->request->data){
+  $mcaNumber = $this->request->data['mcaNumber'];
+ }
+ $yyyymm = date('Y-m');
+ $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+ $p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+ $p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+   
+  $user = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+ 
+ $me = array(
+  'mcaName'=>$user['mcaName'],
+  'mcaNumber'=>$user['mcaNumber'],
+  'DateJoin'=>$user['DateJoin'],
+  'user.'.$yyyymm.'.Level' =>$user[$yyyymm]['Level'],
+  'user.'.$p1yyyymm.'.Level' =>$user[$p1yyyymm]['Level'],
+  'user.'.$p2yyyymm.'.Level' =>$user[$p2yyyymm]['Level'],
+  'user.'.$p3yyyymm.'.Level' =>$user[$p3yyyymm]['Level'],
+
+  'user.'.$yyyymm.'.PV' =>$user[$yyyymm]['PV'],
+  'user.'.$p1yyyymm.'.PV' =>$user[$p1yyyymm]['PV'],
+  'user.'.$p2yyyymm.'.PV' =>$user[$p2yyyymm]['PV'],
+  'user.'.$p3yyyymm.'.PV' =>$user[$p3yyyymm]['PV'],
+  'user.'.$yyyymm.'.GPV' =>$user[$yyyymm]['GPV'],
+  'user.'.$p1yyyymm.'.GPV' =>$user[$p1yyyymm]['GPV'],
+  'user.'.$p2yyyymm.'.GPV' =>$user[$p2yyyymm]['GPV'],
+  'user.'.$p3yyyymm.'.GPV' =>$user[$p3yyyymm]['GPV'],
+  'user.'.$yyyymm.'.PGPV' =>$user[$yyyymm]['PGPV'],
+  'user.'.$p1yyyymm.'.PGPV' =>$user[$p1yyyymm]['PGPV'],
+  'user.'.$p2yyyymm.'.PGPV' =>$user[$p2yyyymm]['PGPV'],
+  'user.'.$p3yyyymm.'.PGPV' =>$user[$p3yyyymm]['PGPV'],
+  'user.'.$yyyymm.'.GBV' =>$user[$yyyymm]['GBV'],
+  'user.'.$p1yyyymm.'.GBV' =>$user[$p1yyyymm]['GBV'],
+  'user.'.$p2yyyymm.'.GBV' =>$user[$p2yyyymm]['GBV'],
+  'user.'.$p3yyyymm.'.GBV' =>$user[$p3yyyymm]['GBV'],
+  'user.'.$yyyymm.'.PGBV' =>$user[$yyyymm]['PGBV'],
+  'user.'.$p1yyyymm.'.PGBV' =>$user[$p1yyyymm]['PGBV'],
+  'user.'.$p2yyyymm.'.PGBV' =>$user[$p2yyyymm]['PGBV'],
+  'user.'.$p3yyyymm.'.PGBV' =>$user[$p3yyyymm]['PGBV'],
+ );
+ 
+  return $this->render(array('json' => array("success"=>"Yes",'user'=>$me,)));
+}
+
 //end of class
 }
 
