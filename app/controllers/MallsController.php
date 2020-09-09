@@ -4848,7 +4848,7 @@ public function getChecks($mcaNumber = null){
       'Enable'=>'Yes',
       $p1yyyymm.'.Gross'=>array('$gt'=>0)
      ),
-     'fields'=>array('mcaName','mcaNumber','refer',$p1yyyymm.'.Gross',$p2yyyymm.'.Gross',$p3yyyymm.'.Gross',$p1yyyymm.'.GBV',$p2yyyymm.'.GBV',$p3yyyymm.'.GBV',$p1yyyymm.'.Percent',$p2yyyymm.'.Percent',$p2yyyymm.'.Percent')
+     'fields'=>array('mcaName','mcaNumber','refer',$p1yyyymm.'.Gross',$p2yyyymm.'.Gross',$p3yyyymm.'.Gross',$p1yyyymm.'.GBV',$p2yyyymm.'.GBV',$p3yyyymm.'.GBV',$p1yyyymm.'.Level',$p2yyyymm.'.Level',$p2yyyymm.'.Level')
     )
  );
  $me = array(   'user.mcaNumber'=>$user['mcaNumber'],
@@ -4859,9 +4859,9 @@ public function getChecks($mcaNumber = null){
    'user.'.$p1yyyymm.'.Gross' =>$user[$p1yyyymm]['Gross'],
    'user.'.$p2yyyymm.'.Gross' =>$user[$p2yyyymm]['Gross'],
    'user.'.$p3yyyymm.'.Gross' =>$user[$p3yyyymm]['Gross'],
-   'user.'.$p1yyyymm.'.Percent' =>$user[$p1yyyymm]['Level'],
-   'user.'.$p2yyyymm.'.Percent' =>$user[$p2yyyymm]['Level'],
-   'user.'.$p3yyyymm.'.Percent' =>$user[$p3yyyymm]['Level'],);
+   'user.'.$p1yyyymm.'.Level' =>$user[$p1yyyymm]['Level'],
+   'user.'.$p2yyyymm.'.Level' =>$user[$p2yyyymm]['Level'],
+   'user.'.$p3yyyymm.'.Level' =>$user[$p3yyyymm]['Level'],);
   // $this->_render['layout'] = 'noHeaderFooter';
   // return compact('me','team');
   return $this->render(array('json' => array("success"=>"Yes",
