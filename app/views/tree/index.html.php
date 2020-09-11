@@ -30,7 +30,7 @@ foreach($allusers as $user) {
  ?>
 							[{v:'<?=$mcaNumber?>', f:'\
 							<?php if($user['PV']>0){?>\
-								<b class="<?php if($user['PV']>0){echo " red ";}else{echo " blue ";}?>">\
+								<b class="<?php if($user['PV']>0){echo " green ";}else{echo " blue ";}?>">\
 									<?=$user['mcaName']?></b><br>\
 									PV: <?=$user['PV']?><br>\
 									PGPV: <?=$user['PGPV']?><br>\
@@ -39,7 +39,7 @@ foreach($allusers as $user) {
 									GBV: <?=$user['GBV']?><br>\
 									GPV: <?=$user['GPV']?><br>\
 									CGPV: <?=$user['GrossPV']?><br>\
-									<b style="color:red"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
+									<b style="color:green"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
 									Days: <?=$user['Days']?><br>\
@@ -68,9 +68,9 @@ $i++;
         // For each orgchart box, provide the name, manager, and tooltip to show.
 /*
         data.addRows([
-          [{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'},
+          [{v:'Mike', f:'Mike<div style="color:green; font-style:italic">President</div>'},
            '', 'The President'],
-          [{v:'Jim', f:'Jim<div style="color:red; font-style:italic">Vice President</div>'},
+          [{v:'Jim', f:'Jim<div style="color:green; font-style:italic">Vice President</div>'},
            'Mike', 'VP'],
           ['Alice', 'Mike', ''],
           ['Bob', 'Jim', 'Bob Sponge'],
@@ -84,7 +84,7 @@ $i++;
       }
    </script>
    <style>
-			.red {color:red}
+			.green {color:green}
 			</style>
 <div style="padding:10px;margin:auto;width:100vw">
 <div style="margin:auto;border:1px solid gray">
