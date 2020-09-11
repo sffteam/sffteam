@@ -224,7 +224,7 @@ public function persons(){
 }
 
 public function register(){
-	print_r($this->request->data);
+//	print_r($this->request->data);
 	if($this->request->data){
 		
 		$user = X_nptusers::create()->save($this->request->data);
