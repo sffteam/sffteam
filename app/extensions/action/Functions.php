@@ -489,19 +489,24 @@ curl_close($curl);
   return $results;
 	} 
 
- public function addnotify($mcaNumber,$subtitle,$title){
-   $data = array(
-      'mcaNumber'=>$mcaNumber,
+ public function addnotify($mcaNumber,$subtitle,$title,$text,$icon,$titleRightText){
+
+   $user = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+   ));
+   
+   foreach($user['ancestors'] as $ua){
+    print_r($ua);
+    $data = array(
+      'mcaNumber'=>$ua,
       'subtitle'=>$subtitle,
       'title'=>$title,
+      'text'=>$text,
+      'icon'=>$icon,
+      'titleRightText'=>$titleRightText
      );
-   Notifications::create()->save($data);    
-   $data = array(
-      'mcaNumber'=>"36702790",
-      'subtitle'=>"MCA: ". $mcaNumber ." ". $subtitle,
-      'title'=>"MCA: ". $mcaNumber ." ". $title,
-     );
-   Notifications::create()->save($data);    
+    Notifications::create()->save($data);    
+   }
  return true;
  }
  
