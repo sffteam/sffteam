@@ -1693,7 +1693,16 @@ set_time_limit(0);
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
            $this->addUserEnrolment($data,$yyyymm);
-           //print_r($data);
+           
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "New Joinee", // $subtitle
+            $mcaName . ", MCA No: ". $data['mcaNumber'] . ", <strong>".$data['mcaName']."</strong> has joined your network on ".$data['DateJoin'] , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'] // $titleRightText
+           );
           }
          }
         }else{
@@ -4928,6 +4937,7 @@ public function getTargets(){
  
   return $this->render(array('json' => array("success"=>"Yes",'user'=>$me,)));
 }
+
 
 //end of class
 }
