@@ -496,7 +496,6 @@ curl_close($curl);
    ));
    
    foreach($user['ancestors'] as $ua){
-    print_r($ua);
     $data = array(
       'mcaNumber'=>$ua,
       'subtitle'=>$subtitle,

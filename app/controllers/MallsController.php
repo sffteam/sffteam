@@ -10,6 +10,7 @@ use lithium\data\Connections;
 use app\models\Malls;
 use app\models\Contacts;
 use app\models\Distributors;
+use app\models\Notifications;
 use app\models\Tools;
 use app\models\Audios;
 use app\models\Baselines;
@@ -4938,7 +4939,12 @@ public function getTargets(){
   return $this->render(array('json' => array("success"=>"Yes",'user'=>$me,)));
 }
 
-
+ public function notification($mcaNumber=null){
+  $notification = Notifications::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+ return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification)));
+}
 //end of class
 }
 
