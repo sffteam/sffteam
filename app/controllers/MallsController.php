@@ -1699,7 +1699,7 @@ set_time_limit(0);
            $function->addnotify(
             $data['mcaNumber'],  // $mcaNumber
             "New Joinee", // $subtitle
-            $mcaName . ", MCA No: ". $data['mcaNumber'] . ", <strong>".$data['mcaName']."</strong> has joined your network on ".$data['DateJoin'] , // $title
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has joined your network on ".$data['DateJoin'] , // $title
             "Click to follow up",// $text,
             "<i class='icons f7-icons'>share</i>", // $icon,
             $data['DateJoin'] // $titleRightText
@@ -1964,7 +1964,7 @@ Users::update(
      'Enable'=>$data['Enable'],
 
    );
-print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
+   print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
    Users::create()->save($data);
    
   }
@@ -4940,10 +4940,15 @@ public function getTargets(){
 }
 
  public function notification($mcaNumber=null){
+  
   $notification = Notifications::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
- return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification)));
+  $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+
+ return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification,'mobile'=>$findmobile)));
 }
 //end of class
 }

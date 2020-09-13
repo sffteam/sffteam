@@ -504,7 +504,7 @@ curl_close($curl);
       'icon'=>$icon,
       'titleRightText'=>$titleRightText
      );
-    Notifications::create()->save($data);    
+    Notifications::create()->save($data);
    }
  return true;
  }
