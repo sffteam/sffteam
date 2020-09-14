@@ -489,7 +489,7 @@ curl_close($curl);
   return $results;
 	} 
 
- public function addnotify($mcaNumber,$subtitle,$title,$text,$icon,$titleRightText){
+ public function addnotify($mcaNumber,$subtitle,$title,$text,$icon,$titleRightText,$mcaName){
 
    $user = Users::find('first',array(
     'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
@@ -499,6 +499,7 @@ curl_close($curl);
     $data = array(
       'mcaNumber'=>$ua,
       'mcaNumberNew'=>$mcaNumber,
+      'mcaName'=>$mcaName,
       'subtitle'=>$subtitle, 
       'title'=>$title,
       'text'=>$text,

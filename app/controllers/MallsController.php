@@ -1702,7 +1702,8 @@ set_time_limit(0);
             $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has joined your network on ".$data['DateJoin'] , // $title
             "Click to follow up",// $text,
             "<i class='icons f7-icons'>share</i>", // $icon,
-            $data['DateJoin'] // $titleRightText
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'], // new Name
            );
           }
          }
