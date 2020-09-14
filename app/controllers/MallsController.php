@@ -1531,16 +1531,6 @@ set_time_limit(0);
            $yyyymm = $this->request->data['yyyymm'];
            $this->addUserActive($data,$yyyymm);
 
-           $function = new Functions();
-           $function->addnotify(
-            $data['mcaNumber'],  // $mcaNumber
-            "DP Purchase", // $subtitle
-            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased " , // $title
-            "Click to follow up",// $text,
-            "<i class='icons f7-icons'>share</i>", // $icon,
-            $data['DateJoin'], // $titleRightText,
-            $data['mcaName'] // new Name
-           );
 
           }
          }
@@ -1834,7 +1824,19 @@ Users::update(
       'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
       'Date'=> new \MongoDate()
      );
-     print_r($data['mcaName'].': PV<br>\n');
+     print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
+
+
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "DP Purchase", // $subtitle
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased of PV ". ((int)$data['PV']-(int)$userActive[$yyyymm]['PV']) , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'] // new Name
+           );
      
      
     }else{
