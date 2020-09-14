@@ -1703,7 +1703,7 @@ set_time_limit(0);
             "Click to follow up",// $text,
             "<i class='icons f7-icons'>share</i>", // $icon,
             $data['DateJoin'], // $titleRightText,
-            $data['mcaName'], // new Name
+            $data['mcaName'] // new Name
            );
           }
          }
