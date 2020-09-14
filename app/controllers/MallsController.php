@@ -4957,12 +4957,12 @@ public function getTargets(){
 public function newArchive(){
  if($this->request->data){
   $mcaNumber = $this->request->data['mcaNumber'];
-  $mcaNumberNew = $this->request->data['mcaNumberNew'];
+  $_id = $this->request->data['_id'];
   
   $data = array('action'=>'Archive');
   $conditions = array(
    'mcaNumber'=>$mcaNumber,
-   'mcaNumberNew'=>$mcaNumberNew,
+   '_id'=>$_id,
   );
   Notifications::updata($data,$conditions);
   return $this->render(array('json' => array("success"=>"Yes")));
