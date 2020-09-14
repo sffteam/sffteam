@@ -1506,7 +1506,6 @@ set_time_limit(0);
          'refer' => (string)$data[6],
          'PaidTitle'=>trim((string)$data[7]),
          'ValidTitle'=>trim((string)$data[8]),
-         
          'PrevCummPV'=>(integer)$data[9],
          'ExtraPV'=>(integer)$data[10],
          'PV'=>(integer)$data[11],
@@ -1523,7 +1522,6 @@ set_time_limit(0);
          'Enable'=>'Yes'
         );
         
-  //      print_r($data);
         $user = Users::find("first",array(
         "conditions"=>array('mcaNumber'=>$data['mcaNumber'])
         ));
@@ -1532,7 +1530,18 @@ set_time_limit(0);
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
            $this->addUserActive($data,$yyyymm);
-           //print_r($data);
+
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "DP Purchase", // $subtitle
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased " , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'] // new Name
+           );
+
           }
          }
         }else{
@@ -1825,9 +1834,9 @@ Users::update(
       'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
       'Date'=> new \MongoDate()
      );
-     print_r($data['mcaName'].': PV');
-     print_r($today['PV']);
-     print_r("\n");
+     print_r($data['mcaName'].': PV<br>\n');
+     
+     
     }else{
      $today = array(
       'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
@@ -1859,7 +1868,8 @@ Users::update(
   );
     $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
     Users::update($data,$conditions);
-
+    //*********************************************************************
+    //*********************************************************************
    }else{
     
    }
