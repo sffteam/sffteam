@@ -499,7 +499,7 @@ curl_close($curl);
     $data = array(
       'mcaNumber'=>$ua,
       'mcaNumberNew'=>$mcaNumber,
-      'subtitle'=>$subtitle,
+      'subtitle'=>$subtitle, 
       'title'=>$title,
       'text'=>$text,
       'icon'=>$icon,

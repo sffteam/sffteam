@@ -4942,7 +4942,10 @@ public function getTargets(){
  public function notification($mcaNumber=null){
   
   $notification = Notifications::find('first',array(
-   'conditions'=>array('mcaNumber'=>$mcaNumber)
+   'conditions'=>array(
+    'mcaNumber'=>$mcaNumber,
+    'action'=>array('$exists'=>false)
+    )
   ));
   $findmobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
@@ -4950,6 +4953,23 @@ public function getTargets(){
 
  return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification,'mobile'=>$findmobile)));
 }
+
+public function newArchive(){
+ if($this->request->data){
+  $mcaNumber = $this->request->data['mcaNumber'];
+  $mcaNumberNew = $this->request->data['mcaNumberNew'];
+  
+  $data = array('action'=>'Archive');
+  $conditions = array(
+   'mcaNumber'=>$mcaNumber,
+   'mcaNumberNew'=>$mcaNumberNew,
+  );
+  Notifications::updata($data,$conditions);
+  return $this->render(array('json' => array("success"=>"Yes")));
+ } 
+ return $this->render(array('json' => array("success"=>"No")));
+}
+
 //end of class
 }
 
