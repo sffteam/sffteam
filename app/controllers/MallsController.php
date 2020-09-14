@@ -4963,7 +4963,9 @@ public function getTargets(){
   $findmobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$notification['mcaNumberNew'])
   ));
-
+ if(count($findmobile)==0){
+  $findmobile = array('Mobile'=>'0000000000');
+ }
  return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification,'mobile'=>$findmobile)));
 }
 
