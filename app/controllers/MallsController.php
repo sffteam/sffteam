@@ -4948,7 +4948,7 @@ public function getTargets(){
     )
   ));
   $findmobile = Mobiles::find('first',array(
-   'conditions'=>array('mcaNumber'=>$mcaNumber)
+   'conditions'=>array('mcaNumber'=>$notification['mcaNumberNew'])
   ));
 
  return $this->render(array('json' => array("success"=>"Yes",'notification'=>$notification,'mobile'=>$findmobile)));
@@ -4962,7 +4962,7 @@ public function newArchive(){
   $data = array('action'=>'Archive');
   $conditions = array(
    'mcaNumber'=>$mcaNumber,
-   '_id'=>$_id,
+   '_id'=>(string)$_id,
   );
   Notifications::update($data,$conditions);
   return $this->render(array('json' => array("success"=>"Yes")));
