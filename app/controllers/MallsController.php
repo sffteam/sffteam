@@ -4964,7 +4964,7 @@ public function newArchive(){
    'mcaNumber'=>$mcaNumber,
    '_id'=>$_id,
   );
-  Notifications::updata($data,$conditions);
+  Notifications::update($data,$conditions);
   return $this->render(array('json' => array("success"=>"Yes")));
  } 
  return $this->render(array('json' => array("success"=>"No")));
