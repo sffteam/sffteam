@@ -1481,5 +1481,16 @@ public function listProducts(){
   return compact('products');
 }
 
+public function customersInfo(){
+ if($this->request->data){
+  $customer = N_customers::find('first',array(
+		'conditions'=>array('_id'=>$this->request->data['customer_id'])
+	));
+  
+  return $this->render(array('json' => array("success"=>"Yes","customer"=>$customer)));		
+ }
+ return $this->render(array('json' => array("success"=>"No")));		
+}
+
 }
 ?>
