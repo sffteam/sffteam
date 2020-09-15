@@ -1460,6 +1460,7 @@ public function m_cartproducts(){
 				'FSSAI' => $product['Regulatory Data Fssai Lic No'],
 				'HS Code' => $product['HS Code'],
 				'MRP:Pan India' => $product['MRP:Pan India'],
+    'MarwarCategory' => $product['MarwarCategory'],
 				'Quantity'=> (integer)$quantity,
 				'Value'=>$quantity*$product['MRP:Pan India'],
 				));
@@ -1473,7 +1474,12 @@ public function m_cartproducts(){
  
 }
 
-
+public function listProducts(){
+ 			$products = N_products::find('all',array(
+					
+				));
+  return compact('products');
+}
 
 }
 ?>
