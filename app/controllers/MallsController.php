@@ -2428,6 +2428,8 @@ public function getbuilders(){
       'Region'=>$n['Zone'].'-'.$n['City']?:"",
       'Mobile'=>$mobile['Mobile']?:"",
       'Level'=>$n[$yyyymm]['Level']?:"",
+      'Legs'=>$n[$yyyymm]['Legs']?:0,
+      'QDLegs'=>$n[$yyyymm]['QDLegs']?:0,
      )
     );
    }
