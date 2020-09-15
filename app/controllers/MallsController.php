@@ -1825,8 +1825,7 @@ Users::update(
       'Date'=> new \MongoDate()
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
-
-
+          if($userActive['Enable']=="Yes"){
            $function = new Functions();
            $function->addnotify(
             $data['mcaNumber'],  // $mcaNumber
@@ -1837,7 +1836,7 @@ Users::update(
             $data['DateJoin'], // $titleRightText,
             $data['mcaName'] // new Name
            );
-     
+          }
      
     }else{
      $today = array(
