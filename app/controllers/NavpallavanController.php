@@ -1500,6 +1500,7 @@ public function m_savecustomersalesMarwar(){
   
   
 			$customer_id = $this->request->data['customer_id'];
+   $invoice_no = $this->request->data['invoice_no'];
 			$customer = N_customers::find('first',array(
 				'conditions'=>array('_id'=>(string)$customer_id)
 			));
@@ -1515,6 +1516,7 @@ public function m_savecustomersalesMarwar(){
 						));
         $data = array(
         'user_id'=>$this->request->data['user_id'],
+        'invoice_no'=>$invoice_no,
         'product_id'=>(string)$product['_id'],
         'product_name'=>$product['Product Name'],
         'product_description'=>$product['Product Description'],
