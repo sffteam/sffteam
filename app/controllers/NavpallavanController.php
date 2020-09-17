@@ -1486,8 +1486,8 @@ public function customersInfo(){
   $customer = N_customers::find('first',array(
 		'conditions'=>array('_id'=>$this->request->data['customer_id'])
 	));
-  
-  return $this->render(array('json' => array("success"=>"Yes","customer"=>$customer)));		
+  $invoice = N_sales::count() + 1;
+  return $this->render(array('json' => array("success"=>"Yes","customer"=>$customer,'invoice'=>$invoice)));		
  }
  return $this->render(array('json' => array("success"=>"No")));		
 }
