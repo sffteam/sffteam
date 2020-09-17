@@ -1382,7 +1382,7 @@ public function savecustomersales(){
 						));
 							$data = array(
 							'user_id'=>$this->request->data['user_id'],
-							'product_id'=>$product['_id'],
+							'product_id'=>(string)$product['_id'],
 							'product_name'=>$product['Product Name'],
 							'product_description'=>$product['Product Description'],
 							'product_netweight'=>$product['Net Weight'],
@@ -1491,6 +1491,52 @@ public function customersInfo(){
  }
  return $this->render(array('json' => array("success"=>"No")));		
 }
+
+
+public function m_savecustomersalesMarwar(){
+	
+	
+	if($this->request->data){
+  
+  
+			$customer_id = $this->request->data['customer_id'];
+			$customer = N_customers::find('first',array(
+				'conditions'=>array('_id'=>(string)$customer_id)
+			));
+   $cart = split(",",$this->request->data['cart']);
+   
+		foreach($cart as $k=>$v){
+     $productx = split(":",$v);
+     
+     if($productx[0]!="X"){
+      
+						$product = N_products::find('first',array(
+							'conditions'=>array('GTIN'=>(string)$productx[0])
+						));
+        $data = array(
+        'user_id'=>$this->request->data['user_id'],
+        'product_id'=>(string)$product['_id'],
+        'product_name'=>$product['Product Name'],
+        'product_description'=>$product['Product Description'],
+        'product_netweight'=>$product['Net Weight'],
+        'product_unit'=>$product['Measurement Unit of Dimension'],
+        'product_mrp'=>$product['MRP:Pan India'],
+        'product_fran_mrp'=>$product['FranchiseMRP'],
+        'customer_id'=>$customer_id,
+        'saleDate'=>date("Y-m-d", time()),
+        'DateTime'=>new MongoDate(),
+        'product_quantity'=>$productx[1],
+        'product_value'=> ($productx[1]*$product['MRP:Pan India']),
+        'product_fran_value'=>0,
+       );
+       N_sales::create()->save($data);			
+     }
+		}
+	}
+	return $this->render(array('json' => array("success"=>"Yes")));		
+}
+
+
 
 }
 ?>
