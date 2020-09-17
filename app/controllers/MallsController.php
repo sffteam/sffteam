@@ -2295,7 +2295,8 @@ set_time_limit(0);
          'DP'=> (float)$data[3],
          'BV'=> (float)$data[4],
          'PV'=> (float)$data[5],
-         'Essential'=> (string)$data[6],
+         'Weight'=> (string)$data[6],
+         'Essential'=>"",
          );
          print_r($data);
        $product = Malls::find("first",array(
@@ -2311,11 +2312,8 @@ set_time_limit(0);
    
        }
       }
-      
       fclose($handle);      
    }
-  
- 
 }
 
 public function clubmembers(){
