@@ -69,6 +69,8 @@ class MallsController extends \lithium\action\Controller {
     'DP'=>$p['DP'],
     'BV'=>$p['BV'],
     'PV'=>$p['PV'],
+    'Weight'=>$p['Weight'],
+    'Available'=>$p['Available'],
    ));
   }
   $CategoriesArray = array(
@@ -89,7 +91,7 @@ class MallsController extends \lithium\action\Controller {
     '00' => 'Others',
     '60' => 'Extra',
     );
-    
+
   return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray)));  
   
  }
