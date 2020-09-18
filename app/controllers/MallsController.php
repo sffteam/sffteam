@@ -2288,15 +2288,21 @@ set_time_limit(0);
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
        $num = count($data);
        $row++;
+       if($data[0]==$data[8]){
+        $Available = "Yes";
+       }else{
+        $Available = "No";
+       }
         $data = array(
          'Code' => (string)$data[0],
          'Name' => ucwords(strtolower((string)$data[1])),
-         'MRP'=> (float)$data[2],
-         'DP'=> (float)$data[3],
-         'BV'=> (float)$data[4],
-         'PV'=> (float)$data[5],
-         'Weight'=> (string)$data[6],
-         'Essential'=>"",
+         'Loyalty'=>(string)$data[2],
+         'Weight'=> (string)$data[3],
+         'MRP'=> (float)$data[4],
+         'DP'=> (float)$data[5],
+         'BV'=> (float)$data[6],
+         'PV'=> (float)$data[7],
+         'Available'=>$Available,
          );
          print_r($data);
        $product = Malls::find("first",array(
@@ -2312,7 +2318,7 @@ set_time_limit(0);
    
        }
       }
-      fclose($handle);      
+      fclose($handle);
    }
 }
 
