@@ -994,6 +994,7 @@ public function searchdown(){
 // Upload Active
 
 public function uploadbuilders(){
+ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -1360,6 +1361,7 @@ public function getusers(){
 
 
 public function uploadjoinee(){
+   ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -1421,6 +1423,7 @@ set_time_limit(0);
 }
 
 public function uploadinner(){
+   ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -1485,6 +1488,7 @@ set_time_limit(0);
 }
 
 public function uploadactive(){
+   ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -1633,6 +1637,7 @@ public function list100pv(){
 
 
 public function uploadEnrolment(){
+   ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -2230,7 +2235,7 @@ public function getproducts(){
 }
 
 public function uploadmobile(){
-
+  ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
@@ -2274,6 +2279,7 @@ set_time_limit(0);
  }
 
 public function uploadproducts(){
+   ini_set('memory_limit','-1');
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
