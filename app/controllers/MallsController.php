@@ -2423,7 +2423,7 @@ public function clubmembers(){
     $p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),    
     $p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),    
     $p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),    
-    'upline'=>$upline['mcaName'],
+    'upline'=>$upline['mcaName']?:"self",
    )
   );
   }
@@ -3336,7 +3336,7 @@ public function getlevel(){
    'mobile'=>$mobile['Mobile']?:"",
    'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
    'yyyymm'=>$yyyymm,
-   'upline'=>$upline['mcaName'],
+   'upline'=>$upline['mcaName']?:"self",
    ));
   }
   
