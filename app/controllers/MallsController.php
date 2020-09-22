@@ -3274,7 +3274,17 @@ public function getlevel(){
    'conditions'=>array('mcaNumber'=>(string)$u['mcaNumber'])
  ));
 
+ $user = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+ ));
+ 
+ $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
   
+   $upline = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][2])
+   ));
+
+ 
   array_push($allusers, array(
    'mcaNumber' => $u['mcaNumber'],
    'mcaName' => $u['mcaName'],
@@ -3283,31 +3293,15 @@ public function getlevel(){
    'mobile'=>$mobile['Mobile']?:"",
    'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
    'yyyymm'=>$yyyymm,
+   'upline'=>$upline['mcaName'],
    ));
   }
   
   
  
- $user = Users::find('first',array(
-  'conditions'=>array('mcaNumber'=>$mcaNumber)
- ));
- $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
  
- $tree = array();
-  foreach($user['ancestors'] as $key=>$val){
-    $upline = Users::find('first',array(
-     'conditions'=>array('mcaNumber'=>$val)
-    ));
-    if($upline['mcaNumber']!=null){
-      array_push($tree,array(
-      'mcaNumber'=>$upline['mcaNumber'],
-      'mcaName'=>$upline['mcaName'],
-      'PaidTitle'=>$upline[$p1yyyymm]['PaidTitle'],
-     ));
-    }
-    
-
-  }
+ 
+  
   
  return $this->render(array('json' => array("success"=>"Yes","count"=>count($users),"users"=>$allusers,'tree'=>$tree[1])));
 }
