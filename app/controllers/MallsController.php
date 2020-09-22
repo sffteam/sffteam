@@ -3262,28 +3262,18 @@ public function getlevel(){
    $yyyymm.'.GrossPV'=>array('$gte'=>(integer)$gpv,'$lt'=>(integer)$lpv),
    $yyyymm.'.Percent'=>array('$lt'=>(integer)22),
  );
+
  $users = Users::find('all',array(
   'conditions'=>$conditions,
   'order'=>array($yyyymm.'.GrossPV'=>'DESC',$pyyyymm.'.GrossPV'=>'DESC')
  ));
  $allusers = array();
+
  foreach($users as $u){
   $mobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>(string)$u['mcaNumber'])
  ));
 
-  foreach($user['ancestors'] as $key=>$val){
-    $upline = Users::find('first',array(
-     'conditions'=>array('mcaNumber'=>$val)
-    ));
-    if($upline['mcaNumber']!=null){
-     if(strpos($upline[$p1yyyymm]['PaidTitle'],"Qualified")!==false){
-      array_push($tree,array(
-      'mcaNumber'=>$upline['mcaNumber'],
-      'PaidTitle'=>$upline[$p1yyyymm]['PaidTitle'],
-     ));
-     }
-    }
   
   array_push($allusers, array(
    'mcaNumber' => $u['mcaNumber'],
@@ -3296,8 +3286,6 @@ public function getlevel(){
    ));
   }
   
-  }
-  
   
  
  $user = Users::find('first',array(
@@ -3307,23 +3295,18 @@ public function getlevel(){
  
  $tree = array();
   foreach($user['ancestors'] as $key=>$val){
-   
     $upline = Users::find('first',array(
      'conditions'=>array('mcaNumber'=>$val)
     ));
-
     if($upline['mcaNumber']!=null){
-     
-   //  if(strpos($upline[$p1yyyymm]['PaidTitle'],"(Qualified)")!==false){
-      
       array_push($tree,array(
       'mcaNumber'=>$upline['mcaNumber'],
       'mcaName'=>$upline['mcaName'],
       'PaidTitle'=>$upline[$p1yyyymm]['PaidTitle'],
      ));
-   //  }
     }
     
+
   }
   
  return $this->render(array('json' => array("success"=>"Yes","count"=>count($users),"users"=>$allusers,'tree'=>$tree[1])));
