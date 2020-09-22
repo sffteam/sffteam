@@ -2379,6 +2379,19 @@ public function clubmembers(){
   $mobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
   ));
+
+
+ $user = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>$n['mcaNumber'])
+ ));
+ 
+ $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+  
+   $upline = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][2])
+   ));
+
+
   
   array_push($allusers,array(
     'mcaName'=>$n['mcaName'],
@@ -2397,6 +2410,7 @@ public function clubmembers(){
     $p9yyyymm => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),    
     $p10yyyymm => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),    
     $p11yyyymm => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),    
+    'upline'=>$upline['mcaName'],
    )
   );
   }
