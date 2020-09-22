@@ -2387,8 +2387,21 @@ public function clubmembers(){
  
  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
   
+  $number = 0;
+  foreach($user['ancestors'] as $key=>$val){
+   // print_r($val.":".$mcaNumber."\n");
+   if($val!=$mcaNumber){
+    $number = $number + 1;
+    
+   }else{
+    break;
+    $number = 0;
+    
+   }
+  }
+  $number = $number + 1;
    $upline = Users::find('first',array(
-    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][2])
+    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][$number])
    ));
 
 
@@ -3294,8 +3307,24 @@ public function getlevel(){
  
  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
   
+  $number = 0;
+  foreach($user['ancestors'] as $key=>$val){
+   // print_r($val.":".$mcaNumber."\n");
+   if($val!=$mcaNumber){
+    $number = $number + 1;
+    
+   }else{
+    break;
+    $number = 0;
+    
+   }
+  }
+  $number = $number + 1;
+
+  // print_r($number."\n");
+  // print_r($number);
    $upline = Users::find('first',array(
-    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][2])
+    'conditions'=>array('mcaNumber'=>(string)$user['ancestors'][$number])
    ));
 
  
