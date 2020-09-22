@@ -3076,6 +3076,28 @@ public function getdown(){
     $mobile = Mobiles::find('first',array(
      'conditions'=>array('mcaNumber'=>$n['mcaNumber'])
     ));
+
+  $number = 0;
+  foreach($n['ancestors'] as $key=>$val){
+     // print_r($val.":".$mcaNumber."\n");
+   if($val!=$mcaNumber){
+    $number = $number + 1;
+    
+   }else{
+    break;
+    $number = 0;
+    
+   }
+  }
+  $number = $number + 1;
+
+  // print_r($number."\n");
+  // print_r($number);
+   $upline = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$n['ancestors'][$number])
+   ));
+
+
     array_push($allusers,array(
      'mcaNumber'=>$n['mcaNumber'],
      'mcaName'=>$n['mcaName'],
@@ -3092,6 +3114,7 @@ public function getdown(){
      $p9yyyymm."" => array('PV'=>$n[$p9yyyymm]['PV']?:0,'GPV'=>$n[$p9yyyymm]['GPV']?:0),
      $p10yyyymm."" => array('PV'=>$n[$p10yyyymm]['PV']?:0,'GPV'=>$n[$p10yyyymm]['GPV']?:0),
      $p11yyyymm."" => array('PV'=>$n[$p11yyyymm]['PV']?:0,'GPV'=>$n[$p11yyyymm]['GPV']?:0),
+     'upline'=>$upline['mcaName']?:"self",
     ));
    }
  }
