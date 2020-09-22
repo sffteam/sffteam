@@ -2684,7 +2684,7 @@ public function getjoinee(){
       'right'=>array('$lt'=>$right),
       'Enable'=>'Yes'
    ),
-   'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV',$yyyymm.'.GPV','KYC','NEFT'),
+   'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV',$yyyymm.'.GPV','KYC','NEFT','ancestors'),
    'order'=>array('DateJoin'=>'ASC')
    )
  );  
@@ -2692,6 +2692,28 @@ public function getjoinee(){
      $mobile = Mobiles::find('first',array(
       'conditions'=>array('mcaNumber'=>$lu['mcaNumber'])
      ));
+  $number = 0;
+  
+  foreach($lu['ancestors'] as $key=>$val){
+   //print_r($val.":".$mcaNumber."\n");
+   if($val!=$mcaNumber){
+    $number = $number + 1;
+    
+   }else{
+    break;
+    $number = 0;
+    
+   }
+  }
+  $number = $number + 1;
+
+   //print_r($number."\n");
+  // print_r($number);
+   $upline = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$lu['ancestors'][$number])
+   ));
+//   print_r($upline['mcaName']);
+
       array_push($joineeUsers,array(
        'mcaNumber'=>$lu['mcaNumber'],
        'mcaName'=>$lu['mcaName'],
@@ -2700,7 +2722,8 @@ public function getjoinee(){
        'NEFT'=>$lu['NEFT'],
        'PV'=>$lu[$yyyymm]['PV']?:'',
        'GPV'=>$lu[$yyyymm]['GPV']?:'',
-       'Mobile'=>$mobile['Mobile']?:""
+       'Mobile'=>$mobile['Mobile']?:"",
+       'upline'=>$upline['mcaName']?:"self",
        ));
     }
  
