@@ -1463,7 +1463,7 @@ public function m_cartproducts(){
     'MarwarCategory' => $product['MarwarCategory'],
 				'Quantity'=> (integer)$quantity,
 				'Value'=>$quantity*$product['MRP:Pan India'],
-    'Payment'=>$this->request->data['paymentMode'],
+    
 				));
 			}
 				$totalquantity = $totalquantity + $quantity;
@@ -1531,6 +1531,7 @@ public function m_savecustomersalesMarwar(){
         'product_quantity'=>$productx[1],
         'product_value'=> ($productx[1]*$product['MRP:Pan India']),
         'product_fran_value'=>0,
+        'Payment'=>$this->request->data['paymentMode'],
        );
        N_sales::create()->save($data);			
      }
