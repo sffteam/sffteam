@@ -1463,6 +1463,7 @@ public function m_cartproducts(){
     'MarwarCategory' => $product['MarwarCategory'],
 				'Quantity'=> (integer)$quantity,
 				'Value'=>$quantity*$product['MRP:Pan India'],
+    'Payment'=>$this->request->data['paymentMode'],
 				));
 			}
 				$totalquantity = $totalquantity + $quantity;
