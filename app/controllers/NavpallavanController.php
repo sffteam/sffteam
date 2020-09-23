@@ -1538,7 +1538,14 @@ public function m_savecustomersalesMarwar(){
 	return $this->render(array('json' => array("success"=>"Yes")));		
 }
 
-
+public function m_getdisplay(){
+ 
+ $dir   = LITHIUM_APP_PATH .'/webroot/img/navpallavan/screen';
+ 
+ $files = scandir($dir);
+ 
+ return $this->render(array('json' => array("success"=>"Yes","files"=>$files)));		
+}
 
 }
 ?>
