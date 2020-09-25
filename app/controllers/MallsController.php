@@ -2226,6 +2226,12 @@ public function uploadprodstates(){
    }
    $row = 0;
 
+   $state = substr($this->request->data['State'],0,strpos($this->request->data['State'],"."));
+   $data = array(
+    $state => 'No',
+   );
+   Malls::update($data);
+
    if (($handle = fopen($tmpName, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
        $num = count($data);
@@ -2237,8 +2243,10 @@ public function uploadprodstates(){
           'Code'=>(string)$Code
          );
          
-         $state = substr($this->request->data['State'],0,strpos($this->request->data['State'],"."));
+         
    //      print_r($state);
+         
+         
          
          $product = Malls::find('first',array(
           'conditions'=>$conditions
@@ -2248,11 +2256,7 @@ public function uploadprodstates(){
           $state => 'Yes',
           'Code'=>$Code
          );
-         print_r($data);
-         print_r($conditions);
          Malls::update($data,$conditions);
-         
-         
       }
       
    }
