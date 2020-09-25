@@ -2212,6 +2212,57 @@ set_time_limit(0);
    }
  }
 
+public function uploadprodstates(){
+  ini_set('memory_limit','-1');
+  set_time_limit(0);
+  if($this->request->data){
+   $file = $this->request->data['file']; 
+   
+   if($_FILES['file']['tmp_name'] == 0){ 
+    $name = $_FILES['file']['tmp_name'];
+    $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
+    $type = $_FILES['file']['tmp_name'];
+    $tmpName = $_FILES['file']['tmp_name'];
+   }
+   $row = 0;
+
+   if (($handle = fopen($tmpName, "r")) !== FALSE) {
+      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+       $num = count($data);
+       $row++;
+         $CodeProduct = (string)$data[0];
+         $Code = trim(substr($CodeProduct,0,6));
+         
+         $conditions = array(
+          'Code'=>(string)$Code
+         );
+         
+         $state = substr($this->request->data['State'],0,strpos($this->request->data['State'],"."));
+   //      print_r($state);
+         
+         $product = Malls::find('first',array(
+          'conditions'=>$conditions
+         ));
+         
+         $data = array(
+          $state => 'Yes',
+          'Code'=>$Code
+         );
+         print_r($data);
+         print_r($conditions);
+         Malls::update($data,$conditions);
+         
+         
+      }
+      
+   }
+   
+  }
+  $states = array("Gujarat","TamilNadu","Punjab","Maharashtra","Kerala");
+  
+  return compact('states');
+}
+
 public function uploadproducts(){
    ini_set('memory_limit','-1');
 set_time_limit(0);
