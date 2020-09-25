@@ -2227,9 +2227,6 @@ public function uploadprodstates(){
    $row = 0;
 
    $state = substr($this->request->data['State'],0,strpos($this->request->data['State'],"."));
-   $data = array(
-    $state => 'No',
-   );
    Malls::update($data);
 
    if (($handle = fopen($tmpName, "r")) !== FALSE) {
@@ -2242,20 +2239,21 @@ public function uploadprodstates(){
          $conditions = array(
           'Code'=>(string)$Code
          );
-         
-         
    //      print_r($state);
-         
-         
-         
          $product = Malls::find('first',array(
           'conditions'=>$conditions
          ));
+         $available = array($state);
          
+         
+         
+
          $data = array(
-          $state => 'Yes',
-          'Code'=>$Code
+          'Available'=>$available
          );
+
+         print_r($data);
+
          Malls::update($data,$conditions);
       }
       
