@@ -2243,7 +2243,9 @@ public function uploadprodstates(){
          $product = Malls::find('first',array(
           'conditions'=>$conditions
          ));
-         $available = array($state);
+         
+         
+         $available = $product['Available'] . ", ".$state ;
          
          
          
