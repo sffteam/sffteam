@@ -59,8 +59,8 @@ class SimulateController extends \lithium\action\Controller {
     'ExtraPV'=>0,
     'PV'=>110,
     'BV'=>2970,
-    'GPV'=>0,
-    'GBV'=>0,
+    'GPV'=>110,
+    'GBV'=>2970,
     'GrossPV'=>0,
     'PGPV'=>0,
     'PGBV'=>0,
@@ -90,45 +90,52 @@ class SimulateController extends \lithium\action\Controller {
  
  public function batchProcess($month){
   $yyyymm = date("Y-m", strtotime($month ." month", strtotime(date("F") . "1")) );
+  $pyyyymm = date("Y-m", strtotime(($month-1) ." month", strtotime(date("F") . "1")) );  
   $users = S_users::find('all',array(
    'order'=>array('mcaNumber'=>'DESC')
   ));
   
   foreach($users as $u){
-   print_r($u['mcaNumber']."\n - ");
-   $ancestors = $u['ancestors'];
-   $pv = $u[$yyyymm]['PV'];
-   $bv = $u[$yyyymm]['BV'];
-   $data = array(
-    $yyyymm . ".GPV" => $u[$yyyymm]['GPV']+$pv,
-    $yyyymm . ".GBV" => $u[$yyyymm]['GBV']+$bv,
-    'mcaNumber'=>(string)$u['mcaNumber'],
-    'mcaName'=>(string)$u['mcaName'],
-    
-   );
-   print_r($data);
-   $conditions = array('mcaNumber'=>(string)$u['mcaNumber']);
-   S_users::update($data,$conditions);
+//   print_r("main-".$u['mcaNumber']."\n");
+    $ancestors = $u['ancestors'];
+    $pv = $u[$yyyymm]['PV'];
+    $bv = $u[$yyyymm]['BV'];
+   // $gpv = $u[$yyyymm]['GPV'] + $pv;
+   // $gbv = $u[$yyyymm]['GBV'] + $bv;
+  
+   // $data = array(
+    // $yyyymm . ".GPV" => $gpv + $pv,
+    // $yyyymm . ".GBV" => $gbv + $bv,
+    // 'mcaNumber'=>(string)$u['mcaNumber'],
+    // 'mcaName'=>(string)$u['mcaName'],
+   // );
+   //  print_r($data);
+   
+    $conditions = array('mcaNumber'=>(string)$u['mcaNumber']);
+    S_users::update($data,$conditions);
    
    foreach($ancestors as $a){
     if($a!=""){
-    print_r($a ."a\n");
+//    print_r("ancestor - ".$a ."\n");
     $conditions = array('mcaNumber'=>(string)$a);
     
     $upline = S_users::find('first',array(
      'conditions'=>$conditions
     ));
+    // print_r($upline[$yyyymm]['GPV']);
+    // print_r($conditions);
     $gpv = $upline[$yyyymm]['GPV']+ $pv;
     $gbv = $upline[$yyyymm]['GBV']+ $bv;
     
     $data = array(
      $yyyymm . ".GPV" => $gpv,
      $yyyymm . ".GBV" => $gbv,
-     'mcaNumber'=>(string)$a
-     
+     'mcaNumber'=>(string)$upline['mcaNumber']
     ); 
-    print_r($data);
-    S_users::update($data,$conditions);
+    $conditions = array('mcaNumber'=>(string)$upline['mcaNumber']);
+     // print_r($data);
+     // print_r($conditions);
+     S_users::update($data,$conditions);
     }
    }
    
