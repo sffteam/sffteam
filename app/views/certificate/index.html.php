@@ -1,5 +1,5 @@
 <?php
-  $yyyymm = date("Y-m", strtotime(-1 ." month", strtotime(date("F") . "1")) );
+  $yyyymm = date("Y-m", strtotime(0 ." month", strtotime(date("F") . "1")) );
   ?>
 <style>
 .date{
