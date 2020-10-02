@@ -5178,7 +5178,8 @@ public function byTUYNames(){
   foreach($tuy as $t){
    foreach($tuyNames as $tn){
      if($t==$tn['TUYName']){
-      array_push($tuysub,array(
+      array_push($tuysub,
+       array(
        'Code'=>$tn['Code'],
        'Name'=>$tn['Name'],
        'Weight'=>$tn['Weight'],
@@ -5195,7 +5196,7 @@ public function byTUYNames(){
       ));
      }
    }
-     array_push($allTUY,array($t=>$tuysub));
+     array_push($allTUY,array('TUYName'=>$t,'Values'=>$tuysub));
      $tuysub=array();
   }
  
