@@ -5164,7 +5164,19 @@ public function byTUYNames(){
  $tuyNames = Malls::find('all',array(
   'order'=>array('TUYName'=>'ASC','Percent'=>'DESC')
  ));
- return $this->render(array('json' => array("success"=>"Yes",'Products'=>$tuyNames)));
+ 
+ $tuy = array();
+ $tuysub = array();
+ $tuyName = "";
+ foreach($tuyNames as $t){
+    $tuyName = $t['TUYName'];
+    if (in_array($t['TUYName'], $tuy) ) {
+      continue;
+    }
+    $tuy[] = $t['TUYName'];
+   }
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$tuyNames,)));
 }
 
 
