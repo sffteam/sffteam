@@ -91,8 +91,24 @@ class MallsController extends \lithium\action\Controller {
     '00' => 'Others',
     '60' => 'Extra',
     );
+  $CategoriesSwiperArray = array(
+    'HC' => 'Home',
+    'LC' => 'Laundry',
+    'PC' => 'Personal',
+    'FP' => 'Food',
+    'SC' => 'Skin',
+    'FS' => 'Supplement',
+    'MJ' => 'Jewelery',
+    'UC' => 'Cosmetics',
+    'BC' => 'BabyCare',
+    'AG' => 'Agriculture',
+    'AC' => 'Auto',
+    'HL' => 'Wellness',
+    'WA' => 'Watches',
+    'MG' => 'Technology',
+    );
 
-  return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray)));  
+  return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray,'CategorySwiper'=>$CategoriesSwiperArray)));  
   
  }
  
