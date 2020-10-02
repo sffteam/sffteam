@@ -5167,16 +5167,39 @@ public function byTUYNames(){
  
  $tuy = array();
  $tuysub = array();
- $tuyName = "";
- foreach($tuyNames as $t){
+ $allTUY = array();
+  foreach($tuyNames as $t){
     $tuyName = $t['TUYName'];
     if (in_array($t['TUYName'], $tuy) ) {
       continue;
     }
     $tuy[] = $t['TUYName'];
+  }
+  foreach($tuy as $t){
+   foreach($tuyNames as $tn){
+     if($t==$tn['TUYName']){
+      array_push($tuysub,array(
+       'Code'=>$tn['Code'],
+       'Name'=>$tn['Name'],
+       'Weight'=>$tn['Weight'],
+       'MRP'=>$tn['MRP'],
+       'DP'=>$tn['DP'],
+       'BV'=>$tn['BV'],
+       'PV'=>$tn['PV'],
+       'Percent'=>$tn['Percent'],
+       'Saving'=>$tn['Saving'],
+       'SavingPercent'=>$tn['SavingPercent'],
+       'InDemand'=>$tn['InDemand'],
+       'BuyInLoyalty'=>$tn['BuyInLoyalty'],
+       'TUYName'=>$tn['TUYName'],
+      ));
+     }
    }
+     array_push($allTUY,array($t=>$tuysub));
+     $tuysub=array();
+  }
  
- return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$tuyNames,)));
+ return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$allTUY,)));
 }
 
 
