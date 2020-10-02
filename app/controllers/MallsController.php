@@ -92,20 +92,19 @@ class MallsController extends \lithium\action\Controller {
     '60' => 'Extra',
     );
   $CategoriesSwiperArray = array(
-    'HC' => 'Home',
-    'LC' => 'Laundry',
-    'PC' => 'Personal',
-    'FP' => 'Food',
-    'SC' => 'Skin',
-    'FS' => 'Supplement',
-    'MJ' => 'Jewelery',
-    'UC' => 'Cosmetics',
-    'BC' => 'BabyCare',
-    'AG' => 'Agriculture',
-    'AC' => 'Auto',
-    'HL' => 'Wellness',
-    'WA' => 'Watches',
-    'MG' => 'Technology',
+    'HC' => array('Name'=>'HOME','color'=>'#e53935'),
+    'LC' => array('Name'=>'LAUNDRY','color'=>'#303f9f'),
+    'PC' => array('Name'=>'PERSONAL','color'=>'#8e24aa'),
+    'FP' => array('Name'=>'FOOD','color'=>'#00796b'),
+    'SC' => array('Name'=>'SKINCARE','color'=>'#0288d1'),
+    'MJ' => array('Name'=>'JEWELERY','color'=>'#455a64'),
+    'UC' => array('Name'=>'COSMETICS','color'=>'#388e3c'),
+    'BC' => array('Name'=>'BABYCARE','color'=>'#afb42b'),
+    'AG' => array('Name'=>'AGRICULTURE','color'=>'#fbc02d'),
+    'AC' => array('Name'=>'AUTOCARE','color'=>'#e64a19'),
+    'HL' => array('Name'=>'WELLNESS','color'=>'#6d4c41'),
+    'WA' => array('Name'=>'WATCHES','color'=>'#0097a7'),
+    'MG' => array('Name'=>'TECHNOLOGY','color'=>'#01579b'),
     );
 
   return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray,'CategorySwiper'=>$CategoriesSwiperArray)));  
