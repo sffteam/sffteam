@@ -5160,6 +5160,14 @@ public function newArchive(){
  return $this->render(array('json' => array("success"=>"No")));
 }
 
+public function byTUYNames(){
+ $tuyNames = Malls::find('all',array(
+  'order'=>array('TUYName'=>'ASC','Percent'=>'DESC')
+ ));
+ return $this->render(array('json' => array("success"=>"Yes",'Products'=>$tuyNames)));
+}
+
+
 //end of class
 }
 
