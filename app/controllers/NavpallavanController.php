@@ -14,6 +14,7 @@ use app\models\N_orders;
 use app\models\N_customers;
 use app\models\N_messages;
 use app\models\N_smses;
+use app\models\N_pos_display;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -1419,20 +1420,37 @@ public function m_getproducts(){
 	}
 	return $this->render(array('json' => array("success"=>"No")));		
 }
-
+public function updateCart(){
+  $conditions = array('cart'=>'Current');
+  $data = array(
+  'cart'=>'Current',
+  'cartstring'=>$this->request->data['cartstring'],
+  );
+  N_pos_display::update($data,$conditions);
+  return $this->render(array('json' => array("success"=>'Yes')));		
+}
+public function getCart(){
+  $cartstring = N_pos_display::find('first',array(
+   'conditions'=>array('cart'=>'Current')
+  ));
+  return $this->render(array('json' => array("success"=>'Yes','cartstring'=>$cartstring)));
+}
 public function m_getprice(){
 	if($this->request->data){
 		$cart = $this->request->data;
+ 
   $value = 0;
   $totalvalue = 0;
 		$totalquantity = 0;
   foreach ($cart as $code => $quantity){
-			
+   if($code!="X"){
    $product = N_products::find('first',array(
     'conditions'=>array('GTIN'=>(string)$code)
    ));
-				$totalquantity = $totalquantity + $quantity;
-    $totalvalue = floatval($product['MRP:Pan India']*$quantity); 
+				$totalquantity = (integer)$totalquantity + (integer)$quantity;
+    $totalvalue = floatval($product['MRP:Pan India']*(integer)$quantity); 
+
+   }
 				$value = $value + $totalvalue;
 			}
    
