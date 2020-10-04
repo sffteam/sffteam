@@ -1557,5 +1557,15 @@ public function m_getdisplay(){
  return $this->render(array('json' => array("success"=>"Yes","files"=>$files)));		
 }
 
+public function getProductScan(){
+ 
+   $gtin = $this->request->data['gtin'];
+    $product = N_products::find('first',array(
+    'conditions'=>array('GTIN'=>(string)$gtin)
+   ));
+
+ return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));		
+}
+
 }
 ?>
