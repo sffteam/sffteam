@@ -1446,6 +1446,7 @@ public function m_getprice(){
 
 public function m_cartproducts(){
 	 $cart = $this->request->data;
+  
   $CartProducts = array();
 		foreach ($cart as $code => $quantity){
 			if($code!="X"){
@@ -1463,11 +1464,14 @@ public function m_cartproducts(){
     'MarwarCategory' => $product['MarwarCategory'],
 				'Quantity'=> (integer)$quantity,
 				'Value'=>$quantity*$product['MRP:Pan India'],
-    
+    'Shelf Life Unit'=>$product['Shelf Life Unit'],
+    'Shelf Life Value'=>$product['Shelf Life Value'],
 				));
+				$totalquantity = $totalquantity + (integer)$quantity;
+    $totalvalue = floatval($product['MRP:Pan India']*(integer)$quantity); 
 			}
-				$totalquantity = $totalquantity + $quantity;
-    $totalvalue = floatval($product['MRP:Pan India']*$quantity); 
+
+    
 				$value = $value + $totalvalue;
 
 		}
@@ -1487,8 +1491,12 @@ public function customersInfo(){
   $customer = N_customers::find('first',array(
 		'conditions'=>array('_id'=>$this->request->data['customer_id'])
 	));
-  $invoice = N_sales::count() + 1;
-  return $this->render(array('json' => array("success"=>"Yes","customer"=>$customer,'invoice'=>$invoice)));		
+  $invoice = N_sales::find('first',array(
+   'conditions'=>array('invoice_no'=>array('$exists'=>true)),
+   'order'=>array('invoice_no'=>'DESC')
+   ));
+   $maxInvoice = number_format($invoice['invoice_no']) + 1;
+  return $this->render(array('json' => array("success"=>"Yes","customer"=>$customer,'invoice'=>$maxInvoice)));		
  }
  return $this->render(array('json' => array("success"=>"No")));		
 }
