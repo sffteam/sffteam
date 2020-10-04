@@ -14,7 +14,7 @@ use app\models\N_orders;
 use app\models\N_customers;
 use app\models\N_messages;
 use app\models\N_smses;
-use app\models\N_pos_display;
+use app\models\N_posdisplay;
 use \MongoDate;
 
 class NavpallavanController extends \lithium\action\Controller {
@@ -1426,11 +1426,11 @@ public function updateCart(){
   'cart'=>'Current',
   'cartstring'=>$this->request->data['cartstring'],
   );
-  N_pos_display::update($data,$conditions);
-  return $this->render(array('json' => array("success"=>'Yes')));		
+  N_posdisplay::update($data,$conditions);
+  return $this->render(array('json' => array("success"=>$data)));		
 }
 public function getCart(){
-  $cartstring = N_pos_display::find('first',array(
+  $cartstring = N_posdisplay::find('first',array(
    'conditions'=>array('cart'=>'Current')
   ));
   return $this->render(array('json' => array("success"=>'Yes','cartstring'=>$cartstring)));
