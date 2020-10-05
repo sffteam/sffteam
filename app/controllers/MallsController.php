@@ -5162,7 +5162,7 @@ public function newArchive(){
 
 public function byTUYNames(){
  $tuyNames = Malls::find('all',array(
-  'order'=>array('TUYName'=>'ASC','Percent'=>'DESC')
+  'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
  ));
  
  $tuy = array();
