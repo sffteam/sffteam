@@ -2468,6 +2468,7 @@ public function getbuilders(){
       'PGPV'=>$n[$yyyymm]['PGPV']?:0,
       'RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
       'PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
+      'ValidTitle'=>$n[$yyyymm]['ValidTitle']?:"",      
       'Region'=>$n['Zone'].'-'.$n['City']?:"",
       'Mobile'=>$mobile['Mobile']?:"",
       'Level'=>$n[$yyyymm]['Level']?:"",
