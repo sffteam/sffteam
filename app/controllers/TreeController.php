@@ -56,7 +56,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'conditions'=>array(
 						'left'=>array('$gt'=>$user['left']),
 						'right'=>array('$lt'=>$user['right']),
-						$yyyymm.'.Level'=>22
+						$yyyymm.'.Level'=>16
 					),
 					'order'=>array(
 					//'mcaName'=>'ASC'
