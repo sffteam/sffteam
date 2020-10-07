@@ -2458,7 +2458,7 @@ public function getbuilders(){
    $mobile = Mobiles::find('first',array(
     'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
    ));
-   if($n[$yyyymm]["GPV"]>4000){
+   if($n[$yyyymm]["GrossPV"]>4000){
     array_push($users,
      array(
       'mcaNumber'=>$n['mcaNumber'],
