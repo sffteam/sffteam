@@ -771,7 +771,7 @@ public function findTree($mcaNumber,$level){
  ));
  
  foreach($downlines as $d){
-  if($d['Level']!=null && $d[$yyyymm]['Percent']==22){
+  if($d['Level']!=null && $d[$yyyymm]['Percent']==16){
    array_push($tree,array(
     'mcaNumber'=>$d['mcaNumber'],
     'mcaName'=>$d['mcaName'],
@@ -782,7 +782,7 @@ public function findTree($mcaNumber,$level){
      'conditions'=>array('refer_id'=>$d['mcaNumber'])
     ));
     foreach($downlines1 as $d1){
-     if($d1['Level']!=null && $d1[$yyyymm]['Percent']==22){
+     if($d1['Level']!=null && $d1[$yyyymm]['Percent']==16){
       array_push($tree,array(
        'mcaNumber'=>$d1['mcaNumber'],
        'mcaName'=>$d1['mcaName'],
@@ -794,7 +794,7 @@ public function findTree($mcaNumber,$level){
      'conditions'=>array('refer_id'=>$d1['mcaNumber'])
     ));
     foreach($downlines2 as $d2){
-     if($d2['Level']!=null && $d2[$yyyymm]['Percent']==22){
+     if($d2['Level']!=null && $d2[$yyyymm]['Percent']==16){
       array_push($tree,array(
        'mcaNumber'=>$d2['mcaNumber'],
        'mcaName'=>$d2['mcaName'],
@@ -806,7 +806,7 @@ public function findTree($mcaNumber,$level){
      'conditions'=>array('refer_id'=>$d2['mcaNumber'])
     ));
     foreach($downlines3 as $d3){
-     if($d3['Level']!=null && $d3[$yyyymm]['Percent']==22){
+     if($d3['Level']!=null && $d3[$yyyymm]['Percent']==16){
       array_push($tree,array(
        'mcaNumber'=>$d3['mcaNumber'],
        'mcaName'=>$d3['mcaName'],
@@ -2569,17 +2569,16 @@ ini_set('memory_limit', '-1');
     'Consultant'=>array('GPV'=>0,'Level'=>7),
     'Senior Consultant'=>array('GPV'=>300,'Level'=>10),
     'Deputy Supervisor'=>array('GPV'=>1200,'Level'=>13),
-    'Supervisor'=>array('GPV'=>2700,'Level'=>16),
-    'Senior Supervisor'=>array('GPV'=>4500,'Level'=>19),
-    'Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1250,'Legs'=>0),
-    'Senior Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>1100,'Legs'=>1),
-    'Execuive Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>900,'Legs'=>2),
-    'Senior Executive Direc'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>600,'Legs'=>3),
-    'Platinum Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>300,'Legs'=>4),
-    'Presidential Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>6),
-    'Crown Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>8),
-    'Royal Black Diamond Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>11),
-    'Global Black Diamong Director'=>array('GPV'=>6000,'Level'=>22,'PGBV'=>0,'Legs'=>14),
+    'Supervisor'=>array('GPV'=>2700,'Level'=>15),
+    'Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1250,'Legs'=>0),
+    'Senior Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1100,'Legs'=>1),
+    'Execuive Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>900,'Legs'=>2),
+    'Senior Executive Direc'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>600,'Legs'=>3),
+    'Platinum Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>300,'Legs'=>4),
+    'Presidential Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>0,'Legs'=>6),
+    'Crown Diamond Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>0,'Legs'=>8),
+    'Royal Black Diamond Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>0,'Legs'=>11),
+    'Global Black Diamong Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>0,'Legs'=>14),
    );
 
   foreach ($groups as $key=>$val){
@@ -3383,7 +3382,7 @@ public function getlevel(){
    'right'=>array('$lt'=>$right),
    'Enable'=>'Yes',
    $yyyymm.'.GrossPV'=>array('$gte'=>(integer)$gpv,'$lt'=>(integer)$lpv),
-   $yyyymm.'.Percent'=>array('$lt'=>(integer)22),
+   $yyyymm.'.Percent'=>array('$lt'=>(integer)16),
  );
 
  $users = Users::find('all',array(
