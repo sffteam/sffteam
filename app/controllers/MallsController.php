@@ -2458,7 +2458,7 @@ public function getbuilders(){
    $mobile = Mobiles::find('first',array(
     'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
    ));
-//   if($n[$yyyymm]["PGPV"]>1){
+   if($n[$yyyymm]["GPV"]>4000){
     array_push($users,
      array(
       'mcaNumber'=>$n['mcaNumber'],
@@ -2477,7 +2477,7 @@ public function getbuilders(){
      )
     );
    }
-//  }
+  }
   return $this->render(array('json' => array("success"=>"Yes","users"=>$users)));  
 
  }
