@@ -5193,6 +5193,7 @@ public function byTUYNames(){
        'InDemand'=>$tn['InDemand'],
        'BuyInLoyalty'=>$tn['BuyInLoyalty'],
        'TUYName'=>$tn['TUYName'],
+       'Video'=>$tn['Video'],
       ));
      }
    }
