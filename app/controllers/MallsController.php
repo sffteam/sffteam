@@ -71,6 +71,13 @@ class MallsController extends \lithium\action\Controller {
     'PV'=>$p['PV'],
     'Weight'=>$p['Weight'],
     'Available'=>$p['Available'],
+    'Percent'=>$p['Percent'],
+    'Saving'=>$p['Saving'],
+    'SavingPercent'=>$p['SavingPercent'],
+    'InDemand'=>$p['InDemand'],
+    'BuyInLoyalty'=>$p['BuyInLoyalty'],
+    'TUYName'=>$p['TUYName'],
+    'Video'=>$p['Video'],
    ));
   }
   $CategoriesArray = array(
@@ -467,7 +474,6 @@ public function product($Code,$format=null){
    'conditions'=>array('Code'=> $Code)
   ));
   if($format=="jpg"){
-   
    return compact('product');
   }
  return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));  
