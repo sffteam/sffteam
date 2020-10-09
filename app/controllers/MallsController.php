@@ -71,6 +71,13 @@ class MallsController extends \lithium\action\Controller {
     'PV'=>$p['PV'],
     'Weight'=>$p['Weight'],
     'Available'=>$p['Available'],
+    'Percent'=>$p['Percent'],
+    'Saving'=>$p['Saving'],
+    'SavingPercent'=>$p['SavingPercent'],
+    'InDemand'=>$p['InDemand'],
+    'BuyInLoyalty'=>$p['BuyInLoyalty'],
+    'TUYName'=>$p['TUYName'],
+    'Video'=>$p['Video'],
    ));
   }
   $CategoriesArray = array(
@@ -467,7 +474,6 @@ public function product($Code,$format=null){
    'conditions'=>array('Code'=> $Code)
   ));
   if($format=="jpg"){
-   
    return compact('product');
   }
  return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));  
@@ -5204,7 +5210,52 @@ public function byTUYNames(){
  return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$allTUY,)));
 }
 
+public function getItemsCategory(){
+ $category = $this->request->data['category'];
+ $products = Malls::find("all",array(
+  'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')),
+  'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+ ));
 
+ $tuy = array();
+ $tuysub = array();
+ $allTUY = array();
+  foreach($products as $t){
+    $tuyName = $t['TUYName'];
+    if (in_array($t['TUYName'], $tuy) ) {
+      continue;
+    }
+    $tuy[] = $t['TUYName'];
+  }
+  foreach($tuy as $t){
+   foreach($products as $tn){
+     if($t==$tn['TUYName']){
+      array_push($tuysub,
+       array(
+       'Code'=>$tn['Code'],
+       'Name'=>$tn['Name'],
+       'Weight'=>$tn['Weight'],
+       'MRP'=>$tn['MRP'],
+       'DP'=>$tn['DP'],
+       'BV'=>$tn['BV'],
+       'PV'=>$tn['PV'],
+       'Percent'=>$tn['Percent'],
+       'Saving'=>$tn['Saving'],
+       'SavingPercent'=>$tn['SavingPercent'],
+       'InDemand'=>$tn['InDemand'],
+       'BuyInLoyalty'=>$tn['BuyInLoyalty'],
+       'TUYName'=>$tn['TUYName'],
+       'Video'=>$tn['Video'],
+      ));
+     }
+   }
+     array_push($allTUY,array('TUYName'=>$t,'Values'=>$tuysub));
+     $tuysub=array();
+  }
+
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$allTUY)));
+}
 //end of class
 }
 
