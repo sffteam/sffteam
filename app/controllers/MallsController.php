@@ -282,6 +282,48 @@ public function cartproducts(){
  
 }
 
+public function getcartproducts(){
+  $cart = $this->request->data;
+  $CartProducts = array();
+  foreach ($cart as $code => $quantity){
+   if($code!="X"){
+    $product = Malls::find('first',array(
+     'conditions'=>array('Code'=>(string)$code)
+    ));
+   }
+   if(count($product)>0){
+   array_push($CartProducts,array(
+    'Code' => $product['Code'],
+    'Name' => $product['Name'],
+    'MRP' => $product['MRP'],
+    'DP' => $product['DP'],
+    'BV' => $product['BV'],
+    'PV' => $product['PV'],
+    'Quantity'=> (integer)$quantity,
+    'Percent'=>$product['Percent'],
+    'Saving'=>$product['Saving'],
+    'SavingPercent'=>$product['SavingPercent'],
+    'InDemand'=>$product['InDemand'],
+    'BuyInLoyalty'=>$product['BuyInLoyalty'],
+    'TUYName'=>$product['TUYName'],
+    'Video'=>$product['Video'],
+    ));
+   }
+    $totalPV = floatval($product['PV']*$quantity); 
+    $totalBV = floatval($product['BV']*$quantity); 
+    $totalDP = floatval($product['DP']*$quantity); 
+    $totalvalue = floatval($product['MRP']*$quantity); 
+   
+    $value = $value + $totalvalue;
+    $valueBV = $valueBV + $totalBV;
+    $valuePV = $valuePV + $totalPV;
+    $valueDP = $valueDP + $totalDP;
+  }
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"CartProducts"=>$CartProducts)));  
+ 
+}
+
+
 public function points(){
  $points = Points::find('all');
  $AllPoints = array();
