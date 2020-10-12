@@ -18,7 +18,7 @@ class SaleController extends \lithium\action\Controller {
   // }
   $this->_render['layout'] = 'sale';
  }
- public function index($category = null, $mcaNumber = ""){
+ public function index($category = null, $mcaNumber = "",$price=null){
   
  if($category=="all"){
  $tuyNames = Malls::find('all',array(
@@ -115,7 +115,7 @@ class SaleController extends \lithium\action\Controller {
     'WA' => array('Name'=>'WATCHES','color'=>'#0097a7'),
     'MG' => array('Name'=>'TECHNOLOGY','color'=>'#01579b'),
     );
-   return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray');
+   return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray','price');
   
  }
  
