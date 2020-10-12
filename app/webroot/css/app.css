@@ -69,3 +69,83 @@ ul.a {
 		width:80vw;
 		height:400px;
 }
+
+
+.Poppins{
+ font-family: 'Poppins', sans-serif;
+}
+.Raleway{
+ font-family: 'Raleway', sans-serif;
+}
+.Share{
+ font-family: 'Share', cursive;
+}
+
+body{
+ font-family: 'Poppins', sans-serif;
+}
+.szhalf{font-size:calc(.8em + .5vw)}
+.szforth{font-size:calc(.3em + .5vw)}
+.sz1{font-size:calc(1em + 1vw)}
+.sz2{font-size:calc(1em + 2vw)}
+.sz3{font-size:calc(1em + 3vw)}
+.sz4{font-size:calc(1em + 4vw)}
+.sz1b{font-size:calc(1em + 1vw);font-weight:bold}
+.sz2b{font-size:calc(1em + 2vw);font-weight:bold}
+.sz3b{font-size:calc(1em + 3vw);font-weight:bold}
+.sz4b{font-size:calc(1em + 4vw);font-weight:bold}
+.sz10{
+ font-size: 10px;
+}
+.sz11{
+ font-size: 11px;
+}
+.sz12{
+ font-size: 12px;
+}
+.sz14{
+ font-size: 14px;
+}
+.sz16{
+ font-size: 16px;
+}
+.sz18{
+ font-size: 16px;
+}
+h1 {
+  letter-spacing: 3px;
+}
+.sz10b{
+ font-size: 10px;
+ font-weight: bold;
+}
+.sz11b{
+ font-size: 11px;
+ font-weight: bold
+}
+.sz12b{
+ font-size: 12px;
+ font-weight: bold
+}
+.sz14b{
+ font-size: 14px;
+ font-weight: bold
+}
+.sz16b{
+ font-size: 16px;
+ font-weight: bold
+}
+.sz18b{
+ font-size: 16px;
+ font-weight: bold;
+ color:#999999;
+}
+.cs3 {
+  letter-spacing: 3px;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+	max-height: 100%;
+}

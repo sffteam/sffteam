@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.1
+ * Framework7 5.7.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2020
+ * Released on: June 1, 2020
  */
 
 (function (global, factory) {
@@ -672,90 +672,147 @@
   Template7.partials = Template7Class.partials;
 
   /**
-   * SSR Window 1.0.1
+   * SSR Window 2.0.0
    * Better handling for window object in SSR environment
    * https://github.com/nolimits4web/ssr-window
    *
-   * Copyright 2018, Vladimir Kharlampidi
+   * Copyright 2020, Vladimir Kharlampidi
    *
    * Licensed under MIT
    *
-   * Released on: July 18, 2018
+   * Released on: May 12, 2020
    */
-  var doc = (typeof document === 'undefined') ? {
-    body: {},
-    addEventListener: function addEventListener() {},
-    removeEventListener: function removeEventListener() {},
-    activeElement: {
-      blur: function blur() {},
-      nodeName: '',
-    },
-    querySelector: function querySelector() {
-      return null;
-    },
-    querySelectorAll: function querySelectorAll() {
-      return [];
-    },
-    getElementById: function getElementById() {
-      return null;
-    },
-    createEvent: function createEvent() {
-      return {
-        initEvent: function initEvent() {},
-      };
-    },
-    createElement: function createElement() {
-      return {
-        children: [],
-        childNodes: [],
-        style: {},
-        setAttribute: function setAttribute() {},
-        getElementsByTagName: function getElementsByTagName() {
-          return [];
-        },
-      };
-    },
-    location: { hash: '' },
-  } : document; // eslint-disable-line
+  /* eslint-disable no-param-reassign */
+  function isObject(obj) {
+      return (obj !== null &&
+          typeof obj === 'object' &&
+          'constructor' in obj &&
+          obj.constructor === Object);
+  }
+  function extend(target, src) {
+      if (target === void 0) { target = {}; }
+      if (src === void 0) { src = {}; }
+      Object.keys(src).forEach(function (key) {
+          if (typeof target[key] === 'undefined')
+              { target[key] = src[key]; }
+          else if (isObject(src[key]) &&
+              isObject(target[key]) &&
+              Object.keys(src[key]).length > 0) {
+              extend(target[key], src[key]);
+          }
+      });
+  }
 
-  var win = (typeof window === 'undefined') ? {
-    document: doc,
-    navigator: {
-      userAgent: '',
-    },
-    location: {},
-    history: {},
-    CustomEvent: function CustomEvent() {
-      return this;
-    },
-    addEventListener: function addEventListener() {},
-    removeEventListener: function removeEventListener() {},
-    getComputedStyle: function getComputedStyle() {
-      return {
-        getPropertyValue: function getPropertyValue() {
-          return '';
-        },
-      };
-    },
-    Image: function Image() {},
-    Date: function Date() {},
-    screen: {},
-    setTimeout: function setTimeout() {},
-    clearTimeout: function clearTimeout() {},
-  } : window; // eslint-disable-line
+  var doc = typeof document !== 'undefined' ? document : {};
+  var ssrDocument = {
+      body: {},
+      addEventListener: function () { },
+      removeEventListener: function () { },
+      activeElement: {
+          blur: function () { },
+          nodeName: '',
+      },
+      querySelector: function () {
+          return null;
+      },
+      querySelectorAll: function () {
+          return [];
+      },
+      getElementById: function () {
+          return null;
+      },
+      createEvent: function () {
+          return {
+              initEvent: function () { },
+          };
+      },
+      createElement: function () {
+          return {
+              children: [],
+              childNodes: [],
+              style: {},
+              setAttribute: function () { },
+              getElementsByTagName: function () {
+                  return [];
+              },
+          };
+      },
+      createElementNS: function () {
+          return {};
+      },
+      importNode: function () {
+          return null;
+      },
+      location: {
+          hash: '',
+          host: '',
+          hostname: '',
+          href: '',
+          origin: '',
+          pathname: '',
+          protocol: '',
+          search: '',
+      },
+  };
+  extend(doc, ssrDocument);
+
+  var win = typeof window !== 'undefined' ? window : {};
+  var ssrWindow = {
+      document: ssrDocument,
+      navigator: {
+          userAgent: '',
+      },
+      location: {
+          hash: '',
+          host: '',
+          hostname: '',
+          href: '',
+          origin: '',
+          pathname: '',
+          protocol: '',
+          search: '',
+      },
+      history: {
+          replaceState: function () { },
+          pushState: function () { },
+          go: function () { },
+          back: function () { },
+      },
+      CustomEvent: function CustomEvent() {
+          return this;
+      },
+      addEventListener: function () { },
+      removeEventListener: function () { },
+      getComputedStyle: function () {
+          return {
+              getPropertyValue: function () {
+                  return '';
+              },
+          };
+      },
+      Image: function () { },
+      Date: function () { },
+      screen: {},
+      setTimeout: function () { },
+      clearTimeout: function () { },
+      matchMedia: function () {
+          return {};
+      },
+  };
+  extend(win, ssrWindow);
 
   /**
-   * Dom7 2.1.3
+   * Dom7 2.1.5
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
-   * Copyright 2019, Vladimir Kharlampidi
+   * Copyright 2020, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
    *
    * Licensed under MIT
    *
-   * Released on: February 11, 2019
+   * Released on: May 15, 2020
    */
 
   var Dom7 = function Dom7(arr) {
@@ -2770,11 +2827,9 @@
 
   var Support = (function Support() {
     return {
-      touch: (function checkTouch() {
-        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
-      }()),
+      touch: !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch)),
 
-      pointerEvents: !!win.PointerEvent,
+      pointerEvents: !!win.PointerEvent && ('maxTouchPoints' in win.navigator) && win.navigator.maxTouchPoints >= 0,
 
       observer: (function checkObserver() {
         return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
@@ -2826,6 +2881,7 @@
       cordova: !!(win.cordova || win.phonegap),
       phonegap: !!(win.cordova || win.phonegap),
       electron: false,
+      nwjs: false,
     };
 
     var screenWidth = win.screen.width;
@@ -2840,20 +2896,26 @@
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
     var windows = platform === 'Win32';
     var electron = ua.toLowerCase().indexOf('electron') >= 0;
+    var nwjs = typeof nw !== 'undefined' && typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.nw !== 'undefined';
     var macos = platform === 'MacIntel';
 
     // iPadOs 13 fix
+    var iPadScreens = [
+      '1024x1366',
+      '1366x1024',
+      '834x1194',
+      '1194x834',
+      '834x1112',
+      '1112x834',
+      '768x1024',
+      '1024x768' ];
     if (!ipad
       && macos
       && Support.touch
-      && (
-        (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
-        || (screenWidth === 834 && screenHeight === 1194) // Pro 11
-        || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
-        || (screenWidth === 768 && screenHeight === 1024) // other
-      )
+      && iPadScreens.indexOf((screenWidth + "x" + screenHeight)) >= 0
     ) {
       ipad = ua.match(/(Version)\/([\d.]+)/);
+      if (!ipad) { ipad = [0, 1, '13_0_0']; }
       macos = false;
     }
 
@@ -2899,9 +2961,10 @@
     device.standalone = device.webView;
 
     // Desktop
-    device.desktop = !(device.ios || device.android) || electron;
+    device.desktop = !(device.ios || device.android) || electron || nwjs;
     if (device.desktop) {
       device.electron = electron;
+      device.nwjs = nwjs;
       device.macos = macos;
       device.windows = windows;
       if (device.macos) {
@@ -3188,7 +3251,7 @@
     if ( parameters === void 0 ) parameters = {};
 
     var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
+    var Constructor = parameters.constructor;
     var domProp = parameters.domProp;
     var app = parameters.app;
     var addMethods = parameters.addMethods;
@@ -3197,13 +3260,13 @@
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
 
-        if (app) { return new (Function.prototype.bind.apply( constructor, [ null ].concat( [app], args) )); }
-        return new (Function.prototype.bind.apply( constructor, [ null ].concat( args) ));
+        if (app) { return new (Function.prototype.bind.apply( Constructor, [ null ].concat( [app], args) )); }
+        return new (Function.prototype.bind.apply( Constructor, [ null ].concat( args) ));
       },
       get: function get(el) {
         if ( el === void 0 ) el = defaultSelector;
 
-        if (el instanceof constructor) { return el; }
+        if (el instanceof Constructor) { return el; }
         var $el = $(el);
         if ($el.length === 0) { return undefined; }
         return $el[0][domProp];
@@ -3234,30 +3297,66 @@
     if ( parameters === void 0 ) parameters = {};
 
     var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
+    var Constructor = parameters.constructor;
     var app = parameters.app;
     var methods = Utils.extend(
       ConstructorMethods({
         defaultSelector: defaultSelector,
-        constructor: constructor,
+        constructor: Constructor,
         app: app,
         domProp: 'f7Modal',
       }),
       {
-        open: function open(el, animate) {
+        open: function open(el, animate, targetEl) {
           var $el = $(el);
+          if ($el.length > 1 && targetEl) {
+            // check if same modal in other page
+            var $targetPage = $(targetEl).parents('.page');
+            if ($targetPage.length) {
+              $el.each(function (index, modalEl) {
+                var $modalEl = $(modalEl);
+                if ($modalEl.parents($targetPage)[0] === $targetPage[0]) {
+                  $el = $modalEl;
+                }
+              });
+            }
+          }
+          if ($el.length > 1) {
+            $el = $el.eq($el.length - 1);
+          }
           if (!$el.length) { return undefined; }
           var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
+          if (!instance) {
+            var params = $el.dataset();
+            instance = new Constructor(app, Object.assign({}, {el: $el}, params));
+          }
           return instance.open(animate);
         },
-        close: function close(el, animate) {
+        close: function close(el, animate, targetEl) {
           if ( el === void 0 ) el = defaultSelector;
 
           var $el = $(el);
           if (!$el.length) { return undefined; }
+          if ($el.length > 1) {
+            // check if close link (targetEl) in this modal
+            var $parentEl;
+            if (targetEl) {
+              var $targetEl = $(targetEl);
+              if ($targetEl.length) {
+                $parentEl = $targetEl.parents($el);
+              }
+            }
+            if ($parentEl && $parentEl.length > 0) {
+              $el = $parentEl;
+            } else {
+              $el = $el.eq($el.length - 1);
+            }
+          }
           var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
+          if (!instance) {
+            var params = $el.dataset();
+            instance = new Constructor(app, Object.assign({}, {el: $el}, params));
+          }
           return instance.close(animate);
         },
       }
@@ -3505,8 +3604,12 @@
         var html = doc.querySelector('html');
         if (media === DARK) {
           html.classList.add('theme-dark');
+          app.darkTheme = true;
+          app.emit('darkThemeChange', true);
         } else if (media === LIGHT) {
           html.classList.remove('theme-dark');
+          app.darkTheme = false;
+          app.emit('darkThemeChange', false);
         }
       };
 
@@ -3565,8 +3668,12 @@
       }
       if (app.mq.dark && app.mq.dark.matches) {
         html.classList.add('theme-dark');
+        app.darkTheme = true;
+        app.emit('darkThemeChange', true);
       } else if (app.mq.light && app.mq.light.matches) {
         html.classList.remove('theme-dark');
+        app.darkTheme = false;
+        app.emit('darkThemeChange', false);
       }
     };
 
@@ -3582,7 +3689,7 @@
       app.router.componentLoader(
         app.params.component,
         app.params.componentUrl,
-        { componentOptions: { el: app.root[0] } },
+        { componentOptions: { el: app.root[0], root: true } },
         function (el) {
           app.root = $(el);
           app.root[0].f7 = app;
@@ -4052,11 +4159,9 @@
       Utils.extend(xhr, options.xhrFields);
     }
 
-    var xhrTimeout;
 
     // Handle XHR
     xhr.onload = function onload() {
-      if (xhrTimeout) { clearTimeout(xhrTimeout); }
       if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
         var responseData;
         if (options.dataType === 'json') {
@@ -4086,21 +4191,17 @@
     };
 
     xhr.onerror = function onerror() {
-      if (xhrTimeout) { clearTimeout(xhrTimeout); }
       fireCallback('error', xhr, xhr.status, xhr.status);
       fireCallback('complete', xhr, 'error');
     };
 
     // Timeout
     if (options.timeout > 0) {
-      xhr.onabort = function onabort() {
-        if (xhrTimeout) { clearTimeout(xhrTimeout); }
-      };
-      xhrTimeout = setTimeout(function () {
-        xhr.abort();
+      xhr.timeout = options.timeout;
+      xhr.ontimeout = function () {
         fireCallback('error', xhr, 'timeout', 'timeout');
         fireCallback('complete', xhr, 'timeout');
-      }, options.timeout);
+      };
     }
 
     // Ajax start callback
@@ -5267,12 +5368,22 @@
     function animatableNavElements() {
       var els = [];
       var inverter = app.rtl ? -1 : 1;
+      var currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-transparent') && !$currentNavbarEl.hasClass('navbar-large') && !$currentNavbarEl.hasClass('navbar-transparent-visible');
       var currentNavIsLarge = $currentNavbarEl.hasClass('navbar-large');
       var currentNavIsCollapsed = $currentNavbarEl.hasClass('navbar-large-collapsed');
-      var currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-large-transparent');
+      var currentNavIsLargeTransparent = $currentNavbarEl.hasClass('navbar-large-transparent')
+        || (
+          $currentNavbarEl.hasClass('navbar-large')
+          && $currentNavbarEl.hasClass('navbar-transparent')
+        );
+      var previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-transparent') && !$previousNavbarEl.hasClass('navbar-large') && !$previousNavbarEl.hasClass('navbar-transparent-visible');
       var previousNavIsLarge = $previousNavbarEl.hasClass('navbar-large');
       var previousNavIsCollapsed = $previousNavbarEl.hasClass('navbar-large-collapsed');
-      var previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-large-transparent');
+      var previousNavIsLargeTransparent = $previousNavbarEl.hasClass('navbar-large-transparent')
+        || (
+          $previousNavbarEl.hasClass('navbar-large')
+          && $previousNavbarEl.hasClass('navbar-transparent')
+        );
       var fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
       var toLarge = previousNavIsLarge && !previousNavIsCollapsed;
       var $currentNavElements = $currentNavbarEl.find('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
@@ -5305,6 +5416,7 @@
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
           var isBg = $navEl.hasClass('navbar-bg');
+          if ((isTitle || isBg) && currentNavIsTransparent) { return; }
           if (!fromLarge && $navEl.hasClass('.title-large')) { return; }
           var el = {
             el: navEl,
@@ -5347,7 +5459,7 @@
             if (els.indexOf(el) < 0) { els.push(el); }
             if (!fromLarge && !toLarge) {
               if (currentNavIsCollapsed) {
-                if (currentNavIsTransparent) {
+                if (currentNavIsLargeTransparent) {
                   el.className = 'ios-swipeback-navbar-bg-large';
                 }
                 el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
@@ -5397,6 +5509,7 @@
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
           var isBg = $navEl.hasClass('navbar-bg');
+          if ((isTitle || isBg) && previousNavIsTransparent) { return; }
           var el = {
             el: navEl,
           };
@@ -5422,7 +5535,7 @@
             if (els.indexOf(el) < 0) { els.push(el); }
             if (!fromLarge && !toLarge) {
               if (previousNavIsCollapsed) {
-                if (previousNavIsTransparent) {
+                if (previousNavIsLargeTransparent) {
                   el.className = 'ios-swipeback-navbar-bg-large';
                 }
                 el.transform = function (progress) { return ("translateX(" + ((-100 + 100 * progress) * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
@@ -6114,6 +6227,8 @@
         .removeClass('navbar-previous navbar-current navbar-next')
         .addClass(("navbar-" + newPagePosition + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked');
+      $newNavbarEl.trigger('navbar:position', { position: newPagePosition });
+      router.emit('navbarPosition', $newNavbarEl[0], newPagePosition);
       if (isMaster || isDetail) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -6608,6 +6723,7 @@
     var url;
     var createRoute;
     var name;
+    var path;
     var query;
     var params;
     var route;
@@ -6617,20 +6733,16 @@
       url = navigateParams.url;
       createRoute = navigateParams.route;
       name = navigateParams.name;
+      path = navigateParams.path;
       query = navigateParams.query;
       params = navigateParams.params;
     }
-    if (name) {
-      // find route by name
-      route = router.findRouteByKey('name', name);
-      if (!route) {
-        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
-      }
-      url = router.constructRouteUrl(route, { params: params, query: query });
+    if (name || path) {
+      url = router.generateUrl({ path: path, name: name, params: params, query: query });
       if (url) {
         return router.navigate(url, navigateOptions);
       }
-      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      return router;
     }
     var app = router.app;
     appRouterCheck(router, 'navigate');
@@ -6766,7 +6878,7 @@
         }
       }
       if (preloadMaster || (masterLoaded && navigateOptions.reloadAll)) {
-        router.navigate(route.route.masterRoute.path, {
+        router.navigate({ path: route.route.masterRoute.path, params: route.params || {} }, {
           animate: false,
           reloadAll: navigateOptions.reloadAll,
           reloadCurrent: navigateOptions.reloadCurrent,
@@ -7359,6 +7471,8 @@
         .addClass(("navbar-previous" + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked')
         .removeAttr('aria-hidden');
+      $newNavbarEl.trigger('navbar:position', { position: 'previous' });
+      router.emit('navbarPosition', $newNavbarEl[0], 'previous');
       if (isMaster || isDetailRoot) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -7486,7 +7600,7 @@
         router.emit('pageMasterUnstack', $newPage[0]);
         if (dynamicNavbar) {
           $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
-          router.emi('navbarMasterUnstack', app.navbar.getElByPage($newPage));
+          router.emit('navbarMasterUnstack', app.navbar.getElByPage($newPage));
         }
       }
       // Page init and before init events
@@ -7783,12 +7897,7 @@
     var params = navigateOptions.params;
     var query = navigateOptions.query;
     if (name) {
-      // find route by name
-      route = router.findRouteByKey('name', name);
-      if (!route) {
-        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
-      }
-      navigateUrl = router.constructRouteUrl(route, { params: params, query: query });
+      navigateUrl = router.generateUrl({ name: name, params: params, query: query });
       if (navigateUrl) {
         return router.back(navigateUrl, Utils.extend({}, navigateOptions, {
           name: null,
@@ -7796,7 +7905,7 @@
           query: null,
         }));
       }
-      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      return router;
     }
 
     var app = router.app;
@@ -7822,7 +7931,11 @@
       if (modalToClose && modalToClose.$el) {
         var prevOpenedModals = modalToClose.$el.prevAll('.modal-in');
         if (prevOpenedModals.length && prevOpenedModals[0].f7Modal) {
-          previousRoute = prevOpenedModals[0].f7Modal.route;
+          var modalEl = prevOpenedModals[0];
+          // check if current router not inside of the modalEl
+          if (!router.$el.parents(modalEl).length) {
+            previousRoute = modalEl.f7Modal.route;
+          }
         }
       }
       if (!previousRoute) {
@@ -7876,11 +7989,16 @@
 
     var skipMaster;
     if (router.params.masterDetailBreakpoint > 0) {
+      var classes = [];
+      router.$el.children('.page').each(function (index, pageEl) {
+        classes.push(pageEl.className);
+      });
+
       var $previousMaster = router.$el.children('.page-current').prevAll('.page-master').eq(0);
       if ($previousMaster.length) {
         var expectedPreviousPageUrl = router.history[router.history.length - 2];
         var expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);
-        if (expectedPreviousPageRoute && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
+        if (expectedPreviousPageRoute && $previousMaster[0].f7Page && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
           $previousPage = $previousMaster;
           if (!navigateOptions.preload) {
             skipMaster = app.width >= router.params.masterDetailBreakpoint;
@@ -7888,6 +8006,7 @@
         }
       }
     }
+
     if (!navigateOptions.force && $previousPage.length && !skipMaster) {
       if (router.params.pushState
         && $previousPage[0].f7Page
@@ -8369,12 +8488,12 @@
           if ($oldNavbarEl) {
             $oldNavbarEl.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
           }
-          if ($newNavbarEl.hasClass('sliding')) {
+          if ($newNavbarEl.hasClass('sliding') || $newNavbarEl.children('.navbar-inner.sliding').length) {
             $newNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
           } else {
             $newNavbarEl.find('.sliding').transform('');
           }
-          if ($oldNavbarEl.hasClass('sliding')) {
+          if ($oldNavbarEl.hasClass('sliding') || $oldNavbarEl.children('.navbar-inner.sliding').length) {
             $oldNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
           } else {
             $oldNavbarEl.find('.sliding').transform('');
@@ -8570,6 +8689,38 @@
         url: url,
         path: path,
       };
+    };
+
+    Router.prototype.generateUrl = function generateUrl (parameters) {
+      if ( parameters === void 0 ) parameters = {};
+
+      if (typeof parameters === 'string') {
+        return parameters;
+      }
+      var name = parameters.name;
+      var path = parameters.path;
+      var params = parameters.params;
+      var query = parameters.query;
+      if (!name && !path) {
+        throw new Error('Framework7: "name" or "path" parameter is required');
+      }
+      var router = this;
+      var route = name
+        ? router.findRouteByKey('name', name)
+        : router.findRouteByKey('path', path);
+
+      if (!route) {
+        if (name) {
+          throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+        } else {
+          throw new Error(("Framework7: route with path \"" + path + "\" not found"));
+        }
+      }
+      var url = router.constructRouteUrl(route, { params: params, query: query });
+      if (!url) {
+        throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      }
+      return url;
     };
 
     // eslint-disable-next-line
@@ -9350,6 +9501,144 @@
     },
   };
 
+  function resizableView(view) {
+    var app = view.app;
+    if (view.resizableInitialized) { return; }
+    Utils.extend(view, {
+      resizable: true,
+      resizableWidth: null,
+      resizableInitialized: true,
+    });
+    var $htmlEl = $('html');
+    var $el = view.$el;
+    if (!$el) { return; }
+
+    var $resizeHandlerEl;
+
+    var isTouched;
+    var isMoved;
+    var touchesStart = {};
+    var touchesDiff;
+    var width;
+
+    var minWidth;
+    var maxWidth;
+
+    function transformCSSWidth(v) {
+      if (!v) { return null; }
+      if (v.indexOf('%') >= 0 || v.indexOf('vw') >= 0) {
+        return parseInt(v, 10) / 100 * app.width;
+      }
+      var newV = parseInt(v, 10);
+      if (Number.isNaN(newV)) { return null; }
+      return newV;
+    }
+
+    function isResizable() {
+      return view.resizable && $el.hasClass('view-resizable') && $el.hasClass('view-master-detail');
+    }
+
+    function handleTouchStart(e) {
+      if (!isResizable()) { return; }
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isMoved = false;
+      isTouched = true;
+      var $pageMasterEl = $el.children('.page-master');
+      minWidth = transformCSSWidth($pageMasterEl.css('min-width'));
+      maxWidth = transformCSSWidth($pageMasterEl.css('max-width'));
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) { return; }
+      e.f7PreventSwipePanel = true;
+      var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+
+      if (!isMoved) {
+        width = $resizeHandlerEl[0].offsetLeft + $resizeHandlerEl[0].offsetWidth;
+        $el.addClass('view-resizing');
+        $htmlEl.css('cursor', 'col-resize');
+      }
+
+      isMoved = true;
+
+      e.preventDefault();
+
+      touchesDiff = (pageX - touchesStart.x);
+
+      var newWidth = width + touchesDiff;
+      if (minWidth && !Number.isNaN(minWidth)) {
+        newWidth = Math.max(newWidth, minWidth);
+      }
+      if (maxWidth && !Number.isNaN(maxWidth)) {
+        newWidth = Math.min(newWidth, maxWidth);
+      }
+      newWidth = Math.min(Math.max(newWidth, 0), app.width);
+
+      view.resizableWidth = newWidth;
+      $htmlEl[0].style.setProperty('--f7-page-master-width', (newWidth + "px"));
+
+      $el.trigger('view:resize', newWidth);
+      view.emit('local::resize viewResize', view, newWidth);
+    }
+    function handleTouchEnd() {
+      $('html').css('cursor', '');
+      if (!isTouched || !isMoved) {
+        isTouched = false;
+        isMoved = false;
+        return;
+      }
+      isTouched = false;
+      isMoved = false;
+
+      $htmlEl[0].style.setProperty('--f7-page-master-width', ((view.resizableWidth) + "px"));
+      $el.removeClass('view-resizing');
+    }
+
+    function handleResize() {
+      if (!view.resizableWidth) { return; }
+      minWidth = transformCSSWidth($resizeHandlerEl.css('min-width'));
+      maxWidth = transformCSSWidth($resizeHandlerEl.css('max-width'));
+
+      if (minWidth && !Number.isNaN(minWidth) && view.resizableWidth < minWidth) {
+        view.resizableWidth = Math.max(view.resizableWidth, minWidth);
+      }
+      if (maxWidth && !Number.isNaN(maxWidth) && view.resizableWidth > maxWidth) {
+        view.resizableWidth = Math.min(view.resizableWidth, maxWidth);
+      }
+      view.resizableWidth = Math.min(Math.max(view.resizableWidth, 0), app.width);
+
+      $htmlEl[0].style.setProperty('--f7-page-master-width', ((view.resizableWidth) + "px"));
+    }
+
+    $resizeHandlerEl = view.$el.children('.view-resize-handler');
+    if (!$resizeHandlerEl.length) {
+      view.$el.append('<div class="view-resize-handler"></div>');
+      $resizeHandlerEl = view.$el.children('.view-resize-handler');
+    }
+    view.$resizeHandlerEl = $resizeHandlerEl;
+
+    $el.addClass('view-resizable');
+
+    // Add Events
+    var passive = Support.passiveListener ? { passive: true } : false;
+
+    view.$el.on(app.touchEvents.start, '.view-resize-handler', handleTouchStart, passive);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
+    app.on('resize', handleResize);
+    view.on('beforeOpen', handleResize);
+
+    view.once('viewDestroy', function () {
+      $el.removeClass('view-resizable');
+      view.$resizeHandlerEl.remove();
+      view.$el.off(app.touchEvents.start, '.view-resize-handler', handleTouchStart, passive);
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
+      app.off('resize', handleResize);
+      view.off('beforeOpen', handleResize);
+    });
+  }
+
   var View = /*@__PURE__*/(function (Framework7Class) {
     function View(appInstance, el, viewParams) {
       if ( viewParams === void 0 ) viewParams = {};
@@ -9522,6 +9811,9 @@
       var app = view.app;
       view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
       view.checkMasterDetailBreakpoint();
+      if (view.params.masterDetailResizable) {
+        resizableView(view);
+      }
       app.on('resize', view.checkMasterDetailBreakpoint);
     };
 
@@ -9769,6 +10061,9 @@
           if (options.componentOptions && options.componentOptions.el) {
             componentOptions.el = options.componentOptions.el;
           }
+          if (options.componentOptions && options.componentOptions.root) {
+            componentOptions.root = options.componentOptions.root;
+          }
           app.component.create(componentOptions, extendContext)
             .then(function (createdComponent) {
               resolve(createdComponent.el);
@@ -9906,8 +10201,8 @@
   /* eslint no-use-before-define: "off" */
 
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-  var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
-  var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
+  var propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(' ');
+  var booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(' ');
   var tempDomDIV = doc.createElement('div');
   var tempDomTBODY;
   var tempDomTROW;
@@ -10952,6 +11247,7 @@
         $id: options.isClassComponent ? self.constructor.id : (options.id || id),
         $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
         $children: children || [],
+        $isRootComponent: !!options.root,
       }
     );
     var $options = self.$options;
@@ -10990,7 +11286,16 @@
       enumerable: true,
       configurable: true,
       get: function get() {
-        if (app.rootComponent) { return app.rootComponent; }
+        if (self.$isRootComponent) {
+          return self;
+        }
+        if (app.rootComponent) {
+          if (!self.$onRootUpdated) {
+            self.$onRootUpdated = function () { return self.$update(); };
+            app.on('rootComponentUpdated', self.$onRootUpdated);
+          }
+          return app.rootComponent;
+        }
         var root = Utils.merge({}, app.data, app.methods);
         if (win && win.Proxy) {
           root = new win.Proxy(root, {
@@ -11233,6 +11538,9 @@
       function resolver() {
         resolve();
         if (callback) { callback(); }
+        if (self.$isRootComponent) {
+          self.$f7.emit('rootComponentUpdated');
+        }
       }
       self.__updateIsPending = true;
       self.__updateQueue.push(resolver);
@@ -11273,6 +11581,11 @@
     self.$hook('beforeDestroy');
 
     if (self.$styleEl) { $(self.$styleEl).remove(); }
+    if (self.$onRootUpdated) {
+      self.$f7.off('rootComponentUpdated', self.$onRootUpdated);
+      delete self.$onRootUpdated;
+    }
+
     self.$detachEvents();
     self.$hook('destroyed');
     // Delete component instance
@@ -11469,8 +11782,10 @@
         },
         create: function create(options, context, children) {
           if (typeof options === 'function') {
+            var root = options.root;
+            var el = options.el;
             // eslint-disable-next-line
-            return new options(app, { isClassComponent: true }, context, children);
+            return new options(app, { isClassComponent: true, root: root, el: el }, context, children);
           }
           return new Component(app, options, context, children);
         },
@@ -11728,11 +12043,17 @@
     if ($viewsEl.length === 0) { $viewsEl = app.root; }
     // Find active view as tab
     var $viewEl = $viewsEl.children('.view');
+    if ($viewEl.length === 0) {
+      $viewEl = $viewsEl.children('.tabs').children('.view');
+    }
     // Propably in tabs or split view
     if ($viewEl.length > 1) {
       if ($viewEl.hasClass('tab')) {
         // Tabs
         $viewEl = $viewsEl.children('.view.tab-active');
+        if ($viewEl.length === 0) {
+          $viewEl = $viewsEl.children('.tabs').children('.view.tab-active');
+        }
       }
     }
     if ($popoverView.length > 0 && $popoverView[0].f7View) { return $popoverView[0].f7View; }
@@ -11766,6 +12087,7 @@
         reloadPages: false,
         reloadDetail: false,
         masterDetailBreakpoint: 0,
+        masterDetailResizable: false,
         removeElements: true,
         removeElementsWithTimeout: false,
         removeElementsTimeout: 0,
@@ -11897,8 +12219,11 @@
         return;
       }
 
+      var $innerEl = $el.children('.navbar-inner');
+      if (!$innerEl.length) { return; }
+
       var needCenterTitle = (
-        $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+        $innerEl.hasClass('navbar-inner-centered-title')
         || app.params.navbar[((app.theme) + "CenterTitle")]
       );
       var needLeftTitle = app.theme === 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")];
@@ -11915,14 +12240,13 @@
       }
 
       if (app.theme !== 'ios' && app.params.navbar[((app.theme) + "CenterTitle")]) {
-        $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
+        $innerEl.addClass('navbar-inner-centered-title');
       }
       if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-        $el.children('.navbar-inner').addClass('navbar-inner-left-title');
+        $innerEl.addClass('navbar-inner-left-title');
       }
 
       var $viewEl = $el.parents('.view').eq(0);
-      var $innerEl = $el.children('.navbar-inner');
       var left = app.rtl ? $innerEl.children('.right') : $innerEl.children('.left');
       var right = app.rtl ? $innerEl.children('.left') : $innerEl.children('.right');
       var title = $innerEl.children('.title');
@@ -12180,7 +12504,7 @@
         app.navbar.collapseLargeTitle($navbarEl);
       }
     },
-    initNavbarOnScroll: function initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse) {
+    initNavbarOnScroll: function initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse, needTransparent) {
       var app = this;
       var $pageEl = $(pageEl);
       var $navbarEl = $(navbarEl);
@@ -12188,6 +12512,7 @@
       var isLarge = $titleLargeEl.length || $navbarEl.hasClass('.navbar-large');
       var navbarHideHeight = 44;
       var snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
+      var snapPageScrollToTransparentNavbar = app.params.navbar.snapPageScrollToTransparentNavbar;
 
       var previousScrollTop;
       var currentScrollTop;
@@ -12200,6 +12525,9 @@
 
       var navbarCollapsed;
       var navbarTitleLargeHeight;
+
+      var navbarOffsetHeight;
+
       if (needCollapse || (needHide && isLarge)) {
         navbarTitleLargeHeight = $navbarEl.css('--f7-navbar-large-title-height');
 
@@ -12243,15 +12571,83 @@
         }
       }
 
+      function snapTransparentNavbar() {
+        var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+        if (inSearchbarExpanded) { return; }
+        if (!scrollContent || currentScrollTop < 0) { return; }
+        if (currentScrollTop >= navbarOffsetHeight / 2 && currentScrollTop < navbarOffsetHeight) {
+          $(scrollContent).scrollTop(navbarOffsetHeight, 100);
+        } else if (currentScrollTop < navbarOffsetHeight) {
+          $(scrollContent).scrollTop(0, 200);
+        }
+      }
+
+      function handleNavbarTransparent() {
+        var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+        var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+        if (inSearchbarExpanded || isHidden) { return; }
+        if (!navbarOffsetHeight) {
+          navbarOffsetHeight = navbarEl.offsetHeight;
+        }
+        var opacity = currentScrollTop / navbarOffsetHeight;
+        var notTransparent = $navbarEl.hasClass('navbar-transparent-visible');
+        opacity = Math.max(Math.min(opacity, 1), 0);
+
+        if ((notTransparent && opacity === 1) || (!notTransparent && opacity === 0)) {
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+        if (notTransparent && opacity === 0) {
+          $navbarEl.trigger('navbar:transparenthide');
+          app.emit('navbarTransparentHide', $navbarEl[0]);
+          $navbarEl.removeClass('navbar-transparent-visible');
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+        if (!notTransparent && opacity === 1) {
+          $navbarEl.trigger('navbar:transparentshow');
+          app.emit('navbarTransparentShow', $navbarEl[0]);
+          $navbarEl.addClass('navbar-transparent-visible');
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+
+        $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
+
+        if (snapPageScrollToTransparentNavbar) {
+          if (!Support.touch) {
+            clearTimeout(scrollTimeoutId);
+            scrollTimeoutId = setTimeout(function () {
+              snapTransparentNavbar();
+            }, desktopSnapTimeout);
+          } else if (touchEndTimeoutId) {
+            clearTimeout(touchEndTimeoutId);
+            touchEndTimeoutId = null;
+            touchEndTimeoutId = setTimeout(function () {
+              snapTransparentNavbar();
+              clearTimeout(touchEndTimeoutId);
+              touchEndTimeoutId = null;
+            }, touchSnapTimeout);
+          }
+        }
+      }
+
+      var previousCollapseProgress = null;
+      var collapseProgress = null;
       function handleLargeNavbarCollapse() {
         var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
         if (isHidden) { return; }
-        var isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent');
-        var collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        var isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent')
+          || (
+            $navbarEl.hasClass('navbar-large')
+            && $navbarEl.hasClass('navbar-transparent')
+          );
+        previousCollapseProgress = collapseProgress;
+        collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        var previousCollapseWasInMiddle = previousCollapseProgress > 0 && previousCollapseProgress < 1;
         var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
         if (inSearchbarExpanded) { return; }
         navbarCollapsed = $navbarEl.hasClass('navbar-large-collapsed');
-
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarEl[0]);
         } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -12259,8 +12655,9 @@
         }
         if (
           (collapseProgress === 0 && navbarCollapsed)
+          || (collapseProgress === 0 && previousCollapseWasInMiddle)
           || (collapseProgress === 1 && !navbarCollapsed)
-          // || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+          || (collapseProgress === 1 && previousCollapseWasInMiddle)
         ) {
           if (app.theme === 'md') {
             $navbarEl.find('.navbar-inner').css('overflow', '');
@@ -12304,6 +12701,7 @@
       }
 
       function handleTitleHideShow() {
+        if ($pageEl.hasClass('page-with-card-opened')) { return; }
         scrollHeight = scrollContent.scrollHeight;
         offsetHeight = scrollContent.offsetHeight;
         reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
@@ -12341,9 +12739,10 @@
         }
         currentScrollTop = scrollContent.scrollTop;
         scrollChanged = currentScrollTop;
-
         if (needCollapse) {
           handleLargeNavbarCollapse();
+        } else if (needTransparent) {
+          handleNavbarTransparent();
         }
         if ($pageEl.hasClass('page-previous')) { return; }
         if (needHide) {
@@ -12358,14 +12757,18 @@
         touchEndTimeoutId = null;
         touchEndTimeoutId = setTimeout(function () {
           if (scrollChanged !== false) {
-            snapLargeNavbar();
+            if (needTransparent && !needCollapse) {
+              snapTransparentNavbar();
+            } else {
+              snapLargeNavbar();
+            }
             clearTimeout(touchEndTimeoutId);
             touchEndTimeoutId = null;
           }
         }, touchSnapTimeout);
       }
       $pageEl.on('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+      if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
         app.on('touchstart:passive', handeTouchStart);
         app.on('touchend:passive', handleTouchEnd);
       }
@@ -12373,11 +12776,15 @@
         $pageEl.find('.page-content').each(function (pageContentIndex, pageContentEl) {
           if (pageContentEl.scrollTop > 0) { handleScroll.call(pageContentEl); }
         });
+      } else if (needTransparent) {
+        $pageEl.find('.page-content').each(function (pageContentIndex, pageContentEl) {
+          if (pageContentEl.scrollTop > 0) { handleScroll.call(pageContentEl); }
+        });
       }
       $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
         delete $pageEl[0].f7DetachNavbarScrollHandlers;
         $pageEl.off('scroll', '.page-content', handleScroll, true);
-        if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+        if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
           app.off('touchstart:passive', handeTouchStart);
           app.off('touchend:passive', handleTouchEnd);
         }
@@ -12413,10 +12820,11 @@
         showOnPageScrollTop: true,
         collapseLargeTitleOnScroll: true,
         snapPageScrollToLargeTitle: true,
+        snapPageScrollToTransparentNavbar: true,
       },
     },
     on: {
-      'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
+      'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
         var app = this;
         $('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
@@ -12469,6 +12877,12 @@
           page.$el.addClass('page-with-navbar-large');
         }
 
+        // Need transparent on scroll
+        var needTransparentOnScroll;
+        if (!needCollapseOnScrollHandler && $navbarEl.hasClass('navbar-transparent')) {
+          needTransparentOnScroll = true;
+        }
+
         // Need Hide On Scroll
         var needHideOnScrollHandler;
         if (
@@ -12490,8 +12904,8 @@
           }
         }
 
-        if (needCollapseOnScrollHandler || needHideOnScrollHandler) {
-          app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
+        if (needCollapseOnScrollHandler || needHideOnScrollHandler || needTransparentOnScroll) {
+          app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler, needTransparentOnScroll);
         }
       },
       'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
@@ -12636,7 +13050,7 @@
       $el.trigger('toolbar:show');
       app.emit('toolbarShow', $el[0]);
     },
-    initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
+    initToolbarOnScroll: function initToolbarOnScroll(pageEl) {
       var app = this;
       var $pageEl = $(pageEl);
       var $toolbarEl = $pageEl.parents('.view').children('.toolbar');
@@ -12659,11 +13073,12 @@
       var action;
       var toolbarHidden;
       function handleScroll(e) {
+        if ($pageEl.hasClass('page-with-card-opened')) { return; }
+        if ($pageEl.hasClass('page-previous')) { return; }
         var scrollContent = this;
         if (e && e.target && e.target !== scrollContent) {
           return;
         }
-        if ($pageEl.hasClass('page-previous')) { return; }
         currentScrollTop = scrollContent.scrollTop;
         scrollHeight = scrollContent.scrollHeight;
         offsetHeight = scrollContent.offsetHeight;
@@ -12709,7 +13124,7 @@
           hide: Toolbar.hide.bind(app),
           show: Toolbar.show.bind(app),
           setHighlight: Toolbar.setHighlight.bind(app),
-          initHideToolbarOnScroll: Toolbar.initHideToolbarOnScroll.bind(app),
+          initToolbarOnScroll: Toolbar.initToolbarOnScroll.bind(app),
           init: Toolbar.init.bind(app),
         },
       });
@@ -12765,7 +13180,7 @@
           ) {
             return;
           }
-          app.toolbar.initHideToolbarOnScroll(page.el);
+          app.toolbar.initToolbarOnScroll(page.el);
         }
       },
       init: function init() {
@@ -13807,7 +14222,7 @@
       var pageContentOffsetHeight;
       var pageContentScrollHeight;
       var popupHeight;
-      var $pushViewEl;
+      var $pushEl;
 
       function handleTouchStart(e) {
         if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) { return; }
@@ -13858,7 +14273,10 @@
         if (!isMoved) {
           if (isPush && pushOffset) {
             popupHeight = $el[0].offsetHeight;
-            $pushViewEl = app.root.children('.view, .views');
+            $pushEl = $el.prevAll('.popup.modal-in').eq(0);
+            if ($pushEl.length === 0) {
+              $pushEl = app.root.children('.view, .views');
+            }
           }
           if (pageContentEl) {
             pageContentScrollTop = pageContentEl.scrollTop;
@@ -13877,12 +14295,30 @@
             }
           }
           isMoved = true;
+          popup.emit('local::swipeStart popupSwipeStart', popup);
+          popup.$el.trigger('popup:swipestart');
+        } else {
+          popup.emit('local::swipeMove popupSwipeMove', popup);
+          popup.$el.trigger('popup:swipemove');
         }
+
         e.preventDefault();
         if (isPush && pushOffset) {
           var pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
           var scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
-          $pushViewEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+          if ($pushEl.hasClass('popup')) {
+            if ($pushEl.hasClass('popup-push')) {
+              $pushEl.transition(0).transform(
+                ("translate3d(0, calc(-1 * " + pushProgress + " * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(" + scale + ")")
+              );
+            } else {
+              $pushEl.transition(0).transform(
+                ("translate3d(0, 0px , 0px) scale(" + scale + ")")
+              );
+            }
+          } else {
+            $pushEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+          }
         }
         $el.transition(0).transform(("translate3d(0," + (-touchesDiff) + "px,0)"));
       }
@@ -13891,11 +14327,13 @@
         if (!isMoved) {
           return;
         }
+        popup.emit('local::swipeEnd popupSwipeEnd', popup);
+        popup.$el.trigger('popup:swipeend');
         isMoved = false;
         allowSwipeToClose = false;
         $el.transition('');
         if (isPush && pushOffset) {
-          $pushViewEl.transition('').transform('');
+          $pushEl.transition('').transform('');
         }
         var direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
         if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
@@ -13913,6 +14351,8 @@
               $el.addClass('swipe-close-to-top');
             }
             $el.transform('');
+            popup.emit('local::swipeclose popupSwipeClose', popup);
+            popup.$el.trigger('popup:swipeclose');
             popup.close();
             allowSwipeToClose = true;
           });
@@ -13934,10 +14374,14 @@
         });
       }
 
+      var hasPreviousPushPopup;
+
       popup.on('open', function () {
+        hasPreviousPushPopup = false;
         if (popup.params.closeOnEscape) {
           $(doc).on('keydown', onKeyDown);
         }
+        $el.prevAll('.popup.modal-in').addClass('popup-behind');
         if (popup.push) {
           isPush = popup.push && (
             (app.width < 630 || app.height < 630)
@@ -13961,19 +14405,21 @@
         }
       });
       popup.on('close', function () {
+        hasPreviousPushPopup = popup.$el.prevAll('.popup-push.modal-in').length > 0;
         if (popup.params.closeOnEscape) {
           $(doc).off('keydown', onKeyDown);
         }
         if (popup.params.closeByBackdropClick) {
           app.off('click', handleClick);
         }
-        if (isPush && pushOffset) {
+        $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
+        if (isPush && pushOffset && !hasPreviousPushPopup) {
           popup.$htmlEl.removeClass('with-modal-popup-push');
           popup.$htmlEl.addClass('with-modal-popup-push-closing');
         }
       });
       popup.on('closed', function () {
-        if (isPush && pushOffset) {
+        if (isPush && pushOffset && !hasPreviousPushPopup) {
           popup.$htmlEl.removeClass('with-modal-popup-push-closing');
           popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
         }
@@ -14013,6 +14459,7 @@
         app: app,
         constructor: Popup,
         defaultSelector: '.popup.modal-in',
+        parentSelector: '.popup',
       });
     },
     clicks: {
@@ -14020,13 +14467,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popup.open(data.popup, data.animate);
+        app.popup.open(data.popup, data.animate, $clickedEl);
       },
       '.popup-close': function closePopup($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popup.close(data.popup, data.animate);
+        app.popup.close(data.popup, data.animate, $clickedEl);
       },
     },
   };
@@ -14097,13 +14544,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.loginScreen.open(data.loginScreen, data.animate);
+        app.loginScreen.open(data.loginScreen, data.animate, $clickedEl);
       },
       '.login-screen-close': function closeLoginScreen($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.loginScreen.close(data.loginScreen, data.animate);
+        app.loginScreen.close(data.loginScreen, data.animate, $clickedEl);
       },
     },
   };
@@ -14425,8 +14872,32 @@
         {
           open: function open(popoverEl, targetEl, animate) {
             var $popoverEl = $(popoverEl);
+            if ($popoverEl.length > 1) {
+              // check if same popover in other page
+              var $targetPage = $(targetEl).parents('.page');
+              if ($targetPage.length) {
+                $popoverEl.each(function (index, el) {
+                  var $el = $(el);
+                  if ($el.parents($targetPage)[0] === $targetPage[0]) {
+                    $popoverEl = $el;
+                  }
+                });
+              }
+            }
+            if ($popoverEl.length > 1) {
+              $popoverEl = $popoverEl.eq($popoverEl.length - 1);
+            }
             var popover = $popoverEl[0].f7Modal;
-            if (!popover) { popover = new Popover(app, { el: $popoverEl, targetEl: targetEl }); }
+            var data = $popoverEl.dataset();
+            if (!popover) {
+              popover = new Popover(app, Object.assign(
+                {
+                  el: $popoverEl,
+                  targetEl: targetEl,
+                },
+                data
+              ));
+            }
             return popover.open(targetEl, animate);
           },
         }
@@ -14443,7 +14914,7 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popover.close(data.popover, data.animate);
+        app.popover.close(data.popover, data.animate, $clickedEl);
       },
     },
   };
@@ -14556,6 +15027,36 @@
             targetY: targetY,
             targetWidth: targetWidth,
             targetHeight: targetHeight,
+            on: {
+              open: function open() {
+                if (!actions.$el) {
+                  actions.$el = popover.$el;
+                }
+                actions.$el.trigger(("modal:open " + (actions.type.toLowerCase()) + ":open"));
+                actions.emit(("local::open modalOpen " + (actions.type) + "Open"), actions);
+              },
+              opened: function opened() {
+                if (!actions.$el) {
+                  actions.$el = popover.$el;
+                }
+                actions.$el.trigger(("modal:opened " + (actions.type.toLowerCase()) + ":opened"));
+                actions.emit(("local::opened modalOpened " + (actions.type) + "Opened"), actions);
+              },
+              close: function close() {
+                if (!actions.$el) {
+                  actions.$el = popover.$el;
+                }
+                actions.$el.trigger(("modal:close " + (actions.type.toLowerCase()) + ":close"));
+                actions.emit(("local::close modalClose " + (actions.type) + "Close"), actions);
+              },
+              closed: function closed() {
+                if (!actions.$el) {
+                  actions.$el = popover.$el;
+                }
+                actions.$el.trigger(("modal:closed " + (actions.type.toLowerCase()) + ":closed"));
+                actions.emit(("local::closed modalClosed " + (actions.type) + "Closed"), actions);
+              },
+            },
           });
           popover.open(animate);
           popover.once('popoverOpened', function () {
@@ -14670,7 +15171,8 @@
       var actions = this;
       if (actions.params.render) { return actions.params.render.call(actions, actions); }
       var groups = actions.groups;
-      return ("\n      <div class=\"actions-modal" + (actions.params.grid ? ' actions-grid' : '') + "\">\n        " + (groups.map(function (group) { return ("<div class=\"actions-group\">\n            " + (group.map(function (button) {
+      var cssClass = actions.params.cssClass;
+      return ("\n      <div class=\"actions-modal" + (actions.params.grid ? ' actions-grid' : '') + " " + (cssClass || '') + "\">\n        " + (groups.map(function (group) { return ("<div class=\"actions-group\">\n            " + (group.map(function (button) {
                 var buttonClasses = [("actions-" + (button.label ? 'label' : 'button'))];
                 var color = button.color;
                 var bg = button.bg;
@@ -14694,7 +15196,8 @@
       var actions = this;
       if (actions.params.renderPopover) { return actions.params.renderPopover.call(actions, actions); }
       var groups = actions.groups;
-      return ("\n      <div class=\"popover popover-from-actions\">\n        <div class=\"popover-inner\">\n          " + (groups.map(function (group) { return ("\n            <div class=\"list\">\n              <ul>\n                " + (group.map(function (button) {
+      var cssClass = actions.params.cssClass;
+      return ("\n      <div class=\"popover popover-from-actions " + (cssClass || '') + "\">\n        <div class=\"popover-inner\">\n          " + (groups.map(function (group) { return ("\n            <div class=\"list\">\n              <ul>\n                " + (group.map(function (button) {
                     var itemClasses = [];
                     var color = button.color;
                     var bg = button.bg;
@@ -14731,6 +15234,7 @@
         forceToPopover: false,
         backdrop: true,
         backdropEl: undefined,
+        cssClass: null,
         closeByBackdropClick: true,
         closeOnEscape: false,
         render: null,
@@ -14753,13 +15257,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.actions.open(data.actions, data.animate);
+        app.actions.open(data.actions, data.animate, $clickedEl);
       },
       '.actions-close': function closeActions($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.actions.close(data.actions, data.animate);
+        app.actions.close(data.actions, data.animate, $clickedEl);
       },
     },
   };
@@ -14953,7 +15457,6 @@
         touchesDiff = startTouch.y - currentTouch.y;
 
         var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
-
 
         if (!isMoved) {
           if (sheetPageContentEl && !$el.hasClass('modal-in-swipe-step')) {
@@ -15173,6 +15676,7 @@
         if (sheet.params.closeOnEscape) {
           $(doc).on('keydown', onKeyDown);
         }
+        $el.prevAll('.popup.modal-in').addClass('popup-behind');
         if (sheet.params.swipeToStep) {
           sheet.setSwipeStep(false);
           app.on('resize', onResize);
@@ -15216,6 +15720,7 @@
         if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
           app.off('click', handleClick);
         }
+        $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
         if (sheet.push && pushOffset) {
           sheet.$htmlEl.removeClass('with-modal-sheet-push');
           sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
@@ -15316,13 +15821,13 @@
         if ($('.sheet-modal.modal-in').length > 0 && data.sheet && $(data.sheet)[0] !== $('.sheet-modal.modal-in')[0]) {
           app.sheet.close('.sheet-modal.modal-in');
         }
-        app.sheet.open(data.sheet, data.animate);
+        app.sheet.open(data.sheet, data.animate, $clickedEl);
       },
       '.sheet-close': function closeSheet($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.sheet.close(data.sheet, data.animate);
+        app.sheet.close(data.sheet, data.animate, $clickedEl);
       },
     },
   };
@@ -15421,13 +15926,17 @@
       if (toast.params.render) { return toast.params.render.call(toast, toast); }
       var ref = toast.params;
       var position = ref.position;
+      var horizontalPosition = ref.horizontalPosition;
       var cssClass = ref.cssClass;
       var icon = ref.icon;
       var text = ref.text;
       var closeButton = ref.closeButton;
       var closeButtonColor = ref.closeButtonColor;
       var closeButtonText = ref.closeButtonText;
-      return ("\n      <div class=\"toast toast-" + position + " " + (cssClass || '') + " " + (icon ? 'toast-with-icon' : '') + "\">\n        <div class=\"toast-content\">\n          " + (icon ? ("<div class=\"toast-icon\">" + icon + "</div>") : '') + "\n          <div class=\"toast-text\">" + text + "</div>\n          " + (closeButton && !icon ? ("\n          <a class=\"toast-button button " + (closeButtonColor ? ("color-" + closeButtonColor) : '') + "\">" + closeButtonText + "</a>\n          ").trim() : '') + "\n        </div>\n      </div>\n    ").trim();
+      var horizontalClass = position === 'top' || position === 'bottom'
+        ? ("toast-horizontal-" + horizontalPosition)
+        : '';
+      return ("\n      <div class=\"toast toast-" + position + " " + horizontalClass + " " + (cssClass || '') + " " + (icon ? 'toast-with-icon' : '') + "\">\n        <div class=\"toast-content\">\n          " + (icon ? ("<div class=\"toast-icon\">" + icon + "</div>") : '') + "\n          <div class=\"toast-text\">" + text + "</div>\n          " + (closeButton && !icon ? ("\n          <a class=\"toast-button button " + (closeButtonColor ? ("color-" + closeButtonColor) : '') + "\">" + closeButtonText + "</a>\n          ").trim() : '') + "\n        </div>\n      </div>\n    ").trim();
     };
 
     return Toast;
@@ -15463,6 +15972,7 @@
         icon: null,
         text: null,
         position: 'bottom',
+        horizontalPosition: 'left',
         closeButton: false,
         closeButtonColor: null,
         closeButtonText: 'Ok',
@@ -15492,12 +16002,25 @@
       app.root.append(("\n      <div class=\"preloader-backdrop\"></div>\n      <div class=\"preloader-modal\">\n        <div class=\"preloader color-" + color + "\">" + preloaderInner + "</div>\n      </div>\n    "));
       Preloader.visible = true;
     },
+    showIn: function showIn(el, color) {
+      if ( color === void 0 ) color = 'white';
+
+      var app = this;
+      var preloaderInner = Utils[((app.theme) + "PreloaderContent")] || '';
+      $(el || 'html').addClass('with-modal-preloader');
+      $(el || app.root).append(("\n      <div class=\"preloader-backdrop\"></div>\n      <div class=\"preloader-modal\">\n        <div class=\"preloader color-" + color + "\">" + preloaderInner + "</div>\n      </div>\n    "));
+    },
     hide: function hide() {
       var app = this;
       if (!Preloader.visible) { return; }
       $('html').removeClass('with-modal-preloader');
       app.root.find('.preloader-backdrop, .preloader-modal').remove();
       Preloader.visible = false;
+    },
+    hideIn: function hideIn(el) {
+      var app = this;
+      $(el || 'html').removeClass('with-modal-preloader');
+      $(el || app.root).find('.preloader-backdrop, .preloader-modal').remove();
     },
   };
   var Preloader$1 = {
@@ -15509,6 +16032,8 @@
           init: Preloader.init.bind(app),
           show: Preloader.show.bind(app),
           hide: Preloader.hide.bind(app),
+          showIn: Preloader.showIn.bind(app),
+          hideIn: Preloader.hideIn.bind(app),
         },
       });
     },
@@ -16807,23 +17332,25 @@
       var $popupEl;
       vl.attachEvents = function attachEvents() {
         $pageEl = vl.$el.parents('.page').eq(0);
-        $tabEl = vl.$el.parents('.tab').eq(0);
+        $tabEl = vl.$el.parents('.tab').filter(function (tabElIndex, tabEl) {
+          return $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0;
+        }).eq(0);
         $panelEl = vl.$el.parents('.panel').eq(0);
         $popupEl = vl.$el.parents('.popup').eq(0);
 
         vl.$scrollableParentEl.on('scroll', handleScrollBound);
-        if ($pageEl) { $pageEl.on('page:reinit', handleResizeBound); }
-        if ($tabEl) { $tabEl.on('tab:show', handleResizeBound); }
-        if ($panelEl) { $panelEl.on('panel:open', handleResizeBound); }
-        if ($popupEl) { $popupEl.on('popup:open', handleResizeBound); }
+        if ($pageEl.length) { $pageEl.on('page:reinit', handleResizeBound); }
+        if ($tabEl.length) { $tabEl.on('tab:show', handleResizeBound); }
+        if ($panelEl.length) { $panelEl.on('panel:open', handleResizeBound); }
+        if ($popupEl.length) { $popupEl.on('popup:open', handleResizeBound); }
         app.on('resize', handleResizeBound);
       };
       vl.detachEvents = function attachEvents() {
         vl.$scrollableParentEl.off('scroll', handleScrollBound);
-        if ($pageEl) { $pageEl.off('page:reinit', handleResizeBound); }
-        if ($tabEl) { $tabEl.off('tab:show', handleResizeBound); }
-        if ($panelEl) { $panelEl.off('panel:open', handleResizeBound); }
-        if ($popupEl) { $popupEl.off('popup:open', handleResizeBound); }
+        if ($pageEl.length) { $pageEl.off('page:reinit', handleResizeBound); }
+        if ($tabEl.length) { $tabEl.off('tab:show', handleResizeBound); }
+        if ($panelEl.length) { $panelEl.off('panel:open', handleResizeBound); }
+        if ($popupEl.length) { $popupEl.off('popup:open', handleResizeBound); }
         app.off('resize', handleResizeBound);
       };
       // Init
@@ -17715,11 +18242,13 @@
       var tabLinkEl;
       var animate;
       var tabRoute;
-      if (args.length === 1 && args[0].constructor === Object) {
+      var animatedInit;
+      if (args.length === 1 && args[0] && args[0].constructor === Object) {
         tabEl = args[0].tabEl;
         tabLinkEl = args[0].tabLinkEl;
         animate = args[0].animate;
         tabRoute = args[0].tabRoute;
+        animatedInit = args[0].animatedInit;
       } else {
         (assign = args, tabEl = assign[0], tabLinkEl = assign[1], animate = assign[2], tabRoute = assign[3]);
         if (typeof args[1] === 'boolean') {
@@ -17736,7 +18265,7 @@
         $newTabEl[0].f7TabRoute = tabRoute;
       }
 
-      if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
+      if (!animatedInit && ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active'))) {
         return {
           $newTabEl: $newTabEl,
           newTabEl: $newTabEl[0],
@@ -17807,14 +18336,26 @@
       // Remove active class from old tabs
       var $oldTabEl = $tabsEl.children('.tab-active');
       $oldTabEl.removeClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
+        if ($oldTabEl.hasClass('view') && $oldTabEl.children('.page').length) {
+          $oldTabEl.children('.page').each(function (pageIndex, pageEl) {
+            $(pageEl).trigger('page:tabhide');
+            app.emit('pageTabHide', pageEl);
+          });
+        }
         $oldTabEl.trigger('tab:hide');
         app.emit('tabHide', $oldTabEl[0]);
       }
 
       // Trigger 'show' event on new tab
       $newTabEl.addClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
+        if ($newTabEl.hasClass('view') && $newTabEl.children('.page').length) {
+          $newTabEl.children('.page').each(function (pageIndex, pageEl) {
+            $(pageEl).trigger('page:tabshow');
+            app.emit('pageTabShow', pageEl);
+          });
+        }
         $newTabEl.trigger('tab:show');
         app.emit('tabShow', $newTabEl[0]);
       }
@@ -17918,12 +18459,21 @@
         },
       });
     },
+    on: {
+      'pageInit tabMounted': function onInit(pageOrTabEl) {
+        var $el = $(pageOrTabEl.el || pageOrTabEl);
+        var animatedTabEl = $el.find('.tabs-animated-wrap > .tabs > .tab-active')[0];
+        if (!animatedTabEl) { return; }
+        var app = this;
+        app.tab.show({ tabEl: animatedTabEl, animatedInit: true, animate: false });
+      },
+    },
     clicks: {
       '.tab-link': function tabLinkClick($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
-        var app = this;
         if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
+          var app = this;
           app.tab.show({
             tabEl: data.tab || $clickedEl.attr('href'),
             tabLinkEl: $clickedEl,
@@ -17954,6 +18504,7 @@
     var isGestureStarted;
     var isMoved;
     var isScrolling;
+    var isInterrupted;
     var touchesStart = {};
     var touchStartTime;
     var touchesDiff;
@@ -17997,12 +18548,13 @@
       isMoved = false;
       isTouched = true;
       isScrolling = undefined;
+      isInterrupted = false;
 
       touchStartTime = Utils.now();
       direction = undefined;
     }
     function handleTouchMove(e) {
-      if (!isTouched || isGestureStarted) { return; }
+      if (!isTouched || isGestureStarted || isInterrupted) { return; }
       touchMoves += 1;
       if (touchMoves < 2) { return; }
       if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
@@ -18102,22 +18654,36 @@
           translate = panelWidth;
         }
       }
+      var noFollowProgress = Math.abs(translate / panelWidth);
       if (effect === 'reveal') {
-        $viewEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
-        $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        if (!params.swipeNoFollow) {
+          $viewEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+          $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        }
 
         $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
       } else {
         if (side === 'left') { translate -= panelWidth; }
-        $el.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        if (!params.swipeNoFollow) {
+          $el.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
 
-        $backdropEl.transition(0);
-        backdropOpacity = 1 - Math.abs(translate / panelWidth);
-        $backdropEl.css({ opacity: backdropOpacity });
+          $backdropEl.transition(0);
+          backdropOpacity = 1 - Math.abs(translate / panelWidth);
+          $backdropEl.css({ opacity: backdropOpacity });
+        }
 
         $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
+      }
+
+      if (params.swipeNoFollow) {
+        var stateChanged = (panel.opened && noFollowProgress === 0) || (!panel.opened && noFollowProgress === 1);
+        if (stateChanged) {
+          isInterrupted = true;
+          // eslint-disable-next-line
+          handleTouchEnd(e);
+        }
       }
     }
     function handleTouchEnd(e) {
@@ -18131,7 +18697,7 @@
       isMoved = false;
       var timeDiff = (new Date()).getTime() - touchStartTime;
       var action;
-      var edge = (translate === 0 || Math.abs(translate) === panelWidth);
+      var edge = (translate === 0 || Math.abs(translate) === panelWidth) && !params.swipeNoFollow;
 
       var threshold = params.swipeThreshold || 0;
 
@@ -18359,7 +18925,6 @@
       }
       $el.removeClass('panel-resizing');
       Utils.nextFrame(function () {
-        if (visibleByBreakpoint) { return; }
         $el.transition('');
         if (effect === 'reveal') {
           $backdropEl.transition('');
@@ -18708,6 +19273,13 @@
       app.panel.allowOpen = true;
       $('html').removeClass('with-panel-closing');
       panel.$el.removeClass('panel-out');
+      if (panel.$backdropEl) {
+        var otherPanel = app.panel.get('.panel-in');
+        var shouldHideBackdrop = !otherPanel || (otherPanel && !otherPanel.$backdropEl);
+        if (shouldHideBackdrop) {
+          panel.$backdropEl.removeClass('panel-backdrop-in');
+        }
+      }
       panel.$el.trigger('panel:closed');
       panel.emit('local::closed panelClosed', panel);
     };
@@ -18803,7 +19375,10 @@
       $el[animate ? 'removeClass' : 'addClass']('not-animated');
       $el.addClass('panel-in');
 
-      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      if ($backdropEl) {
+        $backdropEl.addClass('panel-backdrop-in');
+        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      }
 
       if (panel.effect === 'cover') {
         /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
@@ -18857,7 +19432,9 @@
       if (!opened || $el.hasClass('panel-in-breakpoint') || !$el.hasClass('panel-in')) { return panel; }
 
       $el[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      if ($backdropEl) {
+        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      }
 
       var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 
@@ -18964,6 +19541,7 @@
         visibleBreakpoint: undefined,
         collapsedBreakpoint: undefined,
         swipe: false, // or true
+        swipeNoFollow: false, // or true
         swipeOnlyClose: false,
         swipeActiveArea: 0,
         swipeThreshold: 0,
@@ -19130,14 +19708,16 @@
       if ( animate === void 0 ) animate = true;
       var app = this;
 
-      if ($('.card-opened').length) { return; }
       var $cardEl = $(cardEl).eq(0);
-
       if (!$cardEl || !$cardEl.length) { return; }
       if ($cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) { return; }
 
       var $pageEl = $cardEl.parents('.page').eq(0);
       if (!$pageEl.length) { return; }
+
+      if ($pageEl.find('.card-opened').length) {
+        return;
+      }
 
       var prevented;
 
@@ -19302,7 +19882,7 @@
         .transform(("translate3d(" + (app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)) + "px, 0px, 0) scale(" + (1 / scaleX) + ", " + (1 / scaleY) + ")"));
 
       $cardEl
-        .transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+        .transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
       if (cardParams.animate) {
         $cardEl.transitionEnd(function () {
           transitionEnd();
@@ -19356,7 +19936,7 @@
         translateX = (cardRightOffset - cardLeftOffset) / 2;
         translateY = (cardBottomOffset - cardTopOffset) / 2;
 
-        $cardEl.transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+        $cardEl.transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
         $cardContentEl
           .css({
             width: (maxWidth + "px"),
@@ -19437,7 +20017,7 @@
           isMoved = false;
           app.card.close($cardEl);
         } else {
-          $cardEl.transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + (scaleX * (1 - progress * 0.2)) + ", " + (scaleY * (1 - progress * 0.2)) + ")"));
+          $cardEl.transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + (scaleX * (1 - progress * 0.2)) + ", " + (scaleY * (1 - progress * 0.2)) + ")"));
         }
       }
       function onTouchEnd() {
@@ -19452,7 +20032,7 @@
         } else {
           $cardEl
             .addClass('card-transitioning')
-            .transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+            .transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
         }
       }
 
@@ -19555,6 +20135,9 @@
               width: '',
               height: '',
             });
+        }
+        if ($backdropEl && $backdropEl.length) {
+          $backdropEl.removeClass('card-backdrop-in card-backdrop-out');
         }
         $cardEl.removeClass('card-closing card-no-transition');
         $cardEl.trigger('card:closed');
@@ -20044,12 +20627,26 @@
     },
     validate: function validate(inputEl) {
       var $inputEl = $(inputEl);
-      if (!$inputEl.length) { return; }
+      if (!$inputEl.length) { return true; }
       var $itemInputEl = $inputEl.parents('.item-input');
       var $inputWrapEl = $inputEl.parents('.input');
+      function unsetReadonly() {
+        if ($inputEl[0].f7ValidateReadonly) {
+          $inputEl[0].readOnly = false;
+        }
+      }
+      function setReadonly() {
+        if ($inputEl[0].f7ValidateReadonly) {
+          $inputEl[0].readOnly = true;
+        }
+      }
+      unsetReadonly();
       var validity = $inputEl[0].validity;
       var validationMessage = $inputEl.dataset().errorMessage || $inputEl[0].validationMessage || '';
-      if (!validity) { return; }
+      if (!validity) {
+        setReadonly();
+        return true;
+      }
       if (!validity.valid) {
         var $errorEl = $inputEl.nextAll('.item-input-error-message, .input-error-message');
         if (validationMessage) {
@@ -20066,17 +20663,22 @@
         $itemInputEl.addClass('item-input-invalid');
         $inputWrapEl.addClass('input-invalid');
         $inputEl.addClass('input-invalid');
-      } else {
-        $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
-        $inputWrapEl.removeClass('input-invalid input-with-error-message');
-        $inputEl.removeClass('input-invalid');
+        setReadonly();
+        return false;
       }
+      $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
+      $inputWrapEl.removeClass('input-invalid input-with-error-message');
+      $inputEl.removeClass('input-invalid');
+      setReadonly();
+      return true;
     },
     validateInputs: function validateInputs(el) {
       var app = this;
-      $(el).find('input, textarea, select').each(function (index, inputEl) {
-        app.input.validate(inputEl);
-      });
+      var validates = $(el)
+        .find('input, textarea, select')
+        .toArray()
+        .map(function (inputEl) { return app.input.validate(inputEl); });
+      return validates.indexOf(false) < 0;
     },
     focus: function focus(inputEl) {
       var $inputEl = $(inputEl);
@@ -20226,7 +20828,11 @@
           .trigger('input:clear', previousValue);
         app.emit('inputClear', previousValue);
       }
+      function preventDefault(e) {
+        e.preventDefault();
+      }
       $(doc).on('click', '.input-clear-button', clearInput);
+      $(doc).on('mousedown', '.input-clear-button', preventDefault);
       $(doc).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
       $(doc).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
       $(doc).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);
@@ -20711,7 +21317,7 @@
 
       // Scale
       var $scaleEl;
-      if (range.scale && range.scaleSteps > 1) {
+      if (range.scale && range.scaleSteps >= 1) {
         $scaleEl = $(("\n        <div class=\"range-scale\">\n          " + (range.renderScale()) + "\n        </div>\n      "));
         $el.append($scaleEl);
       }
@@ -20905,7 +21511,7 @@
         parentModals = range.$el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast');
         parentModals.on('modal:open', handleResize);
         parentPanel = range.$el.parents('.panel');
-        parentPanel.on('panel:open', handleResize);
+        parentPanel.on('panel:open panel:resize', handleResize);
         parentPage = range.$el.parents('.page').eq(0);
         parentPage.on('page:reinit', handleResize);
       };
@@ -20920,7 +21526,7 @@
           parentModals.off('modal:open', handleResize);
         }
         if (parentPanel) {
-          parentPanel.off('panel:open', handleResize);
+          parentPanel.off('panel:open panel:resize', handleResize);
         }
         if (parentPage) {
           parentPage.off('page:reinit', handleResize);
@@ -21102,7 +21708,6 @@
         : (app.rtl ? 'right' : 'left');
 
       var html = '';
-
       Array
         .from({ length: range.scaleSteps + 1 })
         .forEach(function (scaleEl, index) {
@@ -21128,7 +21733,7 @@
 
     Range.prototype.updateScale = function updateScale () {
       var range = this;
-      if (!range.scale || range.scaleSteps < 2) {
+      if (!range.scale || range.scaleSteps < 1) {
         if (range.$scaleEl) { range.$scaleEl.remove(); }
         delete range.$scaleEl;
         return;
@@ -21859,6 +22464,9 @@
           }
         } else {
           optionEl = ss.$selectEl.find(("option[value=\"" + value + "\"]"))[0];
+          if (!optionEl) {
+            optionEl = ss.$selectEl.find('option').filter(function (index, optEl) { return optEl.value === value; })[0];
+          }
           displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
           text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
           optionText = [text];
@@ -22029,6 +22637,7 @@
 
     SmartSelect.prototype.getItemsData = function getItemsData () {
       var ss = this;
+      var theme = ss.app.theme;
       var items = [];
       var previousGroupEl;
       ss.$selectEl.find('option').each(function (index, optionEl) {
@@ -22036,8 +22645,10 @@
         var optionData = $optionEl.dataset();
         var optionImage = optionData.optionImage || ss.params.optionImage;
         var optionIcon = optionData.optionIcon || ss.params.optionIcon;
-        var optionHasMedia = optionImage || optionIcon;
-        // if (material) optionHasMedia = optionImage || optionIcon;
+        var optionIconIos = theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
+        var optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
+        var optionIconAurora = theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
+        var optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
         var optionColor = optionData.optionColor;
 
         var optionClassName = optionData.optionClass || '';
@@ -22062,6 +22673,9 @@
           groupLabel: optionGroupLabel,
           image: optionImage,
           icon: optionIcon,
+          iconIos: optionIconIos,
+          iconMd: optionIconMd,
+          iconAurora: optionIconAurora,
           color: optionColor,
           className: optionClassName,
           disabled: $optionEl[0].disabled,
@@ -22087,6 +22701,27 @@
     SmartSelect.prototype.renderItem = function renderItem (item, index) {
       var ss = this;
       if (ss.params.renderItem) { return ss.params.renderItem.call(ss, item, index); }
+
+      function getIconContent(iconValue) {
+        if ( iconValue === void 0 ) iconValue = '';
+
+        if (iconValue.indexOf(':') >= 0) {
+          return iconValue.split(':')[1];
+        }
+        return '';
+      }
+      function getIconClass(iconValue) {
+        if ( iconValue === void 0 ) iconValue = '';
+
+        if (iconValue.indexOf(':') >= 0) {
+          var className = iconValue.split(':')[0];
+          if (className === 'f7') { className = 'f7-icons'; }
+          if (className === 'material') { className = 'material-icons'; }
+          return className;
+        }
+        return iconValue;
+      }
+
       var itemHtml;
       if (item.isLabel) {
         itemHtml = "<li class=\"item-divider\">" + (item.groupLabel) + "</li>";
@@ -22100,7 +22735,16 @@
             disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
           }
         }
-        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" text-color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+
+        var icon = item.icon;
+        var iconIos = item.iconIos;
+        var iconMd = item.iconMd;
+        var iconAurora = item.iconAurora;
+        var hasIcon = icon || iconIos || iconMd || iconAurora;
+        var iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
+        var iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
+
+        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (hasIcon ? ("<i class=\"icon " + iconClass + "\">" + iconContent + "</i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" text-color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       }
       return itemHtml;
     };
@@ -22937,6 +23581,9 @@
           calendar.$inputEl.on('input:clear', onInputClear);
           if (calendar.params.inputReadOnly) {
             calendar.$inputEl.on('focus mousedown', onInputFocus);
+            if (calendar.$inputEl[0]) {
+              calendar.$inputEl[0].f7ValidateReadonly = true;
+            }
           }
         },
         detachInputEvents: function detachInputEvents() {
@@ -22944,6 +23591,9 @@
           calendar.$inputEl.off('input:clear', onInputClear);
           if (calendar.params.inputReadOnly) {
             calendar.$inputEl.off('focus mousedown', onInputFocus);
+            if (calendar.$inputEl[0]) {
+              delete calendar.$inputEl[0].f7ValidateReadonly;
+            }
           }
         },
         attachHtmlEvents: function attachHtmlEvents() {
@@ -24405,8 +25055,16 @@
       calendar.opening = false;
       calendar.closing = true;
 
-      if (calendar.$inputEl && app.theme === 'md') {
-        calendar.$inputEl.trigger('blur');
+      if (calendar.$inputEl) {
+        if (app.theme === 'md') {
+          calendar.$inputEl.trigger('blur');
+        } else {
+          var validate = calendar.$inputEl.attr('validate');
+          var required = calendar.$inputEl.attr('required');
+          if (validate && required) {
+            app.input.validate(calendar.$inputEl);
+          }
+        }
       }
       if (calendar.detachCalendarEvents) {
         calendar.detachCalendarEvents();
@@ -25129,12 +25787,18 @@
           picker.$inputEl.on('click', onInputClick);
           if (picker.params.inputReadOnly) {
             picker.$inputEl.on('focus mousedown', onInputFocus);
+            if (picker.$inputEl[0]) {
+              picker.$inputEl[0].f7ValidateReadonly = true;
+            }
           }
         },
         detachInputEvents: function detachInputEvents() {
           picker.$inputEl.off('click', onInputClick);
           if (picker.params.inputReadOnly) {
             picker.$inputEl.off('focus mousedown', onInputFocus);
+            if (picker.$inputEl[0]) {
+              delete picker.$inputEl[0].f7ValidateReadonly;
+            }
           }
         },
         attachHtmlEvents: function attachHtmlEvents() {
@@ -25436,8 +26100,17 @@
       picker.cols.forEach(function (col) {
         if (col.destroy) { col.destroy(); }
       });
-      if (picker.$inputEl && app.theme === 'md') {
-        picker.$inputEl.trigger('blur');
+
+      if (picker.$inputEl) {
+        if (app.theme === 'md') {
+          picker.$inputEl.trigger('blur');
+        } else {
+          var validate = picker.$inputEl.attr('validate');
+          var required = picker.$inputEl.attr('required');
+          if (validate && required) {
+            app.input.validate(picker.$inputEl);
+          }
+        }
       }
 
       if (picker.$el) {
@@ -25830,10 +26503,21 @@
 
       if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbars').length > 0) { hasNavbar = true; }
       if ($pageEl.hasClass('no-navbar')) { hasNavbar = false; }
-      if (!ptr.bottom && $pageEl.hasClass('page-with-navbar-large')) {
+      if (!ptr.bottom) {
         var pageNavbarEl = app.navbar.getElByPage($pageEl[0]);
-        if (pageNavbarEl && $(pageNavbarEl).hasClass('navbar-large-transparent')) {
-          $el.addClass('ptr-with-navbar-large-transparent');
+        if (pageNavbarEl) {
+          var $pageNavbarEl = $(pageNavbarEl);
+          var isLargeTransparent = $pageNavbarEl.hasClass('navbar-large-transparent')
+            || (
+              $pageNavbarEl.hasClass('navbar-large')
+              && $pageNavbarEl.hasClass('navbar-transparent')
+            );
+          var isTransparent = $pageNavbarEl.hasClass('navbar-transparent') && !$pageNavbarEl.hasClass('navbar-large');
+          if (isLargeTransparent) {
+            $el.addClass('ptr-with-navbar-large-transparent');
+          } else if (isTransparent) {
+            $el.addClass('ptr-with-navbar-transparent');
+          }
         }
       }
       if (!hasNavbar && !ptr.bottom) { $el.addClass('ptr-no-navbar'); }
@@ -26963,6 +27647,7 @@
       } else {
         $fabEl.addClass('fab-opened');
       }
+      $fabEl.siblings('.fab-backdrop').addClass('backdrop-in');
       $fabEl.trigger('fab:open');
     },
     close: function close(fabEl) {
@@ -26980,6 +27665,7 @@
       } else {
         $fabEl.removeClass('fab-opened');
       }
+      $fabEl.siblings('.fab-backdrop').removeClass('backdrop-in');
       $fabEl.trigger('fab:close');
     },
     toggle: function toggle(fabEl) {
@@ -27021,6 +27707,10 @@
 
         var app = this;
         app.fab.close(data.fab);
+      },
+      '.fab-backdrop': function close() {
+        var app = this;
+        app.fab.close();
       },
     },
   };
@@ -29079,10 +29769,16 @@
     }
     // Find slides currently in view
     if (swiper.params.slidesPerView !== 'auto' && swiper.params.slidesPerView > 1) {
-      for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
-        var index = swiper.activeIndex + i;
-        if (index > swiper.slides.length) { break; }
-        activeSlides.push(swiper.slides.eq(index)[0]);
+      if (swiper.params.centeredSlides) {
+        swiper.visibleSlides.each(function (index, slide) {
+          activeSlides.push(slide);
+        });
+      } else {
+        for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
+          var index = swiper.activeIndex + i;
+          if (index > swiper.slides.length) { break; }
+          activeSlides.push(swiper.slides.eq(index)[0]);
+        }
       }
     } else {
       activeSlides.push(swiper.slides.eq(swiper.activeIndex)[0]);
@@ -29134,7 +29830,7 @@
       var slideProgress = (
         (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0)) - slide.swiperSlideOffset
       ) / (slide.swiperSlideSize + params.spaceBetween);
-      if (params.watchSlidesVisibility) {
+      if (params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) {
         var slideBefore = -(offsetCenter - slide.swiperSlideOffset);
         var slideAfter = slideBefore + swiper.slidesSizesGrid[i];
         var isVisible = (slideBefore >= 0 && slideBefore < swiper.size - 1)
@@ -29180,7 +29876,7 @@
       isEnd: isEnd,
     });
 
-    if (params.watchSlidesProgress || params.watchSlidesVisibility) { swiper.updateSlidesProgress(translate); }
+    if (params.watchSlidesProgress || params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) { swiper.updateSlidesProgress(translate); }
 
     if (isBeginning && !wasBeginning) {
       swiper.emit('reachBeginning toEdge');
@@ -29321,7 +30017,7 @@
     if (previousRealIndex !== realIndex) {
       swiper.emit('realIndexChange');
     }
-    if (swiper.initialized || swiper.runCallbacksOnInit) {
+    if (swiper.initialized || swiper.params.runCallbacksOnInit) {
       swiper.emit('slideChange');
     }
   }
@@ -29690,14 +30386,18 @@
     }
     if (params.cssMode) {
       var isH = swiper.isHorizontal();
+      var t = -translate;
+      if (rtl) {
+        t = wrapperEl.scrollWidth - wrapperEl.offsetWidth - t;
+      }
       if (speed === 0) {
-        wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -translate;
+        wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
       } else {
         // eslint-disable-next-line
         if (wrapperEl.scrollTo) {
-          wrapperEl.scrollTo(( obj = {}, obj[isH ? 'left' : 'top'] = -translate, obj.behavior = 'smooth', obj ));
+          wrapperEl.scrollTo(( obj = {}, obj[isH ? 'left' : 'top'] = t, obj.behavior = 'smooth', obj ));
         } else {
-          wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -translate;
+          wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
         }
       }
       return true;
@@ -30294,7 +30994,7 @@
       }
       return;
     }
-    if (data.isTouchEvent && e.type === 'mousemove') { return; }
+    if (data.isTouchEvent && e.type !== 'touchmove') { return; }
     var targetTouch = e.type === 'touchmove' && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
     var pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX;
     var pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY;
@@ -30382,7 +31082,7 @@
       return;
     }
     swiper.allowClick = false;
-    if (!params.cssMode) {
+    if (!params.cssMode && e.cancelable) {
       e.preventDefault();
     }
     if (params.touchMoveStopPropagation && !params.nested) {
@@ -30685,13 +31385,14 @@
           $wrapperEl.transitionEnd(function () {
             if (!swiper || swiper.destroyed || !data.allowMomentumBounce) { return; }
             swiper.emit('momentumBounce');
-
             swiper.setTransition(params.speed);
-            swiper.setTranslate(afterBouncePosition);
-            $wrapperEl.transitionEnd(function () {
-              if (!swiper || swiper.destroyed) { return; }
-              swiper.transitionEnd();
-            });
+            setTimeout(function () {
+              swiper.setTranslate(afterBouncePosition);
+              $wrapperEl.transitionEnd(function () {
+                if (!swiper || swiper.destroyed) { return; }
+                swiper.transitionEnd();
+              });
+            }, 0);
           });
         } else if (swiper.velocity) {
           swiper.updateProgress(newPosition);
@@ -30838,8 +31539,17 @@
   function onScroll () {
     var swiper = this;
     var wrapperEl = swiper.wrapperEl;
+    var rtlTranslate = swiper.rtlTranslate;
     swiper.previousTranslate = swiper.translate;
-    swiper.translate = swiper.isHorizontal() ? -wrapperEl.scrollLeft : -wrapperEl.scrollTop;
+    if (swiper.isHorizontal()) {
+      if (rtlTranslate) {
+        swiper.translate = ((wrapperEl.scrollWidth - wrapperEl.offsetWidth) - wrapperEl.scrollLeft);
+      } else {
+        swiper.translate = -wrapperEl.scrollLeft;
+      }
+    } else {
+      swiper.translate = -wrapperEl.scrollTop;
+    }
     // eslint-disable-next-line
     if (swiper.translate === -0) { swiper.translate = 0; }
 
@@ -30854,7 +31564,7 @@
       newProgress = (swiper.translate - swiper.minTranslate()) / (translatesDiff);
     }
     if (newProgress !== swiper.progress) {
-      swiper.updateProgress(swiper.translate);
+      swiper.updateProgress(rtlTranslate ? -swiper.translate : swiper.translate);
     }
 
     swiper.emit('setTranslate', swiper.translate, false);
@@ -31046,7 +31756,7 @@
     var breakpoint = false;
 
     var points = Object.keys(breakpoints).map(function (point) {
-      if (typeof point === 'string' && point.startsWith('@')) {
+      if (typeof point === 'string' && point.indexOf('@') === 0) {
         var minRatio = parseFloat(point.substr(1));
         var value = win.innerHeight * minRatio;
         return { value: value, point: point };
@@ -31127,7 +31837,9 @@
     function onReady() {
       if (callback) { callback(); }
     }
-    if (!imageEl.complete || !checkForComplete) {
+    var isPicture = $(imageEl).parent('picture')[0];
+
+    if (!isPicture && (!imageEl.complete || !checkForComplete)) {
       if (src) {
         image = new win.Image();
         image.onload = onReady;
@@ -32525,7 +33237,7 @@
         // Else (this is the first time the wheel is moved):
         //     Animate the slider.
         if (prevEvent) {
-          if (newEvent.direction !== prevEvent.direction || newEvent.delta > prevEvent.delta) {
+          if (newEvent.direction !== prevEvent.direction || newEvent.delta > prevEvent.delta || newEvent.time > prevEvent.time + 150) {
             swiper.mousewheel.animateSlider(newEvent);
           }
         } else {
@@ -33804,9 +34516,9 @@
         gesture.scaleStart = Zoom.getDistanceBetweenTouches(e);
       }
       if (!gesture.$slideEl || !gesture.$slideEl.length) {
-        gesture.$slideEl = $(e.target).closest('.swiper-slide');
+        gesture.$slideEl = $(e.target).closest(("." + (swiper.params.slideClass)));
         if (gesture.$slideEl.length === 0) { gesture.$slideEl = swiper.slides.eq(swiper.activeIndex); }
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
         gesture.maxRatio = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
         if (gesture.$imageWrapEl.length === 0) {
@@ -33814,7 +34526,9 @@
           return;
         }
       }
-      gesture.$imageEl.transition(0);
+      if (gesture.$imageEl) {
+        gesture.$imageEl.transition(0);
+      }
       swiper.zoom.isScaling = true;
     },
     onGestureChange: function onGestureChange(e) {
@@ -33872,7 +34586,7 @@
       var image = zoom.image;
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
       if (image.isTouched) { return; }
-      if (Device.android) { e.preventDefault(); }
+      if (Device.android && e.cancelable) { e.preventDefault(); }
       image.isTouched = true;
       image.touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -33935,7 +34649,9 @@
           return;
         }
       }
-      e.preventDefault();
+      if (e.cancelable) {
+        e.preventDefault();
+      }
       e.stopPropagation();
 
       image.isMoved = true;
@@ -34016,8 +34732,12 @@
       var zoom = swiper.zoom;
       var gesture = zoom.gesture;
       if (gesture.$slideEl && swiper.previousIndex !== swiper.activeIndex) {
-        gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
-        gesture.$imageWrapEl.transform('translate3d(0,0,0)');
+        if (gesture.$imageEl) {
+          gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
+        }
+        if (gesture.$imageWrapEl) {
+          gesture.$imageWrapEl.transform('translate3d(0,0,0)');
+        }
 
         zoom.scale = 1;
         zoom.currentScale = 1;
@@ -34049,8 +34769,12 @@
       var image = zoom.image;
 
       if (!gesture.$slideEl) {
-        gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+          gesture.$slideEl = swiper.$wrapperEl.children(("." + (swiper.params.slideActiveClass)));
+        } else {
+          gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+        }
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
       }
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
@@ -34135,8 +34859,12 @@
       var gesture = zoom.gesture;
 
       if (!gesture.$slideEl) {
-        gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+          gesture.$slideEl = swiper.$wrapperEl.children(("." + (swiper.params.slideActiveClass)));
+        } else {
+          gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+        }
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
       }
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
@@ -34158,17 +34886,19 @@
       var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
       var activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+      var slideSelector = "." + (swiper.params.slideClass);
+
       // Scale image
       if (Support.gestures) {
-        swiper.$wrapperEl.on('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.on('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-        swiper.$wrapperEl.on('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.on('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.on('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.on('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
-        swiper.$wrapperEl.on(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.on(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-        swiper.$wrapperEl.on(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+        swiper.$wrapperEl.on(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
-          swiper.$wrapperEl.on(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+          swiper.$wrapperEl.on(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
         }
       }
 
@@ -34185,17 +34915,19 @@
       var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
       var activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+      var slideSelector = "." + (swiper.params.slideClass);
+
       // Scale image
       if (Support.gestures) {
-        swiper.$wrapperEl.off('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.off('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-        swiper.$wrapperEl.off('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.off('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.off('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.off('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
-        swiper.$wrapperEl.off(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.off(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-        swiper.$wrapperEl.off(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+        swiper.$wrapperEl.off(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
-          swiper.$wrapperEl.off(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+          swiper.$wrapperEl.off(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
         }
       }
 
@@ -34348,6 +35080,7 @@
         var src = $imageEl.attr('data-src');
         var srcset = $imageEl.attr('data-srcset');
         var sizes = $imageEl.attr('data-sizes');
+        var $pictureEl = $imageEl.parent('picture');
 
         swiper.loadImage($imageEl[0], (src || background), srcset, sizes, false, function () {
           if (typeof swiper === 'undefined' || swiper === null || !swiper || (swiper && !swiper.params) || swiper.destroyed) { return; }
@@ -34362,6 +35095,16 @@
             if (sizes) {
               $imageEl.attr('sizes', sizes);
               $imageEl.removeAttr('data-sizes');
+            }
+            if ($pictureEl.length) {
+              $pictureEl.children('source').each(function (sourceIndex, sourceEl) {
+                var $source = $(sourceEl);
+
+                if ($source.attr('data-srcset')) {
+                  $source.attr('srcset', $source.attr('data-srcset'));
+                  $source.removeAttr('data-srcset');
+                }
+              });
             }
             if (src) {
               $imageEl.attr('src', src);
@@ -34382,6 +35125,9 @@
             }
           }
           swiper.emit('lazyImageReady', $slideEl[0], $imageEl[0]);
+          if (swiper.params.autoHeight) {
+            swiper.updateAutoHeight();
+          }
         });
 
         swiper.emit('lazyImageLoad', $slideEl[0], $imageEl[0]);
@@ -34409,6 +35155,7 @@
         } else if (slides[index]) { return true; }
         return false;
       }
+
       function slideIndex(slideEl) {
         if (isVirtual) {
           return $(slideEl).attr('data-swiper-slide-index');
@@ -34718,9 +35465,242 @@
     },
   };
 
+  var History$1 = {
+    init: function init() {
+      var swiper = this;
+      if (!swiper.params.history) { return; }
+      if (!win.history || !win.history.pushState) {
+        swiper.params.history.enabled = false;
+        swiper.params.hashNavigation.enabled = true;
+        return;
+      }
+      var history = swiper.history;
+      history.initialized = true;
+      history.paths = History$1.getPathValues();
+      if (!history.paths.key && !history.paths.value) { return; }
+      history.scrollToSlide(0, history.paths.value, swiper.params.runCallbacksOnInit);
+      if (!swiper.params.history.replaceState) {
+        win.addEventListener('popstate', swiper.history.setHistoryPopState);
+      }
+    },
+    destroy: function destroy() {
+      var swiper = this;
+      if (!swiper.params.history.replaceState) {
+        win.removeEventListener('popstate', swiper.history.setHistoryPopState);
+      }
+    },
+    setHistoryPopState: function setHistoryPopState() {
+      var swiper = this;
+      swiper.history.paths = History$1.getPathValues();
+      swiper.history.scrollToSlide(swiper.params.speed, swiper.history.paths.value, false);
+    },
+    getPathValues: function getPathValues() {
+      var pathArray = win.location.pathname.slice(1).split('/').filter(function (part) { return part !== ''; });
+      var total = pathArray.length;
+      var key = pathArray[total - 2];
+      var value = pathArray[total - 1];
+      return { key: key, value: value };
+    },
+    setHistory: function setHistory(key, index) {
+      var swiper = this;
+      if (!swiper.history.initialized || !swiper.params.history.enabled) { return; }
+      var slide = swiper.slides.eq(index);
+      var value = History$1.slugify(slide.attr('data-history'));
+      if (!win.location.pathname.includes(key)) {
+        value = key + "/" + value;
+      }
+      var currentState = win.history.state;
+      if (currentState && currentState.value === value) {
+        return;
+      }
+      if (swiper.params.history.replaceState) {
+        win.history.replaceState({ value: value }, null, value);
+      } else {
+        win.history.pushState({ value: value }, null, value);
+      }
+    },
+    slugify: function slugify(text) {
+      return text.toString()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+    },
+    scrollToSlide: function scrollToSlide(speed, value, runCallbacks) {
+      var swiper = this;
+      if (value) {
+        for (var i = 0, length = swiper.slides.length; i < length; i += 1) {
+          var slide = swiper.slides.eq(i);
+          var slideHistory = History$1.slugify(slide.attr('data-history'));
+          if (slideHistory === value && !slide.hasClass(swiper.params.slideDuplicateClass)) {
+            var index = slide.index();
+            swiper.slideTo(index, speed, runCallbacks);
+          }
+        }
+      } else {
+        swiper.slideTo(0, speed, runCallbacks);
+      }
+    },
+  };
+
+  var History$2 = {
+    name: 'history',
+    params: {
+      history: {
+        enabled: false,
+        replaceState: false,
+        key: 'slides',
+      },
+    },
+    create: function create() {
+      var swiper = this;
+      Utils.extend(swiper, {
+        history: {
+          init: History$1.init.bind(swiper),
+          setHistory: History$1.setHistory.bind(swiper),
+          setHistoryPopState: History$1.setHistoryPopState.bind(swiper),
+          scrollToSlide: History$1.scrollToSlide.bind(swiper),
+          destroy: History$1.destroy.bind(swiper),
+        },
+      });
+    },
+    on: {
+      init: function init() {
+        var swiper = this;
+        if (swiper.params.history.enabled) {
+          swiper.history.init();
+        }
+      },
+      destroy: function destroy() {
+        var swiper = this;
+        if (swiper.params.history.enabled) {
+          swiper.history.destroy();
+        }
+      },
+      transitionEnd: function transitionEnd() {
+        var swiper = this;
+        if (swiper.history.initialized) {
+          swiper.history.setHistory(swiper.params.history.key, swiper.activeIndex);
+        }
+      },
+      slideChange: function slideChange() {
+        var swiper = this;
+        if (swiper.history.initialized && swiper.params.cssMode) {
+          swiper.history.setHistory(swiper.params.history.key, swiper.activeIndex);
+        }
+      },
+    },
+  };
+
+  var HashNavigation = {
+    onHashCange: function onHashCange() {
+      var swiper = this;
+      swiper.emit('hashChange');
+      var newHash = doc.location.hash.replace('#', '');
+      var activeSlideHash = swiper.slides.eq(swiper.activeIndex).attr('data-hash');
+      if (newHash !== activeSlideHash) {
+        var newIndex = swiper.$wrapperEl.children(("." + (swiper.params.slideClass) + "[data-hash=\"" + newHash + "\"]")).index();
+        if (typeof newIndex === 'undefined') { return; }
+        swiper.slideTo(newIndex);
+      }
+    },
+    setHash: function setHash() {
+      var swiper = this;
+      if (!swiper.hashNavigation.initialized || !swiper.params.hashNavigation.enabled) { return; }
+      if (swiper.params.hashNavigation.replaceState && win.history && win.history.replaceState) {
+        win.history.replaceState(null, null, (("#" + (swiper.slides.eq(swiper.activeIndex).attr('data-hash'))) || ''));
+        swiper.emit('hashSet');
+      } else {
+        var slide = swiper.slides.eq(swiper.activeIndex);
+        var hash = slide.attr('data-hash') || slide.attr('data-history');
+        doc.location.hash = hash || '';
+        swiper.emit('hashSet');
+      }
+    },
+    init: function init() {
+      var swiper = this;
+      if (!swiper.params.hashNavigation.enabled || (swiper.params.history && swiper.params.history.enabled)) { return; }
+      swiper.hashNavigation.initialized = true;
+      var hash = doc.location.hash.replace('#', '');
+      if (hash) {
+        var speed = 0;
+        for (var i = 0, length = swiper.slides.length; i < length; i += 1) {
+          var slide = swiper.slides.eq(i);
+          var slideHash = slide.attr('data-hash') || slide.attr('data-history');
+          if (slideHash === hash && !slide.hasClass(swiper.params.slideDuplicateClass)) {
+            var index = slide.index();
+            swiper.slideTo(index, speed, swiper.params.runCallbacksOnInit, true);
+          }
+        }
+      }
+      if (swiper.params.hashNavigation.watchState) {
+        $(win).on('hashchange', swiper.hashNavigation.onHashCange);
+      }
+    },
+    destroy: function destroy() {
+      var swiper = this;
+      if (swiper.params.hashNavigation.watchState) {
+        $(win).off('hashchange', swiper.hashNavigation.onHashCange);
+      }
+    },
+  };
+  var HashNavigation$1 = {
+    name: 'hash-navigation',
+    params: {
+      hashNavigation: {
+        enabled: false,
+        replaceState: false,
+        watchState: false,
+      },
+    },
+    create: function create() {
+      var swiper = this;
+      Utils.extend(swiper, {
+        hashNavigation: {
+          initialized: false,
+          init: HashNavigation.init.bind(swiper),
+          destroy: HashNavigation.destroy.bind(swiper),
+          setHash: HashNavigation.setHash.bind(swiper),
+          onHashCange: HashNavigation.onHashCange.bind(swiper),
+        },
+      });
+    },
+    on: {
+      init: function init() {
+        var swiper = this;
+        if (swiper.params.hashNavigation.enabled) {
+          swiper.hashNavigation.init();
+        }
+      },
+      destroy: function destroy() {
+        var swiper = this;
+        if (swiper.params.hashNavigation.enabled) {
+          swiper.hashNavigation.destroy();
+        }
+      },
+      transitionEnd: function transitionEnd() {
+        var swiper = this;
+        if (swiper.hashNavigation.initialized) {
+          swiper.hashNavigation.setHash();
+        }
+      },
+      slideChange: function slideChange() {
+        var swiper = this;
+        if (swiper.hashNavigation.initialized && swiper.params.cssMode) {
+          swiper.hashNavigation.setHash();
+        }
+      },
+    },
+  };
+
   var a11y = {
     makeElFocusable: function makeElFocusable($el) {
       $el.attr('tabIndex', '0');
+      return $el;
+    },
+    makeElNotFocusable: function makeElNotFocusable($el) {
+      $el.attr('tabIndex', '-1');
       return $el;
     },
     addElRole: function addElRole($el, role) {
@@ -34786,15 +35766,19 @@
       if ($prevEl && $prevEl.length > 0) {
         if (swiper.isBeginning) {
           swiper.a11y.disableEl($prevEl);
+          swiper.a11y.makeElNotFocusable($prevEl);
         } else {
           swiper.a11y.enableEl($prevEl);
+          swiper.a11y.makeElFocusable($prevEl);
         }
       }
       if ($nextEl && $nextEl.length > 0) {
         if (swiper.isEnd) {
           swiper.a11y.disableEl($nextEl);
+          swiper.a11y.makeElNotFocusable($nextEl);
         } else {
           swiper.a11y.enableEl($nextEl);
+          swiper.a11y.makeElFocusable($nextEl);
         }
       }
     },
@@ -34806,7 +35790,7 @@
           var $bulletEl = $(bulletEl);
           swiper.a11y.makeElFocusable($bulletEl);
           swiper.a11y.addElRole($bulletEl, 'button');
-          swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/{{index}}/, $bulletEl.index() + 1));
+          swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/\{\{index\}\}/, $bulletEl.index() + 1));
         });
       }
     },
@@ -35511,8 +36495,13 @@
         // var rotateZ = 0
         var translateZ = -translate * Math.abs(offsetMultiplier);
 
-        var translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
-        var translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
+        var stretch = params.stretch;
+        // Allow percentage to make a relative stretch for responsive sliders
+        if (typeof stretch === 'string' && stretch.indexOf('%') !== -1) {
+          stretch = ((parseFloat(params.stretch) / 100) * slideSize);
+        }
+        var translateY = isHorizontal ? 0 : stretch * (offsetMultiplier);
+        var translateX = isHorizontal ? stretch * (offsetMultiplier) : 0;
 
         // Fix for ultra small values
         if (Math.abs(translateX) < 0.001) { translateX = 0; }
@@ -35668,9 +36657,12 @@
         ? thumbsSwiper.slidesPerViewDynamic()
         : thumbsSwiper.params.slidesPerView;
 
-      if (swiper.realIndex !== thumbsSwiper.realIndex) {
+      var autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
+      var useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
+      if (swiper.realIndex !== thumbsSwiper.realIndex || useOffset) {
         var currentThumbsIndex = thumbsSwiper.activeIndex;
         var newThumbsIndex;
+        var direction;
         if (thumbsSwiper.params.loop) {
           if (thumbsSwiper.slides.eq(currentThumbsIndex).hasClass(thumbsSwiper.params.slideDuplicateClass)) {
             thumbsSwiper.loopFix();
@@ -35679,16 +36671,28 @@
             currentThumbsIndex = thumbsSwiper.activeIndex;
           }
           // Find actual thumbs index to slide to
-          var prevThumbsIndex = thumbsSwiper.slides.eq(currentThumbsIndex).prevAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0).index();
-          var nextThumbsIndex = thumbsSwiper.slides.eq(currentThumbsIndex).nextAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0).index();
+          var prevThumbsIndex = thumbsSwiper.slides
+            .eq(currentThumbsIndex)
+            .prevAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0)
+            .index();
+          var nextThumbsIndex = thumbsSwiper.slides
+            .eq(currentThumbsIndex)
+            .nextAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0)
+            .index();
           if (typeof prevThumbsIndex === 'undefined') { newThumbsIndex = nextThumbsIndex; }
           else if (typeof nextThumbsIndex === 'undefined') { newThumbsIndex = prevThumbsIndex; }
           else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = currentThumbsIndex; }
           else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = nextThumbsIndex; }
           else { newThumbsIndex = prevThumbsIndex; }
+          direction = swiper.activeIndex > swiper.previousIndex ? 'next' : 'prev';
         } else {
           newThumbsIndex = swiper.realIndex;
+          direction = newThumbsIndex > swiper.previousIndex ? 'next' : 'prev';
         }
+        if (useOffset) {
+          newThumbsIndex += direction === 'next' ? autoScrollOffset : -1 * autoScrollOffset;
+        }
+
         if (thumbsSwiper.visibleSlidesIndexes && thumbsSwiper.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0) {
           if (thumbsSwiper.params.centeredSlides) {
             if (newThumbsIndex > currentThumbsIndex) {
@@ -35733,8 +36737,9 @@
     name: 'thumbs',
     params: {
       thumbs: {
-        multipleActiveThumbs: true,
         swiper: null,
+        multipleActiveThumbs: true,
+        autoScrollOffset: 0,
         slideThumbActiveClass: 'swiper-slide-thumb-active',
         thumbsContainerClass: 'swiper-container-thumbs',
       },
@@ -35814,6 +36819,8 @@
     Zoom$1,
     Lazy$3,
     Controller$1,
+    History$2,
+    HashNavigation$1,
     A11y,
     Autoplay$1,
     EffectFade,
@@ -35873,13 +36880,21 @@
     function updateSwiper() {
       swiper.update();
     }
+    var $tabEl = $swiperEl.parents('.tab').filter(function (tabElIndex, tabEl) {
+      return $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0;
+    }).eq(0);
     $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').on('modal:open', updateSwiper);
     $swiperEl.parents('.panel').on('panel:open', updateSwiper);
-    $swiperEl.parents('.tab').on('tab:show', updateSwiper);
+    if ($tabEl && $tabEl.length) {
+      $tabEl.on('tab:show', updateSwiper);
+    }
+
     swiper.on('beforeDestroy', function () {
       $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').off('modal:open', updateSwiper);
       $swiperEl.parents('.panel').off('panel:open', updateSwiper);
-      $swiperEl.parents('.tab').off('tab:show', updateSwiper);
+      if ($tabEl && $tabEl.length) {
+        $tabEl.off('tab:show', updateSwiper);
+      }
     });
     if (isTabs) {
       swiper.on('slideChange', function () {
@@ -36307,6 +37322,8 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
+            var swiper = this;
+            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChange' ].concat( args ));
           },
           transitionStart: function transitionStart() {
@@ -37847,6 +38864,9 @@
       tooltip.useModulesParams(defaults);
 
       tooltip.params = Utils.extend(defaults, params);
+      if (typeof params.offset === 'undefined' && Support.touch && tooltip.params.trigger === 'hover') {
+        tooltip.params.offset = 10;
+      }
 
       var ref = tooltip.params;
       var targetEl = ref.targetEl;
@@ -39829,12 +40849,18 @@
           self.$inputEl.on('click', onInputClick);
           if (self.params.inputReadOnly) {
             self.$inputEl.on('focus mousedown', onInputFocus);
+            if (self.$inputEl[0]) {
+              self.$inputEl[0].f7ValidateReadonly = true;
+            }
           }
         },
         detachInputEvents: function detachInputEvents() {
           self.$inputEl.off('click', onInputClick);
           if (self.params.inputReadOnly) {
             self.$inputEl.off('focus mousedown', onInputFocus);
+            if (self.$inputEl[0]) {
+              delete self.$inputEl[0].f7ValidateReadonly;
+            }
           }
         },
         attachTargetEvents: function attachTargetEvents() {
@@ -40344,8 +41370,16 @@
       // Detach events
       self.detachEvents();
 
-      if (self.$inputEl && app.theme === 'md') {
-        self.$inputEl.trigger('blur');
+      if (self.$inputEl) {
+        if (app.theme === 'md') {
+          self.$inputEl.trigger('blur');
+        } else {
+          var validate = self.$inputEl.attr('validate');
+          var required = self.$inputEl.attr('required');
+          if (validate && required) {
+            app.input.validate(self.$inputEl);
+          }
+        }
       }
       params.modules.forEach(function (m) {
         if (typeof m === 'string' && modules[m] && modules[m].destroy) {
@@ -40678,8 +41712,14 @@
       $itemEl.addClass('treeview-item-opened');
       $itemEl.trigger('treeview:open');
       app.emit('treeviewOpen', $itemEl[0]);
-      function done() {
-        $itemEl[0].f7TreeviewChildrenLoaded = true;
+      function done(cancel) {
+        if (cancel) {
+          $itemEl.removeClass('treeview-item-opened');
+          $itemEl.trigger('treeview:close');
+          app.emit('treeviewClose', $itemEl[0]);
+        } else {
+          $itemEl[0].f7TreeviewChildrenLoaded = true;
+        }
         $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
         $itemEl.find('.treeview-preloader').remove();
       }
@@ -40743,7 +41783,7 @@
     // f7-icon, material-icon, command
     bold: ['bold', 'format_bold', 'bold'],
     italic: ['italic', 'format_italic', 'italic'],
-    underline: ['underline', 'format_underline', 'underline'],
+    underline: ['underline', 'format_underlined', 'underline'],
     strikeThrough: ['strikethrough', 'strikethrough_s', 'strikeThrough'],
     orderedList: ['list_number', 'format_list_numbered', 'insertOrderedList'],
     unorderedList: ['list_bullet', 'format_list_bulleted', 'insertUnorderedList'],
@@ -40823,6 +41863,7 @@
       self.onInput = self.onInput.bind(self);
       self.onPaste = self.onPaste.bind(self);
       self.onSelectionChange = self.onSelectionChange.bind(self);
+      self.closeKeyboardToolbar = self.closeKeyboardToolbar.bind(self);
 
       // Handle Events
       self.attachEvents = function attachEvents() {
@@ -40831,6 +41872,7 @@
         }
         if (self.params.mode === 'keyboard-toolbar') {
           self.$keyboardToolbarEl.on('click', 'button', self.onButtonClick);
+          self.$el.parents('.page').on('page:beforeout', self.closeKeyboardToolbar);
         }
         if (self.params.mode === 'popover' && self.popover) {
           self.popover.$el.on('click', 'button', self.onButtonClick);
@@ -40847,6 +41889,7 @@
         }
         if (self.params.mode === 'keyboard-toolbar') {
           self.$keyboardToolbarEl.off('click', 'button', self.onButtonClick);
+          self.$el.parents('.page').off('page:beforeout', self.closeKeyboardToolbar);
         }
         if (self.params.mode === 'popover' && self.popover) {
           self.popover.$el.off('click', 'button', self.onButtonClick);
@@ -40975,7 +42018,8 @@
         if (!selection.isCollapsed && selection.rangeCount) {
           var range = selection.getRangeAt(0);
           var rect = range.getBoundingClientRect();
-          self.openPopover(rect.x + (win.scrollX || 0), rect.y + (win.scrollY || 0), rect.width, rect.height);
+          var rootEl = self.app.root[0] || doc.body;
+          self.openPopover(rect.x + (win.scrollX || 0) - rootEl.offsetLeft, rect.y + (win.scrollY || 0) - rootEl.offsetTop, rect.width, rect.height);
         } else if (selection.isCollapsed) {
           self.closePopover();
         }
@@ -41050,7 +42094,7 @@
       $buttonEl.trigger('texteditor:buttonclick', button);
       self.emit('local::buttonClick textEditorButtonClick', self, button);
       if (buttonData) {
-        if (buttonData.onClick) { buttonData.onClick(); }
+        if (buttonData.onClick) { buttonData.onClick(self, $buttonEl[0]); }
         return;
       }
       var command = textEditorButtonsMap[button][2];
@@ -41108,11 +42152,11 @@
         var iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
         if (self.params.customButtons && self.params.customButtons[button]) {
           var buttonData = self.params.customButtons[button];
-          return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (buttonData.content || '') + "</button>");
+          return ("<button type=\"button\" class=\"text-editor-button\" data-button=\"" + button + "\">" + (buttonData.content || '') + "</button>");
         }
         if (!textEditorButtonsMap[button]) { return ''; }
         var iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
-        return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (iconContent.indexOf('<') >= 0 ? iconContent : ("<i class=\"" + iconClass + "\">" + iconContent + "</i>")) + "</button>").trim();
+        return ("<button type=\"button\" class=\"text-editor-button\" data-button=\"" + button + "\">" + (iconContent.indexOf('<') >= 0 ? iconContent : ("<i class=\"" + iconClass + "\">" + iconContent + "</i>")) + "</button>").trim();
       }
       self.params.buttons.forEach(function (button, buttonIndex) {
         if (Array.isArray(button)) {
@@ -41219,6 +42263,8 @@
       }
 
       self.attachEvents();
+      self.$el.trigger('texteditor:init');
+      self.emit('local::init textEditorInit', self);
       return self;
     };
 
@@ -41227,6 +42273,9 @@
       self.$el.trigger('texteditor:beforedestroy');
       self.emit('local::beforeDestroy textEditorBeforeDestroy', self);
       self.detachEvents();
+      if (self.params.mode === 'keyboard-toolbar' && self.$keyboardToolbarEl) {
+        self.$keyboardToolbarEl.remove();
+      }
       if (self.popover) {
         self.popover.close(false);
         self.popover.destroy();
