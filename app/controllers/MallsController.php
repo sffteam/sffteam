@@ -4554,6 +4554,24 @@ public function createpage(){
   }
  }
 
+public function loyaltyPriceImages(){
+ $products = Malls::find('all');
+ foreach($products as $p){
+  $this->loyaltyPriceImage($p['Code']);
+ }
+ return $this->render(array('json' => array("success"=>"Yes"))); 
+}
+
+public function loyaltyPriceImage($code){
+ ini_set('memory_limit','-1');
+ set_time_limit(0);
+ $product = Malls::find('first',array(
+  'conditions'=>array('Code'=>$code)
+ ));
+ $file = $this->createLoyaltyimageinstantly($product);
+ return true;
+}
+
 public function createimage(){
  if($this->request->data){
  $img1 = $this->request->data['myBackground'];
@@ -4614,6 +4632,53 @@ public function myfiles($mcaNumber=null){
   return $myfiles; 
  }
  
+
+}
+
+function createLoyaltyimageinstantly($data){
+   $x=400;$y=600;
+   $code = $data['Code'];
+   $name = $data['Name'];
+   $MRP = $data['MRP'];
+   $DP = $data['DP'];
+   $saving = $data['Saving'];
+   $savingpercent = $data['SavingPercent'];
+   $afterfree = $data['AfterFree'];
+   $afterloyalty = $data['AfterLoyalty'];
+   header('Content-Type: image/png');
+   $imageFolder = '/app/webroot/img/products/';
+   $targetFolder = '/app/webroot/img/whatsapp/';
+   $fontFolder = '/';
+   $imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+   $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+ 
+   $img = $imagePath.$code."_400.jpg";
+
+   $outputImage = imagecreatetruecolor(400, 600);
+   $white = imagecolorallocate($outputImage, 255, 255, 255);
+   $black = imagecolorallocate($outputImage, 0, 0, 0);
+   $red = imagecolorallocate($outputImage, 255, 0, 0);
+   $blue = imagecolorallocate($outputImage, 0, 0, 255);
+   $green = imagecolorallocate($outputImage, 0, 102, 0);
+   $brown = imagecolorallocate($outputImage, 102, 0, 0);
+   
+   imagefill($outputImage, 0, 0, $white);
+   $first = imagecreatefromjpeg($img);
+   imagecopyresized($outputImage,$first,0,200,0,0, $x, $y,$x,$y);
+   $text = 'MRP: '.$MRP;
+   $font =  $fontFolder . 'arial.ttf';
+   imagettftext($outputImage, 16, 0, 10, 30, $black, './fonts/Gobold Bold.otf', wordwrap($name . "  - Rs .MRP: ". number_format($MRP,1),35,"\n",true));  
+   
+   imagettftext($outputImage, 12, 0, 10, 110, $blue, './fonts/Raleway-Black.ttf', 'Distributor Price: Rs.'.number_format($DP,1));
+   imagettftext($outputImage, 12, 0, 10, 130, $brown, './fonts/Raleway-Black.ttf', 'Savings: Rs.'.number_format($saving,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 150, $brown, './fonts/Raleway-Black.ttf', 'Savings %: '.$savingpercent . "%");
+   imagettftext($outputImage, 12, 0, 10, 170, $green, './fonts/Raleway-Black.ttf', 'After Free Gift: Rs.'.number_format($afterfree,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 190, $green, './fonts/Raleway-Black.ttf', 'After Year Loyalty: Rs.'.number_format($afterloyalty,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 210, $red, './fonts/Raleway-Black.ttf', wordwrap("Call/WhatsApp: +91 90810 58884, +91 99137 22372",33,"\n",true));  
+  $filename=$code.'.png';
+  imagepng($outputImage, $targetPath . $filename);
+  imagedestroy($outputImage);
+  return $filename;
 
 }
 
