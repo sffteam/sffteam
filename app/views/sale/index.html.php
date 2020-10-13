@@ -42,11 +42,11 @@
    <?php }?>
     <div class="col-100 sz12"><?=$p['Name']?></div>
    
-    <div class="col-50 text-align-center">
-      <img src="/img/products/<?=$p['Code']?>_100.jpg" alt="<?=$p['Code']?>">
+    <div class="col-100 text-align-center">
+      <img src="/img/products/<?=$p['Code']?>_400.jpg" alt="<?=$p['Code']?>">
     </div>
     <?php if(strtolower($price)!='mrp'){?>
-    <div class="col-50 sz11">
+    <div class="col-50 sz11 text-align-center">
        <div class="bg-color-green text-align-center" style="padding:1px;width:100%"><?=$p['SavingPercent']?>% Savings on MRP</div>
        <div class="bg-color-blue text-align-center"  style="padding:1px;width:100%"><?=$p['Percent']?>% DP/BV</div>
        <?php if($p['BuyInLoyalty']=="Yes"){?>
