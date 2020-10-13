@@ -4669,11 +4669,11 @@ function createLoyaltyimageinstantly($data){
    $font =  $fontFolder . 'arial.ttf';
    imagettftext($outputImage, 16, 0, 10, 30, $black, './fonts/Gobold Bold.otf', wordwrap($name . "  - Rs .MRP: ". number_format($MRP,1),35,"\n",true));  
    
-   imagettftext($outputImage, 12, 0, 10, 110, $blue, './fonts/Raleway-Black.ttf', 'Distributor Price: Rs.'.number_format($DP,1));
-   imagettftext($outputImage, 12, 0, 10, 130, $brown, './fonts/Raleway-Black.ttf', 'Savings: Rs.'.number_format($saving,1) . "");
-   imagettftext($outputImage, 12, 0, 10, 150, $brown, './fonts/Raleway-Black.ttf', 'Savings %: '.$savingpercent . "%");
-   imagettftext($outputImage, 12, 0, 10, 170, $green, './fonts/Raleway-Black.ttf', 'After Free Gift: Rs.'.number_format($afterfree,1) . "");
-   imagettftext($outputImage, 12, 0, 10, 190, $green, './fonts/Raleway-Black.ttf', 'After Year Loyalty: Rs.'.number_format($afterloyalty,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 110, $blue, './fonts/SairaExtraCondensed-Bold.ttf', 'Distributor Price: Rs.'.number_format($DP,1));
+   imagettftext($outputImage, 12, 0, 10, 130, $brown, './fonts/SairaExtraCondensed-Bold.ttf', 'Savings: Rs.'.number_format($saving,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 150, $brown, './fonts/SairaExtraCondensed-Bold.ttf', 'Savings %: '.$savingpercent . "%");
+   imagettftext($outputImage, 12, 0, 10, 170, $green, './fonts/SairaExtraCondensed-Bold.ttf', 'After Free Gift: Rs.'.number_format($afterfree,1) . "");
+   imagettftext($outputImage, 12, 0, 10, 190, $green, './fonts/SairaExtraCondensed-Bold.ttf', 'After Year Loyalty: Rs.'.number_format($afterloyalty,1) . "");
    imagettftext($outputImage, 12, 0, 10, 210, $red, './fonts/Raleway-Black.ttf', wordwrap("Call/WhatsApp: +91 90810 58884, +91 99137 22372",33,"\n",true));  
   $filename=$code.'.png';
   imagepng($outputImage, $targetPath . $filename);
