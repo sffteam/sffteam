@@ -5372,7 +5372,7 @@ public function getItemsCategory(){
 }
 
 public function offers(){
-
+  $this->_render['layout'] = 'sale';
 }
 //end of class
 }
