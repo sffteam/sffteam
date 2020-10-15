@@ -5370,6 +5370,10 @@ public function getItemsCategory(){
  
  return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$allTUY)));
 }
+
+public function offers(){
+
+}
 //end of class
 }
 

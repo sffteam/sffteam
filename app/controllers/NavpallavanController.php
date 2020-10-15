@@ -1646,6 +1646,14 @@ public function getInvoiceToday(){
 
 }
 
+public function getInvoice(){
+ $invoiceNo = $this->request->data['invoiceNo'];
+ 
+ $invoiceDetails = N_sales::find('all',array(
+  'conditions'=>array('invoice_no'=>$invoiceNo)
+ ));
+ return $this->render(array('json' => array("success"=>"Yes",'Details'=>$invoiceDetails)));
+}
 
 }
 ?>
