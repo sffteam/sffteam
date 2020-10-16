@@ -1655,7 +1655,7 @@ public function getInvoice(){
  return $this->render(array('json' => array("success"=>"Yes",'Details'=>$invoiceDetails)));
 }
 
-public funtion takereturn(){
+public function takereturn(){
  $id = $this->request->data['id'];
  $conditions = array('id'=>$id);
  $data = array('Return'=>"Yes");
