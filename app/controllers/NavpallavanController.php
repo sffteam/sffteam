@@ -1623,6 +1623,7 @@ public function getInvoiceToday(){
        'product_value'=>$ins['product_value'],
        'product_fran_value'=>$ins['product_fran_value'],
        'Payment'=>$ins['Payment'],
+       'Return'=>$ins['Return']?:"",
       ));
      }
    }
@@ -1648,11 +1649,18 @@ public function getInvoiceToday(){
 
 public function getInvoice(){
  $invoiceNo = $this->request->data['invoiceNo'];
- 
  $invoiceDetails = N_sales::find('all',array(
   'conditions'=>array('invoice_no'=>$invoiceNo)
  ));
  return $this->render(array('json' => array("success"=>"Yes",'Details'=>$invoiceDetails)));
+}
+
+public funtion takereturn(){
+ $id = $this->request->data['id'];
+ $conditions = array('id'=>$id);
+ $data = array('Return'=>"Yes");
+ N_sales::update($data,$conditions);
+ return $this->render(array('json' => array("success"=>"Yes")));
 }
 
 }
