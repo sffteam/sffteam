@@ -1657,10 +1657,10 @@ public function getInvoice(){
 
 public function takereturn(){
  $id = $this->request->data['id'];
- $conditions = array('_id'=>$id);
+ $conditions = array('_id'=>(string)$id);
  $data = array('Return'=>"Yes");
  N_sales::update($data,$conditions);
- return $this->render(array('json' => array("success"=>"Yes")));
+ return $this->render(array('json' => array("success"=>"Yes","data"=>$data,'conditions'=>$conditions)));
 }
 
 }
