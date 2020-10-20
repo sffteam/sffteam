@@ -33,6 +33,7 @@ foreach($allusers as $user) {
 								<b class="<?php if($user['PV']>0){echo " green ";}else{echo " blue ";}?>">\
 									<?=$user['mcaName']?></b><br>\
 									PV: <?=$user['PV']?><br>\
+									EPV: <?=$user['ExtraPV']?><br>\
 									PGPV: <?=$user['PGPV']?><br>\
 									RollUpPV: <?=$user['RollUpPV']?><br>\
 									PGBV: <?=$user['PGBV']?><br>\
