@@ -1647,6 +1647,83 @@ public function getInvoiceToday(){
 
 }
 
+public function getInvoiceRange(){
+ 
+  $selectDateRange = split(' - ',$this->request->data['selectDateRange'])	;
+  $user_id = $this->request->data['user_id']	;
+  
+   $conditions = array(
+    'DateTime' => array('$gte'=>new MongoDate(strtotime($selectDateRange[0])),'$lte'=>new MongoDate(strtotime($selectDateRange[1]))),
+    'user_id'=>(string)$user_id,
+    'invoice_no'=>array('$exists'=>true)
+   );
+  
+  
+   $invoices = N_sales::find('all',array(
+   'conditions'=>$conditions,
+   'order'=>array('saleDate'=>'ASC','invoice_no'=>'ASC','product_id'=>'ASC')
+  ));
+
+ $inv = array();
+ $invsub = array();
+ $allINV = array();
+  foreach($invoices as $i){
+    $invoice = $i['invoice_no'];
+    if (in_array($i['invoice_no'], $inv) ) {
+      continue;
+    }
+    $inv[] = $i['invoice_no'];
+  }
+  foreach($inv as $in){
+   foreach($invoices as $ins){
+     if($in==$ins['invoice_no']){
+      array_push($invsub,
+       array(
+       'invoice_no'=>$ins['invoice_no'],
+       'user_id'=>$ins['user_id'],
+       'product_id'=>$ins['product_id'],
+       'product_name'=>$ins['product_name'],
+       'product_description'=>$ins['product_description'],
+       'product_netweight'=>$ins['product_netweight'],
+       'product_unit'=>$ins['product_unit'],
+       'product_mrp'=>$ins['product_mrp'],
+       'product_fran_mrp'=>$ins['product_fran_mrp'],
+       'customer_id'=>$ins['customer_id'],
+       'saleDate'=>$ins['saleDate'],
+       'product_quantity'=>$ins['product_quantity'],
+       'product_value'=>$ins['product_value'],
+       'product_fran_value'=>$ins['product_fran_value'],
+       'Payment'=>$ins['Payment'],
+       'Return'=>$ins['Return']?:"",
+      ));
+     }
+   }
+     array_push($allINV,array('Invoice'=>$in,'Values'=>$invsub));
+     
+     $invsub=array();
+  }
+  $summary = array();
+  $inv_value = 0;
+  foreach($allINV as $inv){
+   foreach($inv['Values'] as $invoice){
+     $inv_value = $inv_value + $invoice['product_value'];
+     $saleDate = $invoice['saleDate'];
+   }
+   
+    array_push($summary,array(
+     'InvoiceNo'=>$inv['Invoice'],
+     'saleDate'=>$saleDate,
+     'value'=>$inv_value,
+    ));
+    $inv_value = 0;
+  }
+  
+ return $this->render(array('json' => array("success"=>"Yes",'Summary'=>$summary,'Invoices'=>$allINV,)));
+
+}
+
+
+
 public function getInvoice(){
  $invoiceNo = $this->request->data['invoiceNo'];
  $invoiceDetails = N_sales::find('all',array(
