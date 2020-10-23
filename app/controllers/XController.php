@@ -6,6 +6,15 @@ use app\models\Urls;
 
 class XController extends \lithium\action\Controller {
 
+
+protected function _init() {
+  parent::_init();
+//  $user = Session::read('default');
+  // if($user==null){
+   // return $this->redirect('/savings');
+  // }
+  $this->_render['layout'] = 'sale';
+ }
 	public function shorturl($longURL=null,$title=null){
 			if($longURL){
 				$longURL =  "https://circle.sff.team/the-unstoppable-you/".urlencode(strtolower($longURL));
@@ -33,5 +42,23 @@ class XController extends \lithium\action\Controller {
 		));
 		return compact('url');
 	}
+
+
+ public function p(){
+  
+  
+ }
+ public function product(){
+  
+  
+ }
+
+ public function join(){
+  
+  
+ }
+
+
+
 
 }
