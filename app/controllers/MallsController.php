@@ -4405,6 +4405,22 @@ public function sendsmsonly(){
  return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users)))); 
 }
 
+public function sendwhatsapponly(){
+ if($this->request->data){
+  $mcaNumber = $this->request->data['mcaNumber'];
+  $message = $this->request->data['message'];
+  $user = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+  ));
+ $function = new Functions();
+  $message = $message . "\n--".$user['mcaName']. "\n+91".$user['Inner']['mobile'];
+  $mobile = "+919081058884";//.$this->request->data['mobile'];
+  $function->twilio_wa($mobile,$message);
+ }
+ return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users)))); 
+}
+
+
 
 public function sendemailall(){
  if($this->request->data){
