@@ -59,7 +59,9 @@ class TwilioController extends \lithium\action\Controller {
     "+919879578255", "+917597219319",
     array("url" => "http://demo.twilio.com/docs/voice.xml")
 			);
-
-		
 	}
+public function welcome(){
+		return $this->render(array('json' => array("success"=>"Yes","result","post")));		
+	} 
+ 
 }
