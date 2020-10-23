@@ -9,6 +9,7 @@ use app\models\N_users;
 use app\models\N_prices;
 use app\models\N_recipes;
 use app\models\N_products;
+use app\models\N_inwards;
 use app\models\N_sales;
 use app\models\N_orders;
 use app\models\N_customers;
@@ -312,7 +313,7 @@ public function products(){
 			));
 			
 			
-			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products,'raw'=>$raw)));		
+			return $this->render(array('json' => array("success"=>"Yes",'count'=>count($products),'products'=>$products,'raw'=>$raw)));
 		}
 		
 		if($this->request->data['post']=="add"){
@@ -1740,7 +1741,31 @@ public function takereturn(){
  return $this->render(array('json' => array("success"=>"Yes","data"=>$data,'conditions'=>$conditions)));
 }
 
-
+public function saveInward(){
+ $data = array(
+  'user_id' => $this->request->data['user_id'],
+  'quantity' => $this->request->data['value'],
+  'id' => $this->request->data['id'],
+  'inwardDate' => $this->request->data['inwardDate'],
+ );
+ 
+ $conditions = array(
+  'user_id' => $this->request->data['user_id'],
+  'id' => $this->request->data['id'],
+  'inwardDate' => $this->request->data['inwardDate'],
+ );
+ 
+ $inward = N_inwards::find('first',array(
+  'conditions'=>$conditions
+ ));
+ 
+ if(count($inward)==0){
+   N_inwards::create()->save($data);
+ }else{
+   N_inwards::update($data,$conditions);
+ }
+ return $this->render(array('json' => array("success"=>"Yes","data"=>$data,'conditions'=>$conditions)));
+}
 
 }
 ?>
