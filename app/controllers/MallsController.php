@@ -14,6 +14,7 @@ use app\models\Notifications;
 use app\models\Tools;
 use app\models\Audios;
 use app\models\Baselines;
+use app\models\Invitees;
 use app\models\Swipers;
 use app\models\Rewards;
 use app\models\Templates;
@@ -4414,7 +4415,7 @@ public function sendwhatsapponly(){
   ));
  $function = new Functions();
   $message = $message . "\n--".$user['mcaName']. "\n+91".$user['Inner']['mobile'];
-  $mobile = "+919081058884";//.$this->request->data['mobile'];
+  $mobile = "+919913722372";//.$this->request->data['mobile'];
   $function->twilio_wa($mobile,$message);
  }
  return $this->render(array('json' => array("success"=>"Yes",'count'=>count($users)))); 
@@ -5390,6 +5391,33 @@ public function getItemsCategory(){
 public function offers(){
   $this->_render['layout'] = 'sale';
 }
+
+public function invitees(){
+ $invitees = Invitees::find('all');
+ $x = 1;
+ foreach($invitees as $i){
+  $this->sendsmsinviteeonly('92143138',$this->request->data['message'],$i['Number']);
+  sleep(2);
+  $x = $x +1;
+ }
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'count'=>$x))); 
+}
+
+
+public function sendsmsinviteeonly($mcaNumber,$message,$mobile){
+  $user = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+  ));
+  $function = new Functions();
+  $message = $message . "\n--".$user['mcaName']. "\n".str_replace("##","\n",$user['Inner']['mobile']);
+  $mobile = "+91".$mobile;
+  $function->twilio_api($mobile,$message);
+ 
+ return true; 
+}
+
+
 //end of class
 }
 
