@@ -512,7 +512,7 @@ curl_close($curl);
  }
  
 	public function twilio_api($mobile,$message){
-			
+set_time_limit(0);
 $sid    = TWILIO_ACCOUNT_SID;
 $token  = TWILIO_AUTH_TOKEN;
 $twilio = new Client($sid, $token);

@@ -5393,11 +5393,23 @@ public function offers(){
 }
 
 public function invitees(){
- $invitees = Invitees::find('all');
+ set_time_limit(0);
+ $invitees = Invitees::find('all',
+  array(
+   'conditions'=>array('sent'=>"Yes-2")
+  )
+ );
  $x = 1;
  foreach($invitees as $i){
   $this->sendsmsinviteeonly('92143138',$this->request->data['message'],$i['Number']);
-  sleep(2);
+  $data = array(
+   'sent'=>'Yes-3',
+  );
+  $conditions = array(
+   'Number'=> $i['Number']
+  );
+  Invitees::update($data,$conditions);
+  sleep(1);
   $x = $x +1;
  }
  
