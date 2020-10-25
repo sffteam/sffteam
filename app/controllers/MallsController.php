@@ -20,6 +20,7 @@ use app\models\Rewards;
 use app\models\Templates;
 use app\models\Pdfs;
 use app\models\Invoices;
+use app\models\Outlines;
 use app\models\Logs;
 use app\models\Lists;
 use app\models\Modicare_products; // Only for Transfer of products.. Not required
@@ -5429,6 +5430,74 @@ public function sendsmsinviteeonly($mcaNumber,$message,$mobile){
  return true; 
 }
 
+
+public function outline(){
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+ 
+ if($this->request->data['id']){
+  $outline = Outlines::find('first',array(
+   'conditions'=>array('_id'=>(string)$this->request->data['id']),
+   'order'=>array('_id'=>'ASC')
+  ));
+  $id = $outline['id'];
+  
+ }else{
+  $outline = Outlines::find('first',array(
+   'order'=>array('_id'=>'ASC')
+  ));
+  $id = $outline['_id'];
+ }
+ 
+ $allLevels = array();
+ 
+ 
+ array_push($allLevels,array(
+   'id' => (string)$outline['_id'],
+   'left'=>$outline['left'],
+   'right'=>$outline['right'],
+   'outline_audio'=>$outline['outline_audio']?:"",
+   'outline_image'=>$outline['outline_image']?:"",
+   'outline_description'=>$outline['outline_description']?:"",
+   'outline_order'=>$outline['outline_order']?:"",
+   'outline_pdf'=>$outline['outline_pdf']?:"",
+   'outline_text'=>$outline['outline_text']?:"",
+   'outline_url'=>$outline['outline_url']?:"",
+   'outline_video'=>$outline['outline_video']?:"",
+   'outline_name'=>$outline['outline_name']?:"",
+   'outline_refer_id'=>$outline['outline_refer_id']?:"",
+ ));
+ 
+    $outlines = Outlines::find('all',array(
+    'conditions'=>array(
+     'outline_refer_id'=>(string)$outline['_id']
+    ),
+    'order'=>array('_id'=>'ASC'),
+    
+    ));
+
+    foreach($outlines as $o){
+     array_push($allLevels,array(
+     
+     'id' => (string)$o['_id'],
+     'left'=>$o['left'],
+     'right'=>$o['right'],
+     'outline_audio'=>$o['outline_audio']?:"",
+     'outline_image'=>$o['outline_image']?:"",
+     'outline_description'=>$o['outline_description']?:"",
+     'outline_order'=>$o['outline_order']?:"",
+     'outline_pdf'=>$o['outline_pdf']?:"",
+     'outline_text'=>$o['outline_text']?:"",
+     'outline_url'=>$o['outline_url']?:"",
+     'outline_video'=>$o['outline_video']?:"",
+     'outline_name'=>$o['outline_name']?:"",
+     'outline_refer_id'=>$o['outline_refer_id']?:"",
+    ));
+    }
+ 
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allLevels),'Levels'=>$allLevels))); 
+}
 
 //end of class
 }
