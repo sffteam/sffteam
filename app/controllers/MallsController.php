@@ -5474,21 +5474,21 @@ public function outline(){
     ));
 
     foreach($outlines as $o){
-     // array_push($allLevels,array(
-     // 'id' => (string)$o['_id'],
-     // 'left'=>$o['left'],
-     // 'right'=>$o['right'],
-     // 'outline_audio'=>$o['outline_audio']?:"",
-     // 'outline_image'=>$o['outline_image']?:"",
-     // 'outline_description'=>$o['outline_description']?:"",
-     // 'outline_order'=>$o['outline_order']?:"",
-     // 'outline_pdf'=>$o['outline_pdf']?:"",
-     // 'outline_text'=>$o['outline_text']?:"",
-     // 'outline_url'=>$o['outline_url']?:"",
-     // 'outline_video'=>$o['outline_video']?:"",
-     // 'outline_name'=>$o['outline_name']?:"",
-     // 'outline_refer_id'=>$o['outline_refer_id']?:"",
-    // ));
+     array_push($allLevels,array(
+     'id' => (string)$o['_id'],
+     'left'=>$o['left'],
+     'right'=>$o['right'],
+     'outline_audio'=>$o['outline_audio']?:"",
+     'outline_image'=>$o['outline_image']?:"",
+     'outline_description'=>$o['outline_description']?:"",
+     'outline_order'=>$o['outline_order']?:"",
+     'outline_pdf'=>$o['outline_pdf']?:"",
+     'outline_text'=>$o['outline_text']?:"",
+     'outline_url'=>$o['outline_url']?:"",
+     'outline_video'=>$o['outline_video']?:"",
+     'outline_name'=>$o['outline_name']?:"",
+     'outline_refer_id'=>$o['outline_refer_id']?:"",
+    ));
     }
  
  
