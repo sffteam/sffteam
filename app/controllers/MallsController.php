@@ -5435,7 +5435,7 @@ public function outline(){
  ini_set('max_execution_time', '0');
  ini_set("memory_limit", "-1");
  
- if($this->request->data['id']){
+ if($this->request->data['id']!="0000"){
   $outline = Outlines::find('first',array(
    'conditions'=>array('_id'=>(string)$this->request->data['id']),
    'order'=>array('_id'=>'ASC')
