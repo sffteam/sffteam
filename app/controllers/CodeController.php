@@ -38,8 +38,11 @@ class CodeController extends \lithium\action\Controller {
 		
 	}
  
- public function call($msg){
-	$msg = urldecode($msg);
+ public function call($date, $time, $title, $speaker){
+	$date = urldecode($date);
+ $time = urldecode($time);
+ $title = urldecode($title);
+ $speaker = urldecode($speaker);
 	$layout = false;
 	$view  = new View(array(
 		'paths' => array(
@@ -49,7 +52,7 @@ class CodeController extends \lithium\action\Controller {
 		));
 		echo $view->render(
 		'all',
-		compact('msg'),
+		compact('date','time', 'title', 'speaker'),
 		array(
 			'controller' => 'code',
 			'template'=>'call',
