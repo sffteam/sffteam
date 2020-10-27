@@ -38,6 +38,29 @@ class CodeController extends \lithium\action\Controller {
 		
 	}
  
+ public function call($msg){
+	$msg = urldecode($msg);
+	$layout = false;
+	$view  = new View(array(
+		'paths' => array(
+			'template' => '{:library}/views/{:controller}/{:template}.{:type}.php',
+			'layout'   => '{:library}/views/layouts/{:layout}.{:type}.php',
+		)
+		));
+		echo $view->render(
+		'all',
+		compact('msg'),
+		array(
+			'controller' => 'code',
+			'template'=>'call',
+			'type' => 'xml',
+			'layout' =>'default'
+		)
+		);	
+		return $this->render(array('layout' => false));
+		
+	}
+ 
  public function msg ($message){
  $layout = false; 
    $layout = false;

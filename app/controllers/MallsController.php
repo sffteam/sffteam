@@ -5495,6 +5495,12 @@ public function outline(){
  return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allLevels),'Levels'=>$allLevels))); 
 }
 
+function callFollowup($mobile,$msg){
+   $function = new Functions();
+   $returncall = $function->twilioCall("+91".$mobile,$msg);  // Testing if it works  
+   return $this->render(array('json' => array("success"=>"No")));   
+}
+
 //end of class
 }
 

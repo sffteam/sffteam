@@ -1,0 +1,1 @@
+<Response><Say voice="woman">Hi, I am calling from We Capacitate. <?=urldecode($msg)?>, I repeat <?=urldecode($msg)?>.</Say></Response>
