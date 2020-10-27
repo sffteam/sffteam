@@ -537,11 +537,11 @@ $message = $twilio->messages
                   );
 }
 
-function twilioCall($mobile,$msg){
+function twilioCall($mobile,$date, $time, $title, $speaker){
 			
 // Get cURL resource
 $url = 'https://api.twilio.com/2010-04-01/Accounts/'.TWILIO_ACCOUNT_SID.'/Calls.json';
-$CallURL = 'http://sff.team/code/call/'.$msg;
+$CallURL = 'http://sff.team/code/call/'.$date.'/'.$time.'/'.$title.'/'.$speaker.'/';
 $auth = TWILIO_ACCOUNT_SID.":".TWILIO_AUTH_TOKEN;
 $fields = array(
 		'To' =>  $mobile  ,
