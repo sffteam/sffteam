@@ -5498,7 +5498,7 @@ public function outline(){
 function callFollowup($mobile,$date, $time, $title, $speaker){
    $function = new Functions();
    $returncall = $function->twilioCall("+91".$mobile,$date, $time, $title, $speaker);  // Testing if it works  
-   return $this->render(array('json' => array("success"=>"No")));   
+   return $this->render(array('json' => array("success"=>"Yes")));
 }
 
 //end of class
