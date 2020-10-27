@@ -1,1 +1,1 @@
-<Response><Say voice="woman">Hi, I am calling from We Capacitate. <?=urldecode($msg)?>, I repeat <?=urldecode($msg)?>.</Say></Response>
+<Response><Say voice="woman">Hi, I am calling from We Capacitate. This is a reminder to you that we have Discovery Session on Zoom. Connect to Zoom Meeting with ID: 7,,5,,9,,7,,2,,1,,9,,3,,1,,9 and password 4,,5,,6,,7,,8,,9,,8,,8. We Capacitate Welcomes You., Do attend the meeting it is going to change the way you think about business.</Say></Response>
