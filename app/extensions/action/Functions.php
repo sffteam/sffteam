@@ -553,7 +553,7 @@ $fields = array(
 		'Record'=>'false'
 		);
 $post = http_build_query($fields);
-print_r($fields);
+
 //print_r($post);
 $curl = curl_init($url);
 // Set some options - we are passing in a useragent too here
