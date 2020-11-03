@@ -4615,8 +4615,9 @@ public function createimage(){
  $myfiles = $this->myfiles($mcaNumber);
  return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles))); 
  }
- 
 }
+
+
 
 public function myfiles($mcaNumber=null){
  $this->_render['layout'] = ''; 
@@ -4650,8 +4651,20 @@ public function myfiles($mcaNumber=null){
    }
   return $myfiles; 
  }
- 
-
+}
+public function myInviteImages(){
+   $targetFolder = '/app/webroot/img/invite/';
+   $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+   $files = scandir($targetPath);
+   $myfiles = array();
+   foreach($files as $f){
+     if($f=="."||$f==".."){
+       continue;
+     }
+     array_push($myfiles,array('file'=>$f));
+     
+   }
+  return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles))); 
 }
 
 function createLoyaltyimageinstantly($data,$mcaNumber){
