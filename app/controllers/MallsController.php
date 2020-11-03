@@ -4653,16 +4653,22 @@ public function myfiles($mcaNumber=null){
  }
 }
 public function myInviteImages(){
+   $mcaNumber = $this->request->data['mcaNumber'];
    $targetFolder = '/app/webroot/img/invite/';
    $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
    $files = scandir($targetPath);
    $myfiles = array();
    foreach($files as $f){
-     if($f=="."||$f==".."){
-       continue;
+     $filemcaNumber = substr($f,0,8);
+     if($filemcaNumber=="00000000"){
+      array_push($myfiles,array('file'=>$f));
      }
-     array_push($myfiles,array('file'=>$f));
+
+     if($filemcaNumber!=$mcaNumber){
+      continue;
+     }
      
+     array_push($myfiles,array('file'=>$f));
    }
   return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles))); 
 }
