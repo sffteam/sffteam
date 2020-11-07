@@ -38,6 +38,18 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
+ Connections::add('default_FalSabji', array(
+ 	'type' => CONNECTIONFALSABJI_TYPE,
+ 	'host' => array(CONNECTIONFALSABJI,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONFALSABJI_DB,
+	'login' => CONNECTIONFALSABJI_USER,
+	'password' => CONNECTIONFALSABJI_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
+
  Connections::add('default_Rbitcoin', array(
  	'type' => CONNECTIONRBITCOIN_TYPE,
  	'host' => array(CONNECTIONRBITCOIN,
