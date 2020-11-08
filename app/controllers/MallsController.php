@@ -1034,6 +1034,8 @@ public function searchdown(){
      'InActive' => (integer)$u[$pyyyymm]['InActive']?:0,
      'Gross' => $u[$pyyyymm]['Gross']?:0,     
      'APB' => $u[$pyyyymm]['APB']?:0,     
+     'TBB' => $u[$pyyyymm]['TBB']?:0,     
+     'ABB' => $u[$pyyyymm]['ABB']?:0,     
      'DB' => $u[$pyyyymm]['DB']?:0,     
      'LPB' => $u[$pyyyymm]['LPB']?:0,     
      'TF' => $u[$pyyyymm]['TF']?:0,     
