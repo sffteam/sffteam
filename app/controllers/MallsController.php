@@ -2043,7 +2043,6 @@ Users::update(
    );
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
    Users::update($data,$conditions);
-  
  }
 
 public function saveMessage(){
