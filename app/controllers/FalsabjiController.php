@@ -13,10 +13,14 @@ class FalsabjiController extends \lithium\action\Controller {
  }
 
  public function index($type=null){
-  
-  $items = F_items::find('all',array(
-//   'conditions'=>array('Type'=>$type)
+  if($type==null){
+   $items = F_items::find('all',array(
+   )); 
+  }else{
+   $items = F_items::find('all',array(
+   'conditions'=>array('Type'=>$type)
   ));
+  }
   return $this->render(array('json' => array("success"=>"Yes",'items'=>$items)));  
  }
 
