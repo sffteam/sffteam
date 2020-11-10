@@ -57,8 +57,39 @@ class FalsabjiController extends \lithium\action\Controller {
   return $this->render(array('json' => array("success"=>"No")));  
  }
 
+public function saveuser(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $dob = $this->request->data['dateofbirth'];
+  $name = $this->request->data['name'];
+  $type = $this->request->data['type'];
+  
+  $conditions = array('mobile'=>(string)$mobile);
+  $data = array(
+     'Name' => $name,
+     'DOB'=>$dob,
+     'Type'=>$type,
+    );
+  F_users::update($data,$conditions);
+  $user = F_users::find('first',array(
+     'conditions'=>$conditions
+    ));
+  return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));  
+ }
+ return $this->render(array('json' => array("success"=>"No")));  
+}
 
-
+public function getuser(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $conditions = array('mobile'=>(string)$mobile);
+    $user = F_users::find('first',array(
+     'conditions'=>$conditions
+    ));
+  return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));  
+ }
+ return $this->render(array('json' => array("success"=>"No")));  
+}
 
 }
 
