@@ -41,7 +41,7 @@ class FalsabjiController extends \lithium\action\Controller {
     $msg = "Fal-Sabji OTP is ". $otp . ",  to register.";
 //    $returncall = $function->twilio($mobile,$msg,$otp);  // Testing if it works 
     $returnsms = $function->sendSms($mobile,$msg);  // Testing if it works 
-    $user = Users::find('first',array(
+    $user = F_users::find('first',array(
     'conditions'=>array(
      'mobile'=>(string)$mobile,
      )
