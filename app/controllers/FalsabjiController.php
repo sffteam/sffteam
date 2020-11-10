@@ -46,15 +46,13 @@ class FalsabjiController extends \lithium\action\Controller {
 
     $function = new Functions();
     $msg = "Fal-Sabji OTP is ". $otp . ",  to register.";
-//    $returncall = $function->twilio($mobile,$msg,$otp);  // Testing if it works 
-    $returnsms = $function->sendSms($mobile,$msg);  // Testing if it works 
+//    $returncall = $function->twilio("+91".$mobile,$msg,$otp);  // Testing if it works 
+    $returnsms = $function->sendSms("+91".$mobile,$msg);  // Testing if it works 
     $user = F_users::find('first',array(
      'conditions'=>$conditions
     ));
     
     return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));  
-   
-   
   }
   return $this->render(array('json' => array("success"=>"No")));  
  }
