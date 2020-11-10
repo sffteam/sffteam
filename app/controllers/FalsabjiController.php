@@ -28,28 +28,32 @@ class FalsabjiController extends \lithium\action\Controller {
      'mobile'=>(string)$mobile,
      )
    ));
-   if(count($user)==0){
+   
     $ga = new GoogleAuthenticator();
     $otp = $ga->getCode($ga->createSecret(64)); 
     $data = array(
      'otp' => $otp,
      'mobile'=>$mobile,
     );
+    $conditions = array('mobile'=>(string)$mobile);
     
+   if(count($user)==0){ 
     F_users::create()->save($data);
+   }else{
+    F_users::update($data,$conditions);
+   }
+
+
     $function = new Functions();
     $msg = "Fal-Sabji OTP is ". $otp . ",  to register.";
 //    $returncall = $function->twilio($mobile,$msg,$otp);  // Testing if it works 
     $returnsms = $function->sendSms($mobile,$msg);  // Testing if it works 
     $user = F_users::find('first',array(
-    'conditions'=>array(
-     'mobile'=>(string)$mobile,
-     )
+     'conditions'=>$conditions
     ));
+    
     return $this->render(array('json' => array("success"=>"Yes","otp"=>$otp,'user'=>$user)));  
-   }else{
-    return $this->render(array('json' => array("success"=>"No")));  
-   }
+   
    
   }
   return $this->render(array('json' => array("success"=>"No")));  
