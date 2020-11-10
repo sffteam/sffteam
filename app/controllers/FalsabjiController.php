@@ -91,6 +91,38 @@ public function getuser(){
  return $this->render(array('json' => array("success"=>"No")));  
 }
 
+public function saveLatLon(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $latitude = $this->request->data['latitude'];
+  $longitude = $this->request->data['longitude'];
+  $timestamp = $this->request->data['timestamp'];
+  $conditions = array('mobile'=>(string)$mobile);
+    $user = F_users::find('first',array(
+     'conditions'=>$conditions
+    ));
+  $p_latitude = $user['latitude'];
+  $p_longitude = $user['longitude'];
+  $p_timestamp = $user['timestamp'];
+  
+  $data = array(
+   'latitude' => $latitude,
+   'longitude'=> $longitude,
+   'timestamp' => $timestamp,
+   'p_latitude' => $p_latitude,
+   'p_longitude' => $p_longitude,
+   'p_timestamp'=> $p_timestamp
+  );
+  F_users::update($data,$conditions);
+  $user = F_users::find('first',array(
+   'conditions'=>$conditions
+  ));
+  
+  return $this->render(array('json' => array("success"=>"Yes",'user'=>$user)));  
+ }
+ return $this->render(array('json' => array("success"=>"No")));  
+}
+
 }
 
 
