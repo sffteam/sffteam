@@ -101,9 +101,9 @@ public function saveLatLon(){
     $user = F_users::find('first',array(
      'conditions'=>$conditions
     ));
-  $p_latitude = $user['latitude'];
-  $p_longitude = $user['longitude'];
-  $p_timestamp = $user['timestamp'];
+  $p_latitude = $user['latitude']?:0;
+  $p_longitude = $user['longitude']?:0;
+  $p_timestamp = $user['timestamp']?:0;
   
   $data = array(
    'latitude' => $latitude,
