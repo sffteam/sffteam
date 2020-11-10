@@ -123,6 +123,21 @@ public function saveLatLon(){
  return $this->render(array('json' => array("success"=>"No")));  
 }
 
+public function getUsers(){
+ if($this->request->data){
+  $mobile1 = $this->request->data['mobile1'];
+  $mobile2 = $this->request->data['mobile2'];
+  $users = F_users::find('all',array(
+   'conditions'=>array('mobile'=> array('$in'=>array($mobile1, $mobile2)))
+  ));
+  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));  
+ }
+ return $this->render(array('json' => array("success"=>"No")));  
+ 
+}
+
+
+
 }
 
 
