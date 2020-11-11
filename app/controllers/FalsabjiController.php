@@ -140,6 +140,8 @@ public function getVendors(){
   $users = F_users::find('all',array(
    'conditions'=>array('Type'=> 'Vendor')
   ));
+  
+  
  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
 }
 

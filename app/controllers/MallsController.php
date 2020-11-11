@@ -567,7 +567,10 @@ public function show($Code){
 public function searchmca(){
  if($this->request->data){
   $user = Users::find('first',array(
-   'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
+   'conditions'=>array(
+    'mcaNumber'=>$this->request->data['mcaNumber'],
+//    'percent'=>array('$ne'=>null)
+    )
   ));
   $findmobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$this->request->data['mcaNumber'])
@@ -582,7 +585,9 @@ public function searchmca(){
   $tree=array();
   foreach($user['ancestors'] as $key=>$val){
     $upline = Users::find('first',array(
-     'conditions'=>array('mcaNumber'=>$val)
+     'conditions'=>array('mcaNumber'=>$val,
+     $p1yyyymm.'.Percent'=>array('$ne'=>null)
+     )
     ));
     if($upline['mcaNumber']!=null){
      $findUserMobile = Mobiles::find('first',array(
@@ -652,6 +657,7 @@ public function findTeam($mcaNumber){
   'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
   $yyyymm = date('Y-m');
+  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
    $left = $user['left'];
    $right = $user['right'];
    $team = Users::count('all',array('conditions'=>
@@ -659,6 +665,7 @@ public function findTeam($mcaNumber){
       'left'=>array('$gt'=>$left),
       'right'=>array('$lt'=>$right),
        $yyyymm=>array('$exists'=>true),
+       $p1yyyymm.'.Percent'=>array('$ne'=>null),
       'Enable'=>'Yes'
    )
    )
@@ -926,7 +933,11 @@ public function searchdown(){
  
  if($this->request->data){
   $users = Users::find('all',array(
-   'conditions'=>array('refer_id'=>$this->request->data['mcaNumber'],$yyyymm=>array('$exists'=>true)),
+   'conditions'=>array(
+    'refer'=>$this->request->data['mcaNumber'],
+     $yyyymm=>array('$exists'=>true),
+     $pyyyymm.'.Percent'=>array('$ne'=>null)
+     ),
    'order'=>array($yyyymm.'.GPV'=>'DESC',$pyyyymm.'.GPV'=>'DESC')
    ));
   if(count($users)>0){
