@@ -130,12 +130,20 @@ public function getUsers(){
   $users = F_users::find('all',array(
    'conditions'=>array('mobile'=> array('$in'=>array($mobile1, $mobile2)))
   ));
-  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));  
+  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
  }
- return $this->render(array('json' => array("success"=>"No")));  
- 
+ return $this->render(array('json' => array("success"=>"No")));
 }
 
+
+public function getVendors(){
+  $users = F_users::find('all',array(
+   'conditions'=>array('Type'=> 'Vendor')
+  ));
+  
+  
+ return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
+}
 
 
 }
