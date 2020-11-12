@@ -168,7 +168,7 @@ public function savevendoritems(){
    'Sell'=>$sell
   );
   
-  if(count($dosell==0)){
+  if(count($dosell)==0){
    F_vendoritems::create()->save($data);
   }else{
    F_vendoritems::update($data,$conditions);
