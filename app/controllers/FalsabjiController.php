@@ -4,6 +4,7 @@ use \lithium\data\Model;
 use app\models\F_items;
 use app\models\F_users;
 use app\models\F_units;
+use app\models\F_vendoritems;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 
@@ -141,8 +142,6 @@ public function getVendors(){
   $users = F_users::find('all',array(
    'conditions'=>array('Type'=> 'Vendor')
   ));
-  
-  
  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
 }
 
@@ -152,6 +151,31 @@ public function getitemsdata(){
  ));
  $units = F_units::find('all');
  return $this->render(array('json' => array("success"=>"Yes",'items'=>$items,'units'=>$units,)));
+}
+
+public function savevendoritems(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $code = $this->request->data['code'];
+  $sell = $this->request->data['sell'];
+  $conditions = array('Code'=>$code,'Mobile'=>$mobile);
+  $dosell = F_vendoritems::find('first',array(
+   'conditions'=>$conditions
+  ));
+  $data = array(
+   'Mobile'=>$mobile,
+   'Code'=>$code,
+   'Sell'=>$sell
+  );
+  
+  if(count($dosell==0)){
+   F_vendoritems::create()->save($data);
+  }else{
+   F_vendoritems::update($data,$conditions);
+  }
+  
+ }
+ return $this->render(array('json' => array("success"=>"Yes")));
 }
 
 }
