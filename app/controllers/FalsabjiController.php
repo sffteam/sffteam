@@ -145,6 +145,12 @@ public function getVendors(){
  return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
 }
 
+public function getitemsdata(){
+ $items = F_items::find('all',array(
+  'order'=>array('Type'=>'ASC','Code'=>'ASC')
+ ));
+ return $this->render(array('json' => array("success"=>"Yes",'items'=>$items)));
+}
 
 }
 
