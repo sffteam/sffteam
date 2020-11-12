@@ -146,11 +146,18 @@ public function getVendors(){
 }
 
 public function getitemsdata(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $conditions = array('Mobile'=>$mobile);
+  $dosell = F_vendoritems::find('all',array(
+   'conditions'=>$conditions
+  ));
+ }
  $items = F_items::find('all',array(
   'order'=>array('Type'=>'ASC','Code'=>'ASC')
  ));
  $units = F_units::find('all');
- return $this->render(array('json' => array("success"=>"Yes",'items'=>$items,'units'=>$units,)));
+ return $this->render(array('json' => array("success"=>"Yes",'dosell'=>$dosell,'items'=>$items,'units'=>$units,)));
 }
 
 public function savevendoritems(){
