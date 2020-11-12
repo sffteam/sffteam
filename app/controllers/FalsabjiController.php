@@ -3,6 +3,7 @@ namespace app\controllers;
 use \lithium\data\Model;
 use app\models\F_items;
 use app\models\F_users;
+use app\models\F_units;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 
@@ -149,7 +150,8 @@ public function getitemsdata(){
  $items = F_items::find('all',array(
   'order'=>array('Type'=>'ASC','Code'=>'ASC')
  ));
- return $this->render(array('json' => array("success"=>"Yes",'items'=>$items)));
+ $units = F_units::find('all');
+ return $this->render(array('json' => array("success"=>"Yes",'items'=>$items,'units'=>$units,)));
 }
 
 }
