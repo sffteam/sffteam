@@ -198,7 +198,7 @@ public function savevendorrates(){
   ));
   $data = array(
    'Mobile'=>$mobile,
-   'Variety'=>$Variery,
+   'Variety'=>$variety,
    'Rate'=>$rate,
    'Unit'=>$unit
   );
