@@ -5,6 +5,7 @@ use app\models\F_items;
 use app\models\F_users;
 use app\models\F_units;
 use app\models\F_vendoritems;
+use app\models\F_vendorrates;
 use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 
@@ -185,7 +186,32 @@ public function savevendoritems(){
  return $this->render(array('json' => array("success"=>"Yes")));
 }
 
+public function savevendorrates(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $variety = $this->request->data['variety'];
+  $rate = $this->request->data['rate'];
+  $unit = $this->request->data['unit'];
+  $conditions = array('Code'=>$code,'Mobile'=>$mobile);
+  $dosell = F_vendorrates::find('first',array(
+   'conditions'=>$conditions
+  ));
+  $data = array(
+   'Mobile'=>$mobile,
+   'Code'=>$code,
+   'Sell'=>$sell
+  );
+  
+  if(count($dosell)==0){
+   F_vendorrates::create()->save($data);
+  }else{
+   F_vendorrates::update($data,$conditions);
+  }
+
+ }
+ return $this->render(array('json' => array("success"=>"Yes")));
 }
 
 
+}
 ?>
