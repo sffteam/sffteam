@@ -151,7 +151,8 @@ public function getitemsdata(){
   $mobile = $this->request->data['mobile'];
   $conditions = array('Mobile'=>$mobile);
   $dosell = F_vendoritems::find('all',array(
-   'conditions'=>$conditions
+   'conditions'=>$conditions,
+   'order'=>array('Code'=>'ASC'),
   ));
  }
  $items = F_items::find('all',array(
@@ -163,8 +164,29 @@ public function getitemsdata(){
  $rates = F_vendorrates::find('all',array(
   'conditions'=>array('Mobile'=>$mobile)
  ));
+ $codes = array();
+ foreach ($rates as $r){
+  array_push($codes,$r['Code']);
+ }
  
- return $this->render(array('json' => array("success"=>"Yes",'dosell'=>$dosell,'items'=>$items,'units'=>$units,'rates'=>$rates)));
+ $myitems = F_items::find('all',array(
+  'conditions'=>array('Code'=>array('$in'=>$codes)),
+  'order'=>array('Type'=>'ASC','Code'=>'ASC')
+ ));
+ $finalmyitems = array();
+ foreach($dosell as $d){
+  foreach($rates as $r){
+   if($d['Code']==$r['Code'])
+   array_push($finalmyitems,array(
+    'Code'=>$d['Code'],
+    'Mobile'=>$d['Mobile'],
+    'Sell'=>$d['Sell']
+   ));
+  }
+ }
+ 
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'finalmyitems'=>$finalmyitems,'rates'=>$rates,'dosell'=>$dosell,'items'=>$items,'units'=>$units)));
  
 }
 
@@ -219,7 +241,7 @@ public function savevendorrates(){
   $data = array(
    'Mobile'=>$mobile,
    'Code'=>$code,
-   'Sell'=>true
+   'Sell'=>"true"
   );
   $conditions = array('Code'=>$code,'Mobile'=>$mobile);
   $dosell = F_vendoritems::find('first',array(
