@@ -191,14 +191,16 @@ public function savevendorrates(){
   $mobile = $this->request->data['mobile'];
   $variety = $this->request->data['variety'];
   $rate = $this->request->data['rate'];
+  $code = $this->request->data['code'];
   $unit = $this->request->data['unit'];
-  $conditions = array('Variety'=>$variety,'Mobile'=>$mobile);
+  $conditions = array('Variety'=>$variety,'Mobile'=>$mobile,'Code'=>$code);
   $dosell = F_vendorrates::find('first',array(
    'conditions'=>$conditions
   ));
   $data = array(
    'Mobile'=>$mobile,
    'Variety'=>$variety,
+   'Code'=>$code,
    'Rate'=>$rate,
    'Unit'=>$unit
   );
