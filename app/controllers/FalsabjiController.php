@@ -226,10 +226,17 @@ public function savevendorrates(){
   $dosell = F_vendorrates::find('first',array(
    'conditions'=>$conditions
   ));
+  $item = F_items::find('first',array(
+   'conditions'=>array('Code'=>$code)
+  ));
   $data = array(
    'Mobile'=>$mobile,
    'Variety'=>$variety,
    'Code'=>$code,
+   'Type'=>$item['Type'],
+   'English'=>$item['English'],
+   'Hindi'=>$item['Hindi'],
+   'Type'=>$item['Gujarati'],
    'Rate'=>$rate,
    'Unit'=>$unit
   );
