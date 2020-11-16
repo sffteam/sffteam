@@ -244,5 +244,20 @@ public function savevendorrates(){
 }
 
 
+function swipeDelete(){
+ if($this->request->data){
+  $mobile = $this->request->data['mobile'];
+  $variety = $this->request->data['variety'];
+  $code = $this->request->data['code'];
+  $conditions = array(
+   'Mobile'=>$mobile,
+   'Variety'=>$variety,
+   'Code'=>$code
+  );
+  F_vendorrates::remove($conditions);
+ }
+ return $this->render(array('json' => array("success"=>"Yes")));
+}
+
 }
 ?>
