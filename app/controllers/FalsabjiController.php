@@ -157,8 +157,15 @@ public function getitemsdata(){
  $items = F_items::find('all',array(
   'order'=>array('Type'=>'ASC','Code'=>'ASC')
  ));
+ 
+ 
  $units = F_units::find('all');
- return $this->render(array('json' => array("success"=>"Yes",'dosell'=>$dosell,'items'=>$items,'units'=>$units,)));
+ $rates = F_vendorrates::find('all',array(
+  'conditions'=>array('Mobile'=>$mobile);
+ ))
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'dosell'=>$dosell,'items'=>$items,'units'=>$units,'rates'=>$rates)));
+ 
 }
 
 public function savevendoritems(){
@@ -204,13 +211,25 @@ public function savevendorrates(){
    'Rate'=>$rate,
    'Unit'=>$unit
   );
-  
   if(count($dosell)==0){
    F_vendorrates::create()->save($data);
   }else{
    F_vendorrates::update($data,$conditions);
   }
-
+  $data = array(
+   'Mobile'=>$mobile,
+   'Code'=>$code,
+   'Sell'=>true
+  );
+  $conditions = array('Code'=>$code,'Mobile'=>$mobile);
+  $dosell = F_vendoritems::find('first',array(
+   'conditions'=>$conditions
+  ));
+  if(count($dosell)==0){
+   F_vendoritems::create()->save($data);
+  }else{
+   F_vendoritems::update($data,$conditions);
+  }
  }
  return $this->render(array('json' => array("success"=>"Yes")));
 }
