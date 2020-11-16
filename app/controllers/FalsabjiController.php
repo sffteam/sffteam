@@ -161,8 +161,8 @@ public function getitemsdata(){
  
  $units = F_units::find('all');
  $rates = F_vendorrates::find('all',array(
-  'conditions'=>array('Mobile'=>$mobile);
- ))
+  'conditions'=>array('Mobile'=>$mobile)
+ ));
  
  return $this->render(array('json' => array("success"=>"Yes",'dosell'=>$dosell,'items'=>$items,'units'=>$units,'rates'=>$rates)));
  
