@@ -164,29 +164,9 @@ public function getitemsdata(){
  $rates = F_vendorrates::find('all',array(
   'conditions'=>array('Mobile'=>$mobile)
  ));
- $codes = array();
- foreach ($rates as $r){
-  array_push($codes,$r['Code']);
- }
- 
- $myitems = F_items::find('all',array(
-  'conditions'=>array('Code'=>array('$in'=>$codes)),
-  'order'=>array('Type'=>'ASC','Code'=>'ASC')
- ));
- $finalmyitems = array();
- foreach($dosell as $d){
-  foreach($rates as $r){
-   if($d['Code']==$r['Code'])
-   array_push($finalmyitems,array(
-    'Code'=>$d['Code'],
-    'Mobile'=>$d['Mobile'],
-    'Sell'=>$d['Sell']
-   ));
-  }
- }
  
  
- return $this->render(array('json' => array("success"=>"Yes",'finalmyitems'=>$finalmyitems,'rates'=>$rates,'dosell'=>$dosell,'items'=>$items,'units'=>$units)));
+ return $this->render(array('json' => array("success"=>"Yes",'rates'=>$rates,'dosell'=>$dosell,'items'=>$items,'units'=>$units)));
  
 }
 
