@@ -4,7 +4,7 @@
  </div>
 
 <div class="block bg-color-pink">
- <h1 class="sz3b text-align-center">Diwali Sale</h1>
+ <h1 class="sz3b text-align-center">Buy - Save - Earn</h1>
 </div>
 <div class="block" style="background: url('/img/diwali.jpg') no-repeat center center fixed;   background-repeat: no-repeat;
     background-size: 100% auto;
