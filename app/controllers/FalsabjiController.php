@@ -263,6 +263,22 @@ function swipeDelete(){
 
 function saveImage(){
  $imageData = $this->request->data['imageData'];
+ $mobile = $this->request->data['mobile'];
+ $dir    = '/tmp';
+ $filename = $mobile.".jpg";
+ $targetFolder = '/app/webroot/img/falsabji/users/';
+ $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+ 
+ $img = str_replace('data:image/jpeg;base64,', '', $imageData);
+ $img = str_replace('data:image/png;base64,', '', $img);
+ $img = str_replace(' ', '+', $img);
+ $fileData = base64_decode($img);
+ 
+ // $file = fopen($targetPath.$filename,"w");
+ // fwrite($file, base64_decode($imageData));
+ // fclose($file);
+   file_put_contents($targetPath.$filename, $fileData);
+ 
  return $this->render(array('json' => array("success"=>"Yes")));
 }
 
