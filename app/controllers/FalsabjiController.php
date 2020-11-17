@@ -65,6 +65,7 @@ public function saveuser(){
   $mobile = $this->request->data['mobile'];
   $dob = $this->request->data['dateofbirth'];
   $name = $this->request->data['name'];
+  $upi = $this->request->data['upi'];
   $type = $this->request->data['type'];
   
   $conditions = array('mobile'=>(string)$mobile);
@@ -72,6 +73,7 @@ public function saveuser(){
      'Name' => $name,
      'DOB'=>$dob,
      'Type'=>$type,
+     'UPI'=>$upi,
     );
   F_users::update($data,$conditions);
   $user = F_users::find('first',array(
@@ -256,6 +258,11 @@ function swipeDelete(){
   );
   F_vendorrates::remove($conditions);
  }
+ return $this->render(array('json' => array("success"=>"Yes")));
+}
+
+function saveImage(){
+ $imageData = $this->request->data['imageData'];
  return $this->render(array('json' => array("success"=>"Yes")));
 }
 
