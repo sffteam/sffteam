@@ -142,11 +142,61 @@ public function getUsers(){
 
 
 public function getVendors(){
+  $mobile = $this->request->data['mobile'];
+  
   $users = F_users::find('all',array(
    'conditions'=>array('Type'=> 'Vendor')
   ));
- return $this->render(array('json' => array("success"=>"Yes",'users'=>$users)));
+  $user = F_users::find('first',array(
+   'conditions'=>array('mobile'=> $mobile)
+  ));
+  
+  $function = new Functions();
+  $distances = array();
+  foreach($users as $u){
+  
+   $ulat = $u['latitude'];
+   $ulon = $u['longitude'];
+   $distance = $function->distance($ulat, $ulon, $user['latitude'], $user['longitude'], 'K');
+   
+   array_push($distances,array(
+    'Mobile'=>$u['mobile'],
+    'Distance'=>$distance,
+    'Name'=>$u['Name']
+   ));
+   
+  }
+ return $this->render(array('json' => array("success"=>"Yes",'users'=>$distances)));
 }
+
+public function getCustomers(){
+  $mobile = $this->request->data['mobile'];
+  
+  $users = F_users::find('all',array(
+   'conditions'=>array('Type'=> 'Customer')
+  ));
+  $user = F_users::find('first',array(
+   'conditions'=>array('mobile'=> $mobile)
+  ));
+  
+  $function = new Functions();
+  $distances = array();
+  foreach($users as $u){
+  
+   $ulat = $u['latitude'];
+   $ulon = $u['longitude'];
+   $distance = $function->distance($ulat, $ulon, $user['latitude'], $user['longitude'], 'K');
+   
+   array_push($distances,array(
+    'Mobile'=>$u['mobile'],
+    'Distance'=>$distance,
+    'Name'=>$u['Name']
+   ));
+   
+  }
+ return $this->render(array('json' => array("success"=>"Yes",'users'=>$distances)));
+}
+
 
 public function getitemsdata(){
  if($this->request->data){
