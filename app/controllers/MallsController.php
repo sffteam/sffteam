@@ -4618,9 +4618,10 @@ public function loyaltyPriceImage($code,$mcaNumber){
  $product = Malls::find('first',array(
   'conditions'=>array('Code'=>$code)
  ));
- print_r($mcaNumber);
+// print_r($mcaNumber);
  $file = $this->createLoyaltyimageinstantly($product,$mcaNumber);
  return true;
+ //return $this->render(array('json' => array("success"=>"Yes"))); 
 }
 
 public function createimage(){
@@ -4729,7 +4730,7 @@ function createLoyaltyimageinstantly($data,$mcaNumber){
  
    $img = $imagePath.$code."_400.jpg";
 
-   $outputImage = imagecreatetruecolor(400, 600);
+   $outputImage = imagecreatetruecolor(400, 630);
    $white = imagecolorallocate($outputImage, 255, 255, 255);
    $black = imagecolorallocate($outputImage, 0, 0, 0);
    $red = imagecolorallocate($outputImage, 255, 0, 0);
@@ -4742,15 +4743,20 @@ function createLoyaltyimageinstantly($data,$mcaNumber){
    imagecopyresized($outputImage,$first,0,200,0,0, $x, $y,$x,$y);
    $text = 'MRP: '.$MRP;
    $font =  $fontFolder . 'arial.ttf';
-   imagettftext($outputImage, 12, 0, 10, 30, $black, './fonts/Gobold Bold.otf', wordwrap($code." ".$name . "  - Rs .MRP: ". number_format($MRP,1),45,"\n",true));  
+   imagettftext($outputImage, 12, 0, 10, 30, $black, './fonts/calibrib.ttf', wordwrap($code." ".$name ,50,"\n",true));  
+   imagettftext($outputImage, 14, 0, 10, 70, $black, './fonts/calibri.ttf', 'MRP: Rs.'.number_format($MRP,0));
+   imagettftext($outputImage, 14, 0, 10, 90, $blue, './fonts/calibri.ttf', 'Distributor Price: Rs.'.number_format($DP,0));
+   imagettftext($outputImage, 14, 0, 10, 110, $green, './fonts/calibri.ttf', 'Cost After FREE Gift: Rs.'.number_format($afterfree,0) . "");
+   imagettftext($outputImage, 14, 0, 10, 130, $green, './fonts/calibri.ttf', 'Cost After ONE Year Loyalty: Rs.'.number_format($afterloyalty,0) . "");
    
-   imagettftext($outputImage, 14, 0, 10, 90, $blue, './fonts/SairaExtraCondensed-Bold.ttf', 'Distributor Price: Rs.'.number_format($DP,1));
-   imagettftext($outputImage, 14, 0, 10, 110, $brown, './fonts/SairaExtraCondensed-Bold.ttf', 'Savings: Rs.'.number_format($saving,1) . "");
-   imagettftext($outputImage, 14, 0, 10, 130, $brown, './fonts/SairaExtraCondensed-Bold.ttf', 'Savings %: '.$savingpercent . "%");
-   imagettftext($outputImage, 14, 0, 10, 150, $green, './fonts/SairaExtraCondensed-Bold.ttf', 'After Free Gift: Rs.'.number_format($afterfree,1) . "");
-   imagettftext($outputImage, 14, 0, 10, 170, $green, './fonts/SairaExtraCondensed-Bold.ttf', 'After Year Loyalty: Rs.'.number_format($afterloyalty,1) . "");
-   $mobileInfo = "Call/WhatsApp: ".$mobile['mcaName']."  +91".$mobile['Mobile'];
-   imagettftext($outputImage, 14, 0, 10, 190, $red, './fonts/SairaExtraCondensed-Bold.ttf', wordwrap($mobileInfo,60,"\n",true));  
+   imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
+   imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
+   
+   $mobileInfo = "Call/WhatsApp me : ";//.$mobile['mcaName']."  +91".$mobile['Mobile'];
+   imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
+   imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
+  imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
+
   $filename=$code.'.png';
   imagepng($outputImage, $targetPath . $filename);
   imagedestroy($outputImage);
