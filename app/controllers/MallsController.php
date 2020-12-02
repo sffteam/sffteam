@@ -223,15 +223,17 @@ class MallsController extends \lithium\action\Controller {
      $totalBV = floatval($product['BV']*$quantity); 
      $totalDP = floatval($product['DP']*$quantity); 
      $totalvalue = floatval($product['MRP']*$quantity); 
+     $totalWeight = floatval($product['Weight']*$quantity); 
     }
     $wp = $wp + $walletpoints;
     $value = $value + $totalvalue;
     $valueBV = $valueBV + $totalBV;
     $valuePV = $valuePV + $totalPV;
     $valueDP = $valueDP + $totalDP;
+    $valueWeight = $valueWeight + $totalWeight;
    }
    
-  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"walletpoints"=>$wp)));  
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"walletpoints"=>$wp,"weight"=>$valueWeight)));  
  }
 
 
