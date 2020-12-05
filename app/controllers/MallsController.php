@@ -1714,7 +1714,7 @@ set_time_limit(0);
          'Gross'=>(integer)$data[35],
          'NEFT'=>(string)$data[36],
          'Aadhar'=>(string)$data[37],
-         'DaysLeft'=>(string)$data[38],
+         'DaysLeft'=>(integer)$data[38],
          'State'=>(string)$data[39],
          'Zone'=>(string)$data[40],
          'City'=>(string)$data[41],
@@ -2730,9 +2730,10 @@ public function getkyc(){
       'left'=>array('$gt'=>$left),
       'right'=>array('$lt'=>$right),
       'Enable'=>'Yes',
-      'KYC'=>array('$ne'=>'Approved')
+      'KYC'=>array('$ne'=>'Approved'),
+      'DaysLeft'=>array('$gte'=>0),
      ),
-     'order'=>array('KYC'=>'DESC','mcaName'=>'ASC',)
+     'order'=>array('DaysLeft'=>'DESC','KYC'=>'DESC','mcaName'=>'ASC',)
     ));
   //  print_r(count($ListUsers));
     foreach($ListUsers as $lu){
