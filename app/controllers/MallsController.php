@@ -2731,7 +2731,7 @@ public function getkyc(){
       'right'=>array('$lt'=>$right),
       'Enable'=>'Yes',
       'KYC'=>array('$ne'=>'Approved'),
-      'DaysLeft'=>array('$gte'=>0),
+      $yyyymm.'.DaysLeft'=>array('$gte'=>0),
      ),
      'order'=>array('DaysLeft'=>'DESC','KYC'=>'DESC','mcaName'=>'ASC',)
     ));
