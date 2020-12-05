@@ -2743,6 +2743,7 @@ public function getkyc(){
        'mcaNumber'=>$lu['mcaNumber'],
        'mcaName'=>$lu['mcaName'],
        'PV'=>$lu[$yyyymm]['PV'],
+       'DaysLeft'=>$lu[$yyyymm]['DaysLeft'],
        'DateJoin'=>$lu['DateJoin'],
        'KYC'=>$lu['KYC']?:'',
        'Mobile'=>$mobile['Mobile']?:""
