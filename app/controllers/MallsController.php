@@ -2725,17 +2725,20 @@ public function getkyc(){
   $yyyymm = date('Y-m');
   
   $kycUsers = array();
-  $ListUsers = Users::find('all',array(
-     'conditions'=>array(
+     $conditions=array(
       'left'=>array('$gt'=>$left),
       'right'=>array('$lt'=>$right),
       'Enable'=>'Yes',
       'KYC'=>array('$ne'=>'Approved'),
-      $yyyymm.'.DaysLeft'=>array('$gte'=>0),
-     ),
-     'order'=>array('DaysLeft'=>'DESC','KYC'=>'DESC','mcaName'=>'ASC',)
+//      $yyyymm.'.DaysLeft'=>array('$exists'=>true),
+      $yyyymm.'.DaysLeft'=>array('$gt'=>0),
+     );
+//     print_r($conditions);
+  $ListUsers = Users::find('all',array(
+      'conditions'=>$conditions,
+     'order'=>array('DaysLeft'=>'DESC','KYC'=>'DESC','mcaName'=>'ASC')
     ));
-  //  print_r(count($ListUsers));
+//    print_r($ListUsers);
     foreach($ListUsers as $lu){
      $mobile = Mobiles::find('first',array(
       'conditions'=>array('mcaNumber'=>$lu['mcaNumber'])
@@ -2751,7 +2754,7 @@ public function getkyc(){
        ));
     }
   
-  return $this->render(array('json' => array("success"=>"Yes",'users'=>$kycUsers)));  
+  return $this->render(array('json' => array("success"=>"Yes",'count'=>count($kycUsers),'users'=>$kycUsers)));  
  }
  return $this->render(array('json' => array("success"=>"No")));  
 }
@@ -4611,22 +4614,22 @@ public function createpage(){
   }
  }
 
-public function loyaltyPriceImages($mcaNumber){
+public function loyaltyPriceImages($mcaNumber,$mrp){
  $products = Malls::find('all');
  foreach($products as $p){
-  $this->loyaltyPriceImage($p['Code'],$mcaNumber);
+  $this->loyaltyPriceImage($p['Code'],$mcaNumber,$mrp);
  }
  return $this->render(array('json' => array("success"=>"Yes"))); 
 }
 
-public function loyaltyPriceImage($code,$mcaNumber){
+public function loyaltyPriceImage($code,$mcaNumber,$mrp){
  ini_set('memory_limit','-1');
  set_time_limit(0);
  $product = Malls::find('first',array(
   'conditions'=>array('Code'=>$code)
  ));
 // print_r($mcaNumber);
- $file = $this->createLoyaltyimageinstantly($product,$mcaNumber);
+ $file = $this->createLoyaltyimageinstantly($product,$mcaNumber,$mrp);
  return true;
  //return $this->render(array('json' => array("success"=>"Yes"))); 
 }
@@ -4713,7 +4716,7 @@ public function myInviteImages(){
   return $this->render(array('json' => array("success"=>"Yes",'files'=>$myfiles))); 
 }
 
-function createLoyaltyimageinstantly($data,$mcaNumber){
+function createLoyaltyimageinstantly($data,$mcaNumber,$mrp){
    $mobile = Mobiles::find('first',array(
      'conditions'=>array('mcaNumber'=>$mcaNumber)
     ));
@@ -4752,13 +4755,14 @@ function createLoyaltyimageinstantly($data,$mcaNumber){
    $font =  $fontFolder . 'arial.ttf';
    imagettftext($outputImage, 12, 0, 10, 30, $black, './fonts/calibrib.ttf', wordwrap($code." ".$name ,50,"\n",true));  
    imagettftext($outputImage, 14, 0, 10, 70, $black, './fonts/calibri.ttf', 'MRP: Rs.'.number_format($MRP,0));
+if($mrp=="" || $mrp == null){   
    imagettftext($outputImage, 14, 0, 10, 90, $blue, './fonts/calibri.ttf', 'Distributor Price: Rs.'.number_format($DP,0));
    imagettftext($outputImage, 14, 0, 10, 110, $green, './fonts/calibri.ttf', 'Cost After FREE Gift: Rs.'.number_format($afterfree,0) . "");
    imagettftext($outputImage, 14, 0, 10, 130, $green, './fonts/calibri.ttf', 'Cost After ONE Year Loyalty: Rs.'.number_format($afterloyalty,0) . "");
    
    imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
    imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
-   
+}   
    $mobileInfo = "Call/WhatsApp me : ";//.$mobile['mcaName']."  +91".$mobile['Mobile'];
    imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
    imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
