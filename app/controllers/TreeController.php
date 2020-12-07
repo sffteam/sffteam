@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 use app\models\Users;
+use app\models\Mobiles;
 
 
 class TreeController extends \lithium\action\Controller {
@@ -22,12 +23,16 @@ $this->_render['layout'] = 'noHeaderFooter';
 			$user = Users::find('first',array(
 				'conditions'=>array('mcaNumber'=>$mcaNumber)
 			));
+   $mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>$mcaNumber)
+			));
    
 			$allusers = array();
    
 				array_push($allusers,array(
 					'mcaNumber'=>$user['mcaNumber'],
 					'mcaName'=>$user['mcaName'],
+     'mobile'=>$mobile['Mobile'],
 					'refer'=>$user['refer'],
      'PV'=>$user[$yyyymm]['PV'],
      'ExtraPV'=>$user[$yyyymm]['ExtraPV'],     
@@ -68,10 +73,14 @@ $this->_render['layout'] = 'noHeaderFooter';
 			
 			
 			foreach($users as $u){
+    $mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+			));
     $count = $this->countChilds($u['mcaNumber']);
     //print_r($u['mcaName']."<br>");
 				array_push($allusers,array(
 					'mcaNumber'=>$u['mcaNumber'],
+     'mobile'=>$mobile['Mobile'],
 					'mcaName'=>$u['mcaName'],
 					'refer'=>$u['refer'],
      'PV'=>$u[$yyyymm]['PV'],
@@ -94,6 +103,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				),
 				'order'=>array('mcaName'=>'ASC')
 			));
+   
 			$selfline = array(
 				'mcaNumber'=>$self['mcaNumber'],
 				'mcaName'=>$self['mcaName'],

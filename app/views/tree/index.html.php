@@ -26,12 +26,13 @@ foreach($allusers as $user) {
 //if($user['PV']>0){
 	$mcaNumber = $user['mcaNumber'];
 	$refer = $user['refer'];
-	//print_r($user['ValidTitle']);
+
  ?>
 							[{v:'<?=$mcaNumber?>', f:'\
 							<?php if($user['PV']>0){?>\
 								<b class="<?php if($user['PV']>0){echo " green ";}else{echo " blue ";}?>">\
 									<?=$user['mcaName']?></b><br>\
+         <b>☎️ <?=$user['mobile']?></b><br>\
 									PV: <?=$user['PV']?><br>\
 									EPV: <?=$user['ExtraPV']?><br>\
 									PGPV: <?=$user['PGPV']?><br>\
