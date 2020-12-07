@@ -48,6 +48,7 @@ foreach($allusers as $user) {
 								<?php }else{?>\
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
+         <b>☎️ <?=$user['mobile']?></b><br>\
 									PGPV: <?=$user['PGPV']?><br>\
 									RollUpPV: <?=$user['RollUpPV']?><br>\
 									PGBV: <?=$user['PGBV']?><br>\
