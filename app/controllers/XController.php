@@ -15,6 +15,25 @@ protected function _init() {
   // }
   $this->_render['layout'] = 'sale';
  }
+ public function index(){
+  if($this->request->data){
+   $longURL = $this->request->data['text'];
+   $shortURL = substr(sha1($longURL),0,6);
+				$data = array(
+					'URL'=>$longURL,
+					'Short'=>$shortURL
+				);
+			$url = Urls::find('first',array(
+				'conditions'=>array('Short'=>(string)$shortURL)
+			));
+			
+			if(count($url)!=0){}else{
+				Urls::create()->save($data);
+			}
+				return compact('shortURL');
+   
+  }
+ }
 	public function shorturl($longURL=null,$title=null){
 			if($longURL){
 				$longURL =  "https://circle.sff.team/the-unstoppable-you/".urlencode(strtolower($longURL));
