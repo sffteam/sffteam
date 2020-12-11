@@ -20,8 +20,13 @@
      <div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><a style="color-black" class="external" href="/sale/index/<?=$ca?>/<?=$mobile['mcaNumber']?>/<?=$price?>"><?=$val?></a></div>
     <?php }?>
     </div>
- 
-
+    <div class="row responsive block">
+    <div class=" col-50 Share sz1 bg-color-lightblue" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong><a href="#FreeGifts" class="text-color-black">Free Gifts</a></strong>
+    </div>
+    <div class=" col-50 Share sz1 bg-color-pink" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong><a href="#Loyalty" class="text-color-black">Loyalty</a></strong>
+    </div>
+    </div>
+    
 <?php foreach($tuy as $t){?>
  <h1 class="sz3 bg-color-black text-color-white text-align-center"><?=$t?></h1>
  <div class="block">
@@ -67,5 +72,11 @@
 <?php } ?>
  
  </div>
-
+ <div id="FreeGifts" class="bg-color-lightblue">
+ <h1 class="sz3 bg-color-black text-color-white text-align-center">Free Gifts</h1>
+ 
+ </div>
+ <div id="Loyalty" class="bg-color-pink">
+ <h1 class="sz3 bg-color-black text-color-white text-align-center">Loyalty</h1>
+ </div>
 
