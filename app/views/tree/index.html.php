@@ -33,13 +33,13 @@ foreach($allusers as $user) {
 								<b class="<?php if($user['PV']>0){echo " green ";}else{echo " blue ";}?>">\
 									<?=$user['mcaName']?></b><br>\
          <b>☎️ <?=$user['mobile']?></b><br>\
-									PV: <?=$user['PV']?><br>\
-									EPV: <?=$user['ExtraPV']?><br>\
-									PGPV: <?=$user['PGPV']?><br>\
-									RollUpPV: <?=$user['RollUpPV']?><br>\
-									PGBV: <?=$user['PGBV']?><br>\
-									GBV: <?=$user['GBV']?><br>\
-									GPV: <?=$user['GPV']?><br>\
+									<?php if($user['PV']>0){echo "PV: ".$user['PV']."<br>";}?>\
+									<?php if($user['EPV']>0){echo "EPV: ".$user['EPV']."<br>";}?>\
+									<?php if($user['PGPV']>0){echo "PGPV: ".$user['PGPV']."<br>";}?>\
+									<?php if($user['RollUpPV']>0){echo "RollUpPV: ".$user['RollUpPV']."<br>";}?>\
+									<?php if($user['PGBV']>0){echo "PGPV: ".$user['PGBV']."<br>";}?>\
+									<?php if($user['GBV']>0){echo "PGPV: ".$user['GBV']."<br>";}?>\
+									<?php if($user['GPV']>0){echo "PGPV: ".$user['GPV']."<br>";}?>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<b style="color:green"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
@@ -49,11 +49,11 @@ foreach($allusers as $user) {
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
          <b>☎️ <?=$user['mobile']?></b><br>\
-									PGPV: <?=$user['PGPV']?><br>\
-									RollUpPV: <?=$user['RollUpPV']?><br>\
-									PGBV: <?=$user['PGBV']?><br>\
-									GPV: <?=$user['GPV']?><br>\
-									GBV: <?=$user['GBV']?><br>\
+									<?php if($user['PGPV']>0){echo "PGPV: ".$user['PGPV']."<br>";}?>\
+									<?php if($user['RollUpPV']>0){echo "RollUpPV: ".$user['RollUpPV']."<br>";}?>\
+									<?php if($user['PGBV']>0){echo "PGPV: ".$user['PGBV']."<br>";}?>\
+									<?php if($user['GBV']>0){echo "PGPV: ".$user['GBV']."<br>";}?>\
+									<?php if($user['GPV']>0){echo "PGPV: ".$user['GPV']."<br>";}?>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
