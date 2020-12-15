@@ -37,9 +37,9 @@ foreach($allusers as $user) {
 									<?php if($user['EPV']>0){echo "EPV: ".$user['EPV']."<br>";}?>\
 									<?php if($user['PGPV']>0){echo "PGPV: ".$user['PGPV']."<br>";}?>\
 									<?php if($user['RollUpPV']>0){echo "RollUpPV: ".$user['RollUpPV']."<br>";}?>\
-									<?php if($user['PGBV']>0){echo "PGPV: ".$user['PGBV']."<br>";}?>\
-									<?php if($user['GBV']>0){echo "PGPV: ".$user['GBV']."<br>";}?>\
-									<?php if($user['GPV']>0){echo "PGPV: ".$user['GPV']."<br>";}?>\
+									<?php if($user['PGBV']>0){echo "PGBV: ".$user['PGBV']."<br>";}?>\
+									<?php if($user['GBV']>0){echo "GBV: ".$user['GBV']."<br>";}?>\
+									<?php if($user['GPV']>0){echo "GPV: ".$user['GPV']."<br>";}?>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<b style="color:green"><?php if(strpos($user['PaidTitle'], "Non") !== false){}else{echo $user['PaidTitle'];}?></b>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
@@ -51,9 +51,9 @@ foreach($allusers as $user) {
          <b>☎️ <?=$user['mobile']?></b><br>\
 									<?php if($user['PGPV']>0){echo "PGPV: ".$user['PGPV']."<br>";}?>\
 									<?php if($user['RollUpPV']>0){echo "RollUpPV: ".$user['RollUpPV']."<br>";}?>\
-									<?php if($user['PGBV']>0){echo "PGPV: ".$user['PGBV']."<br>";}?>\
-									<?php if($user['GBV']>0){echo "PGPV: ".$user['GBV']."<br>";}?>\
-									<?php if($user['GPV']>0){echo "PGPV: ".$user['GPV']."<br>";}?>\
+									<?php if($user['PGBV']>0){echo "PGBV: ".$user['PGBV']."<br>";}?>\
+									<?php if($user['GBV']>0){echo "GBV: ".$user['GBV']."<br>";}?>\
+									<?php if($user['GPV']>0){echo "GPV: ".$user['GPV']."<br>";}?>\
 									CGPV: <?=$user['GrossPV']?><br>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
