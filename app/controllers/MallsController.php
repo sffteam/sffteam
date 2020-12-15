@@ -255,6 +255,7 @@ public function cartproducts(){
     'BV' => $product['BV'],
     'PV' => $product['PV'],
     'Weight' => $product['Weight'],
+    'Percent' => $product['Percent'],
     'Quantity'=> (integer)$quantity
    ));
    }
