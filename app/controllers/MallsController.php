@@ -254,6 +254,7 @@ public function cartproducts(){
     'DP' => $product['DP'],
     'BV' => $product['BV'],
     'PV' => $product['PV'],
+    'Weight' => $product['Weight'],
     'Quantity'=> (integer)$quantity
    ));
    }
