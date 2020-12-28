@@ -13,7 +13,12 @@
  <h1 class="sz1b Share text-align-left text-color-white padding" style="text-shadow: 2px 2px #000000;"><br>Brought to you by<br><?=$mobile['mcaName']?><br>Call/WhatsApp:<br>+91<?=$mobile['Mobile']?><br><br></h1>
 </div>
  
-   <h2 class="sz3 bg-color-gray text-color-black text-align-center"><a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/<?=$price?>">Categories All</a></h2>
+   <h2 class="sz3 bg-color-gray text-color-black text-align-center">
+			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/mrp">Categories All MRP</a> - 
+			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/DP"> DP</a> <br>
+			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/mrp">Top Selling All MRP </a> - 
+			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/DP"> DP</a> 
+			</h2>
    
     <div class="row responsive block">
     <?php foreach($CategoriesArray as $ca=>$val){?>
@@ -26,11 +31,13 @@
     <div class=" col-50 Share sz1 bg-color-pink" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong><a href="#Loyalty" class="text-color-black">Loyalty</a></strong>
     </div>
     </div>
-    
+
 <?php foreach($tuy as $t){?>
  <h1 class="sz3 bg-color-black text-color-white text-align-center"><?=$t?></h1>
  <div class="block">
- <?php foreach($products as $p){?>
+ 
+	<?php foreach($products as $p){?>
+	
  <?php if($t==$p['TUYName']){?>
  <div class="row " style="border-bottom:1px dotted gray">
   <div class="col-100">
