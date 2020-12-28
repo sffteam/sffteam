@@ -18,13 +18,20 @@ class SaleController extends \lithium\action\Controller {
   // }
   $this->_render['layout'] = 'sale';
  }
- public function index($category = null, $mcaNumber = "",$price=null){
+ public function index($category = null, $mcaNumber = "",$price=null,$top=null){
   
  if($category=="all"){
  $tuyNames = Malls::find('all',array(
   'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
  ));
- }else{
+ }else if($category=="top"){
+   $tuyNames = Malls::find('all',array(
+     'conditions'=>array(
+					'InDemand'=>1
+					),
+     'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+   ));
+  }else{
  $tuyNames = Malls::find('all',array(
   'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')), 
   'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
@@ -70,12 +77,19 @@ class SaleController extends \lithium\action\Controller {
    $products = Malls::find('all',array(
        'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
    ));
-  }else{
+  }else if($category=="top"){
    $products = Malls::find('all',array(
+     'conditions'=>array(
+						'InDemand'=>1
+						),
+     'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+   ));
+  }else{
+			$products = Malls::find('all',array(
      'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')),
      'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
    ));
-  }
+		}
   if($mcaNumber!=null){
    $mobile = Mobiles::find('first',array(
     'conditions'=>array('mcaNumber'=>$mcaNumber)
@@ -115,6 +129,7 @@ class SaleController extends \lithium\action\Controller {
     'WA' => array('Name'=>'WATCHES','color'=>'#0097a7'),
     'MG' => array('Name'=>'TECHNOLOGY','color'=>'#01579b'),
     );
+
    return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray','price');
   
  }
