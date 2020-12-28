@@ -4765,7 +4765,7 @@ if($mrp=="" || $mrp == null){
    imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
    imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
 }   
-   $mobileInfo = "Call/WhatsApp me : ";//.$mobile['mcaName']."  +91".$mobile['Mobile'];
+   $mobileInfo = "".$mobile['mcaName']."  +91".$mobile['Mobile'];
    imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
    imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
   imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
