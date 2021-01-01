@@ -27,7 +27,7 @@ class SaleController extends \lithium\action\Controller {
  }else if($category=="top"){
    $tuyNames = Malls::find('all',array(
      'conditions'=>array(
-					'InDemand'=>1
+					'InDemand'=>array('$ne'=>0)
 					),
      'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
    ));
@@ -80,7 +80,7 @@ class SaleController extends \lithium\action\Controller {
   }else if($category=="top"){
    $products = Malls::find('all',array(
      'conditions'=>array(
-						'InDemand'=>1
+						'InDemand'=>array('$ne'=>0)
 						),
      'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
    ));
