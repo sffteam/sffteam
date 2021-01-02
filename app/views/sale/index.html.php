@@ -14,8 +14,10 @@
 </div>
  
    <h2 class="sz3 bg-color-gray text-color-black text-align-center">
+			<?php  if($category == 'all'){?>
 			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/mrp">Categories All MRP</a> - 
 			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/DP"> DP</a> <br>
+			<?php }?>
 			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/mrp">Top Selling All MRP </a> - 
 			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/DP"> DP</a> 
 			</h2>

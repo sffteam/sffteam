@@ -95,7 +95,7 @@ class SaleController extends \lithium\action\Controller {
     'conditions'=>array('mcaNumber'=>$mcaNumber)
    ));
   }
-  
+if($category != 'top')  {
     $CategoriesArray = array(
     'HC' => 'Home Care',
     'LC' => 'Laundry Care',
@@ -129,8 +129,11 @@ class SaleController extends \lithium\action\Controller {
     'WA' => array('Name'=>'WATCHES','color'=>'#0097a7'),
     'MG' => array('Name'=>'TECHNOLOGY','color'=>'#01579b'),
     );
-
-   return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray','price');
+		}else{
+	   $CategoriesArray = array();
+				$CategoriesSwiperArray = array();
+		}
+   return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray','price','category');
   
  }
  
