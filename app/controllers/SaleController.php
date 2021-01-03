@@ -130,8 +130,25 @@ if($category != 'top')  {
     'MG' => array('Name'=>'TECHNOLOGY','color'=>'#01579b'),
     );
 		}else{
-	   $CategoriesArray = array();
-				$CategoriesSwiperArray = array();
+	   $CategoriesArray = array(  'HC' => 'Home Care',
+    'LC' => 'Laundry Care',
+    'PC' => 'Personal Care',
+    'FP' => 'Food & Beverages',
+    'SC' => 'Skin Care',
+    'FS' => 'Food Supplement',
+    'BC' => 'Baby Care',
+    'HL' => 'Wellness',
+   );
+				$CategoriesSwiperArray = array(
+    'HC' => 'Home Care',
+    'LC' => 'Laundry Care',
+    'PC' => 'Personal Care',
+    'FP' => 'Food & Beverages',
+    'SC' => 'Skin Care',
+    'FS' => 'Food Supplement',
+    'BC' => 'Baby Care',
+    'HL' => 'Wellness',
+				);
 		}
    return compact('products','mobile','CategoriesArray','tuy','CategoriesSwiperArray','price','category');
   
