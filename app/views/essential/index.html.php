@@ -46,9 +46,9 @@
     <?php }?>
     </div>
     <div class="row responsive block">
-    <div class=" col-50 Share sz1 bg-color-lightblue" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong><a href="#FreeGifts" class="text-color-black">Free Gifts</a></strong>
+    <div class=" col-50 Share sz1 bg-color-lightblue" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong>Free Gifts</strong>
     </div>
-    <div class=" col-50 Share sz1 bg-color-pink" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong><a href="#Loyalty" class="text-color-black">Loyalty</a></strong>
+    <div class=" col-50 Share sz1 bg-color-pink" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong>Loyalty</strong>
     </div>
     </div>
 
