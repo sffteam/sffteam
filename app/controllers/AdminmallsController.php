@@ -224,7 +224,7 @@ public function getmobiles(){
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
 			'mcaNumber'=>array('$nin'=>$next),
-//			'DateJoin'=> array('$regex'=>$yyyy,'$options'=>'i'),
+			'DateJoin'=> array('$regex'=>$yyyy,'$options'=>'i'),
 			'Enable'=>'Yes'
 		 ),
 		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV', 'DateJoin'),
@@ -246,12 +246,12 @@ public function getmobilesjoin(){
 	$yyyymm = date('Y-m');
 	$yyyy = date('Y');
 	$yyyyMM = date('M Y');
-	
+
 	$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );	
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
 			'mcaNumber'=>array('$nin'=>$next),
-			'DateJoin'=>array('$regex'=>$yyyyMM,'$options'=>'i'),
+			'DateJoin'=>array('$regex'=>$yyyy,'$options'=>'i'),
 			'Enable'=>'Yes'
 		 ),
 		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV', 'DateJoin'),
