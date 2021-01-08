@@ -12,16 +12,16 @@
    <div class="col Share sz2 text-align-center">Buy regular use products at Distributor Price (MRP less 15% to 20%)</div> 
    </div>
    <div class="row">
-   <div class="col Share sz2 text-align-center">Plus Free Gift of 10% of order value immediately</div>
+   <div class="col Share sz2 text-align-center">Plus Free Gift of 10% of order value immediately, <br>And further benefit of 25% if you buy regularly for 1 year.</div>
    </div>
    <div class="row">
    <div class="col Share sz2 text-align-center">Free Delivery of order above Rs. 4000</div>
    </div>
    <div class="row">
-   <div class="col Share sz4 text-align-center">GOOD EARNING OPPORTUNITY<br>Part Time Home Based Work</div>
+   <div class="col Share sz4 text-align-center bg-color-black text-color-white">GOOD EARNING OPPORTUNITY<br>Part Time Home Based Work</div>
    </div>
    <div class="row">
-   <div class="col Share sz4 text-align-center">Contact <?=$mobile['mcaName']?>, +91<?=$mobile['Mobile']?></div>
+   <div class="col Share sz2 text-align-center">For Details Contact <?=$mobile['mcaName']?>, <?=$mobile['Mobile']?></div>
    </div>
    
     <div class="row responsive block">
