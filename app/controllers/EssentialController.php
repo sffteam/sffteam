@@ -29,12 +29,12 @@ class EssentialController extends \lithium\action\Controller {
      'conditions'=>array(
 					'InDemand'=>array('$ne'=>0)
 					),
-     'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+     'order'=>array('Code'=>'DESC','Name'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
   }else{
  $tuyNames = Malls::find('all',array(
   'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')), 
-  'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+     'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
  ));
  }
  $tuy = array();
@@ -75,19 +75,19 @@ class EssentialController extends \lithium\action\Controller {
   
   if($category=="all"){
    $products = Malls::find('all',array(
-       'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+          'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
    ));
   }else if($category=="top"){
    $products = Malls::find('all',array(
      'conditions'=>array(
 						'InDemand'=>array('$ne'=>0)
 						),
-     'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+        'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
    ));
   }else{
 			$products = Malls::find('all',array(
      'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')),
-     'order'=>array('TUYName'=>'ASC','Code'=>'ASC','Percent'=>'DESC')
+        'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
    ));
 		}
   if($mcaNumber!=null){
