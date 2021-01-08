@@ -14,12 +14,8 @@
 </div>
  
    <h2 class="sz3 bg-color-gray text-color-black text-align-center">
-			<?php  if($category == 'all'){?>
-			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/mrp">Categories All MRP</a> - 
-			<a class="external text-color-black" href="/sale/index/all/<?=$mobile['mcaNumber']?>/DP"> DP</a> <br>
-			<?php }?>
-			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/mrp">Top Selling All MRP </a> - 
-			<a class="external text-color-black" href="/sale/index/top/<?=$mobile['mcaNumber']?>/DP"> DP</a> 
+			<a class="external text-color-black" href="/essential/index/top/<?=$mobile['mcaNumber']?>/mrp">Top Selling All MRP </a> - 
+			<a class="external text-color-black" href="/essential/index/top/<?=$mobile['mcaNumber']?>/DP"> DP</a> 
 			</h2>
    <div class="row">
     <div class="col Share sz4 text-align-center">Excellent Savings Opportunity</div>
@@ -34,7 +30,7 @@
    <div class="col Share sz2 text-align-center">Free Delivery of order above Rs. 4000</div>
    </div>
    <div class="row">
-   <div class="col Share sz4 text-align-center">Also GOOD EARNING OPPORTUNITY by part time Home based Work</div>
+   <div class="col Share sz4 text-align-center">GOOD EARNING OPPORTUNITY<br>Part Time Home Based Work</div>
    </div>
    <div class="row">
    <div class="col Share sz4 text-align-center">Contact <?=$mobile['mcaName']?>, +91<?=$mobile['Mobile']?></div>
@@ -45,12 +41,7 @@
      <div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><?=$val?></div>
     <?php }?>
     </div>
-    <div class="row responsive block">
-    <div class=" col-50 Share sz1 bg-color-lightblue" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong>Free Gifts</strong>
-    </div>
-    <div class=" col-50 Share sz1 bg-color-pink" style="margin-bottom:5px;border-bottom:1px dotted black"> <strong>Loyalty</strong>
-    </div>
-    </div>
+
 
 <?php foreach($tuy as $t){?>
  <h1 class="sz3 bg-color-black text-color-white text-align-center"><?=$t?></h1>
@@ -98,12 +89,5 @@
  </div>
 <?php } ?>
  
- </div>
- <div id="FreeGifts" class="bg-color-lightblue">
- <h1 class="sz3 bg-color-black text-color-white text-align-center">Free Gifts</h1>
- 
- </div>
- <div id="Loyalty" class="bg-color-pink">
- <h1 class="sz3 bg-color-black text-color-white text-align-center">Loyalty</h1>
  </div>
 
