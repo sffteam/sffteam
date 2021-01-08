@@ -3,19 +3,7 @@
   
  </div>
 
-<div class="block bg-color-pink">
- <h1 class="sz3b text-align-center">Buy - Save - Earn</h1>
-</div>
-<div class="block" style="background: url('/img/diwali.jpg') no-repeat center center fixed;   background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: center top;
-    background-attachment: fixed;">
- <h1 class="sz1b Share text-align-left text-color-white padding" style="text-shadow: 2px 2px #000000;"><br>Brought to you by<br><?=$mobile['mcaName']?><br>Call/WhatsApp:<br>+91<?=$mobile['Mobile']?><br><br></h1>
-</div>
- 
-   <h2 class="sz3 bg-color-gray text-color-black text-align-center">
-			<a class="external text-color-black" href="/essential/index/top/<?=$mobile['mcaNumber']?>/mrp">Top Selling All MRP </a> - 
-			<a class="external text-color-black" href="/essential/index/top/<?=$mobile['mcaNumber']?>/DP"> DP</a> 
+   <h2 class="sz3 bg-color-gray text-color-black text-align-center">Essential, Daily Use Products
 			</h2>
    <div class="row">
     <div class="col Share sz4 text-align-center">Excellent Savings Opportunity</div>
