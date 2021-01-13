@@ -1,7 +1,18 @@
+
 // Dom7
+var app = new Framework7();
+
 var server = window.location.protocol+'//'+window.location.hostname +'/';
 console.log(server);
 //var server = "http://sffteam/";
+
+var toastBottomNoInternet = app.toast.create({
+  text: 'No Internet connection!',
+  position: 'top',
+  cssClass: 'toast_red',
+  closeTimeout: 2000,
+  closeButton: false,
+ });
 
 
 function login(){
@@ -209,21 +220,62 @@ function changeQT(type,value,code){
 }
 
 
-$(function(){
-	// add multiple select / deselect functionality
-	$("#selectall").click(function () {
-		  $('.case').attr('checked', this.checked);
-	});
+// $(function(){
+	//add multiple select / deselect functionality
+	// $("#selectall").click(function () {
+		  // $('.case').attr('checked', this.checked);
+	// });
 
-	// if all checkbox are selected, check the selectall checkbox
-	// and viceversa
-	$(".case").click(function(){
+	//if all checkbox are selected, check the selectall checkbox
+	//and viceversa
+	// $(".case").click(function(){
 
-		if($(".case").length == $(".case:checked").length) {
-			$("#selectall").attr("checked", "checked");
-		} else {
-			$("#selectall").removeAttr("checked");
-		}
+		// if($(".case").length == $(".case:checked").length) {
+			// $("#selectall").attr("checked", "checked");
+		// } else {
+			// $("#selectall").removeAttr("checked");
+		// }
 
-	});
-});
+	// });
+// });
+
+
+function getUserSearch( chars) {
+ var formData = new FormData();
+ formData.append('mcaNumber', '92143138');
+ formData.append('chars', chars);
+ var submitURL = server + 'm2l21/getusers';
+ app.preloader.show();
+ console.log(submitURL);
+ app.request.post(submitURL, formData, function (data) {
+  
+  var gotData = JSON.parse(data);
+  if (gotData['success'] == "Yes") {
+   htmlnew = "";
+   for (key in gotData['users']) {
+    htmlnew = htmlnew + '<li class="item-content">\
+     <div class="item-inner">\
+     <div class="item-title">\
+     <p onclick="selectName(\'' + gotData['users'][key]['mcaNumber'] + '\');">' + gotData['users'][key]['mcaNumber'] + ' - ' + gotData['users'][key]['mcaName'] + '</p></div>\
+     </div></li>';
+   }
+   $$("#searchUsers").html(htmlnew);
+   app.preloader.hide();
+   var searchbar = app.searchbar.create({
+     el: '.searchbar',
+     searchContainer: '.list',
+     searchIn: '.item-title',
+     on: {
+      search(sb, query, previousQuery) {}
+     }
+    });
+  } else {}
+ }, function () {
+  toastBottomNoInternet.open();
+  app.preloader.hide();
+ });
+}
+
+function selectName(mcaNumber){
+ console.log(mcaNumber);
+}
