@@ -21,4 +21,3 @@
 
 # Temporary files, i.e. compiled templates.
 app/resources/tmp/*
-app/webroot/img/whatsapp/*.*

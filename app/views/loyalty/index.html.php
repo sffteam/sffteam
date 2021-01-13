@@ -1,4 +1,4 @@
-<div class="page-content">
+<div class="page-content" style="width:90%">
  <div class="block">
   
  </div>
