@@ -26,7 +26,7 @@
    
     <div class="row responsive block">
     <?php foreach($CategoriesArray as $ca=>$val){?>
-     <div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><a href="/loyalty/index/<?=$ca?>/<?=$mobile['mcaNumber']?>/" class="external"><?=$val?></a></div>
+     <div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><a href="/loyalty/index/<?=$ca?>/<?=$mobile['mcaNumber']?>/<?=$price?>" class="external"><?=$val?></a></div>
     <?php }?>
     </div>
 
