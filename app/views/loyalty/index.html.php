@@ -1,7 +1,4 @@
-<div class="page-content" style="width:90%">
- <div class="block">
-  
- </div>
+<div style="width:90%">
 
    <h2 class="sz3 bg-color-gray text-color-black text-align-center">Essential, Daily Use Products
 			</h2>
@@ -17,16 +14,17 @@
    <div class="row">
    <div class="col Share sz2 text-align-center">Free Delivery of order above Rs. 4000</div>
    </div>
-   <div class="row">
+<!--   <div class="row">
    <div class="col Share sz4 text-align-center bg-color-black text-color-white">GOOD EARNING OPPORTUNITY<br>Part Time Home Based Work</div>
    </div>
+-->   
    <div class="row">
    <div class="col Share sz2 text-align-center">For Details Contact <?=$mobile['mcaName']?>, <?=$mobile['Mobile']?></div>
    </div>
    
     <div class="row responsive block">
     <?php foreach($CategoriesArray as $ca=>$val){?>
-     <div class=" col-50 Share sz1 " style="margin-bottom:5px;border-bottom:1px dotted black"><a href="/loyalty/index/<?=$ca?>/<?=$mobile['mcaNumber']?>/<?=$price?>" class="external"><?=$val?></a></div>
+     <div class=" col-50 Share sz3 " style="margin-bottom:5px;border-bottom:1px dotted black"><a href="/loyalty/index/<?=$ca?>/<?=$mobile['mcaNumber']?>/<?=$price?>" class="external"><?=$val?></a></div>
     <?php }?>
     </div>
 
