@@ -884,7 +884,7 @@ public function findTree($mcaNumber,$level){
     
    }
  }
-// return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree)));    
+ return $this->render(array('json' => array("success"=>"Yes","tree"=>$tree)));    
  return $tree;
 }
 
@@ -5569,6 +5569,85 @@ function callFollowup($mobile,$date, $time, $title, $speaker){
    $function = new Functions();
    $returncall = $function->twilioCall("+91".$mobile,$date, $time, $title, $speaker);  // Testing if it works  
    return $this->render(array('json' => array("success"=>"Yes")));
+}
+
+public function purchases($mcaNumber = null){
+ ini_set('memory_limit','-1');
+ $yyyymm = date('Y-m');
+ $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+ $p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+ $p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+ $p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+ $p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+ $p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+ $p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+ $p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+ $p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+ $p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+ $p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
+
+  if($mcaNumber!=null){
+  
+  $user = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+  ));
+  
+   $left = $user['left'];
+   $right = $user['right'];
+   $conditions = array(
+   'left'=>array('$gt'=>$left),
+   'right'=>array('$lt'=>$right),
+   'Enable'=>'Yes'   
+  );
+ $users = Users::find('all',array(
+  'conditions'=>$conditions,
+ ));
+ 
+ $inner = array($mcaNumber);
+ foreach($users as $u){
+  array_push($inner,$u['mcaNumber']);
+ }
+ 
+ $list  = Users::find('all',array(
+  'conditions'=>array(
+   'mcaNumber'=>array('$in'=>$inner),
+   'Enable'=>'Yes',
+  ),
+  'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV',$p1yyyymm.'.PV',$p2yyyymm.'.PV',$p3yyyymm.'.PV',$p4yyyymm.'.PV',$p5yyyymm.'.PV',$p6yyyymm.'.PV',$p7yyyymm.'.PV',$p8yyyymm.'.PV',$p9yyyymm.'.PV',$p10yyyymm.'.PV',$p11yyyymm.'.PV'),
+ ));
+
+ $allusers = array();
+ foreach($list as $l){
+    $mobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$l['mcaNumber'])
+    ));
+   if($l[$yyyymm]['PV']==0 && $l[$p1yyyymm]['PV']==0 && $l[$p2yyyymm]['PV']==0 && $l[$p3yyyymm]['PV']==0 && $l[$p4yyyymm]['PV']==0 && $l[$p5yyyymm]['PV']==0 && $l[$p6yyyymm]['PV']==0 && $l[$p7yyyymm]['PV']==0 && $l[$p8yyyymm]['PV']==0 && $l[$p9yyyymm]['PV']==0 && $l[$p10yyyymm]['PV']==0 && $l[$p11yyyymm]['PV']==0){}else{
+   array_push($allusers,array(
+    'mcaNumber'=>$l['mcaNumber'],
+    'mcaName'=>$l['mcaName'],
+    'DateJoin'=>$l['DateJoin'],
+    $yyyymm.'.PV'=>$l[$yyyymm]['PV'],
+    $p1yyyymm.'.PV'=>$l[$p1yyyymm]['PV'],
+    $p2yyyymm.'.PV'=>$l[$p2yyyymm]['PV'],
+    $p3yyyymm.'.PV'=>$l[$p3yyyymm]['PV'],
+    $p4yyyymm.'.PV'=>$l[$p4yyyymm]['PV'],
+    $p5yyyymm.'.PV'=>$l[$p5yyyymm]['PV'],
+    $p6yyyymm.'.PV'=>$l[$p6yyyymm]['PV'],
+    $p7yyyymm.'.PV'=>$l[$p7yyyymm]['PV'],
+    $p8yyyymm.'.PV'=>$l[$p8yyyymm]['PV'],
+    $p9yyyymm.'.PV'=>$l[$p9yyyymm]['PV'],
+    $p10yyyymm.'.PV'=>$l[$p10yyyymm]['PV'],
+    $p11yyyymm.'.PV'=>$l[$p11yyyymm]['PV'],
+
+    'mobile'=>$mobile['Mobile'],
+   ));
+   }
+ }
+
+ }
+// return $this->render(array('json' => array("success"=>"Yes",'count'=>count($allusers),'data'=>$allusers)));
+ return compact('allusers');
+ 
 }
 
 //end of class
