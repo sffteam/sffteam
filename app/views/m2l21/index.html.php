@@ -13,9 +13,10 @@ foreach($participants as $p){
  foreach($mobiles as $m){
   if($p['mcaNumber']===$m['mcaNumber']){
    $mobile =  $m['Mobile'];
+   
   }
  }
- echo '<a class="link external" target="_blank" href="https://wa.me/+91'.$mobile.'&send=Mission%202L21">'.$mobile.'</a>';
+ echo '<a class="link external" target="_blank" href="https://wa.me/91'.trim($mobile).'&text=Mission%202L21%20Registration Link:%20https://sffteam/m2l21/event/'.$p['mcaNumber'].'">'.$mobile.'</a>';
  ?></div>
  <div class="col"><?=$p['Payment']?></div>
 </div>
