@@ -20,6 +20,19 @@ class M2L21Controller extends \lithium\action\Controller {
   $this->_render['layout'] = 'sale';
  }
  public function index( $mcaNumber = ""){
+  $participants = Participants::find('all',array(
+   'order'=>array("Name"=>'ASC')
+  ));
+  $mcaNumbers = array();
+  foreach($participants as $p){
+   array_push($mcaNumbers , $p['mcaNumber']);
+  }
+  
+  
+  $mobiles = Mobiles::find('all',array(
+   'conditions'=>array('mcaNumber'=>array('$in'=>$mcaNumbers)),
+  ));
+  return compact('participants','mobiles');
  }
  public function event( $mcaNumber = ""){
   $user = Users::find('first',array(
