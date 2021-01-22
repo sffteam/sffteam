@@ -43,7 +43,7 @@ class NavpallavanController extends \lithium\action\Controller {
 				)
 		));
 		if(count($user)==1){
-			$mobile = "+91".$this->request->data['mobile'];
+			$mobile = $this->request->data['mobile'];
 			$ga = new GoogleAuthenticator();
 			$otp = $ga->getCode($ga->createSecret(64));	
 			$data = array(
@@ -54,8 +54,9 @@ class NavpallavanController extends \lithium\action\Controller {
 			
 			N_users::update($data,$conditions);
 			$function = new Functions();
+   
 			$msg = "". $otp . " is the OTP for Navpallavan to register in the app";
-			$returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
+   $returncall = $function->twilio($mobile,$msg,$otp);	 // Testing if it works 
 			$returnsms = $function->sendSms($mobile,$msg);	 // Testing if it works 
 			$user = N_users::find('first',array(
    'conditions'=>$conditions
