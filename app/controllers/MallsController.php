@@ -84,6 +84,7 @@ class MallsController extends \lithium\action\Controller {
   }
   $CategoriesArray = array(
     'HC' => 'Home Care 50%',
+    'AB' => 'Agarbatti 30%',
     'LC' => 'Laundry Care 35% & 60%',
     'PC' => 'Personal Care 10% to 40%',
     'FP' => 'Food & Beverages 20% - 25%',
@@ -102,6 +103,7 @@ class MallsController extends \lithium\action\Controller {
     );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'HOME','color'=>'#e53935'),
+    'AB' => array('Name'=>'AGARBATTI','color'=>'#e239A5'),
     'LC' => array('Name'=>'LAUNDRY','color'=>'#303f9f'),
     'PC' => array('Name'=>'PERSONAL','color'=>'#8e24aa'),
     'FP' => array('Name'=>'FOOD','color'=>'#00796b'),
@@ -2899,6 +2901,7 @@ public function getTools(){
 public function getproductsimages(){
   $CategoriesArray = array(
     'HC' => 'Home Care',
+    'AG' => 'Agarbatti',
     'LC' => 'Laundry Care',
     'PC' => 'Personal Care',
     'FP' => 'Food & Beverages',
