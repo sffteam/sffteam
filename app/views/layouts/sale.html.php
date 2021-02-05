@@ -16,7 +16,7 @@
   </head>
 
 <body>
-		<div class="container">
+		<div class="page">
   <h2></h2>
 			<?php echo $this->content(); ?>
   </div>
