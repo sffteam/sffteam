@@ -4758,20 +4758,20 @@ function createLoyaltyimageinstantly($data,$mcaNumber,$mrp){
    imagecopyresized($outputImage,$first,0,200,0,0, $x, $y,$x,$y);
    $text = 'MRP: '.$MRP;
    $font =  $fontFolder . 'arial.ttf';
-   imagettftext($outputImage, 12, 0, 10, 30, $black, './fonts/calibrib.ttf', wordwrap($code." ".$name ,50,"\n",true));  
+   imagettftext($outputImage, 12, 0, 10, 30, $black, './fonts/calibrib.ttf', wordwrap(" ".$name ,50,"\n",true));  
    imagettftext($outputImage, 14, 0, 10, 70, $black, './fonts/calibri.ttf', 'MRP: Rs.'.number_format($MRP,0));
 if($mrp=="" || $mrp == null){   
    imagettftext($outputImage, 14, 0, 10, 90, $blue, './fonts/calibri.ttf', 'Distributor Price: Rs.'.number_format($DP,0));
    imagettftext($outputImage, 14, 0, 10, 110, $green, './fonts/calibri.ttf', 'Cost After FREE Gift: Rs.'.number_format($afterfree,0) . "");
    imagettftext($outputImage, 14, 0, 10, 130, $green, './fonts/calibri.ttf', 'Cost After ONE Year Loyalty: Rs.'.number_format($afterloyalty,0) . "");
    
-   imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
-   imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
+//   imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
+//   imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
 }   
    $mobileInfo = "".$mobile['mcaName']."  +91".$mobile['Mobile'];
-   imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
-   imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
-  imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
+//   imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
+//   imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
+//  imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
 
   $filename=$code.'.png';
   imagepng($outputImage, $targetPath . $filename);
