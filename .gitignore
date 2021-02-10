@@ -21,4 +21,5 @@
 
 # Temporary files, i.e. compiled templates.
 app/resources/tmp/*
-app/img/whatsapp*
+app/img/whatsapp.zip
+app/img/whatsapp/*
