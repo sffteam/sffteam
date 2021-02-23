@@ -23,7 +23,7 @@ class EssentialController extends \lithium\action\Controller {
      'conditions'=>array(
 					'InDemand'=>array('$ne'=>0)
 					),
-     'order'=>array('Code'=>'DESC','Name'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
+     'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
 	   $CategoriesArray = array(  'HC' => 'Home Care',
     'LC' => 'Laundry Care',
@@ -48,7 +48,7 @@ class EssentialController extends \lithium\action\Controller {
      'conditions'=>array(
 						'InDemand'=>array('$ne'=>0)
 						),
-        'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
+             'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
    $mobile = Mobiles::find('first',array(
     'conditions'=>array('mcaNumber'=>$mcaNumber)
@@ -57,7 +57,7 @@ class EssentialController extends \lithium\action\Controller {
      'conditions'=>array(
 					'InDemand'=>array('$ne'=>0)
 					),
-     'order'=>array('Code'=>'DESC','Name'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
+          'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
    $tuy = array();
  $tuysub = array();
@@ -109,12 +109,12 @@ class EssentialController extends \lithium\action\Controller {
      'conditions'=>array(
 					'InDemand'=>array('$ne'=>0)
 					),
-     'order'=>array('Code'=>'DESC','Name'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
+       'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
   }else{
  $tuyNames = Malls::find('all',array(
   'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')), 
-     'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
+          'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
  ));
  }
  $tuy = array();
@@ -155,19 +155,19 @@ class EssentialController extends \lithium\action\Controller {
   
   if($category=="all"){
    $products = Malls::find('all',array(
-          'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
+               'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
   }else if($category=="top"){
    $products = Malls::find('all',array(
      'conditions'=>array(
 						'InDemand'=>array('$ne'=>0)
 						),
-        'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
+             'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
   }else{
 			$products = Malls::find('all',array(
      'conditions'=>array('Code'=> array('like'=>'/^'.$category.'/')),
-        'order'=>array('Name'=>'DESC','TUYName'=>'DESC','Code'=>'DESC','Percent'=>'DESC')
+             'order'=>array('Name'=>'ASC','Code'=>'DESC','TUYName'=>'DESC','Percent'=>'DESC')
    ));
 		}
   if($mcaNumber!=null){
