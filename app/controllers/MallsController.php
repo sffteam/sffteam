@@ -1192,6 +1192,23 @@ set_time_limit(0);
   
  }
 
+ public function setEnableNo(){
+  ini_set('memory_limit', '-1');
+  set_time_limit(0);
+  $users = Users::find('all');
+  foreach($users as $u){
+   $data = array(
+    'Enable'=>'No'
+   );
+   $conditions = array(
+    'mcaNumber' => (string)$u['mcaNumber']
+   );
+   Users::update($data,$conditions);
+   
+  }
+  return compact('data');
+ }
+
  public function adduserBuilders($data,$yyyymm){
   
    if($data){
