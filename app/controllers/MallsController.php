@@ -1880,7 +1880,9 @@ Users::update(
     if($data['PV']>$userActive[$yyyymm]['PV']){
      $today = array(
       'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
       'Date'=> new \MongoDate()
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
@@ -1900,7 +1902,9 @@ Users::update(
     }else{
      $today = array(
       'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
       'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
      );
     }
