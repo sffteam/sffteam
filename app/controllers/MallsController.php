@@ -1880,6 +1880,7 @@ Users::update(
     if($data['PV']>$userActive[$yyyymm]['PV']){
      $today = array(
       'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+      'GPV'=>((int)$data['GPV']),
       'Date'=> new \MongoDate()
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
@@ -1899,6 +1900,7 @@ Users::update(
     }else{
      $today = array(
       'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+      'GPV'=>((int)$data['GPV']),
       'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
      );
     }
@@ -1924,6 +1926,7 @@ Users::update(
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.today'=>$today,
+     $yyyymm.'.'.date('Y-m-d')=>$today,
   );
     $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
     Users::update($data,$conditions);
