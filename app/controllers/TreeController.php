@@ -26,14 +26,15 @@ $this->_render['layout'] = 'noHeaderFooter';
    $mobile = Mobiles::find('first',array(
 				'conditions'=>array('mcaNumber'=>$mcaNumber)
 			));
-   
 			$allusers = array();
+   
    
 				array_push($allusers,array(
 					'mcaNumber'=>$user['mcaNumber'],
 					'mcaName'=>$user['mcaName'],
      'mobile'=>$mobile['Mobile'],
 					'refer'=>$user['refer'],
+     'KYC'=>$user['KYC'],
      'PV'=>$user[$yyyymm]['PV'],
      'ExtraPV'=>$user[$yyyymm]['ExtraPV'],     
      'PGPV'=>$user[$yyyymm]['PGPV'],
@@ -84,6 +85,7 @@ $this->_render['layout'] = 'noHeaderFooter';
      'mobile'=>$mobile['Mobile'],
 					'mcaName'=>$u['mcaName'],
 					'refer'=>$u['refer'],
+     'KYC'=>$u['KYC'],
      'PV'=>$u[$yyyymm]['PV'],
      'ExtraPV'=>$u[$yyyymm]['ExtraPV'],
 					'PGPV'=>$u[$yyyymm]['PGPV'],
