@@ -45,6 +45,7 @@ foreach($allusers as $user) {
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
 									Days: <?=$user['Days']?><br>\
+         <?php if($user['KYC']=='Approved'){echo "<span style=\'color:green\'>".$user['KYC']."</span>";}else{echo "<span style=\'color:red\'>".$user['KYC']."</span>";}?>\
 								<?php }else{?>\
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
@@ -57,7 +58,8 @@ foreach($allusers as $user) {
 									CGPV: <?=$user['GrossPV']?><br>\
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
-									Days: <?=$user['Days']?><?php }?>\
+									Days: <?=$user['Days']?><br>\
+         <?php if($user['KYC']=='Approved'){echo "<span style=\'color:green\'>".$user['KYC']."</span>";}else{echo "<span style=\'color:red\'>".$user['KYC']."</span>";}?><?php }?>\
 									'}, '<?=$refer?>',''],
 <?php
 //}else{
