@@ -127,6 +127,7 @@ class EssentialController extends \lithium\action\Controller {
     }
     $tuy[] = $t['TUYName'];
   }
+  
   foreach($tuy as $t){
    foreach($tuyNames as $tn){
      if($t==$tn['TUYName']){

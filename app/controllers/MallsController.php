@@ -623,17 +623,17 @@ public function searchmca(){
    foreach($joinee as $j){
     $joineePV = $joineePV + $j['PV'];
    }
-   
-   $team = $this->findTeam($this->request->data['mcaNumber']);
-   $pteam = $this->findPTeam($this->request->data['mcaNumber']);
-   $active = $this->findActive($this->request->data['mcaNumber']);
-   $activePVBV = $this->findActivePV($this->request->data['mcaNumber']);
-   $activePPVBV = $this->findActivePPV($this->request->data['mcaNumber']);
-   $activePV = $activePVBV['PV'];
-   $activeBV = $activePVBV['BV'];
-   $activePPV = $activePPVBV['PV'];
-   $activePBV = $activePPVBV['BV'];
-
+//   if($user['Enable']=='Yes'){
+    $team = $this->findTeam($this->request->data['mcaNumber']);
+    $pteam = $this->findPTeam($this->request->data['mcaNumber']);
+    $active = $this->findActive($this->request->data['mcaNumber']);
+    $activePVBV = $this->findActivePV($this->request->data['mcaNumber']);
+    $activePPVBV = $this->findActivePPV($this->request->data['mcaNumber']);
+    $activePV = $activePVBV['PV'];
+    $activeBV = $activePVBV['BV'];
+    $activePPV = $activePPVBV['PV'];
+    $activePBV = $activePPVBV['BV'];
+    //}
    $pactive = $this->findPActive($this->request->data['mcaNumber']);
    $findzero = $this->findZero($this->request->data['mcaNumber']);
    
@@ -772,7 +772,7 @@ public function findPTeam($mcaNumber){
   $user = Users::find('first',array(
   'conditions'=>array('mcaNumber'=>$mcaNumber)
   ));
-  
+//  print_r($user);
   $pyyyymm = date('Y-m', strtotime('first day of last month'));
    $left = $user['left'];
    $right = $user['right'];
@@ -963,7 +963,7 @@ public function searchdown(){
     foreach($joinee as $j){
      $joineePV = $joineePV + $j['PV'];
     }
-    
+//    if($user['Enable']=='Yes'){
     $team = $this->findTeam($u['mcaNumber']);
     $pteam = $this->findPTeam($u['mcaNumber']);
     $active = $this->findActive($u['mcaNumber']);
@@ -973,7 +973,7 @@ public function searchdown(){
     $activeBV = $activePVBV['BV'];
     $activePPV = $activePPVBV['PV'];
     $activePBV = $activePPVBV['BV'];
-    
+  //  }
     $pactive = $this->findPActive($u['mcaNumber']);    
     $findzero = $this->findZero($u['mcaNumber']);
     
@@ -4789,13 +4789,13 @@ if($mrp=="" || $mrp == null){
    imagettftext($outputImage, 14, 0, 10, 110, $green, './fonts/calibri.ttf', 'Cost After FREE Gift: Rs.'.number_format($afterfree,0) . "");
    imagettftext($outputImage, 14, 0, 10, 130, $green, './fonts/calibri.ttf', 'Cost After ONE Year Loyalty: Rs.'.number_format($afterloyalty,0) . "");
    
-//   imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
-//   imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
+   imagettftext($outputImage, 14, 0, 10, 150, $brown, './fonts/calibri.ttf', 'Savings: Rs.'.number_format($MRP-$afterloyalty,0) . "");
+   imagettftext($outputImage, 14, 0, 10, 170, $brown, './fonts/calibri.ttf', 'Savings %: '.number_format(($MRP-$afterloyalty)/$MRP*100,0) . "%");
 }   
    $mobileInfo = "".$mobile['mcaName']."  +91".$mobile['Mobile'];
-//   imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
-//   imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
-//  imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
+   imagettftext($outputImage, 14, 0, 10, 190, $black, './fonts/calibrib.ttf', wordwrap($mobileInfo,60,"\n",true));
+   imagettftext($outputImage, 17, 0, 10, 210, $red, './fonts/calibrib.ttf', wordwrap("To Understand HOW this system works",60,"\n",true));
+  imagettftext($outputImage, 14, 0, 10, 620, $white, './fonts/calibrib.ttf', wordwrap("Best Business in Today's Time, USE-SHARE-EARN",60,"\n",true));
 
   $filename=$code.'.png';
   imagepng($outputImage, $targetPath . $filename);
