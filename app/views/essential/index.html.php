@@ -52,9 +52,10 @@
    <div class="col-25 sz11b text-color-red">Rs: <?=number_format($p['MRP'],1)?></div>
    <?php }?>
     <div class="col-100 sz12"><?=$p['Name']?></div>
-   
+   <div class="col-100 sz12">Gross Weight: <?=$p['Weight']?> gms - Net Weight (approx)</div>
     <div class="col-100 text-align-center">
       <img src="/img/products/<?=$p['Code']?>_400.jpg" alt="<?=$p['Code']?>">
+      
     </div>
     <?php if(strtolower($price)!='mrp'){?>
     <div class="col-50 sz11 text-align-center">
