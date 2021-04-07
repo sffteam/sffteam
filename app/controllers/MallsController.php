@@ -2855,15 +2855,85 @@ public function getjoinee(){
  }
  return $this->render(array('json' => array("success"=>"No")));  
 }
-public function newjoinee($mcaNumber){
+public function newjoinee($mcaNumber,$yyyymm = null){
  $user = Users::find('first',array(
  'conditions'=>array('mcaNumber'=>$mcaNumber)
  ));
  $template = Templates::find('first',array(
  'conditions'=>array('Title'=>'New Joinee')
  ));
- return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));  
+ if($yyyymm!=null){
+  $user = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+  
+  $left = $user['left'];
+  $right = $user['right'];
+  $yyyymm = date('Y-m');
+  $dateJoin = date('M Y');
+  
+  $pyyyymm = date('M Y', strtotime('first day of last month'));
+  $pxyyyymm = date('Y-m', strtotime('first day of last month'));
+  
+  $joineeUsers = array();
+  $joinee = Users::find('all',array('conditions'=>
+   array(
+      'DateJoin'=>array('like'=>'/'.$pyyyymm.'/'),
+      'left'=>array('$gt'=>$left),
+      'right'=>array('$lt'=>$right),
+      'Enable'=>'Yes'
+   ),
+   'fields'=>array('mcaNumber','mcaName','DateJoin',$pxyyyymm.'.PV',$pxyyyymm.'.GPV','KYC','NEFT','ancestors'),
+   'order'=>array('DateJoin'=>'ASC')
+   )
+ );  
+  foreach($joinee as $lu){
+   
+     $mobile = Mobiles::find('first',array(
+      'conditions'=>array('mcaNumber'=>$lu['mcaNumber'])
+     ));
+  $number = 0;
+  
+  foreach($lu['ancestors'] as $key=>$val){
+   //print_r($val.":".$mcaNumber."\n");
+   if($val!=$mcaNumber){
+    $number = $number + 1;
+    
+   }else{
+    break;
+    $number = 0;
+    
+   }
+  }
+  $number = $number + 1;
+
+   //print_r($number."\n");
+  // print_r($number);
+   $upline = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$lu['ancestors'][$number])
+   ));
+//   print_r($upline['mcaName']);
+
+      array_push($joineeUsers,array(
+       'mcaNumber'=>$lu['mcaNumber'],
+       'mcaName'=>$lu['mcaName'],
+       'DateJoin'=>$lu['DateJoin'],
+       'KYC'=>$lu['KYC'],
+       'NEFT'=>$lu['NEFT'],
+       'PV'=>$lu[$pxyyyymm]['PV']?:'',
+       'GPV'=>$lu[$pxyyyymm]['GPV']?:'',
+       'Mobile'=>$mobile['Mobile']?:"",
+       'upline'=>$upline['mcaName']?:"self",
+       ));
+    }
  
+  
+  
+  
+  return compact('joineeUsers');
+ }
+ 
+ return $this->render(array('json' => array("success"=>"Yes","user"=>$user,'template'=>$template)));  
 }
 
 
