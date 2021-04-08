@@ -2869,7 +2869,6 @@ public function newjoinee($mcaNumber,$yyyymm = null){
   
   $left = $user['left'];
   $right = $user['right'];
-  $yyyymm = date('Y-m');
   $dateJoin = date('M Y');
   
   $pyyyymm = date('M Y', strtotime('first day of last month'));
@@ -2878,7 +2877,7 @@ public function newjoinee($mcaNumber,$yyyymm = null){
   $joineeUsers = array();
   $joinee = Users::find('all',array('conditions'=>
    array(
-      'DateJoin'=>array('like'=>'/'.$pyyyymm.'/'),
+      'DateJoin'=>array('like'=>'/'.urldecode($yyyymm).'/'),
       'left'=>array('$gt'=>$left),
       'right'=>array('$lt'=>$right),
       'Enable'=>'Yes'
