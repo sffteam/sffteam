@@ -23,5 +23,14 @@ protected function _init() {
  }
  public function videos(){
  }
-
+ public function discovery(){
+ }
+ public function business(){
+ }
+ public function productvideo(){
+ }
+ public function objection(){
+ }
+ public function knowledge(){
+ } 
 }
