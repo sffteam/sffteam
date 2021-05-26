@@ -4,6 +4,25 @@
     <div class="title">Products</div>
   </div>
 </div>
+<?php
+if($AllProducts==null || $AllProducts ==""){
+ ?>
+ <div class="block-title Bebas sz3">Categories</div>
+      <div class="list links-list">
+        <ul>
+        <?php
+         foreach($Categories as $key=>$val){
+        ?>
+          <li><a href="/mca/products/<?=$key?>/" class="external link"><?=$val?></a></li>
+        <?php
+         }
+        ?>
+        </ul>
+        <br>
+      </div>
+ <?php
+}
+?>
 <div class="row">
 <?php
 foreach($AllProducts as $p){
