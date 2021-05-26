@@ -109,6 +109,9 @@
             	<div class="list links-list ">
 														<ul class="Rale ">
 															<li class=""><a href="/mca/pdfs/discoverypreview/" class="external link">Discovery Preview</a></li>
+               <li class=""><a href="/mca/pdfs/shuruat/" class="external link">Shuruat</a></li>
+               <li class=""><a href="/mca/pdfs/raftar/" class="external link">Raftar</a></li>
+               <li class=""><a href="/mca/pdfs/parivartan/" class="external link">Parivartan</a></li>
 														</ul>
 													</div>
           </div>
