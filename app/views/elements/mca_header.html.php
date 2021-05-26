@@ -79,10 +79,17 @@
              <div class="Bebas panel-close text-align-right">x</div>
             </div>
           </div>
-          <div class=" ">
+          <div class=" page-content">
             	<div class="list links-list ">
 														<ul class="Rale ">
-															<li class=""><a href="/mca/product/categories/" class="external link">Categories</a></li>
+															<li class=""><a href="/mca/products/categories/" class="external link">Categories</a></li>
+               <?php
+               foreach($Categories as $key=>$val){
+                ?>
+                <li class="sz12 "><a href="/mca/products/<?=$key?>/" class="external link"><?=$val?></a></li>
+                <?php
+               }
+               ?>
 														</ul>
 													</div>
           </div>
