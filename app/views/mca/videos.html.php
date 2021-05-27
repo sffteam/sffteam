@@ -61,6 +61,16 @@
           </div>
         </a>
       </li>
+      <li class="margin-left">Episode 105 - Asit Adani
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/Rxkk92OwZrk" class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
             
       
       <li class="text-align-center">End of List</li>
