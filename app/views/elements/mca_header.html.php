@@ -17,7 +17,7 @@
       
   </div>
   <!-- Fixed toolbar goes ALWAYS AFTER navbar -->
-  <div class="toolbar toolbar-bottom">
+  <div class="toolbar toolbar-bottom ">
     <div class="toolbar-inner">
           <a href="/mca/" class="external link">Home</a>
           <a href="/mca/reports/" class="external link">Reports</a>
@@ -35,7 +35,7 @@
            <div class="navbar ">
             <div class="navbar-inner bg-color-gray">
              <div class="Bebas ">Videos</div>
-             <div class="Bebas panel-close text-align-right">x</div>
+             <div class="Bebas panel-close text-align-right"></div>
             </div>
           </div>
           <div class=" ">
@@ -58,7 +58,7 @@
            <div class="navbar ">
             <div class="navbar-inner bg-color-gray">
              <div class="Bebas ">Reports</div>
-             <div class="Bebas panel-close text-align-right">x</div>
+             <div class="Bebas panel-close text-align-right"></div>
             </div>
           </div>
           <div class=" ">
@@ -76,7 +76,7 @@
            <div class="navbar ">
             <div class="navbar-inner bg-color-gray">
              <div class="Bebas ">Products</div>
-             <div class="Bebas panel-close text-align-right">x</div>
+             <div class="Bebas panel-close text-align-right"></div>
             </div>
           </div>
           <div class=" page-content">
@@ -102,7 +102,7 @@
            <div class="navbar ">
             <div class="navbar-inner bg-color-gray">
              <div class="Bebas ">PDFs</div>
-             <div class="Bebas panel-close text-align-right">x</div>
+             <div class="Bebas panel-close text-align-right"></div>
             </div>
           </div>
           <div class=" ">
@@ -124,7 +124,7 @@
            <div class="navbar ">
             <div class="navbar-inner bg-color-gray">
              <div class="Bebas ">Home</div>
-             <div class="Bebas panel-close text-align-right">x</div>
+             <div class="Bebas panel-close text-align-right"></div>
             </div>
           </div>
           <div class=" ">

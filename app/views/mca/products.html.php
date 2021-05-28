@@ -1,7 +1,12 @@
 <div class="navbar">
-  <div class="navbar-bg"></div>
+  <div class="navbar-bg bg-color-black"></div>
   <div class="navbar-inner sliding">
-    <div class="title">Products</div>
+    <a href="/mca/" class="external link text-color-white">Home</a>
+    <a href="/mca/reports/" class="external link text-color-white">Reports</a>
+    <a href="/mca/pdfs/" class="external link text-color-white">PDFs</a>
+    <a href="/mca/products/categories/" class="external link text-color-white">Products</a>
+    <a href="/mca/videos/" class="external link text-color-white">Videos</a>
+
   </div>
 </div>
 <?php
@@ -35,6 +40,7 @@ foreach($AllProducts as $p){
     <strong style="color:green">DP: ₹<?=number_format($p['DP'],1)?></strong> 
     <strong style="color:blue">BV: <?=number_format($p['BV'],1)?></strong>
     <strong style="color:red">PV: <?=number_format($p['PV'],1)?></strong>
+    <strong style="color:green"><?=number_format($p['BV']/$p['DP']*100,0)?>%</strong>
     </p>
     <p class="sz1 Bebas">Cost after FREE gift: ₹<?=number_format($p['DP']-$p['DP']*10/100,1)?></p>
     <p class="sz1 Bebas">Cost after 1 Year Loyalty: ₹<?=number_format($p['DP']-$p['DP']*25/100-$p['DP']*10/100,1)?></p>
@@ -49,6 +55,7 @@ foreach($AllProducts as $p){
     <strong style="color:green">DP: <?=number_format($p['DP'],1)?></strong> 
     <strong style="color:blue">BV: <?=number_format($p['BV'],1)?></strong>
     <strong style="color:red">PV: <?=number_format($p['PV'],1)?></strong>
+    <strong style="color:green"><?=number_format($p['BV']/$p['DP']*100,0)?>%</strong>
     </p>
     <p class="sz1 Bebas">Cost after FREE gift: ₹<?=number_format($p['DP']-$p['DP']*10/100,1)?></p>
     <p class="sz1 Bebas">Cost after 1 Year Loyalty: ₹<?=number_format($p['DP']-$p['DP']*25/100-$p['DP']*10/100,1)?></p>

@@ -3,6 +3,8 @@ namespace app\controllers;
 
 use app\models\Urls;
 use app\models\Malls;
+use app\models\Users;
+use app\models\Mobiles;
 
 class McaController extends \lithium\action\Controller {
 
@@ -19,9 +21,48 @@ protected function _init() {
   $url = 'index';
   return compact('url');
  }
- public function reports(){
+ public function reports($mcaNumber=null,$user=null){
+  
+  if($mcaNumber!=null){
+   $mcaDetails = Users::find('first',array(
+   'conditions'=>array(
+    'mcaNumber'=>$mcaNumber,
+    )
+  ));
+  $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+  }
+  
+  $yyyymm = date('Y-m');
+  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+   $left = $mcaDetails['left'];
+   $right = $mcaDetails['right'];
+   $team = Users::count('all',array('conditions'=>
+   array(
+      'left'=>array('$gt'=>$left),
+      'right'=>array('$lt'=>$right),
+       $yyyymm=>array('$exists'=>true),
+       $p1yyyymm.'.Percent'=>array('$ne'=>null),
+      'Enable'=>'Yes'
+   )
+   )
+ );
+ $joinee = count($this->findJoinee($mcaNumber));
+  
+  $users = Users::find('all',array(
+   'conditions'=>array(
+    'refer'=>$mcaNumber,
+     $yyyymm=>array('$exists'=>true),
+     $pyyyymm.'.Percent'=>array('$ne'=>null)
+     ),
+   'order'=>array()
+   ));
+
+  
+  
   $url = 'reports';
-  return compact('url');
+  return compact('url','mcaNumber','user','mcaDetails','findmobile','team','joinee','users');
  }
  
  public function products($Code=null){
@@ -92,4 +133,49 @@ protected function _init() {
   $url = 'videos';
   return compact('url');
  } 
+
+
+
+
+//----------------------------------------------------------
+public function findJoinee($mcaNumber){
+ $user = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+ ));
+ $yyyymm = date('Y-m');
+ $pyyyymm = date('Y-m', strtotime('first day of last month'));
+ $dateJoin = date('M Y');
+ $left = $user['left'];
+ $right = $user['right'];
+ $joinee = Users::find('all',array('conditions'=>
+   array(
+      'DateJoin'=>array('like'=>'/'.$dateJoin.'/'),
+      'left'=>array('$gt'=>$left),
+      'right'=>array('$lt'=>$right),
+      'Enable'=>'Yes'
+   ),
+   'fields'=>array('mcaNumber','mcaName','DateJoin',$yyyymm.'.PV'),
+   'order'=>array('DateJoin'=>'ASC')
+   )
+ );
+ 
+ $DetailJoinee = array();
+ foreach($joinee as $j){
+  array_push($DetailJoinee,
+    array(
+     'mcaNumber'=>$j['mcaNumber'],
+     'mcaName'=>$j['mcaName'],
+     'DateJoin'=>$j['DateJoin'],
+     'PV'=>$j[$yyyymm]['PV'],
+    )
+  );
+  
+ }
+ 
+// return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'joinee'=>$DetailJoinee)));    
+ return $DetailJoinee;
+}
+
+
+
 }
