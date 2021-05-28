@@ -99,6 +99,7 @@ protected function _init() {
     'DP'=>$p['DP'],
     'BV'=>$p['BV'],
     'PV'=>$p['PV'],
+    'Weight'=>$p['Weight'],
    ));
   }
 

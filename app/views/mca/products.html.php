@@ -40,7 +40,8 @@ foreach($AllProducts as $p){
     <strong style="color:green">DP: ₹<?=number_format($p['DP'],1)?></strong> 
     <strong style="color:blue">BV: <?=number_format($p['BV'],1)?></strong>
     <strong style="color:red">PV: <?=number_format($p['PV'],1)?></strong>
-    <strong style="color:green"><?=number_format($p['BV']/$p['DP']*100,0)?>%</strong>
+    <strong style="color:green"><?=number_format($p['BV']/$p['DP']*100,0)?>%</strong><br>
+    <strong>Weight: <?=number_format($p['Weight'],1)?> grams</strong>
     </p>
     <p class="sz1 Bebas">Cost after FREE gift: ₹<?=number_format($p['DP']-$p['DP']*10/100,1)?></p>
     <p class="sz1 Bebas">Cost after 1 Year Loyalty: ₹<?=number_format($p['DP']-$p['DP']*25/100-$p['DP']*10/100,1)?></p>
