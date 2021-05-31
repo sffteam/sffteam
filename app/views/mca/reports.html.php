@@ -47,7 +47,7 @@ if($mcaNumber==null){
 <div class="card card-expandable ">
  <div class="card-content ">
   <div class="bg-color-red" style="height: 300px;background-color:#ff0000">
-   <div class="card-header text-color-black display-block"><?=$u['mcaName']?><br />
+   <div class="card-header display-block"><?=$u['mcaName']?><br />
    <small style="opacity: 0.8"><?=$u['mcaNumber']?>    </small><br>
    <small class="sz18 Bebas" style="opacity: 0.7"><?=$u[$yyyymm]['ValidTitle']?> - <?=$u['DateJoin']?></small><br>
    <small class="sz16" style="opacity: 0.7">PV: <?=$u[$yyyymm]['PV']?> - EPV: <?=$u[$yyyymm]['ExtraPV']?> - GPV: <?=$u[$yyyymm]['GPV']?></small><br>
@@ -73,4 +73,5 @@ if($mcaNumber==null){
 
  <?php
 }
-?>
+?><br>
+<br>
