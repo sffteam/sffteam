@@ -12,7 +12,44 @@
 <?php
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 if($mcaNumber==null){
- ?>Get MCA
+ ?>
+      <div class="card">
+        <div class="card-header">Get MCA Number</div>
+        <div class="card-content card-content-padding">
+          <form class="list" id="join" action="/mca/checkmca/" method="post">
+          <ul>
+      <li id="mcaNumberDiv">
+        <div class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">MCA Number</div>
+            <div class="item-input-wrap">
+              <input type="number" name="mcaNumber" id="mcaNumber" placeholder="MCA Number" required validate pattern="[0-9]*" data-error-message="Only numbers please!" max="99999999" min="10000000">
+            </div>
+          </div>
+        </div>
+      </li>
+     <li>
+      <div class="item-content item-input">
+       <div class="item-inner">
+        <div class="item-title item-label">Date of Joining</div>
+        <div class="item-input-wrap">
+         <input type="date" name="DateJoin" placeholder="Choose..." value="2000-05-31" required validate>
+        </div>
+       </div>
+      </div>
+     </li>
+     <li>
+     <div class="item-content item-input">
+     <div class="item-input-wrap">
+         <input type="submit" class="button button-raised button-fill button-round no-ripple" value="Submit"/>
+     </div>
+     </div>
+
+     </li>
+		</ul>
+</form>
+        </div>
+      </div>
 <?php
 }else{
  
@@ -47,7 +84,7 @@ if($mcaNumber==null){
 <div class="card card-expandable ">
  <div class="card-content ">
   <div class="bg-color-red" style="height: 300px;background-color:#ff0000">
-   <div class="card-header text-color-black display-block"><?=$u['mcaName']?><br />
+   <div class="card-header display-block"><?=$u['mcaName']?><br />
    <small style="opacity: 0.8"><?=$u['mcaNumber']?>    </small><br>
    <small class="sz18 Bebas" style="opacity: 0.7"><?=$u[$yyyymm]['ValidTitle']?> - <?=$u['DateJoin']?></small><br>
    <small class="sz16" style="opacity: 0.7">PV: <?=$u[$yyyymm]['PV']?> - EPV: <?=$u[$yyyymm]['ExtraPV']?> - GPV: <?=$u[$yyyymm]['GPV']?></small><br>
@@ -73,4 +110,5 @@ if($mcaNumber==null){
 
  <?php
 }
-?>
+?><br>
+<br>
