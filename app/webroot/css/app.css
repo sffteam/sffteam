@@ -24,12 +24,6 @@ ul.a {
   list-style-type: square;
   padding:20px
 }
-.card-header{
- background-color:#C9DEE0
-}
-.card-footer{
- background-color:#C9DEE0
-}
 .item-content-product{
  font-size:12px
 }
@@ -38,7 +32,8 @@ ul.a {
  white-space: wrap;
  text-overflow: none;
  
-}.form-control::-webkit-input-placeholder {
+}
+.form-control::-webkit-input-placeholder {
   color: #ffccff;
   opacity: 1;
 }
