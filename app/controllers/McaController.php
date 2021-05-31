@@ -21,6 +21,27 @@ protected function _init() {
   $url = 'index';
   return compact('url');
  }
+ 
+ public function checkmca(){
+  $date = date_create($this->request->data['DateJoin']);
+  if($this->request->data){
+  $user = Users::find('first',array(
+   'conditions'=>array(
+    'mcaNumber'=>(string)$this->request->data['mcaNumber'],
+    'DateJoin'=>date_format($date,"d M Y"),
+    )
+  ));
+  print_r(date_format($date,"d M Y"));
+  print_r(count($user)) ;
+   if(count($user)==1){
+    $this->redirect('/mca/reports/'.$this->request->data['mcaNumber'].'/');
+   }else{
+    $this->redirect('/mca/reports/');
+   }
+   //return $this->render(array('json' => array("success"=>"No")));  
+  }
+
+ }
  public function reports($mcaNumber=null,$user=null){
   
   if($mcaNumber!=null){
