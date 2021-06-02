@@ -38,6 +38,20 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
+ Connections::add('default_Chaudhary', array(
+ 	'type' => CONNECTIONCHAUDHARY_TYPE,
+ 	'host' => array(CONNECTIONCHAUDHARY,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONCHAUDHARY_DB,
+	'login' => CONNECTIONCHAUDHARY_USER,
+	'password' => CONNECTIONCHAUDHARY_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
+
+
+
  Connections::add('default_FalSabji', array(
  	'type' => CONNECTIONFALSABJI_TYPE,
  	'host' => array(CONNECTIONFALSABJI,
