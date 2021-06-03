@@ -65,7 +65,7 @@
           </div>
         </a>
       </li>
-      <li class="margin-left">Episode 105 - Asit Adani
+      <li class="margin-left">Episode 106 - Asit Adani
         <a
           href="#" class="no-margin no-padding">
           <div class="item-inner">
@@ -75,7 +75,28 @@
           </div>
         </a>
       </li>
+      <li class="margin-left">Episode 107 - Nishtha Viral Trivedi
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
             
+             <iframe width="100%" src="https://www.youtube.com/embed/Ib-8FDr_wj0 " class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
+						<li class="margin-left">Episode 108 - Harish Mehta
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/5I_XaJ9e04E  " class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>            
+						
+						
       
       <li class="text-align-center">End of List</li>
       <li>&nbsp;</li>
