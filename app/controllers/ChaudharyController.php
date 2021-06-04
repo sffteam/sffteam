@@ -7,6 +7,7 @@ use app\extensions\action\Functions;
 use app\extensions\action\GoogleAuthenticator;
 use app\models\C_products;
 use app\models\C_users;
+use app\models\C_inquiry;
 use \MongoDate;
 
 class ChaudharyController extends \lithium\action\Controller {
@@ -61,5 +62,14 @@ class ChaudharyController extends \lithium\action\Controller {
   ));
    return $this->render(array('json' => array("success"=>"Yes",'prices'=>$prices)));
   }
- 
+  public function submit(){
+   if($this->request->data){
+    C_inquiry::create()->save($this->request->data);
+    return $this->render(array('json' => array("success"=>"Yes")));
+   }
+   
+  }
+	
+	
+	
 }
