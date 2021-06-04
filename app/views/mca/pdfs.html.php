@@ -17,5 +17,6 @@
           <li><a href="/img/documents/Raftaar.pdf" class="external link" target="_blank">Raftaar</a></li>
           <li><a href="/img/documents/Parivartan_SMAPUnlimited.pdf" class="external link" target="_blank">Parivartan</a></li>
           <li><a href="/img/documents/Modicare_Unlimited.pdf" class="external link" target="_blank">Business Plan</a></li>
+          <li><a href="/img/LOYALTY EXPRESS TRAINING MODULE .pdf" class="external link" target="_blank">Loyalty Express</a></li>
         </ul>
       </div>
