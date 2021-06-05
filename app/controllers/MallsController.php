@@ -5747,10 +5747,21 @@ public function purchases($mcaNumber = null){
 }
 
 public function todayJoining($yyyymmdd=null){
- 
+print_r(strlen($yyyymmdd));
+set_time_limit(0);
+ini_set('memory_limit','-1'); 
+$conditions = array('DateJoin'=> array('like'=>'/.'.urldecode($yyyymmdd)."/."));
+
+if(strlen($yyyymmdd)==10){
+  $users = Users::find('all',array( 
+  'conditions'=>$conditions,
+  'order'=>array('DateJoin'=>'ASC')
+  ));
+}else{ 
  $users = Users::find('all',array(
   'conditions'=>array('DateJoin'=>urldecode($yyyymmdd))
  ));
+}
  $todayJoining = array();
  foreach($users as $u){
   $mcaNumber = $u['mcaNumber'];
