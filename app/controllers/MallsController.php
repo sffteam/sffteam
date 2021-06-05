@@ -5746,6 +5746,31 @@ public function purchases($mcaNumber = null){
  
 }
 
+public function todayJoining($yyyymmdd=null){
+ 
+ $users = Users::find('all',array(
+  'conditions'=>array('DateJoin'=>urldecode($yyyymmdd))
+ ));
+ 
+ foreach($users as $u){
+  $mcaNumber = $u['mcaNumber'];
+  $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber)
+  ));
+  $todayJoining = array();
+  array_push($todayJoining,array(
+    'mcaNumber'=>$u['mcaNumber'],
+    'Mobile'=>$findmobile['Mobile'],
+    'mcaName'=>$u['mcaName'],
+    'refer'=>$u['refer'],
+    'referName'=>$u['refer_name'],
+    'DateJoin'=>$u['DateJoin'],
+  ));
+ }
+ 
+ return compact('todayJoining');
+}
+
 //end of class
 }
 
