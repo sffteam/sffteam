@@ -1,4 +1,13 @@
 <table>
+ <tr>
+  <td>Name</td>
+  <td>Mobile</td>
+  <td>mcaNumber</td>
+  <td>Refer Mobile</td>
+  <td>ReferName</td>
+  <td>DateJoin</td>
+ </tr>
+
 <?php foreach($todayJoining as $t){?>
  <tr>
   <td><?=$t['mcaName']?></td>
