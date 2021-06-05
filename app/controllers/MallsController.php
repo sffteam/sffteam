@@ -5768,12 +5768,15 @@ if(strlen($yyyymmdd)==10){
    $findmobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
    ));
+   $findrefermobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$u['refer'])
+   ));
    
    array_push($todayJoining,array(
     'mcaNumber'=>$u['mcaNumber'],
     'Mobile'=>$findmobile['Mobile'],
     'mcaName'=>$u['mcaName'],
-    'refer'=>$u['refer'],
+    'refer'=>$findrefermobile['Mobile'],
     'referName'=>$u['refer_name'],
     'DateJoin'=>$u['DateJoin'],
   ));
