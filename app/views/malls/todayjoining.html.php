@@ -7,9 +7,7 @@
   <td>ReferName</td>
   <td>DateJoin</td>
  </tr>
-<?php
-
-foreach($todayJoining as $t){?>
+<?php foreach($todayJoining as $t){?>
  <tr>
   <td><?=$t['mcaName']?></td>
   <td><?=$t['Mobile']?></td>
