@@ -5750,7 +5750,7 @@ public function todayJoining($yyyymmdd=null){
 print_r(strlen($yyyymmdd));
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
-$conditions = array('DateJoin'=> array('like'=>'/.'.urldecode($yyyymmdd)."/."));
+$conditions = array('DateJoin'=> array('like'=>'/.'.urldecode($yyyymmdd)."/."),'Enable'=>'Yes');
 
 if(strlen($yyyymmdd)==10){
   $users = Users::find('all',array( 
@@ -5759,14 +5759,14 @@ if(strlen($yyyymmdd)==10){
   ));
 }else{ 
  $users = Users::find('all',array(
-  'conditions'=>array('DateJoin'=>urldecode($yyyymmdd))
+  'conditions'=>array('DateJoin'=>urldecode($yyyymmdd),'Enable'=>'Yes')
  ));
 }
  $todayJoining = array();
  foreach($users as $u){
   $mcaNumber = $u['mcaNumber'];
    $findmobile = Mobiles::find('first',array(
-   'conditions'=>array('mcaNumber'=>$mcaNumber)
+   'conditions'=>array('mcaNumber'=>$mcaNumber,)
    ));
    $findrefermobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$u['refer'])
