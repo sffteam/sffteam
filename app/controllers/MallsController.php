@@ -5751,14 +5751,14 @@ public function todayJoining($yyyymmdd=null){
  $users = Users::find('all',array(
   'conditions'=>array('DateJoin'=>urldecode($yyyymmdd))
  ));
- 
+ $todayJoining = array();
  foreach($users as $u){
   $mcaNumber = $u['mcaNumber'];
-  $findmobile = Mobiles::find('first',array(
+   $findmobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$mcaNumber)
-  ));
-  $todayJoining = array();
-  array_push($todayJoining,array(
+   ));
+   
+   array_push($todayJoining,array(
     'mcaNumber'=>$u['mcaNumber'],
     'Mobile'=>$findmobile['Mobile'],
     'mcaName'=>$u['mcaName'],
