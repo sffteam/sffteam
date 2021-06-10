@@ -45,8 +45,9 @@ foreach($allusers as $user) {
 									<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>/D/"><?=$mcaNumber?></a>&nbsp;<a href="/tree/index/<?=$mcaNumber?>/<?=$yyyymm?>">All</a><br>\
 									<?=$user['DateJoin']?><br>\
 									Days: <?=$user['Days']?><br>\
-         <?php if($user['KYC']=='Approved'){echo "<span style=\'color:green\'>".$user['KYC']."</span>";}else{echo "<span style=\'color:red\'>".$user['KYC']."</span>";}?>\
-         <?php if($user['NEFT']=='Y'){echo "<span style=\'color:green\'>NEFT: ".$user['NEFT']."</span>";}else{echo "<span style=\'color:red\'>NEFT: ".$user['NEFT']."</span>";}?>\
+         <?php if($user['KYC']=='Approved'){echo "<span style=\'color:green\'>".$user['KYC']."</span><br>";}else{echo "<span style=\'color:red\'>".$user['KYC']."</span><br>";}?>\
+         <?php if($user['NEFT']=='Y'){echo "<span style=\'color:green\'>NEFT: ".$user['NEFT']."</span><br>";}else{echo "<span style=\'color:red\'>NEFT: ".$user['NEFT']."</span><br>";}?>\
+         <?php if($user['Gross']>0){echo "<span style=\'color:green\'>Pay: ".$user['Gross']."</span><br>";}else{echo "<span style=\'color:red\'>Gross: ".$user['Gross']."</span><br>";}?>\
 								<?php }else{?>\
 									<?=$i?><br>\
 									<?=$user['mcaName']?><br>\
