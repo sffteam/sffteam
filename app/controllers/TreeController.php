@@ -47,6 +47,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'InActive'=>$user[$yyyymm]['InActive'],
 					'PaidTitle'=>$user[$yyyymm]['PaidTitle'],
 					'ValidTitle'=>$user[$yyyymm]['ValidTitle'],
+     'Gross'=>$user[$yyyymm]['Gross'],
 					'DateJoin'=>$user['DateJoin'],
 					'Days'=>(string)round((time()-strtotime($user['DateJoin']))/60/60/24,0)
 				));				
@@ -99,6 +100,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'InActive'=>$u[$yyyymm]['InActive'],
 					'PaidTitle'=>$u[$yyyymm]['PaidTitle'],
      'ValidTitle'=>$u[$yyyymm]['ValidTitle'],
+     'Gross'=>$u[$yyyymm]['Gross'],
 					'DateJoin'=>$u['DateJoin'],
 					'Days'=>(string)round((time()-strtotime($u['DateJoin']))/60/60/24,0)
     ));				
@@ -130,6 +132,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'InActive'=>$self[$yyyymm]['InActive'],
 				'PaidTitle'=>$self[$yyyymm]['PaidTitle'],
     'ValidTitle'=>$self[$yyyymm]['ValidTitle'],
+    'Gross'=>$self[$yyyymm]['Gross'],
 				'Days'=>(string)round((time()-strtotime($self['DateJoin']))/60/60/24,0)
 			);
 
