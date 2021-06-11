@@ -5828,11 +5828,10 @@ if(strlen($yyyymmdd)==10){
 public function allteam(){
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
-$conditions = array('Enable'=>'Yes');
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
-print_r($yyyymm);
+
  $users = Users::find('all',array(
-  'conditions'=>array('Enable'=>'Yes')
+  'conditions'=>array('Enable'=>'Yes',$yyyymm.'.Percent'=>16)
  ));
  $todayJoining = array();
  foreach($users as $u){
@@ -5843,6 +5842,19 @@ print_r($yyyymm);
    $findrefermobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$u['refer'])
    ));
+   $team = Users::find('all',array(
+    'conditions'=>array('refer'=>$u['mcaNumber'])
+   ));
+   $allteam = " ";
+   foreach($team as $t){
+    $findTeammobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+   ));
+    $allteam = $allteam . $t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
+    
+   }
+
+
    if($findmobile['Mobile']){
     if($findrefermobile['Mobile']){
      array_push($todayJoining,array(
@@ -5851,7 +5863,7 @@ print_r($yyyymm);
       'refer'=>$u['refer_name'].", Mobile no: +91".$findrefermobile['Mobile'],
       'KYCNEFT'=>"KYC: ". $u['KYC'].", NEFT Approved: ".$u['NEFT'],
       'DateJoin'=>$u['DateJoin'],
-      'Info'=>"Your Valid Title is: *".$u[$yyyymm]['ValidTitle']."* This month you have done ".$u[$yyyymm]['PV']." PV & ".$u[$yyyymm]['ExtraPV']." Extra PV, your team total ". $u[$yyyymm]['GPV']." GPV. Every month you and your team require 1250 GPV or 1250 Pure PGPV. Once you qualify by doing this, you will start earning from Modicare."
+      'Info'=>"Your Valid Title is: *".$u[$yyyymm]['ValidTitle']."* This month you have done ".$u[$yyyymm]['PV']." PV & ".$u[$yyyymm]['ExtraPV']." Extra PV, your team total *". $u[$yyyymm]['GPV']." GPV ". $u[$yyyymm]['PGPV']." PGPV*. Every month you and your team require 1250 GPV or 1250 Pure PGPV. Once you qualify by doing this, you will start earning from Modicare.\\n Your Team: " . $allteam,
     ));
     }
    }
