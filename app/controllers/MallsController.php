@@ -5862,26 +5862,35 @@ print_r($yyyymm);
 
 
 public function addEPV(){
+set_time_limit(0);
+ini_set('memory_limit','-1'); 
+$yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  $users = Users::find('all',array(
-  'conditions'=>array('Enable'=>'Yes'),
+  'conditions'=>array(
+   'Enable'=>'Yes',
+   $yyyymm.'.PV'=>array('$gt'=>0)
+   ),
   'order'=>array('DateJoin'=>'DESC')
  ));
- $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+ $data = array($yyyymm.'.TotalEPV' => 0);
+ Users::update($data);
+ $data = array('TotalEPV' => 0);
+ Users::update($data);
  $allusers = array();
  
  foreach($users as $u){
   if($u[$yyyymm]['PV']>0){
    $refer = $u['ancestors'];
+   $EPV = $u[$yyyymm]['ExtraPV'];
    foreach($refer as $r){
-    $data => array('$inc' => array('TotalEPV' => (integer) ));
+    $data = array('$inc' => array($yyyymm.'.TotalEPV' => (integer) $EPV));
     $conditions = array('mcaNumber'=>$r);
     Users::update($data,$conditions);
    }
   }
-  print_r($refer);
  }
  
- return compact('allusers');
+ return $this->render(array('json' => array("success"=>"Yes",'users'=>count($users))));
 }
 
 
