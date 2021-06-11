@@ -48,6 +48,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'PaidTitle'=>$user[$yyyymm]['PaidTitle'],
 					'ValidTitle'=>$user[$yyyymm]['ValidTitle'],
      'Gross'=>$user[$yyyymm]['Gross'],
+     'TotalEPV'=>$user[$yyyymm]['TotalEPV'],
 					'DateJoin'=>$user['DateJoin'],
 					'Days'=>(string)round((time()-strtotime($user['DateJoin']))/60/60/24,0)
 				));				
@@ -101,6 +102,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'PaidTitle'=>$u[$yyyymm]['PaidTitle'],
      'ValidTitle'=>$u[$yyyymm]['ValidTitle'],
      'Gross'=>$u[$yyyymm]['Gross'],
+     'TotalEPV'=>$u[$yyyymm]['TotalEPV'],
 					'DateJoin'=>$u['DateJoin'],
 					'Days'=>(string)round((time()-strtotime($u['DateJoin']))/60/60/24,0)
     ));				
@@ -133,6 +135,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 				'PaidTitle'=>$self[$yyyymm]['PaidTitle'],
     'ValidTitle'=>$self[$yyyymm]['ValidTitle'],
     'Gross'=>$self[$yyyymm]['Gross'],
+    'TotalEPV'=>$self[$yyyymm]['TotalEPV'],
 				'Days'=>(string)round((time()-strtotime($self['DateJoin']))/60/60/24,0)
 			);
 

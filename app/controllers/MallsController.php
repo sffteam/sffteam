@@ -5882,10 +5882,18 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
   if($u[$yyyymm]['PV']>0){
    $refer = $u['ancestors'];
    $EPV = $u[$yyyymm]['ExtraPV'];
+   
    foreach($refer as $r){
-    $data = array('$inc' => array($yyyymm.'.TotalEPV' => (integer) $EPV));
-    $conditions = array('mcaNumber'=>$r);
-    Users::update($data,$conditions);
+   $findEPV = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>$r)
+   ));
+    $uEPV = $findEPV[$yyyymm]['TotalEPV'];
+    $tEPV = $uEPV + $EPV;
+    $data = array($yyyymm.'.TotalEPV'=>$tEPV);
+    $conditions = array('mcaNumber'=>(string)$r);
+//    print_r($data);
+//    print_r($conditions);
+    Users::update($data,$conditions,array('multi' => false));
    }
   }
  }
