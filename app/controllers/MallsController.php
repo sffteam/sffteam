@@ -5825,13 +5825,13 @@ if(strlen($yyyymmdd)==10){
  return compact('todayJoining');
 }
 
-public function allteam(){
+public function allteam($Percent=null){
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 
  $users = Users::find('all',array(
-  'conditions'=>array('Enable'=>'Yes',$yyyymm.'.Percent'=>16)
+  'conditions'=>array('Enable'=>'Yes',$yyyymm.'.Percent'=>$Percent)
  ));
  $todayJoining = array();
  foreach($users as $u){
@@ -5850,7 +5850,7 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
     $findTeammobile = Mobiles::find('first',array(
    'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
    ));
-    $allteam = $allteam . $t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
+    $allteam = $allteam . "\\n".$t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
     
    }
 
@@ -5860,10 +5860,10 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
      array_push($todayJoining,array(
       'name'=>$u['mcaName']." (MCA No: ".$u['mcaNumber'].")",
       'Mobile'=>$findmobile['Mobile'],
-      'refer'=>$u['refer_name'].", Mobile no: +91".$findrefermobile['Mobile'],
+      'refer'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
       'KYCNEFT'=>"KYC: ". $u['KYC'].", NEFT Approved: ".$u['NEFT'],
       'DateJoin'=>$u['DateJoin'],
-      'Info'=>"Your Valid Title is: *".$u[$yyyymm]['ValidTitle']."* This month you have done ".$u[$yyyymm]['PV']." PV & ".$u[$yyyymm]['ExtraPV']." Extra PV, your team total *". $u[$yyyymm]['GPV']." GPV ". $u[$yyyymm]['PGPV']." PGPV*. Every month you and your team require 1250 GPV or 1250 Pure PGPV. Once you qualify by doing this, you will start earning from Modicare.\\n Your Team: " . $allteam,
+      'Info'=>"Your Valid Title is: *".$u[$yyyymm]['ValidTitle']."* This month you have done ".$u[$yyyymm]['PV']." PV & ".$u[$yyyymm]['ExtraPV']." Extra PV, your team total *". $u[$yyyymm]['GPV']." GPV, & ". $u[$yyyymm]['PGPV']." PGPV*.\\n Every month you and your team require 1250 GPV or 1250 Pure PGPV. Once you qualify by doing this, you will start earning from Modicare.\\n Your Team: " . $allteam,
     ));
     }
    }
