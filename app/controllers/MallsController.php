@@ -1170,7 +1170,7 @@ set_time_limit(0);
      $yyyymm.'.PGPV'=>(integer)$data['PGPV'],
      $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
      $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-    'Level'=>(integer)$data['Level'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.APB'=>(integer)$data['APB'],
@@ -1553,6 +1553,7 @@ set_time_limit(0);
          'mcaNumber' => (string)$data[1],
          'mcaName' => ucwords(strtolower((string)$data[2])),
          'DateJoin' => (string)$data[4],
+         'Level' => (string)$data[5],
          'refer' => (string)$data[6],
          'PaidTitle'=>trim((string)$data[7]),
          'ValidTitle'=>trim((string)$data[8]),
@@ -1566,7 +1567,7 @@ set_time_limit(0);
          'PGPV'=>(integer)$data[16],
          'PGBV'=>(integer)$data[17],
          'RollUpPV'=>(integer)$data[18],
-         'Level'=>(integer)$data[19],
+         'Percent'=>(integer)$data[19],
          'Legs'=>(integer)$data[20],
          'QDLegs'=>(integer)$data[21],
          'Enable'=>'Yes'
@@ -1718,7 +1719,7 @@ set_time_limit(0);
          'PGPV'=>(integer)$data[18],
          'PGBV'=>(integer)$data[19],
          'RollUpPV'=>(integer)$data[20],
-         'Level'=>(integer)$data[21],
+         'Percent'=>(integer)$data[21],
          'Legs'=>(integer)$data[22],
          'QDLegs'=>(integer)$data[23],
          'APB'=>(integer)$data[24],
@@ -1926,7 +1927,7 @@ Users::update(
      $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
      $yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
      $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     'Level'=>(integer)$data['Level'],
+     $yyyymm.'.Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.today'=>$today,
@@ -5831,7 +5832,7 @@ ini_set('memory_limit','-1');
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 
  $users = Users::find('all',array(
-  'conditions'=>array('Enable'=>'Yes',$yyyymm.'.Percent'=>$Percent)
+  'conditions'=>array('Enable'=>'Yes',$yyyymm.'.Percent'=>(integer)$Percent)
  ));
  $todayJoining = array();
  foreach($users as $u){
