@@ -52,22 +52,26 @@ $this->_render['layout'] = 'noHeaderFooter';
 					'DateJoin'=>$user['DateJoin'],
 					'Days'=>(string)round((time()-strtotime($user['DateJoin']))/60/60/24,0)
 				));				
+    
 			if($D==null){
 				$users = Users::find('all',array(
 					'conditions'=>array(
 						'left'=>array('$gt'=>$user['left']),
 						'right'=>array('$lt'=>$user['right']),
+      "Enable" => "Yes"
 					),
 					'order'=>array(
 					//'mcaName'=>'ASC'
 					)
 			));
 			}else{
+    
 				$users = Users::find('all',array(
 					'conditions'=>array(
 						'left'=>array('$gt'=>$user['left']),
 						'right'=>array('$lt'=>$user['right']),
-						$yyyymm.'.Percent'=>16
+						$yyyymm.'.Percent'=>(integer)16,
+      "Enable" => "Yes"
 					),
 					'order'=>array(
 					//'mcaName'=>'ASC'
