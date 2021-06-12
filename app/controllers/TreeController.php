@@ -78,8 +78,7 @@ $this->_render['layout'] = 'noHeaderFooter';
 					)
 			));	
 			}
-			
-			
+//			print_r(count($users));exit;
 			
 			foreach($users as $u){
     $mobile = Mobiles::find('first',array(
