@@ -1098,6 +1098,7 @@ set_time_limit(0);
         $data = array(
          'mcaNumber' => (string)$data[1],
          'mcaName' => ucwords(strtolower((string)$data[2])),
+         'Blocked' => ucwords(strtolower((string)$data[3])),
          'DateJoin' => (string)$data[4],
          'refer' => (string)$data[5],
          'ValidTitle'=>trim((string)$data[6]),
@@ -1127,7 +1128,9 @@ set_time_limit(0);
          'Gross'=>(integer)$data[30],
          'Enable'=>(string)$data[31],
         );
-        
+        if(ucwords(strtolower((string)$data[3]))=='Blocked'){
+         $data['Enable']="No";
+        }
 
         $user = Users::find("first",array(
         "conditions"=>array('mcaNumber'=>$data['mcaNumber'])
