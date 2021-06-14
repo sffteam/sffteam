@@ -6,6 +6,7 @@
   <td>Refer Mobile</td>
   <td>ReferName</td>
   <td>DateJoin</td>
+  <td>PV</td>  
  </tr>
 
 <?php foreach($todayJoining as $t){?>
@@ -16,6 +17,7 @@
   <td>+91<?=$t['refer']?></td>
   <td><?=$t['referName']?></td>
   <td><?=$t['DateJoin']?></td>
+  <td><?=$t['PV']?></td>
  </tr>
 <?php  }?>
 </table>

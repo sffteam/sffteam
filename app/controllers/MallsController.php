@@ -5758,7 +5758,7 @@ public function todayJoining($yyyymmdd=null){
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
 $conditions = array('DateJoin'=> array('like'=>'/.'.urldecode($yyyymmdd)."/."),'Enable'=>'Yes');
-
+$yyyymm = date('Y-m');
 if(strlen($yyyymmdd)==10){
   $users = Users::find('all',array( 
   'conditions'=>$conditions,
@@ -5786,6 +5786,7 @@ if(strlen($yyyymmdd)==10){
     'refer'=>$findrefermobile['Mobile'],
     'referName'=>$u['refer_name'],
     'DateJoin'=>$u['DateJoin'],
+    'PV'=>$u[$yyyymm]['PV']."/".$u[$yyyymm]['GPV'],
   ));
  }
  
