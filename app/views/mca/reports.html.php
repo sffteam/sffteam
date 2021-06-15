@@ -11,6 +11,7 @@
 
 <?php
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+$pyyyymm = date('Y-m', strtotime('first day of last month'));
 if($mcaNumber==null){
  ?>
       <div class="card">
@@ -61,7 +62,7 @@ if($mcaNumber==null){
             <div class="card-header text-color-black display-block"><small><?=$mcaDetails['mcaName']?></small><br />
               <small style="opacity: 0.8"><?=$mcaDetails['mcaNumber']?>   </small><br>
               <small class="sz16 Bebas" style="opacity: 0.7"><?=$mcaDetails[$yyyymm]['ValidTitle']?> - <?=$mcaDetails['DateJoin']?></small><br>
-              <small class="sz16" style="opacity: 0.7">PV: <?=$mcaDetails[$yyyymm]['PV']?> - EPV: <?=$mcaDetails[$yyyymm]['ExtraPV']?> - GPV: <?=$mcaDetails[$yyyymm]['GPV']?></small><br>
+              <small class="sz16" style="opacity: 0.7">PV: <?=$mcaDetails[$yyyymm]['PV']?> - EPV: <?=$mcaDetails[$yyyymm]['ExtraPV']?> - GPV: <?=$mcaDetails[$yyyymm]['GPV']?>- Team EPV: <?=$mcaDetails[$yyyymm]['TotalPV']?></small><br>
               <small class="sz16" style="opacity: 0.7">PGPV: <?=$mcaDetails[$yyyymm]['PGPV']?> - Rollup: <?=$mcaDetails[$yyyymm]['RollUpPV']?></small><br>
               <small class="sz16" style="opacity: 0.7">BV: <?=$mcaDetails[$yyyymm]['BV']?> - GBV: <?=$mcaDetails[$yyyymm]['GBV']?></small><br>
               <small class="sz16" style="opacity: 0.7">Joining: <?=$joinee?> - Team: <?=$team?></small><br>
@@ -87,7 +88,7 @@ if($mcaNumber==null){
    <div class="card-header display-block"><?=$u['mcaName']?><br />
    <small style="opacity: 0.8"><?=$u['mcaNumber']?>    </small><br>
    <small class="sz18 Bebas" style="opacity: 0.7"><?=$u[$yyyymm]['ValidTitle']?> - <?=$u['DateJoin']?></small><br>
-   <small class="sz16" style="opacity: 0.7">PV: <?=$u[$yyyymm]['PV']?> - EPV: <?=$u[$yyyymm]['ExtraPV']?> - GPV: <?=$u[$yyyymm]['GPV']?></small><br>
+   <small class="sz16" style="opacity: 0.7">PV: <?=$u[$yyyymm]['PV']?> - EPV: <?=$u[$yyyymm]['ExtraPV']?> - GPV: <?=$u[$yyyymm]['GPV']?> - Team EPV: <?=$u[$yyyymm]['TotalEPV']?></small><br>
    <small class="sz16" style="opacity: 0.7">PGPV: <?=$u[$yyyymm]['PGPV']?> - Rollup: <?=$u[$yyyymm]['RollUpPV']?></small><br>
    <small class="sz16" style="opacity: 0.7">BV: <?=$u[$yyyymm]['BV']?> - GBV: <?=$u[$yyyymm]['GBV']?></small><br>
    <small class="sz16" style="opacity: 0.7">Joining: <?=$u[$yyyymm]['Joinee']?> - Team: <?=$u[$yyyymm]['Team']?></small><br>
@@ -99,7 +100,11 @@ if($mcaNumber==null){
    </div>
   <div class="card-content-padding">
   <i class="icons f7-icons">phone</i> <a href="tel:<?=$u['Mobile']?>" class="link external"><?=$u['Mobile']?></a>
-  <a href="/mca/reports/<?=$u['mcaNumber']?>" class="external link">Next Team</a>
+  <a href="/mca/reports/<?=$u['mcaNumber']?>" class="external link">Next Team</a><br>
+   <small class="sz16" style="opacity: 0.7">PV: <?=$u[$pyyyymm]['PV']?> - EPV: <?=$u[$pyyyymm]['ExtraPV']?> - GPV: <?=$u[$pyyyymm]['GPV']?> - Team EPV: <?=$u[$pyyyymm]['TotalEPV']?></small><br>
+   <small class="sz16" style="opacity: 0.7">PGPV: <?=$u[$pyyyymm]['PGPV']?> - Rollup: <?=$u[$pyyyymm]['RollUpPV']?></small><br>
+   <small class="sz16" style="opacity: 0.7">BV: <?=$u[$pyyyymm]['BV']?> - GBV: <?=$u[$pyyyymm]['GBV']?></small><br>
+   
   </div>
  </div>
 </div>

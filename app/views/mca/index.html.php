@@ -8,3 +8,6 @@
     <a href="/mca/videos/" class="external link text-color-white">Videos</a>
   </div>
 </div>
+<div class="block page-content Raleway sz1">
+ Click on Reports, PDFs, Products and Videos to know more.
+</div>
