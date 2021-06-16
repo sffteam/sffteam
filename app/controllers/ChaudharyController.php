@@ -155,6 +155,7 @@ class ChaudharyController extends \lithium\action\Controller {
    'Address'=>$this->request->data['C_address'],
    'Pincode'=>$this->request->data['C_pincode'],
    'Products'=>$products,
+   'DateTime'=>date('d-m-Y');
   );
   C_orders::create()->save($data);
     return $this->render(array('json' => array("success"=>"Yes",'data'=>$data)));
