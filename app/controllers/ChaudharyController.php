@@ -96,7 +96,34 @@ class ChaudharyController extends \lithium\action\Controller {
    }
    
   }
-	
-	
+  
+  public function cartproducts(){
+   $cart = $this->request->data;
+   $CartProducts = array();
+   foreach ($cart as $code => $quantity){
+    if($code!="X"){
+     $product = C_products::find('first',array(
+      'conditions'=>array('SKU Number'=>(string)$code)
+     ));
+    }
+    if(count($product)>0){
+    array_push($CartProducts,       array(
+        "_id"=>$product['_id'],
+        "SKU"=>$product['SKU Number'],
+        "Weight"=>$product['Net Weight'],
+        "MRP"=>$product['MRP:Pan India'],
+        "ShelfLife"=>$product['Shelf Life Value'],
+        "ShelfLifeUnit"=>$product['Shelf Life Unit'],
+        "IGST"=>$product['IGST'],
+        "CGST"=>$product['CGST'],
+        "SGST"=>$product['SGST'],
+        "user_id"=>$product['user_id'],
+        'Quantity'=> (integer)$quantity
+        )
+    );
+    }
+   }
+   return $this->render(array('json' => array("success"=>"Yes","CartProducts"=>$CartProducts)));  
+  }
 	
 }
