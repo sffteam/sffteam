@@ -109,6 +109,7 @@ class ChaudharyController extends \lithium\action\Controller {
     if(count($product)>0){
     array_push($CartProducts,       array(
         "_id"=>$product['_id'],
+        "Name"=>$product['Product Name'],
         "SKU"=>$product['SKU Number'],
         "Weight"=>$product['Net Weight'],
         "MRP"=>$product['MRP:Pan India'],
