@@ -8,6 +8,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\models\C_products;
 use app\models\C_users;
 use app\models\C_inquiry;
+use app\models\C_orders;
 use \MongoDate;
 
 class ChaudharyController extends \lithium\action\Controller {
@@ -126,5 +127,36 @@ class ChaudharyController extends \lithium\action\Controller {
    }
    return $this->render(array('json' => array("success"=>"Yes","CartProducts"=>$CartProducts)));  
   }
-	
+	public function cartsubmit(){
+  
+  $products = array();
+  foreach($this->request->data as $key=>$val){
+   if(substr($key,0,9)=="minusCode"){
+    $SKU = str_replace("minusCode","",$key);
+   $prices = C_products::find('first',array(
+   'conditions'=>array('SKU Number'=> $SKU)
+   ));
+    
+    array_push($products, 
+     array(
+      'SKU'=>str_replace("minusCode","",$key),
+      'Quantity'=>(integer)$val,
+      'Rate'=>$prices['MRP:Pan India'],
+      'Value' => (integer)$val * $prices['MRP:Pan India'],
+      "Name"=>$prices['Product Name'],
+      "Weight"=>$prices['Net Weight'],
+      )
+    ); 
+   }
+  }
+  $data = array(
+   'Name'=>$this->request->data['C_name'],
+   'Mobile'=>$this->request->data['C_mobile'],
+   'Address'=>$this->request->data['C_address'],
+   'Pincode'=>$this->request->data['C_pincode'],
+   'Products'=>$products,
+  );
+  C_orders::create()->save($data);
+    return $this->render(array('json' => array("success"=>"Yes",'data'=>$data)));
+ }
 }
