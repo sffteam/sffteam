@@ -43,12 +43,39 @@ class ChaudharyController extends \lithium\action\Controller {
   $newproduct = "";
   foreach($products as $c){
    if($newproduct != $c['Product Name']){
+    
+   $prices = C_products::find('all',array(
+   'conditions'=>array('Product Name'=> array('like'=>'/^'.$c['Product Name'].'/')),
+   'order'=>array('SKU Number'=>'ASC')
+   ));
+    $allprices = array();
+    foreach($prices as $p){
+      array_push($allprices,
+       array(
+       "_id"=>$p['_id'],
+       "SKU"=>$p['SKU Number'],
+       "Weight"=>$p['Net Weight'],
+       "MRP"=>$p['MRP:Pan India'],
+       "ShelfLife"=>$p['Shelf Life Value'],
+       "ShelfLifeUnit"=>$p['Shelf Life Unit'],
+       "IGST"=>$p['IGST'],
+       "CGST"=>$p['CGST'],
+       "SGST"=>$p['SGST'],
+       "user_id"=>$p['user_id'],
+       )
+      );
+     }
+    
     array_push($allproducts,
      array(
       'Name'=>$c['Product Name'],
-      'SKU Number'=>$c['SKU Number']
+      'SKU Number'=>$c['SKU Number'],
+      'SKUs'=>$allprices
      ));
     $newproduct = $c['Product Name'];
+    
+   
+    
    }
   }
   return $this->render(array('json' => array("success"=>"Yes",'allproducts'=>$allproducts)));
