@@ -5968,6 +5968,79 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  return $this->render(array('json' => array("success"=>"Yes",'users'=>count($users))));
 }
 
+public function contacts(){
+set_time_limit(0);
+ini_set('memory_limit','-1'); 
+$yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+
+ $users = Users::find('all',array(
+  'conditions'=>array('Enable'=>'Yes')
+ ));
+ $todayJoining = array();
+ foreach($users as $u){
+  $mcaNumber = $u['mcaNumber'];
+   $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber,)
+   ));
+   $findrefermobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$u['refer'])
+   ));
+   $team = Users::find('all',array(
+    'conditions'=>array('refer'=>$u['mcaNumber'])
+   ));
+   $allteam = " ";
+   foreach($team as $t){
+    $findTeammobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+   ));
+    $allteam = $allteam . "\\n".$t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
+    
+   }
+
+
+   if($findmobile['Mobile']){
+    if($findrefermobile['Mobile']){
+     array_push($todayJoining,array(
+      'name'=>$u['mcaName']." (MCA No: ".$u['mcaNumber'].")",
+      'Mobile'=>$findmobile['Mobile'],
+      'refer'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
+      'KYCNEFT'=>"KYC: ". $u['KYC'].", NEFT Approved: ".$u['NEFT'],
+      'DateJoin'=>$u['DateJoin'],
+    ));
+    }
+   }
+ }
+ 
+ return compact('todayJoining');
+}
+
+public function ytdgpv($mcaNumber=null){
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+   $team = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+    $yyyymm.'.PV'=>array('$gt'=>0),
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GPV'=>DESC),
+   ));
+   foreach($team as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+   }
+   
+ return compact('self','team');
+ 
+}
+
 
 //end of class
 }
