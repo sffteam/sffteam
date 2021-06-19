@@ -77,7 +77,7 @@
         ]);
 
         var options = {
-          title: '<?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) - GBV Growth',
+          title: '<?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) <?=$self[$p1yyyymm]['ValidTitle']?>- GBV Growth',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
@@ -103,7 +103,7 @@
         ]);
 
         var options = {
-          title: '<?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) - GBV/GPV ratio and % Increase',
+          title: '<?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) - <?=$self[$p1yyyymm]['ValidTitle']?> GBV/GPV ratio and % Increase',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
@@ -114,23 +114,23 @@
         GPVchart.draw(data, options);
       }
     </script>
-<table  border="1">
+<table  border="1" class="Roboto">
 <tr>
- <td class="col top left"><small>YYYY-MM</small></td>
- <td class="col top left"><?=$p10yyyymm?></td>
- <td class="col top left"><?=$p9yyyymm?></td>
- <td class="col top left"><?=$p8yyyymm?></td>
- <td class="col top left"><?=$p7yyyymm?></td>
- <td class="col top left"><?=$p6yyyymm?></td>
- <td class="col top left"><?=$p5yyyymm?></td>
- <td class="col top left"><?=$p4yyyymm?></td>
- <td class="col top left"><?=$p3yyyymm?></td>
- <td class="col top left"><?=$p2yyyymm?></td>
- <td class="col top left"><?=$p1yyyymm?></td>
- <td class="col top left right"><?=$yyyymm?></td>
+ <th class="col top left"><small>YYYY-MM</small></th>
+ <th class="col top left"><?=$p10yyyymm?></th>
+ <th class="col top left"><?=$p9yyyymm?></th>
+ <th class="col top left"><?=$p8yyyymm?></th>
+ <th class="col top left"><?=$p7yyyymm?></th>
+ <th class="col top left"><?=$p6yyyymm?></th>
+ <th class="col top left"><?=$p5yyyymm?></th>
+ <th class="col top left"><?=$p4yyyymm?></th>
+ <th class="col top left"><?=$p3yyyymm?></th>
+ <th class="col top left"><?=$p2yyyymm?></th>
+ <th class="col top left"><?=$p1yyyymm?></th>
+ <th class="col top left right"><?=$yyyymm?></th>
 </tr>
 <tr>
- <td class="col top left">PV</td>
+ <th class="col top left">PV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['PV']?></td>
  <td class="col top left"><?=$self[$p9yyyymm]['PV']?></td>
  <td class="col top left"><?=$self[$p8yyyymm]['PV']?></td>
@@ -144,7 +144,7 @@
  <td class="col top left right"><?=$self[$yyyymm]['PV']?></td>
 </tr>
 <tr >
- <td class="col top left">GPV</td>
+ <th class="col top left">GPV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['GPV']?></td>
  <td class="col top left"><?=$self[$p9yyyymm]['GPV']?></td>
  <td class="col top left"><?=$self[$p8yyyymm]['GPV']?></td>
@@ -158,7 +158,7 @@
  <td class="col top left right"><?=$self[$yyyymm]['GPV']?></td>
 </tr>
 <tr>
- <td class="col top left">GBV</td>
+ <th class="col top left">GBV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['GBV']?></td>
  <td class="col top left"><?=$self[$p9yyyymm]['GBV']?></td>
  <td class="col top left"><?=$self[$p8yyyymm]['GBV']?></td>
@@ -172,7 +172,7 @@
  <td class="col top left right"><?=$self[$yyyymm]['GBV']?></td>
 </tr>
 <tr>
- <td class="col top left">GBV/day</td>
+ <th class="col top left">GBV/day</th>
  <td class="col top left"><?=number_format($self[$p10yyyymm]['GBV']/$p10yyyymmdays,0,".","")?></td>
  <td class="col top left"><?=number_format($self[$p9yyyymm]['GBV']/$p9yyyymmdays,0,".","")?></td>
  <td class="col top left"><?=number_format($self[$p8yyyymm]['GBV']/$p8yyyymmdays,0,".","")?></td>
@@ -186,7 +186,7 @@
  <td class="col top left right"><?=number_format($self[$yyyymm]['GBV']/$yyyymmdays,0,".","")?></td>
 </tr>
 <tr>
- <td class="col top left"><small>GBV/PGV</small></td>
+ <th class="col top left"><small>GBV/PGV</small></th>
  <td class="col top left"><?=number_format( $self[$p10yyyymm]['GBV']/$self[$p10yyyymm]['GPV'],0)?></td>
  <td class="col top left"><?=number_format( $self[$p9yyyymm]['GBV']/$self[$p9yyyymm]['GPV'],0)?></td>
  <td class="col top left"><?=number_format( $self[$p8yyyymm]['GBV']/$self[$p8yyyymm]['GPV'],0)?></td>
@@ -200,7 +200,7 @@
  <td class="col top left right"><?=number_format( $self[$yyyymm]['GBV']/$self[$yyyymm]['GPV'],0)?></td>
 </tr>
 <tr>
- <td class="col top left bottom"><small>BV &#8593;%</small></td>
+ <th class="col top left bottom"><small>BV &#8593;%</small></th>
  <td class="col top left bottom"><?=number_format((($self[$p10yyyymm]['GBV']/$p10yyyymmdays)-($self[$p11yyyymm]['GBV']/$p11yyyymmdays))/($self[$p11yyyymm]['GBV']/$p11yyyymmdays)*100,0)?>%</td>
  <td class="col top left bottom"><?=number_format((($self[$p9yyyymm]['GBV']/$p9yyyymmdays)-($self[$p10yyyymm]['GBV']/$p10yyyymmdays))/($self[$p10yyyymm]['GBV']/$p10yyyymmdays)*100,0)?>%</td>
  <td class="col top left bottom"><?=number_format((($self[$p8yyyymm]['GBV']/$p8yyyymmdays)-($self[$p9yyyymm]['GBV']/$p9yyyymmdays))/($self[$p9yyyymm]['GBV']/$p9yyyymmdays)*100,0)?>%</td>
@@ -214,7 +214,7 @@
  <td class="col top left bottom"><?=number_format((($self[$yyyymm]['GBV']/$yyyymmdays)-($self[$p1yyyymm]['GBV']/$p1yyyymmdays))/($self[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
 </tr>
 <tr>
- <td>Title</td>
+ <th>Title</th>
  <td><small><?=$self[$p10yyyymm]['PaidTitle']?></small></td>
  <td><small><?=$self[$p9yyyymm]['PaidTitle']?></small></td>
  <td><small><?=$self[$p8yyyymm]['PaidTitle']?></small></td>
@@ -228,34 +228,39 @@
  <td><small></small></td>
 </tr>
 </table>
-<p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27.</p>
+<p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27. </p>
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
-Your team who have completed PV in this month
-<table border=1>
+Your team who have completed PV in this month. &#9728; are your Direct Team, Your Direct Team who have not completed this month PV is not included. Total Team Size <?=$countteam?> ACTIVE <?=count($team)?>.
+<table border=1 class="Roboto">
  <tr>
- <td class="szhalf">Name</td>
- <td class="szhalf">MCA No</td>
- <td class=" szhalf">PV</td>
- <td class=" szhalf">GPV</td>
- <td class=" szhalf">GBV</td>
- <td class=" szhalf">GBV/GPV %</td>
- <td class=" szhalf">Growth</td>
+ <th class="szhalf">#</th>
+ <th class="szhalf">Name</th>
+ <th class="szhalf">MCA No</th>
+ <th class=" szhalf">PV</th>
+ <th class=" szhalf">GPV</th>
+ <th class=" szhalf">PGPV</th>
+ <th class=" szhalf">GBV</th>
+ <th class=" szhalf">GBV/GPV %</th>
+ <th class=" szhalf">Growth</th>
  </tr>
 <?php 
-foreach($team as $t){
+$i = 0;foreach($team as $t){
+ $i++;
  ?>
 <tr>
+ <td class="szhalf"><?=$i?></td>
  <td class="align-left">
  <?php if($t['refer_id']==$self['mcaNumber']){
   echo "&#9728;";
  }
  ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><?=$t['mcaName']?></a> (+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</td>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
  <td class="align-left"><?=$t['mcaNumber']?></td>
  <td><?=$t[$yyyymm]['PV']?></td>
  <td><?=$t[$yyyymm]['GPV']?></td>
+ <td><?=$t[$yyyymm]['PGPV']?></td>
  <td><?=$t[$yyyymm]['GBV']?></td>
  <td><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
  <td><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
@@ -271,19 +276,19 @@ $nrate = 1.2;
 ?>
 <hr>
 <p>If you do business at the current rate of this month in the next month and maintain 20% in subsequent months. You will have to your own PV and build your team along with title. Your GPV and GBV will grow and your Cheque will be 10% commission based on your GBV.</p>
-<table  border="1">
+<table  border="1" class="Roboto">
 <tr>
- <td ><small>YYYY-MM</small></td>
- <td ><small><?=$n1yyyymm?></small></td>
- <td ><small><?=$n2yyyymm?></small></td>
- <td ><small><?=$n3yyyymm?></small></td>
- <td ><small><?=$n4yyyymm?></small></td>
- <td ><small><?=$n5yyyymm?></small></td>
- <td ><small><?=$n6yyyymm?></small></td>
- <td ><small><?=$n7yyyymm?></small></td>
- <td ><small><?=$n9yyyymm?></small></td>
- <td ><small><?=$n10yyyymm?></small></td>
- <td ><small><?=$n11yyyymm?></small></td>
+ <th ><small>YYYY-MM</small></th>
+ <th ><small><?=$n1yyyymm?></small></th>
+ <th ><small><?=$n2yyyymm?></small></th>
+ <th ><small><?=$n3yyyymm?></small></th>
+ <th ><small><?=$n4yyyymm?></small></th>
+ <th ><small><?=$n5yyyymm?></small></th>
+ <th ><small><?=$n6yyyymm?></small></th>
+ <th ><small><?=$n7yyyymm?></small></th>
+ <th ><small><?=$n9yyyymm?></small></th>
+ <th ><small><?=$n10yyyymm?></small></th>
+ <th ><small><?=$n11yyyymm?></small></th>
 </tr>
 <tr>
  <td ><small>GPV</small></td>

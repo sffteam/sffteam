@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/components/monaca-onsenui/css/font_awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/app.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
 
   <script src="/components/main.js"></script>
 		<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
