@@ -6036,8 +6036,8 @@ public function ytdgpv($mcaNumber=null){
     ));
     $t['Mobile'] = $findmobile['Mobile'];
    }
-   
- return compact('self','team');
+   $countteam = $this->findTeam($mcaNumber);
+ return compact('self','team','countteam');
  
 }
 
