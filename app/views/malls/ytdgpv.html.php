@@ -213,11 +213,26 @@
  <td class="col top left bottom"><?=number_format((($self[$p1yyyymm]['GBV']/$p1yyyymmdays)-($self[$p2yyyymm]['GBV']/$p2yyyymmdays))/($self[$p2yyyymm]['GBV']/$p2yyyymmdays)*100,0)?>%</td>
  <td class="col top left bottom"><?=number_format((($self[$yyyymm]['GBV']/$yyyymmdays)-($self[$p1yyyymm]['GBV']/$p1yyyymmdays))/($self[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
 </tr>
+<tr>
+ <td>Title</td>
+ <td><small><?=$self[$p10yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p9yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p8yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p7yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p6yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p5yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p4yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p3yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p2yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=$self[$p1yyyymm]['PaidTitle']?></small></td>
+ <td><small></small></td>
+</tr>
 </table>
 <p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27.</p>
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
+Your team who have completed PV in this month
 <table border=1>
  <tr>
  <td class="szhalf">Name</td>
@@ -229,7 +244,6 @@
  <td class=" szhalf">Growth</td>
  </tr>
 <?php 
-
 foreach($team as $t){
  ?>
 <tr>
