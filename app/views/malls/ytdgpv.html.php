@@ -317,7 +317,7 @@ $nrate = 1.2;
  <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$self[$yyyymm]['GBV'],0)?></small></td>
 </tr>
 <tr>
- <td ><small>Your Cheque (Approx)</small></td>
+ <td ><small>Commission (Approx) Last Month</small></td>
  <td ><small><?=number_format($rate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
  <td ><small><?=number_format($rate*$nrate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
  <td ><small><?=number_format($rate*$nrate*$nrate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
@@ -328,6 +328,73 @@ $nrate = 1.2;
  <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
  <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
  <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$self[$yyyymm]['GBV']*.1,0)?></small></td>
+</tr>
+<?php
+$average = 0;
+$totalGBV = 0;
+$months = 0;
+ if($self[$p11yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p11yyyymm]['GBV'];
+ }
+ if($self[$p10yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p10yyyymm]['GBV'];
+ }
+ if($self[$p9yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p9yyyymm]['GBV'];
+ }
+ if($self[$p8yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p8yyyymm]['GBV'];
+ }
+ if($self[$p7yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p7yyyymm]['GBV'];
+ }
+ if($self[$p6yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p6yyyymm]['GBV'];
+ }
+ if($self[$p5yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p5yyyymm]['GBV'];
+ }
+ if($self[$p4yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p4yyyymm]['GBV'];
+ }
+ if($self[$p3yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p3yyyymm]['GBV'];
+ }
+ if($self[$p2yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p2yyyymm]['GBV'];
+ }
+ if($self[$p1yyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$p1yyyymm]['GBV'];
+ }
+ if($self[$pyyyymm]['GBV']>0){
+  $months++;
+  $totalGBV = $totalGBV + $self[$pyyyymm]['GBV'];
+ }
+ $average = number_format($totalGBV / $months,0,".","");
+?>
+<tr>
+ <td ><small>Commission (Approx) Average</small></td>
+ <td ><small><?=number_format($rate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
+ <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
 </tr>
 </table>
 <br>
