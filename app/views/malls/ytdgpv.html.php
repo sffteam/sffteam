@@ -215,16 +215,16 @@
 </tr>
 <tr>
  <th>Title</th>
- <td><small><?=$self[$p10yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p9yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p8yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p7yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p6yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p5yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p4yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p3yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p2yyyymm]['PaidTitle']?></small></td>
- <td><small><?=$self[$p1yyyymm]['PaidTitle']?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p10yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p9yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p8yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p7yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p6yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p5yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p4yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?></small></td>
  <td><small></small></td>
 </tr>
 </table>
