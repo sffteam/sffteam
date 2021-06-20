@@ -5958,7 +5958,7 @@ if($findmobile['Mobile']){
     if($findrefermobile['Mobile']){
      array_push($todayJoining,array(
       'fullname'=> $u['mcaName'],
-      'VAR1'=> " +91".$findrefermobile['Mobile']."",
+      'VAR1'=> " +91".$findmobile['Mobile']."",
       'VAR2'=>$u['mcaNumber'],
       'VAR3'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
       'VAR4'=>$team,
