@@ -1,16 +1,16 @@
-<table>
+<table class="Roboto" border=1>
  <tr>
-  <td>Name</td>
-  <td>VAR1</td>
-  <td>VAR2</td>
-  <td>VAR3</td>
-  <td>VAR4</td>
-  <td>VAR5</td>
-  <td>VAR6</td>
+  <th>Name</th>
+  <th>VAR1</th>
+  <th>VAR2</th>
+  <th>VAR3</th>
+  <th>VAR4</th>
+  <th>VAR5</th>
+  <th>VAR6</th>
  </tr>
 <?php foreach($todayJoining as $t){?>
  <tr>
-  <td><?=$t['fullname']?></td>
+  <td class="align-left"><?=$t['fullname']?></td>
   <td><?=$t['VAR1']?></td>
   <td><?=$t['VAR2']?></td>
   <td><?=$t['VAR3']?></td>
