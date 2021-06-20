@@ -11,7 +11,7 @@
  </tr>
 <?php foreach($team as $t){?>
  <tr>
-  <td class="align-left"><?=$t['mcaName']?></td>
+  <td class="align-left"><a href="/malls/myteam/<?=$t['mcaNumber']?>" class="external"><?=$t['mcaName']?></a></td>
   <td>+91<?=$t['Mobile']?></td>
   <td><?=$t['mcaNumber']?></td>
   <td><?=$t[$yyyymm]['PV']?></td>
