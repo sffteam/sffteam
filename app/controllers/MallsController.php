@@ -6090,7 +6090,31 @@ public function ytdgpv($mcaNumber=null){
  return compact('self','team','countteam');
  
 }
-
+public function myteam($mcaNumber=null){
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+   $team = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GrossPV'=>DESC),
+   ));
+   foreach($team as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+   }
+   $countteam = $this->findTeam($mcaNumber);
+ return compact('self','team','countteam');
+ 
+}
 
 //end of class
 }
