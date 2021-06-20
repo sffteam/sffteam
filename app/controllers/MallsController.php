@@ -5928,6 +5928,56 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  return compact('todayJoining');
 }
 
+public function activebv(){
+set_time_limit(0);
+ini_set('memory_limit','-1'); 
+$yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+
+ $users = Users::find('all',array(
+  'conditions'=>array($yyyymm.'.PV'=>array('$gt'=>0),'Enable'=>'Yes'),
+  'order'=>array($yyyymm.'.PV','ASC')
+ ));
+ $todayJoining = array();
+ 
+ foreach($users as $u){
+  $mcaNumber = $u['mcaNumber'];
+   $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber,)
+   ));
+   $findrefermobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$u['refer'])
+   ));
+   $team = Users::find('count',array(
+    'conditions'=>array(
+     'left'=>array('$gt'=>$u['left']),
+     'right'=>array('$lt'=>$u['right']),
+     'Enable'=>'Yes'
+    )
+   ));
+if($findmobile['Mobile']){
+    if($findrefermobile['Mobile']){
+     array_push($todayJoining,array(
+      'fullname'=> $u['mcaName'],
+      'VAR1'=> " +91".$findrefermobile['Mobile']."",
+      'VAR2'=>$u['mcaNumber'],
+      'VAR3'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
+      'VAR4'=>$team,
+      'VAR5'=>$team*1000,
+      'VAR6'=>$team*1000/10,
+    ));
+    }
+   }
+
+   }
+
+
+   
+ 
+
+ return compact('todayJoining');
+}
+
+
 public function addEPV(){
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
