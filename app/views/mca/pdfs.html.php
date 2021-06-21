@@ -13,9 +13,11 @@
       <div class="list links-list">
         <ul>
           <li><a href="/img/documents/WeCapacitate.Brochure-Modicare.pdf" class="external link" target="_blank">Discovery Preview</a></li>
+          <li><a href="/img/documents/Parivartan_SMAPUnlimited.pdf" class="external link" target="_blank">Parivartan</a></li>
           <li><a href="/img/documents/Shuruaat for LMS.pdf" class="external link" target="_blank">Shuruat</a></li>
           <li><a href="/img/documents/Raftaar.pdf" class="external link" target="_blank">Raftaar</a></li>
-          <li><a href="/img/documents/Parivartan_SMAPUnlimited.pdf" class="external link" target="_blank">Parivartan</a></li>
+          <li><a href="/img/documents/Parivartan ScriptComplete-Part 1-Commando Training.pdf" class="external link" target="_blank">Hindi Parivartan Part 1 - Commando Training</a></li>
+          <li><a href="/img/documents/Gujarati Parivartan- Final-Part 1-Commando Training.pdf" class="external link" target="_blank">Gujarati Parivartan Part 1 - Commando Training</a></li>
           <li><a href="/img/documents/Modicare_Unlimited.pdf" class="external link" target="_blank">Business Plan</a></li>
           <li><a href="/img/LOYALTY EXPRESS TRAINING MODULE .pdf" class="external link" target="_blank">Loyalty Express</a></li>
         </ul>

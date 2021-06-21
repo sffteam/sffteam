@@ -15,6 +15,17 @@
   
   <div class="list menu-list no-padding no-margin ">
     <ul>
+      <li class="margin-left">Commando Training - Day 1 - Partvartan
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/1AJHRIdcG8I" class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
+
       <li class="margin-left">Episode 101 - Vasantha Kumari Dandem
         <a
           href="#" class="no-margin no-padding">
