@@ -20,5 +20,9 @@
           <li><a href="/img/documents/Gujarati Parivartan- Final-Part 1-Commando Training.pdf" class="external link" target="_blank">Gujarati Parivartan Part 1 - Commando Training</a></li>
           <li><a href="/img/documents/Modicare_Unlimited.pdf" class="external link" target="_blank">Business Plan</a></li>
           <li><a href="/img/LOYALTY EXPRESS TRAINING MODULE .pdf" class="external link" target="_blank">Loyalty Express</a></li>
+          <li><a href="/img/Commando-Modicare.com.pdf" class="external link" target="_blank">Modicare.com Website</a></li>
+          <li><a href="/img/Commando-ModicareApp.pdf" class="external link" target="_blank">Modicare.com App</a></li>
+          <li><a href="/img/Commando-SFF-Mall-Reports.pdf" class="external link" target="_blank">SFF-Mall & Reports</a></li>
+          
         </ul>
       </div>
