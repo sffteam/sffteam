@@ -131,45 +131,73 @@
 </tr>
 <tr>
  <th class="col top left">PV</th>
- <td class="col top left"><?=$self[$p10yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p9yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p8yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p7yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p6yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p5yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p4yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p3yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p2yyyymm]['PV']?></td>
- <td class="col top left"><?=$self[$p1yyyymm]['PV']?></td>
- <td class="col top left right"><?=$self[$yyyymm]['PV']?></td>
+ <td class="col top left"><?=$self[$p10yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['PV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['PV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['PV']?:0?></td>
 </tr>
 <tr >
  <th class="col top left">GPV</th>
- <td class="col top left"><?=$self[$p10yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p9yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p8yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p7yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p6yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p5yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p4yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p3yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p2yyyymm]['GPV']?></td>
- <td class="col top left"><?=$self[$p1yyyymm]['GPV']?></td>
- <td class="col top left right"><?=$self[$yyyymm]['GPV']?></td>
+ <td class="col top left"><?=$self[$p10yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['GPV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['GPV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['GPV']?:0?></td>
+</tr>
+<tr >
+ <th class="col top left">TEPV</th>
+ <td class="col top left"><?=$self[$p10yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['TotalEPV']?:0?></td>
+</tr>
+<tr>
+ <th class="col top left">CGPV</th>
+ <td class="col top left"><?=$self[$p10yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['GrossPV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['GrossPV']?:0?></td>
 </tr>
 <tr>
  <th class="col top left">GBV</th>
- <td class="col top left"><?=$self[$p10yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p9yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p8yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p7yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p6yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p5yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p4yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p3yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p2yyyymm]['GBV']?></td>
- <td class="col top left"><?=$self[$p1yyyymm]['GBV']?></td>
- <td class="col top left right"><?=$self[$yyyymm]['GBV']?></td>
+ <td class="col top left"><?=$self[$p10yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['GBV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['GBV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['GBV']?:0?></td>
 </tr>
 <tr>
  <th class="col top left">GBV/day</th>
@@ -215,17 +243,17 @@
 </tr>
 <tr>
  <th>Title</th>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p10yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p9yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p8yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p7yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p6yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p5yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p4yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?></small></td>
- <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?></small></td>
- <td><small></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p10yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p9yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p8yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p7yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p6yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p5yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p4yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td><small>To be decided</small></td>
 </tr>
 </table>
 <p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27. </p>
@@ -240,6 +268,7 @@ Your team who have completed PV in this month. &#9728; are your Direct Team, You
  <th class="szhalf">MCA No</th>
  <th class=" szhalf">PV</th>
  <th class=" szhalf">GPV</th>
+ <th class=" szhalf">TEPV</th>
  <th class=" szhalf">PGPV</th>
  <th class=" szhalf">GBV</th>
  <th class=" szhalf">GBV/GPV %</th>
@@ -257,9 +286,10 @@ $i = 0;foreach($team as $t){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="align-left"><?=$t['mcaNumber']?></td>
+ <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" target="_blank"><?=$t['mcaNumber']?></td>
  <td><?=$t[$yyyymm]['PV']?></td>
  <td><?=$t[$yyyymm]['GPV']?></td>
+ <td><?=$t[$yyyymm]['TotalEPV ']?></td>
  <td><?=$t[$yyyymm]['PGPV']?></td>
  <td><?=$t[$yyyymm]['GBV']?></td>
  <td><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
