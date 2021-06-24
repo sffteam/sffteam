@@ -228,6 +228,34 @@
  <td class="col top left right"><?=number_format( $self[$yyyymm]['GBV']/$self[$yyyymm]['GPV'],0)?></td>
 </tr>
 <tr>
+ <th class="col top left"><small>PGPV</small></th>
+ <td class="col top left"><?=number_format($self[$p10yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p9yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p8yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p7yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p6yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p5yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p4yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p3yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p2yyyymm]['PGPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p1yyyymm]['PGPV'],0)?></td>
+ <td class="col top left right"><?=number_format($self[$yyyymm]['PGPV'],0)?></td>
+</tr>
+<tr>
+ <th class="col top left"><small>Roll Up</small></th>
+ <td class="col top left"><?=number_format($self[$p10yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p9yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p8yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p7yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p6yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p5yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p4yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p3yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p2yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p1yyyymm]['RollUpPV'],0)?></td>
+ <td class="col top left right"><?=number_format($self[$yyyymm]['RollUpPV'],0)?></td>
+</tr>
+<tr>
  <th class="col top left bottom"><small>BV &#8593;%</small></th>
  <td class="col top left bottom"><?=number_format((($self[$p10yyyymm]['GBV']/$p10yyyymmdays)-($self[$p11yyyymm]['GBV']/$p11yyyymmdays))/($self[$p11yyyymm]['GBV']/$p11yyyymmdays)*100,0)?>%</td>
  <td class="col top left bottom"><?=number_format((($self[$p9yyyymm]['GBV']/$p9yyyymmdays)-($self[$p10yyyymm]['GBV']/$p10yyyymmdays))/($self[$p10yyyymm]['GBV']/$p10yyyymmdays)*100,0)?>%</td>
