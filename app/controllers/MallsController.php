@@ -6115,6 +6115,57 @@ public function myteam($mcaNumber=null){
  return compact('self','team','countteam');
  
 }
+public function loyalty($mcaNumber=null){
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+  $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+  $p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+  $p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+  $p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+  $p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+  $p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+  
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+   $team = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GrossPV'=>DESC),
+   ));
+   foreach($team as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+    // if($t[$p6yyyymm]['BV']>900 ||$t[$p5yyyymm]['BV']>900 ||$t[$p4yyyymm]['BV']>900 ||$t[$p3yyyymm]['BV']>900 ||$t[$p2yyyymm]['BV']>900 ||$t[$p1yyyymm]['BV']>900||$t[$yyyymm]['BV']>900){
+     // $t['Loyalty'.$p6yyyymm.'PV'] = $t[$p6yyyymm]['PV'];
+     // $t['Loyalty'.$p5yyyymm.'PV'] = $t[$p5yyyymm]['PV'];
+     // $t['Loyalty'.$p4yyyymm.'PV'] = $t[$p4yyyymm]['PV'];
+     // $t['Loyalty'.$p3yyyymm.'PV'] = $t[$p3yyyymm]['PV'];
+     // $t['Loyalty'.$p2yyyymm.'PV'] = $t[$p2yyyymm]['PV'];
+     // $t['Loyalty'.$p1yyyymm.'PV'] = $t[$p1yyyymm]['PV'];
+     // $t['Loyalty'.$yyyymm.'PV'] = $t[$yyyymm]['PV'];
+     // $t['Loyalty'.$p6yyyymm.'BV'] = $t[$p6yyyymm]['BV'];
+     // $t['Loyalty'.$p5yyyymm.'BV'] = $t[$p5yyyymm]['BV'];
+     // $t['Loyalty'.$p4yyyymm.'BV'] = $t[$p4yyyymm]['BV'];
+     // $t['Loyalty'.$p3yyyymm.'BV'] = $t[$p3yyyymm]['BV'];
+     // $t['Loyalty'.$p2yyyymm.'BV'] = $t[$p2yyyymm]['BV'];
+     // $t['Loyalty'.$p1yyyymm.'BV'] = $t[$p1yyyymm]['BV'];
+     // $t['Loyalty'.$yyyymm.'BV'] = $t[$yyyymm]['BV'];
+     
+    // }
+   }
+   $countteam = $this->findTeam($mcaNumber);
+ return compact('self','team','countteam');
+ 
+}
+
 
 //end of class
 }

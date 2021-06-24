@@ -253,7 +253,7 @@
  <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?:"-"?></small></td>
- <td><small>To be decided</small></td>
+ <td><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$yyyymm]['PaidTitle']))?:"-"?></small></td>
 </tr>
 </table>
 <p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27. </p>
