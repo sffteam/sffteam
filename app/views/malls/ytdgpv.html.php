@@ -110,6 +110,7 @@
       }
     </script>
     <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) <?=$self[$p1yyyymm]['ValidTitle']?> - <?=$self['DateJoin']?></strong></h1>
+    <?php echo $this->_render('element', 'mca_menu');?>	
 <table  border="1" class="Roboto">
 <tr>
  <th class="col top left"><small>YYYY-MM</small></th>
