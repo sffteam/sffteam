@@ -25,7 +25,36 @@
           </div>
         </a>
       </li>
-
+      <li class="margin-left">Commando Training - Day 2 - Shuruaat
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/hLnAkjkBz9M" class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
+      <li class="margin-left">Commando Training - Day 3 - Modicare.com Website
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/-Fe2KF8nNao " class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
+      <li class="margin-left">Commando Training - Day 4 - Objection Handling
+        <a
+          href="#" class="no-margin no-padding">
+          <div class="item-inner">
+            
+             <iframe width="100%" src="https://www.youtube.com/embed/C87zmdkNokU " class="lazy"></iframe>
+            
+          </div>
+        </a>
+      </li>
       <li class="margin-left">Episode 101 - Vasantha Kumari Dandem
         <a
           href="#" class="no-margin no-padding">
