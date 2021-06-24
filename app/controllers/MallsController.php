@@ -6088,7 +6088,14 @@ public function ytdgpv($mcaNumber=null){
    "Enable" => "Yes"),
    'order'=>array($yyyymm.'.GPV'=>DESC),
    ));
+   
    foreach($team as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+   }
+   foreach($teamzero as $t){
     $findmobile = Mobiles::find('first',array(
      'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
     ));
