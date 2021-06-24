@@ -51,9 +51,7 @@
  $n9yyyymm = date("Y-m", strtotime("9 month", strtotime(date("F") . "1")) );
  $n10yyyymm = date("Y-m", strtotime("10 month", strtotime(date("F") . "1")) );
  $n11yyyymm = date("Y-m", strtotime("11 month", strtotime(date("F") . "1")) );
-
 ?>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -107,13 +105,11 @@
           curveType: 'function',
           legend: { position: 'bottom' }
         };
-
-        
         var GPVchart = new google.visualization.LineChart(document.getElementById('GPVChart'));
-        
         GPVchart.draw(data, options);
       }
     </script>
+    <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) <?=$self[$p1yyyymm]['ValidTitle']?> - <?=$self['DateJoin']?></strong></h1>
 <table  border="1" class="Roboto">
 <tr>
  <th class="col top left"><small>YYYY-MM</small></th>
