@@ -6080,6 +6080,14 @@ public function ytdgpv($mcaNumber=null){
    "Enable" => "Yes"),
    'order'=>array($yyyymm.'.GPV'=>DESC),
    ));
+   $teamzero = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+    $yyyymm.'.PV'=>0,
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GPV'=>DESC),
+   ));
    foreach($team as $t){
     $findmobile = Mobiles::find('first',array(
      'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
@@ -6087,7 +6095,7 @@ public function ytdgpv($mcaNumber=null){
     $t['Mobile'] = $findmobile['Mobile'];
    }
    $countteam = $this->findTeam($mcaNumber);
- return compact('self','team','countteam');
+ return compact('self','team','countteam','teamzero');
  
 }
 public function myteam($mcaNumber=null){
