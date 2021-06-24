@@ -455,6 +455,45 @@ $months = 0;
  <td ><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
 </tr>
 </table>
-<br>
+<hr>
+Team Zero this month
+<table border=1 class="Roboto">
+ <tr>
+ <th class="szhalf">#</th>
+ <th class="szhalf">Name</th>
+ <th class="szhalf">MCA No</th>
+ <th class=" szhalf">PV</th>
+ <th class=" szhalf">GPV</th>
+ <th class=" szhalf">TEPV</th>
+ <th class=" szhalf">PGPV</th>
+ <th class=" szhalf">GBV</th>
+ <th class=" szhalf">GBV/GPV %</th>
+ <th class=" szhalf">Growth</th>
+ </tr>
+<?php 
+$i = 0;foreach($teamzero as $t){
+ $i++;
+ ?>
+<tr>
+ <td class="szhalf"><?=$i?></td>
+ <td class="align-left">
+ <?php if($t['refer_id']==$self['mcaNumber']){
+  echo "&#9728;";
+ }
+ ?>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" target="_blank"><?=$t['mcaNumber']?></td>
+ <td><?=$t[$yyyymm]['PV']?></td>
+ <td><?=$t[$yyyymm]['GPV']?></td>
+ <td><?=$t[$yyyymm]['TotalEPV ']?></td>
+ <td><?=$t[$yyyymm]['PGPV']?></td>
+ <td><?=$t[$yyyymm]['GBV']?></td>
+ <td><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
+ <td><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
+</tr>
+<?php 
+}
+?> 
+</table>
 <br>
 <hr>
