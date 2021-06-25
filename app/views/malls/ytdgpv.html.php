@@ -109,7 +109,7 @@
         GPVchart.draw(data, options);
       }
     </script>
-    <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<?=$self['mcaNumber']?>) <?=$self[$p1yyyymm]['ValidTitle']?> - <?=$self['DateJoin']?></strong></h1>
+    <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$p1yyyymm]['ValidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?></small></strong></h1>
     <?php echo $this->_render('element', 'mca_menu');?>	
 <table  border="1" class="Roboto">
 <tr>
@@ -282,6 +282,13 @@
 </tr>
 </table>
 <p>GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27. </p>
+<h1 class="Raleway sz1"><strong>My Leaders</strong></h1>
+<p>
+<?php
+foreach($MyAncestor as $key=>$val){
+ print_r($val[0]."<br>");
+};
+?></p>
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
@@ -310,8 +317,8 @@ $i = 0;foreach($team as $t){
   echo "&#9728;";
  }
  ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" target="_blank"><?=$t['mcaNumber']?></td>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
  <td><?=$t[$yyyymm]['PV']?></td>
  <td><?=$t[$yyyymm]['GPV']?></td>
  <td><?=$t[$yyyymm]['TotalEPV ']?></td>
@@ -478,8 +485,8 @@ $i = 0;foreach($teamzero as $t){
   echo "&#9728;";
  }
  ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" target="_blank"><?=$t['mcaNumber']?></td>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></td>
  <td><?=$t[$yyyymm]['PV']?></td>
  <td><?=$t[$yyyymm]['GPV']?></td>
  <td><?=$t[$yyyymm]['TotalEPV ']?></td>
