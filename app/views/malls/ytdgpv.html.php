@@ -322,7 +322,7 @@ $i = 0;foreach($team as $t){
  <td class="  top left text-align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['GPV']?></td>
- <td class="szhalf  top left "><?=$t[$yyyymm]['TotalEPV ']?></td>
+ <td class="szhalf  top left "><?=$t[$yyyymm]['TotalEPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['PGPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['GBV']?></td>
  <td class="szhalf  top left "><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
@@ -490,7 +490,7 @@ $i = 0;foreach($teamzero as $t){
  <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV ']?></td>
+ <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['PGPV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GBV']?></td>
  <td class="  left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
