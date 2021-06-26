@@ -6070,7 +6070,8 @@ public function ytdgpv($mcaNumber=null){
    $this->_render['layout'] = 'sale';
  	ini_set('max_execution_time', '0');
   ini_set("memory_limit", "-1");
-   $yyyymm = date('Y-m');
+     $yyyymm = date('Y-m');
+     $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
     $self = Users::find('first',array(
      'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
      )
@@ -6107,7 +6108,6 @@ public function ytdgpv($mcaNumber=null){
    $MyAncestor = array();
 
   foreach($t['ancestors'] as $key=>$val){
-
     $upline = Users::find('first',array(
      'conditions'=>array('mcaNumber'=>$val )
      )
@@ -6122,13 +6122,23 @@ public function ytdgpv($mcaNumber=null){
       $UpMobile = array('Mobile'=>$findUserMobile['Mobile']);
      }  
     }
+
+    $newDirectors = Users::find('all',array(
+      'conditions'=>array(
+        $yyyymm.'.GrossPV' => array('$gt'=>4000),
+        $p1yyyymm.'.GrossPV'=>array('$lt'=>4000),
+       'left'=>array('$gt'=>$self['left']),
+       'right'=>array('$lt'=>$self['right']),
+       'Enable'=>'Yes'
+      )
+    ));
     
     array_push($MyAncestor,array($upline['mcaName']." (".$upline['mcaNumber'].") "." - +91".$UpMobile['Mobile']));
   }
 
    
    $countteam = $this->findTeam($mcaNumber);
- return compact('self','team','countteam','teamzero','MyAncestor');
+ return compact('self','team','countteam','teamzero','MyAncestor','newDirectors');
  
 }
 public function myteam($mcaNumber=null){

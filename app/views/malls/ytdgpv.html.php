@@ -293,6 +293,43 @@ foreach($MyAncestor as $key=>$val){
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
+<h1 class="Raleway sz1">New Directors <?=$yyyymm?></h1>
+<table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
+ <tr>
+ <th class="szhalf col top left ">#</th>
+ <th class="szhalf col top left ">Name</th>
+ <th class="szhalf col top left ">MCA No</th>
+ <th class=" szhalf col top left ">PV</th>
+ <th class=" szhalf col top left ">GPV</th>
+ <th class=" szhalf col top left ">TEPV</th>
+ <th class=" szhalf col top left ">PGPV</th>
+ <th class=" szhalf col top left ">GBV</th>
+ <th class=" szhalf col top left ">GBV/GPV %</th>
+ <th class=" szhalf col top left right">Growth</th>
+ </tr>
+<?php $i=1;foreach($newDirectors as $t){?>
+ <tr>
+ <td class="szhalf col top left  bottom"><?=$i?></td>
+ <td class="text-align-left col top left  bottom">
+ <?php if($t['refer_id']==$self['mcaNumber']){
+  echo "&#9728;";
+ }
+ ?>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small>(+91<?=$t['Mobile']?>) <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PGPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GBV']?></td>
+ <td class="szhalf  top left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
+ <td class="szhalf  top left bottom right"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td> </tr>
+
+<?php } ?>
+</table>
+ 
+ 
+
 <p class="Roboto szhalf">Your team who have completed PV in this month. &#9728; are your Direct Team, Your Direct Team who have not completed this month PV is not included. Total Team Size <?=$countteam?> ACTIVE <?=count($team)?>.</p>
 <table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
  <tr>
