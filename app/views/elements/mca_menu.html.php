@@ -1,10 +1,8 @@
-  <div class="toolbar">
-    <div class="toolbar-inner">
-          <a href="/mca/" class="external link">Home</a>
-          <a href="/mca/reports/" class="external link">Reports</a>
-          <a href="/mca/pdfs/" class="external link">PDFs</a>
-          <a href="/mca/products/categories/" class="external link">Products</a>
-          <a href="/mca/videos/" class="external link">Videos</a>
-        </div>
-  </div>
-
+<div class="block bg-color-gray text-align-center">
+ <div class="row">
+  <div class="col-25 Raleway sz1"><a href="/malls/ytdgpv/<?=$self['mcaNumber']?>" class="external links"><strong class="text-color-black ">YTD - Home</strong></a></div>
+  <div class="col-25 Raleway sz1"><a href="/malls/p/categories/<?=$self['mcaNumber']?>/" class="external links"><strong class="text-color-black">Products</strong></a></div>
+  <div class="col-25 Raleway sz1"><a href="/malls/v/<?=$self['mcaNumber']?>/" class="external links"><strong class="text-color-black">Video</strong></a></div>
+  <div class="col-25 Raleway sz1"><a href="/malls/d/<?=$self['mcaNumber']?>/" class="external links"><strong class="text-color-black">PDFs</strong></a></div>
+ </div>
+</div>
