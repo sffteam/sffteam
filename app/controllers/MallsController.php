@@ -6105,6 +6105,22 @@ public function ytdgpv($mcaNumber=null){
     ));
     $t['Mobile'] = $findmobile['Mobile'];
    }
+   $newDirectors = Users::find('all',array(
+      'conditions'=>array(
+        $yyyymm.'.GrossPV' => array('$gt'=>4000),
+        $p1yyyymm.'.GrossPV'=>array('$lt'=>4000),
+       'left'=>array('$gt'=>$self['left']),
+       'right'=>array('$lt'=>$self['right']),
+       'Enable'=>'Yes'
+      )
+    ));
+   foreach($newDirectors as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+   }
+   
    $MyAncestor = array();
 
   foreach($t['ancestors'] as $key=>$val){
@@ -6123,15 +6139,7 @@ public function ytdgpv($mcaNumber=null){
      }  
     }
 
-    $newDirectors = Users::find('all',array(
-      'conditions'=>array(
-        $yyyymm.'.GrossPV' => array('$gt'=>4000),
-        $p1yyyymm.'.GrossPV'=>array('$lt'=>4000),
-       'left'=>array('$gt'=>$self['left']),
-       'right'=>array('$lt'=>$self['right']),
-       'Enable'=>'Yes'
-      )
-    ));
+ 
     
     array_push($MyAncestor,array($upline['mcaName']." (".$upline['mcaNumber'].") "." - +91".$UpMobile['Mobile']));
   }
