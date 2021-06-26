@@ -6123,9 +6123,9 @@ public function ytdgpv($mcaNumber=null){
    
    $MyAncestor = array();
 
-  foreach($t['ancestors'] as $key=>$val){
+  foreach($self['ancestors'] as $key=>$val){
     $upline = Users::find('first',array(
-     'conditions'=>array('mcaNumber'=>$val )
+     'conditions'=>array('mcaNumber'=>$val,'Enable'=>'Yes' )
      )
     );
     if($upline['mcaNumber']!=null){
@@ -6138,10 +6138,9 @@ public function ytdgpv($mcaNumber=null){
       $UpMobile = array('Mobile'=>$findUserMobile['Mobile']);
      }  
     }
-
- 
-    
-    array_push($MyAncestor,array($upline['mcaName']." (".$upline['mcaNumber'].") "." - +91".$UpMobile['Mobile']));
+    if($upline['Enable']=="Yes"){
+     array_push($MyAncestor,array($upline['Level']." ".$upline['mcaName']." - <a href='tel:+91".$UpMobile['Mobile']."' class='external link' >+91".$UpMobile['Mobile']."</a>"));
+    }
   }
 
    
