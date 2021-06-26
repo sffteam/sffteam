@@ -66,6 +66,7 @@ ul.a {
 }
 .Roboto{
  font-family: 'Roboto Mono', monospace;
+ font-weight:bold
 }
 .Bebas{
  font-family: 'Bebas Neue', cursive;
@@ -153,3 +154,12 @@ img {
 .right{border-right:1px solid black;}
 .top{border-top:1px solid black;}
 .bottom{border-bottom:1px solid black;}
+.tdw10{
+ min-width:1vw;
+}
+.tdw5{
+ min-width:2vw;
+}
+.tdw50{
+ min-width:5vw;
+}

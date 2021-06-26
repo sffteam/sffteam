@@ -83,24 +83,24 @@ class MallsController extends \lithium\action\Controller {
    ));
   }
   $CategoriesArray = array(
-    'HC' => 'Home Care 50%',
-    'AB' => 'Agarbatti 30%',
-    'LC' => 'Laundry Care 35% & 60%',
-    'PC' => 'Personal Care 10% to 40%',
-    'FP' => 'Food & Beverages 20% - 25%',
-    'SC' => 'Skin Care 60%',
-    'FS' => 'Food Supplement 50%',
-    'MJ' => 'Jewelery 40%',
-    'UC' => 'Cosmetics - Urban Color 60%',
-    'BC' => 'Baby Care 55%',
-    'AG' => 'Agriculture 60%',
-    'AC' => 'Auto Care 50%',
-    'HL' => 'Wellness 60%',
-    'WA' => 'Watches 50%',
-    'MG' => 'Technology 60%',
-    '00' => 'Others 10% to 50%',
-    '60' => 'Extra ',
-    );
+  'HC' => 'Home Care 50%',
+  'AB' => 'Agarbatti 30%',
+  'LC' => 'Laundry Care 35% & 60%',
+  'PC' => 'Personal Care 10% to 60%',
+  'FP' => 'Food & Beverages 10% - 65%',
+  'SC' => 'Skin Care 60%',
+  'FS' => 'Food Supplement 60%',
+  'MJ' => 'Jewelery 40%',
+  'UC' => 'Cosmetics - Urban Color 60%',
+  'BC' => 'Baby Care 40 - 60%',
+  'AG' => 'Agriculture 60%',
+  'AC' => 'Auto Care 50%',
+  'HL' => 'Wellness 40-60%',
+  'WA' => 'Watches 50%',
+  'MG' => 'Technology 60%',
+  '00' => 'Others 10% to 60%',
+  '60' => 'Extra 0% to 60%',
+  );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'HOME','color'=>'#e53935'),
     'AB' => array('Name'=>'AGARBATTI','color'=>'#e239A5'),
@@ -3001,22 +3001,24 @@ public function getTools(){
 
 public function getproductsimages(){
   $CategoriesArray = array(
-    'HC' => 'Home Care',
-    'AG' => 'Agarbatti',
-    'LC' => 'Laundry Care',
-    'PC' => 'Personal Care',
-    'FP' => 'Food & Beverages',
-    'SC' => 'Skin Care',
-    'FS' => 'Food Supplement',
-    'MJ' => 'Jewelery',
-    'UC' => 'Cosmetics - Urban Color',
-    'BC' => 'Baby Care',
-    'AG' => 'Agriculture',
-    'AC' => 'Auto Care',
-    'HL' => 'Wellness',
-    '00' => 'Others',
-    '60' => 'Extra',
-    );
+  'HC' => 'Home Care 50%',
+  'AB' => 'Agarbatti 30%',
+  'LC' => 'Laundry Care 35% & 60%',
+  'PC' => 'Personal Care 10% to 60%',
+  'FP' => 'Food & Beverages 10% - 65%',
+  'SC' => 'Skin Care 60%',
+  'FS' => 'Food Supplement 60%',
+  'MJ' => 'Jewelery 40%',
+  'UC' => 'Cosmetics - Urban Color 60%',
+  'BC' => 'Baby Care 40 - 60%',
+  'AG' => 'Agriculture 60%',
+  'AC' => 'Auto Care 50%',
+  'HL' => 'Wellness 40-60%',
+  'WA' => 'Watches 50%',
+  'MG' => 'Technology 60%',
+  '00' => 'Others 10% to 60%',
+  '60' => 'Extra 0% to 60%',
+  );
  
  $allproducts = array();
  foreach($CategoriesArray as $key=>$val){
@@ -6065,6 +6067,7 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 }
 
 public function ytdgpv($mcaNumber=null){
+   $this->_render['layout'] = 'sale';
  	ini_set('max_execution_time', '0');
   ini_set("memory_limit", "-1");
    $yyyymm = date('Y-m');
@@ -6187,6 +6190,87 @@ public function loyalty($mcaNumber=null){
  
 }
 
+public function p ($category="",$mcaNumber=""){
+ 
+ $this->_render['layout'] = 'sale';
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+ $yyyymm = date('Y-m');
+ $self = Users::find('first',array(
+ 'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+ ));
+ $Categories = array(
+  'HC' => 'Home Care 50%',
+  'AB' => 'Agarbatti 30%',
+  'LC' => 'Laundry Care 35% & 60%',
+  'PC' => 'Personal Care 10% to 60%',
+  'FP' => 'Food & Beverages 10% - 65%',
+  'SC' => 'Skin Care 60%',
+  'FS' => 'Food Supplement 60%',
+  'MJ' => 'Jewelery 40%',
+  'UC' => 'Cosmetics - Urban Color 60%',
+  'BC' => 'Baby Care 40 - 60%',
+  'AG' => 'Agriculture 60%',
+  'AC' => 'Auto Care 50%',
+  'HL' => 'Wellness 40-60%',
+  'WA' => 'Watches 50%',
+  'MG' => 'Technology 60%',
+  '00' => 'Others 10% to 60%',
+  '60' => 'Extra 0% to 60%',
+  );
+  foreach($Categories as $key=>$val){
+   $count = Malls::find('count',array('Code'=> array('like'=>'/^'.$key.'/')));
+   
+   array_push($Categories,array($key=>array('Count'=>$count)));
+  }
+  if(strlen($category)==2){
+   $Code = $category;
+  }else{
+   $Code = 'FP';
+  }
+  $products = Malls::find('all',array(
+   'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/')),
+   'order'=>array('Code'=>'ASC')
+  ));
+  $AllProducts = array();
+  
+  foreach($products as $p){
+   array_push($AllProducts,array(
+    'Code'=>$p['Code'],
+    'Name'=>$p['Name'],
+    'MRP'=>$p['MRP'],
+    'DP'=>$p['DP'],
+    'BV'=>$p['BV'],
+    'PV'=>$p['PV'],
+    'Weight'=>$p['Weight'],
+    'Saving'=>$p['Saving']
+   ));
+  }
+  
+ return compact('self','Categories','AllProducts','category');
+}
+public function v ($mcaNumber=""){
+$this->_render['layout'] = 'sale';
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+    return compact('self','team','countteam');
+}
+public function d ($mcaNumber=""){
+$this->_render['layout'] = 'sale';
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+    return compact('self','team','countteam');
+}
 
 //end of class
 }
