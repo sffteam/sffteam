@@ -6080,7 +6080,7 @@ public function ytdgpv($mcaNumber=null){
    'conditions'=>array(
    'left'=>array('$gt'=>$self['left']),
    'right'=>array('$lt'=>$self['right']),
-    $yyyymm.'.PV'=>array('$gt'=>0),
+//    $yyyymm.'.PV'=>array('$gt'=>0),
    "Enable" => "Yes"),
    'order'=>array($yyyymm.'.GPV'=>DESC),
    ));
@@ -6142,10 +6142,24 @@ public function ytdgpv($mcaNumber=null){
      array_push( $MyAncestor,array($upline['Level']." ".$upline['mcaName']." - <a href='tel:+91".$UpMobile['Mobile']."' class='external link' >+91".$UpMobile['Mobile']."</a>"));
     }
   }
-
+  // PGPV Contributors
+   $PGPVContributors = Users::find('all',array(
+   'conditions'=>array(
+    'refer'=>$mcaNumber,
+    $yyyymm.'.Percent'=>array('$lt'=>16),
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GPV'=>DESC),
+   ));
+   foreach($PGPVContributors as $t){
+    $findmobile = Mobiles::find('first',array(
+     'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+    ));
+    $t['Mobile'] = $findmobile['Mobile'];
+   }
+   
    
    $countteam = $this->findTeam($mcaNumber);
- return compact('self','team','countteam','teamzero','MyAncestor','newDirectors');
+ return compact('self','team','countteam','teamzero','MyAncestor','newDirectors','PGPVContributors');
  
 }
 public function myteam($mcaNumber=null){
