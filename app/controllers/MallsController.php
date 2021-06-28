@@ -6080,7 +6080,7 @@ public function ytdgpv($mcaNumber=null){
    'conditions'=>array(
    'left'=>array('$gt'=>$self['left']),
    'right'=>array('$lt'=>$self['right']),
-//    $yyyymm.'.PV'=>array('$gt'=>0),
+    $yyyymm.'.GPV'=>array('$gt'=>0),
    "Enable" => "Yes"),
    'order'=>array($yyyymm.'.GPV'=>DESC),
    ));
