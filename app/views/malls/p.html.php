@@ -50,9 +50,9 @@
     <td class="top left bottom"><?=$p['Code']?></td>
     <td class="top left bottom text-align-left"><?=$p['Name']?>
      <div class="row" style="width:100px">
-      <div class="col-33"><span class="material-icons sz1 text-color-red">remove</span></div>
+      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-red external link"  >remove</a></span></div>
       <div class="col-33 text-align-center text-color-blue szhalf" >0</div>
-      <div class="col-33"><span class="material-icons sz1 text-color-green">add</span></div>
+      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-green external link"  >add</a></span></div>
     </div>
 </td>
     <td class="top left bottom" ><?=number_format($p['MRP'],0)?></td>
@@ -74,10 +74,9 @@
   <div class="list simple-list">
    <ul>
    <?php
-   print_r($Categories);
      foreach($Categories as $key=>$val){
    ?>
-    <li><a href="/malls/p/<?=$key?>/<?=$self['mcaNumber']?>" class="external link color-black"><?=$val?> (<?=$key?>)</a></li>
+    <li><a href="/malls/p/<?=$key?>/<?=$self['mcaNumber']?>" class="external link color-black"><?=$val?></a></li>
    <?php
      }
    ?>

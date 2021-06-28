@@ -6123,9 +6123,9 @@ public function ytdgpv($mcaNumber=null){
    
    $MyAncestor = array();
 
-  foreach($t['ancestors'] as $key=>$val){
+  foreach($self['ancestors'] as $key=>$val){
     $upline = Users::find('first',array(
-     'conditions'=>array('mcaNumber'=>$val )
+     'conditions'=>array('mcaNumber'=>$val,'Enable'=>'Yes' )
      )
     );
     if($upline['mcaNumber']!=null){
@@ -6138,10 +6138,9 @@ public function ytdgpv($mcaNumber=null){
       $UpMobile = array('Mobile'=>$findUserMobile['Mobile']);
      }  
     }
-
- 
-    
-    array_push($MyAncestor,array($upline['mcaName']." (".$upline['mcaNumber'].") "." - +91".$UpMobile['Mobile']));
+    if($upline['Enable']=="Yes"){
+     array_push( $MyAncestor,array($upline['Level']." ".$upline['mcaName']." - <a href='tel:+91".$UpMobile['Mobile']."' class='external link' >+91".$UpMobile['Mobile']."</a>"));
+    }
   }
 
    
@@ -6208,6 +6207,38 @@ public function loyalty($mcaNumber=null){
  
 }
 
+public function dailytrend($mcaNumber = ""){
+   $this->_render['layout'] = 'sale';
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+     $yyyymm = date('Y-m');
+     $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+   $team = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+    $yyyymm.'.PV'=>array('$gt'=>0),
+   "Enable" => "Yes"),
+   'order'=>array($yyyymm.'.GPV'=>DESC),
+   ));
+   $daily = array();
+   
+   foreach($team as $t){
+     for($x=60;$x>=0;$x--){
+      $date = date('Y-m-d', strtotime(' -'.$x.' day'));
+      $month = date('Y-m', strtotime(' -'.$x.' day'));
+      print_r($t[$month][$date]['PV']."\n");
+      
+      $daily[$date.'.PV'] = $daily[$date.'.PV'] + $t[$month][$date]['PV'];
+     }
+   }
+   print_r($daily);
+   return compact('self','team');
+}
 public function p ($category="",$mcaNumber=""){
  
  $this->_render['layout'] = 'sale';
@@ -6289,6 +6320,8 @@ $this->_render['layout'] = 'sale';
     ));
     return compact('self','team','countteam');
 }
+
+
 
 //end of class
 }

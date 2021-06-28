@@ -3,6 +3,12 @@ var storage = "ytdgpv";
 var version = "1.0.000";
 var server = "https://sff.team/malls/";
 
+if (!localStorage[storage + ".cart"]) {
+ localStorage.setItem(storage + '.cart', "X:0");
+} else {
+ var cart = localStorage[storage + ".cart"];
+}
+
 function pad(n, width, z) {
   z = z || '0';
   n = n + '';
@@ -274,6 +280,9 @@ function clearCart() {
  $$("#CartFill").html("");
  $$("#CartFill").hide();
 }
+
+
+
 //===================================================================================
 function formatYYYYMM(date) {
  var d = new Date(date),
