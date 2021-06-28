@@ -142,7 +142,7 @@
  <td class="col top left right"><?=$self[$yyyymm]['PV']?:0?></td>
 </tr>
 <tr >
- <th class="col top left">GPV</th>
+ <th class="col top left bg-color-red">GPV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['GPV']?:0?></td>
  <td class="col top left"><?=$self[$p9yyyymm]['GPV']?:0?></td>
  <td class="col top left"><?=$self[$p8yyyymm]['GPV']?:0?></td>
@@ -153,10 +153,10 @@
  <td class="col top left"><?=$self[$p3yyyymm]['GPV']?:0?></td>
  <td class="col top left"><?=$self[$p2yyyymm]['GPV']?:0?></td>
  <td class="col top left"><?=$self[$p1yyyymm]['GPV']?:0?></td>
- <td class="col top left right"><?=$self[$yyyymm]['GPV']?:0?></td>
+ <td class="col top left right bg-color-pink"><?=$self[$yyyymm]['GPV']?:0?></td>
 </tr>
 <tr >
- <th class="col top left">TEPV</th>
+ <th class="col top left bg-color-red">TEPV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['TotalEPV']?:0?></td>
  <td class="col top left"><?=$self[$p9yyyymm]['TotalEPV']?:0?></td>
  <td class="col top left"><?=$self[$p8yyyymm]['TotalEPV']?:0?></td>
@@ -167,7 +167,7 @@
  <td class="col top left"><?=$self[$p3yyyymm]['TotalEPV']?:0?></td>
  <td class="col top left"><?=$self[$p2yyyymm]['TotalEPV']?:0?></td>
  <td class="col top left"><?=$self[$p1yyyymm]['TotalEPV']?:0?></td>
- <td class="col top left right"><?=$self[$yyyymm]['TotalEPV']?:0?></td>
+ <td class="col top left right bg-color-pink"><?=$self[$yyyymm]['TotalEPV']?:0?></td>
 </tr>
 <tr>
  <th class="col top left">CGPV</th>
@@ -226,7 +226,7 @@
  <td class="col top left right"><?=number_format( $self[$yyyymm]['GBV']/$self[$yyyymm]['GPV'],0)?></td>
 </tr>
 <tr>
- <th class="col top left"><small>PGPV</small></th>
+ <th class="col top left bg-color-red"><small>PGPV</small></th>
  <td class="col top left"><?=number_format($self[$p10yyyymm]['PGPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p9yyyymm]['PGPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p8yyyymm]['PGPV'],0)?></td>
@@ -237,7 +237,7 @@
  <td class="col top left"><?=number_format($self[$p3yyyymm]['PGPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p2yyyymm]['PGPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p1yyyymm]['PGPV'],0)?></td>
- <td class="col top left right"><?=number_format($self[$yyyymm]['PGPV'],0)?></td>
+ <td class="col top left right bg-color-pink"><?=number_format($self[$yyyymm]['PGPV'],0)?></td>
 </tr>
 <tr>
  <th class="col top left"><small>Roll Up</small></th>
@@ -290,6 +290,42 @@ foreach($MyAncestor as $key=>$val){
  print_r($val[0]."<br>");
 };
 ?></p>
+
+<h1 class="Raleway sz1">PGPV Contributors <?=$yyyymm?></h1>
+<table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
+ <tr>
+ <th class="szhalf col top left ">#</th>
+ <th class="szhalf col top left ">Name</th>
+ <th class="szhalf col top left ">MCA No</th>
+ <th class=" szhalf col top left ">PV</th>
+ <th class=" szhalf col top left bg-color-red ">GPV</th>
+ <th class=" szhalf col top left ">TEPV</th>
+ <th class=" szhalf col top left ">PGPV</th>
+ <th class=" szhalf col top left ">GBV</th>
+ <th class=" szhalf col top left ">GBV/GPV %</th>
+ <th class=" szhalf col top left right">Growth</th>
+ </tr>
+<?php $i=1;foreach($PGPVContributors as $t){?>
+ <tr>
+ <td class="szhalf col top left  bottom"><?=$i?></td>
+ <td class="text-align-left col top left  bottom">
+ <?php if($t['refer_id']==$self['mcaNumber']){
+  echo "&#9728;";
+ }
+ ?>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
+ <td class="szhalf  top left bottom bg-color-pink"><?=$t[$yyyymm]['GPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PGPV']?></td>
+ <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GBV']?></td>
+ <td class="szhalf  top left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
+ <td class="szhalf  top left bottom right"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td> </tr>
+
+<?php $i++;} ?>
+</table>
+
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
