@@ -282,46 +282,14 @@ function addToCartProducts() {
   htmlnew = "";
   Quantity = 0;
   Value = 0;
+  
+  $$("#tMRP").html(gotData['CartProducts']['value']);
+  $$("#tDP").html(gotData['CartProducts']['valueDP']);
+  $$("#tBV").html(gotData['CartProducts']['valueBV']);
+  $$("#tPV").html(gotData['CartProducts']['valuePV']);
   for(key in gotData['CartProducts']){
-   htmlnew = htmlnew + '<li>\
-            <div class="item-content">\
-              <div class="item-media"><img src="img/'+gotData['CartProducts'][key]['SKU']+'.png" width="44" /></div>\
-              <div class="item-inner">\
-                <div class="item-title-row">\
-                  <div class="item-title sz1b Raleway">'+gotData['CartProducts'][key]['Name']+'</div>\
-                  <div class="">Rs.'+gotData['CartProducts'][key]['MRP']+'</div>\
-                </div>\
-                <div class="item-subtitle">'+gotData['CartProducts'][key]['Weight']+'</div>\
-                <div class="item-title-row row">\
-                <div class="col-50 text-align-center">\
-                 <div class="stepper stepper-fill stepper-small stepper-round stepper-init">\
-                  <div class="stepper-button-minus" onclick="minustoCart(\'' + gotData['CartProducts'][key]['SKU'] + '\');"></div>\
-                  <div class="stepper-input-wrap">\
-                    <input type="text" value="' + getValue(gotData['CartProducts'][key]['SKU']) + '" min="0" max="100" step="1" readonly name="minusCode' + gotData['CartProducts'][key]['SKU'] + '" id="minusCode' + gotData['CartProducts'][key]['SKU'] + '"/>\
-                  </div>\
-                  <div class="stepper-button-plus"  onclick="addtoCart(\'' + gotData['CartProducts'][key]['SKU'] + '\');"></div>\
-                 </div>\
-                 </div>\
-                 <div class="col-50 text-align-center Raleway sz1b">Rs.'+(getValue(gotData['CartProducts'][key]['SKU'])*gotData['CartProducts'][key]['MRP'])+'\
-                 </div>\
-                </div>\
-              </div>\
-            </div>\
-          </li>';
-          Quantity = Quantity + getValue(gotData['CartProducts'][key]['SKU']);
-          Value = Value + (getValue(gotData['CartProducts'][key]['SKU'])*gotData['CartProducts'][key]['MRP']);
+   
   }
-  htmlnew = htmlnew + ' <li>\
-            <div class="item-content">\
-              <div class="item-inner">\
-                <div class="item-title-row">\
-                  <div class="item-title">Total</div>\
-                  <div class="">Rs.'+Value+'</div>\
-                </div>\
-                <div class="item-subtitle">Items: '+Quantity+'</div>\
-              </div>\
-            </div>\
-          </li>';
   $$("#CartPreview").html(htmlnew);
   
  });
