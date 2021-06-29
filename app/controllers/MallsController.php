@@ -214,11 +214,13 @@ class MallsController extends \lithium\action\Controller {
      $totalPV = floatval(($product['PV']));
      $totalBV = floatval(($product['BV']));
      $totalDP = floatval(($product['DP']));
+     $totalWeight = floatval($product['Weight']*$quantity); 
      $totalvalue = floatval(($product['MRP'] - $product['discount'])*$quantity);
     }else if($product['discountType']=="Percent"){
      $totalPV = floatval(($product['PV'])); 
      $totalBV = floatval(($product['BV']));
      $totalDP = floatval(($product['DP']));
+     $totalWeight = floatval($product['Weight']*$quantity); 
      $totalvalue = floatval(($product['MRP']-$product['MRP']*$product['discount']/100)*$quantity); 
     }else{
      $totalPV = floatval($product['PV']*$quantity); 
@@ -280,7 +282,7 @@ public function cartproducts(){
      $totalPV = floatval($product['PV']*$quantity); 
      $totalBV = floatval($product['BV']*$quantity); 
      $totalDP = floatval($product['DP']*$quantity);
-     $totalWeight = floatval(($product['Weight']));     
+     $totalWeight = floatval(($product['Weight']));
      $totalvalue = floatval($product['MRP']*$quantity); 
     }
     $wp = $wp + $walletpoints;
