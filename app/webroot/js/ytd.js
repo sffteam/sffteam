@@ -285,11 +285,11 @@ function addToCartProducts() {
   Value = 0;
   console.log($$("#tMRP").html());
   console.log(gotData['CartProducts']);
-  $$("#tMRP").html(gotData['CartProducts']['value']);
-  $$("#tDP").html(gotData['CartProducts']['valueDP']);
-  $$("#tBV").html(gotData['CartProducts']['valueBV']);
-  $$("#tPV").html(gotData['CartProducts']['valuePV']);
-  $$("#tWt").html(gotData['CartProducts']['valueWeight']);
+  $$("#tMRP").html(gotData['value']);
+  $$("#tDP").html(gotData['valueDP']);
+  $$("#tBV").html(gotData['valueBV']);
+  $$("#tPV").html(gotData['valuePV']);
+  $$("#tWt").html(gotData['valueWeight']);
   for(key in gotData['CartProducts']){
    
   }
