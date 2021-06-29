@@ -12,20 +12,21 @@
 <!--  <link rel="stylesheet" href="/css/style.css">-->
   <link rel="stylesheet" href="/css/app.css">
 <script src="/framework7/js/framework7.bundle.min.js"></script>
-<script src="/js/sale.js"></script>
-<script src="/js/ytd.js"></script>
-<script src="/js/app.js"></script>
+
+
 
 
   </head>
 
 <body>
+  <div id="mcaNumber"><?=$self['mcaNumber']?></div>
 		<div class="page">
   <?php echo $this->_render('element', 'mca_menu');?>
   <?php echo $this->content(); ?>
   </div>
 </body>
 <!-- JS code -->
+<script src="/js/ytd.js"></script>
 <script>
  initiate();
 </script>

@@ -2,17 +2,98 @@ var $$ = Dom7;
 var storage = "ytdgpv";
 var version = "1.0.000";
 var server = "https://sff.team/malls/";
+var mcaNumber = $$("#mcaNumber").html();
+console.log(mcaNumber);
 
-if (!localStorage[storage + ".cart"]) {
- localStorage.setItem(storage + '.cart', "X:0");
+if (!localStorage[storage + "."+mcaNumber+".cart"]) {
+ localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
 } else {
- var cart = localStorage[storage + ".cart"];
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
 }
+
+var app  = new Framework7({
+  root: '#app', // App root element
+  id: 'ytdgpv.sff.team', // App bundle ID
+  name: 'Year to Date Group PV SFF Mall', // App name
+  theme: 'auto', // Automatic theme detection
+  // App root methods
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('Hello World!');
+    },
+  },
+  // App routes
+  
+		init: true,
+  template7Pages: true,
+  allowDuplicateUrls: true,
+  allowPageChange: true,
+  closeByBackdropClick: false,
+  stackPages: true,
+  smartSelect: {
+   pageTitle: 'Select Option',
+   openIn: 'popup',
+  },
+  input: {
+   scrollIntoViewOnFocus: true,
+   scrollIntoViewCentered: true,
+  },
+  swiper: {
+   initialSlide: 0,
+   spaceBetween: 10,
+   speed: 300,
+   loop: false,
+   preloadImages: true,
+   zoom: {
+    enabled: true,
+    maxRatio: 3,
+    minRatio: 1,
+   },
+   lazy: {
+    enabled: true,
+   },
+  },
+  photoBrowser: {
+   type: 'popup',
+  },
+  touch: {
+   materialRipple: false,
+   tapHold: true,
+   disableContextMenu: false,
+   activeState: true,
+   fastClicks: true,
+  },
+  pushState: false,
+  toast: {
+   closeTimeout: 3000,
+   closeButton: true,
+  },
+  
+  calendar: {
+   url: 'calendar/',
+   dateFormat: 'dd/mm/yyyy',
+  },
+  lazy: {
+   threshold: 50,
+   sequential: false,
+  },
+	});
+
+
+app.request.setup({
+ crossDomain: true
+});
+
 
 function pad(n, width, z) {
   z = z || '0';
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function initiate(){
+ addToCartBar();
+ addToCartProduct();
 }
 function dataError(message){
 var opentoastdataError = app.toast.create({
@@ -52,6 +133,24 @@ var toastTopNoInternet = app.toast.create({
 app.request.setup({
  crossDomain: true
 });
+
+function addToCartProduct(){
+  if (!localStorage[storage + "."+mcaNumber+".cart"]) {
+   localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
+  } else {
+   var cart = localStorage[storage + "."+mcaNumber+".cart"];
+   cart = cart.replaceAll('X:0,','');
+   localStorage.setItem(storage + "."+mcaNumber+'.cart', cart);
+  }
+ var obj = malformedJSON2Array(cart);
+ for (key in obj) {
+  element = obj[key];
+  for (keyi in element) {
+    zelement = element[keyi];
+    $$('[name=minusCode' + keyi + ']').val(zelement);
+  }
+ }
+}
 function addtoCart(code) {
  var codeAdd = 0;
  var newArray = [];
@@ -63,10 +162,10 @@ function addtoCart(code) {
  if ($$('[name=' + minusCart + ']').val() >= 30) {
   return false;
  }
- if (!localStorage[storage + ".cart"]) {
-  localStorage.setItem(storage + '.cart', "X:0");
+ if (!localStorage[storage + "."+mcaNumber+".cart"]) {
+  localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
  } else {
-  var cart = localStorage[storage + ".cart"];
+  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  }
  var obj = malformedJSON2Array(cart);
  for (key in obj) {
@@ -94,7 +193,7 @@ function addtoCart(code) {
   newArray.push(code + ":" + 1);
  }
  var count = newArray.length;
- localStorage.setItem(storage + '.cart', newArray.toString());
+ localStorage.setItem(storage + "."+mcaNumber+'.cart', newArray.toString());
  toastBottom.open();
  addToCartBar();
  addToCartProducts();
@@ -110,10 +209,10 @@ function minustoCart(code) {
  if ($$('[name=' + minusCart + ']').val() == 0) {
   return false;
  }
- if (!localStorage[storage + ".cart"]) {
-  localStorage.setItem(storage + '.cart', "X:0");
+ if (!localStorage[storage + "."+mcaNumber+".cart"]) {
+  localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
  } else {
-  var cart = localStorage[storage + ".cart"];
+  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  }
  var obj = malformedJSON2Array(cart);
  for (key in obj) {
@@ -136,13 +235,13 @@ function minustoCart(code) {
   newArray.push(code + ":" + 1);
  }
  var count = newArray.length;
- localStorage.setItem(storage + '.cart', newArray.toString());
+ localStorage.setItem(storage + "."+mcaNumber+'.cart', newArray.toString());
  toastBottom.open();
  addToCartBar();
  addToCartProducts();
 }
 function addToCartBar() {
- var cart = localStorage[storage + ".cart"];
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var items = 0;
  var rsValue = 0;
  var obj = malformedJSON2Array(cart);
@@ -161,7 +260,7 @@ function addToCartBar() {
  $$("#CartFill").html(items);
 }
 function addToCartProducts() {
- var cart = localStorage[storage + ".cart"];
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var submitURL = server + 'cartproducts';
  var form_data = new FormData();
  var items = 0;
@@ -276,7 +375,7 @@ function CartSubmit(){
 }
 
 function clearCart() {
- localStorage.setItem(storage + '.cart', "X:0");
+ localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
  $$("#CartFill").html("");
  $$("#CartFill").hide();
 }
@@ -319,7 +418,7 @@ function formatYYYYMMDDH(date) {
  return [year, month, day, hour].join('-');
 }
 function getValue(code) {
- var cart = localStorage[storage + ".cart"];
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var obj = malformedJSON2Array(cart);
  for (keyx in obj) {
   element = obj[keyx];

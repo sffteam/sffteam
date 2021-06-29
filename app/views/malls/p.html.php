@@ -31,7 +31,7 @@
     <th class="tdw5 top left"></th>
     <th class=" top left"></th>
     <th class="tdw10 top left"></th>
-    <th class="tdw50 top left text-align-left">Cart <span class="material-icons">add_shopping_cart</span></th>
+    <th class="tdw50 top left text-align-left">Cart <span class="material-icons">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></th>
     <th class="tdw10 top left" id="tMRP"></th>
     <th class="tdw10 top left" id="tDP"></th>
     <th class="tdw10 top left" id="tBV"></th>
@@ -50,9 +50,9 @@
     <td class="top left bottom"><?=$p['Code']?></td>
     <td class="top left bottom text-align-left"><?=$p['Name']?>
      <div class="row" style="width:100px">
-      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-red external link"  >remove</a></span></div>
-      <div class="col-33 text-align-center text-color-blue szhalf" >0</div>
-      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-green external link"  >add</a></span></div>
+      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-red external link"  onclick="minustoCart('<?=$p['Code']?>');">remove</a></span></div>
+      <div class="col-33 text-align-center text-color-blue szhalf"><input type="text" name="minusCode<?=$p['Code']?>" id="minusCode<?=$p['Code']?>" size="2" readonly/></div>
+      <div class="col-33"><span class="material-icons sz1"><a href="#" class=" text-color-green external link" onclick="addtoCart('<?=$p['Code']?>');" >add</a></span></div>
     </div>
 </td>
     <td class="top left bottom" ><?=number_format($p['MRP'],0)?></td>
