@@ -287,7 +287,7 @@ function addToCartProducts() {
   console.log(gotData['CartProducts']);
   $$("#tMRP").html(gotData['value']);
   $$("#tDP").html(gotData['valueDP']);
-  $$("#tDP").html(Math.round(gotData['valueDP']/gotData['valueBV'],0));
+  $$("#tRatio").html(Math.round(gotData['valueBV']/gotData['valueDP']*100,0));
   $$("#tBV").html(gotData['valueBV']);
   $$("#tPV").html(gotData['valuePV']);
   $$("#tWt").html(gotData['valueWeight']);
