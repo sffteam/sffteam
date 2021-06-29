@@ -3,7 +3,7 @@ var storage = "ytdgpv";
 var version = "1.0.000";
 var server = "https://sff.team/malls/";
 var mcaNumber = $$("#mcaNumber").html();
-console.log(mcaNumber);
+
 
 if (!localStorage[storage + "."+mcaNumber+".cart"]) {
  localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
@@ -94,6 +94,7 @@ function pad(n, width, z) {
 function initiate(){
  addToCartBar();
  addToCartProduct();
+ addToCartProducts();
 }
 function dataError(message){
 var opentoastdataError = app.toast.create({
@@ -278,15 +279,17 @@ function addToCartProducts() {
  app.request.post(submitURL, form_data, function (data) {
   app.preloader.hide(); 
   gotData = JSON.parse(data);
-  console.log(gotData);
+//  console.log(gotData);
   htmlnew = "";
   Quantity = 0;
   Value = 0;
-  
+  console.log($$("#tMRP").html());
+  console.log(gotData['CartProducts']);
   $$("#tMRP").html(gotData['CartProducts']['value']);
   $$("#tDP").html(gotData['CartProducts']['valueDP']);
   $$("#tBV").html(gotData['CartProducts']['valueBV']);
   $$("#tPV").html(gotData['CartProducts']['valuePV']);
+  $$("#tWt").html(gotData['CartProducts']['valueWeight']);
   for(key in gotData['CartProducts']){
    
   }
@@ -297,7 +300,7 @@ function addToCartProducts() {
 function CartSubmit(){
  var formData = app.form.convertToData('#CartNameMobile');
  
-	console.log(formData);
+//	console.log(formData);
  if(formData.C_name==""){
    dataError("Name is required");
    return false;
@@ -318,7 +321,7 @@ function CartSubmit(){
   dataSubmit("Cart send to Chaudhary Tea");
   app.request.post(submitURL, formData, function (data) {
    gotData = JSON.parse(data);  
-   console.log(gotData);
+//   console.log(gotData);
    htmlnew = "Name: " + gotData['data']['Name']+"\n";
    htmlnew = htmlnew + "Mobile: " + gotData['data']['Mobile']+"\n";
    htmlnew = htmlnew + "Address: " + gotData['data']['Address']+"\n";
