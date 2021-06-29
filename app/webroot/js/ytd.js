@@ -279,7 +279,7 @@ function addToCartProducts() {
  app.request.post(submitURL, form_data, function (data) {
   app.preloader.hide(); 
   gotData = JSON.parse(data);
-//  console.log(gotData);
+  console.log(gotData);
   htmlnew = "";
   Quantity = 0;
   Value = 0;
@@ -287,6 +287,7 @@ function addToCartProducts() {
   console.log(gotData['CartProducts']);
   $$("#tMRP").html(gotData['value']);
   $$("#tDP").html(gotData['valueDP']);
+  $$("#tDP").html(Math.round(gotData['valueDP']/gotData['valueBV'],0));
   $$("#tBV").html(gotData['valueBV']);
   $$("#tPV").html(gotData['valuePV']);
   $$("#tWt").html(gotData['valueWeight']);
