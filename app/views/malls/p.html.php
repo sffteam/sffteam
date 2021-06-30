@@ -31,7 +31,7 @@
     <th class="tdw5 top left"></th>
     <th class=" top left"></th>
     <th class="tdw10 top left"></th>
-    <th class="tdw50 top left text-align-left">Cart <span class="material-icons">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></th>
+    <th class="tdw50 top left text-align-left"><a href="#" onclick="sendCart();" class=" color-white external link">Cart <span class="material-icons color-white">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></a></th>
     <th class="tdw10 top left" id="tMRP">11</th>
     <th class="tdw10 top left" id="tDP"></th>
     <th class="tdw10 top left" id="tBV"></th>
