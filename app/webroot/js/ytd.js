@@ -260,6 +260,33 @@ function addToCartBar() {
  }
  $$("#CartFill").html(items);
 }
+function sendCart(){
+ var form_data = new FormData();
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
+ console.log(cart);
+ console.log(mcaNumber);
+ form_data.append(mcaNumber, mcaNumber);
+ var items = 0;
+ var rsValue = 0;
+ var obj = malformedJSON2Array(cart);
+ for (key in obj) {
+  element = obj[key];
+  for (code in element) {
+   codeValue = element[code];
+   form_data.append(code, codeValue);
+   items = items + 1;
+  }
+ }
+
+ console.log(JSON.stringify(form_data));
+ var submitURL = server + 'cartproducts';
+ console.log(submitURL);
+ app.request.post(submitURL, form_data, function (data) {
+  app.preloader.hide(); 
+  gotData = JSON.parse(data);
+ });
+}
+
 function addToCartProducts() {
  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var submitURL = server + 'cartproducts';
@@ -279,12 +306,9 @@ function addToCartProducts() {
  app.request.post(submitURL, form_data, function (data) {
   app.preloader.hide(); 
   gotData = JSON.parse(data);
-  console.log(gotData);
   htmlnew = "";
   Quantity = 0;
   Value = 0;
-  console.log($$("#tMRP").html());
-  console.log(gotData['CartProducts']);
   $$("#tMRP").html(gotData['value']);
   $$("#tDP").html(gotData['valueDP']);
   $$("#tRatio").html(Math.round(gotData['valueBV']/gotData['valueDP']*100,0)+"%");
@@ -295,8 +319,6 @@ function addToCartProducts() {
   for(key in gotData['CartProducts']){
    
   }
-  $$("#CartPreview").html(htmlnew);
-  
  });
 }
 function CartSubmit(){

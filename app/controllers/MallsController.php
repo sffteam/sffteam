@@ -292,8 +292,7 @@ public function cartproducts(){
     $valueDP = $valueDP + $totalDP;
     $valueWeight = $valueWeight + $totalWeight;
   }
-  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"valueWeight"=>$valueWeight,"CartProducts"=>$CartProducts)));  
- 
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"valueWeight"=>$valueWeight,"CartProducts"=>$CartProducts,'mcaNumber'=>$cart['mcaNumber'])));  
 }
 
 public function getcartproducts(){
@@ -6318,6 +6317,18 @@ public function p ($category="",$mcaNumber=""){
   
  return compact('self','Categories','AllProducts','category');
 }
+public function c ($mcaNumber=""){
+$this->_render['layout'] = 'sale';
+ 	ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+   $yyyymm = date('Y-m');
+    $self = Users::find('first',array(
+     'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+     )
+    ));
+    return compact('self');
+}
+
 public function v ($mcaNumber=""){
 $this->_render['layout'] = 'sale';
  	ini_set('max_execution_time', '0');
