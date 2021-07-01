@@ -141,6 +141,20 @@
  <td class="col top left"><?=$self[$p1yyyymm]['PV']?:0?></td>
  <td class="col top left right"><?=$self[$yyyymm]['PV']?:0?></td>
 </tr>
+<tr>
+ <th class="col top left">BV</th>
+ <td class="col top left"><?=$self[$p10yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p9yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p8yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p7yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['BV']?:0?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['BV']?:0?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['BV']?:0?></td>
+</tr>
 <tr >
  <th class="col top left bg-color-red">GPV</th>
  <td class="col top left"><?=$self[$p10yyyymm]['GPV']?:0?></td>
@@ -195,7 +209,7 @@
  <td class="col top left"><?=$self[$p3yyyymm]['GBV']?:0?></td>
  <td class="col top left"><?=$self[$p2yyyymm]['GBV']?:0?></td>
  <td class="col top left"><?=$self[$p1yyyymm]['GBV']?:0?></td>
- <td class="col top left right"><?=$self[$yyyymm]['GBV']?:0?></td>
+ <td class="col top left right bg-color-black text-color-white"><?=$self[$yyyymm]['GBV']?:0?></td>
 </tr>
 <tr>
  <th class="col top left">GBV/day</th>
@@ -240,6 +254,19 @@
  <td class="col top left right bg-color-pink"><?=number_format($self[$yyyymm]['PGPV'],0)?></td>
 </tr>
 <tr>
+ <th class="col top left bg-color-red"><small>PGBV</small></th>
+ <td class="col top left"><?=number_format($self[$p10yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p9yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p8yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p7yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p6yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p5yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p4yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p3yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p2yyyymm]['PGBV'],0)?></td>
+ <td class="col top left"><?=number_format($self[$p1yyyymm]['PGBV'],0)?></td>
+ <td class="col top left right bg-color-pink"><?=number_format($self[$yyyymm]['PGBV'],0)?></td>
+</tr><tr>
  <th class="col top left"><small>Roll Up</small></th>
  <td class="col top left"><?=number_format($self[$p10yyyymm]['RollUpPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p9yyyymm]['RollUpPV'],0)?></td>
@@ -276,7 +303,7 @@
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p6yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p5yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p4yyyymm]['PaidTitle']))?:"-"?></small></td>
- <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?:"-"?></small></td>
+ <td class="col  left bottom bg-color-red"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p3yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom right"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$yyyymm]['PaidTitle']))?:"-"?></small></td>
