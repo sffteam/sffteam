@@ -18,14 +18,16 @@
 <script>
  initiate();
 </script>
-
+  <?php echo $this->_render('element', 'graph');?>
 
   </head>
 
 <body>
-		<div class="page page-content">
+		<div class="page">
   <?php echo $this->_render('element', 'mca_menu');?>
+  <div class="block page-content">
   <?php echo $this->content(); ?>
+  </div>
   </div>
 </body>
 <!-- JS code -->
