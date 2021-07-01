@@ -18,7 +18,7 @@
 <script>
  initiate();
 </script>
-  <?php echo $this->_render('element', 'graph');?>
+  
 
   </head>
 
@@ -26,6 +26,7 @@
 		<div class="page">
   <?php echo $this->_render('element', 'mca_menu');?>
   <div class="block page-content">
+  <?php echo $this->_render('element', 'graph');?>
   <?php echo $this->content(); ?>
   </div>
   </div>
