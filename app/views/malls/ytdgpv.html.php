@@ -348,7 +348,8 @@ foreach($MyAncestor as $key=>$val){
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PGPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GBV']?></td>
  <td class="szhalf  top left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
- <td class="szhalf  top left bottom right"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td> </tr>
+ <td class="szhalf  top left bottom right"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td> 
+ </tr>
 
 <?php $i++;} ?>
 </table>
@@ -582,12 +583,13 @@ $i = 0;foreach($teamzero as $t){
 <tr>
  <td class="szhalf left bottom"><?=$i?></td>
  <td class="text-align-left  left bottom">
- <?php if($t['refer_id']==$self['mcaNumber']){
+ <?php 
+ if($t['refer_id']==$self['mcaNumber']){
   echo "&#9728;";
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></td>
+ <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a></td>
  <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV']?></td>
