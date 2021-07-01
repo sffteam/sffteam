@@ -2579,29 +2579,41 @@ public function getbuilders(){
  if($this->request->data){
   $mcaNumber = $this->request->data['mcaNumber'];
   $yyyymm = date('Y-m');  
+  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
   $dashboard = new DashboardController();
   $Nodes = $dashboard->getChilds($this->request->data['mcaNumber'],"");
   $users = array();
   foreach($Nodes as $n){
+   if($n[$yyyymm]["GrossPV"]>4000 || $n[$p1yyyymm]["GrossPV"]>4000){
    $mobile = Mobiles::find('first',array(
     'conditions'=>array('mcaNumber'=>(string)$n['mcaNumber'])
    ));
-   if($n[$yyyymm]["GrossPV"]>4000){
+
     array_push($users,
      array(
       'mcaNumber'=>$n['mcaNumber'],
+      'Mobile'=>$mobile['Mobile'],
       'mcaName'=>$n['mcaName'],
       'PV'=>$n[$yyyymm]['PV']?:0,
+      'PreviousPV'=>$n[$p1yyyymm]['PV']?:0,
       'GPV'=>$n[$yyyymm]['GPV']?:0,
+      'PreviousGPV'=>$n[$p1yyyymm]['GPV']?:0,
       'PGPV'=>$n[$yyyymm]['PGPV']?:0,
+      'PreviousPGPV'=>$n[$p1yyyymm]['PGPV']?:0,
       'RollUpPV'=>$n[$yyyymm]['RollUpPV']?:0,
+      'PreviousRollUpPV'=>$n[$p1yyyymm]['RollUpPV']?:0,
       'PaidTitle'=>$n[$yyyymm]['PaidTitle']?:"",
-      'ValidTitle'=>$n[$yyyymm]['ValidTitle']?:"",      
+      'PreviousPaidTitle'=>$n[$p1yyyymm]['PaidTitle']?:"",
+      'ValidTitle'=>$n[$yyyymm]['ValidTitle']?:"",
+      'PreviousValidTitle'=>$n[$p1yyyymm]['ValidTitle']?:"",
       'Region'=>$n['Zone'].'-'.$n['City']?:"",
       'Mobile'=>$mobile['Mobile']?:"",
       'Level'=>$n[$yyyymm]['Level']?:"",
+      'PreviousLevel'=>$n[$p1yyyymm]['Level']?:"",
       'Legs'=>$n[$yyyymm]['Legs']?:0,
+      'PreviousLegs'=>$n[$p1yyyymm]['Legs']?:0,
       'QDLegs'=>$n[$yyyymm]['QDLegs']?:0,
+      'PreviousQDLegs'=>$n[$p1yyyymm]['QDLegs']?:0,
      )
     );
    }
@@ -6071,11 +6083,13 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  return compact('todayJoining');
 }
 
-public function ytdgpv($mcaNumber=null){
+public function ytdgpv($mcaNumber=null,$yyyymm){
    $this->_render['layout'] = 'sale';
  	ini_set('max_execution_time', '0');
   ini_set("memory_limit", "-1");
+    if($yyyymm==""){
      $yyyymm = date('Y-m');
+    }
      $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
     $self = Users::find('first',array(
      'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
@@ -6286,11 +6300,11 @@ public function p ($category="",$mcaNumber=""){
   '00' => 'Others 10% to 60%',
   '60' => 'Extra 0% to 60%',
   );
-  foreach($Categories as $key=>$val){
-   $count = Malls::find('count',array('Code'=> array('like'=>'/^'.$key.'/')));
+//  foreach($Categories as $key=>$val){
+   // $count = Malls::find('count',array('Code'=> array('like'=>'/^'.$key.'/')));
    
-   array_push($Categories,array($key=>array('Count'=>$count)));
-  }
+   // array_push($Categories,array($key=>array('Count'=>$count)));
+  // }
   if(strlen($category)==2){
    $Code = $category;
   }else{

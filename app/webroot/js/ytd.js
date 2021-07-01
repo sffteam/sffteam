@@ -1,7 +1,7 @@
 var $$ = Dom7; 
 var storage = "ytdgpv";
 var version = "1.0.000";
-var server = "https://sff.team/malls/";
+var server = "https://sffteam/malls/";
 var mcaNumber = $$("#mcaNumber").html();
 
 
@@ -260,12 +260,18 @@ function addToCartBar() {
  }
  $$("#CartFill").html(items);
 }
+
 function sendCart(){
  var form_data = new FormData();
  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  console.log(cart);
  console.log(mcaNumber);
- form_data.append(mcaNumber, mcaNumber);
+ form_data.append('mcaNumber', mcaNumber);
+
+// for(var p of form_data){
+//  console.log(p);
+// }
+
  var items = 0;
  var rsValue = 0;
  var obj = malformedJSON2Array(cart);
@@ -278,12 +284,16 @@ function sendCart(){
   }
  }
 
- console.log(JSON.stringify(form_data));
+
  var submitURL = server + 'cartproducts';
  console.log(submitURL);
  app.request.post(submitURL, form_data, function (data) {
   app.preloader.hide(); 
   gotData = JSON.parse(data);
+  console.log(gotData);
+  $$('.cart-screen').on('cartscreen:open', function (e) {
+      console.log('Login screen open')
+    });
  });
 }
 

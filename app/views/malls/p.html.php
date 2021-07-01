@@ -31,7 +31,7 @@
     <th class="tdw5 top left"></th>
     <th class=" top left"></th>
     <th class="tdw10 top left"></th>
-    <th class="tdw50 top left text-align-left"><a href="#" onclick="sendCart();" class=" color-white external link">Cart <span class="material-icons color-white">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></a></th>
+    <th class="tdw50 top left text-align-left"><a href="#" data-sheet=".cart-sheet" onclick="return sendCart();" class="sheet-open color-white external link">Cart <span class="material-icons color-white">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></a></th>
     <th class="tdw10 top left" id="tMRP">11</th>
     <th class="tdw10 top left" id="tDP"></th>
     <th class="tdw10 top left" id="tBV"></th>
@@ -85,6 +85,21 @@
  </div>
 </div>
 
+  <div class="sheet-modal cart-sheet">
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right"><a class="link sheet-close" href="#">Done</a></div>
+      </div>
+    </div>
+    <div class="sheet-modal-inner">
+      <div class="block">
+        <h4>Info</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a
+          nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
+      </div>
+    </div>
+  </div>
 
 <br>
 <hr>
