@@ -1,4 +1,58 @@
+<?php
+ $yyyymm = date('Y-m');
+ 
+ $yyyymmdays=date(d)-1;
 
+ $p1yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-1 month", strtotime(date("F") . "1"))),date('Y', strtotime("-1 month", strtotime(date("F") . "1"))));
+ $p2yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-2 month", strtotime(date("F") . "1"))),date('Y', strtotime("-2 month", strtotime(date("F") . "1"))));
+ $p3yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-3 month", strtotime(date("F") . "1"))),date('Y', strtotime("-3 month", strtotime(date("F") . "1"))));
+ $p4yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-4 month", strtotime(date("F") . "1"))),date('Y', strtotime("-4 month", strtotime(date("F") . "1"))));
+ $p5yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-5 month", strtotime(date("F") . "1"))),date('Y', strtotime("-5 month", strtotime(date("F") . "1"))));
+ $p6yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-6 month", strtotime(date("F") . "1"))),date('Y', strtotime("-6 month", strtotime(date("F") . "1"))));
+ $p7yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-7 month", strtotime(date("F") . "1"))),date('Y', strtotime("-7 month", strtotime(date("F") . "1"))));
+ $p8yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-8 month", strtotime(date("F") . "1"))),date('Y', strtotime("-8 month", strtotime(date("F") . "1"))));
+ $p9yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-9 month", strtotime(date("F") . "1"))),date('Y', strtotime("-9 month", strtotime(date("F") . "1"))));
+ $p10yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-10 month", strtotime(date("F") . "1"))),date('Y', strtotime("-10 month", strtotime(date("F") . "1"))));
+ $p11yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-11 month", strtotime(date("F") . "1"))),date('Y', strtotime("-11 month", strtotime(date("F") . "1"))));
+ 
+ $n1yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("1 month", strtotime(date("F") . "1"))),date('Y', strtotime("1 month", strtotime(date("F") . "1"))));
+ $n2yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("2 month", strtotime(date("F") . "1"))),date('Y', strtotime("2 month", strtotime(date("F") . "1"))));
+ $n3yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("3 month", strtotime(date("F") . "1"))),date('Y', strtotime("3 month", strtotime(date("F") . "1"))));
+ $n4yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("4 month", strtotime(date("F") . "1"))),date('Y', strtotime("4 month", strtotime(date("F") . "1"))));
+ $n5yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("5 month", strtotime(date("F") . "1"))),date('Y', strtotime("5 month", strtotime(date("F") . "1"))));
+ $n6yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("6 month", strtotime(date("F") . "1"))),date('Y', strtotime("6 month", strtotime(date("F") . "1"))));
+ $n7yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("7 month", strtotime(date("F") . "1"))),date('Y', strtotime("7 month", strtotime(date("F") . "1"))));
+ $n8yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("8 month", strtotime(date("F") . "1"))),date('Y', strtotime("8 month", strtotime(date("F") . "1"))));
+ $n9yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("9 month", strtotime(date("F") . "1"))),date('Y', strtotime("9 month", strtotime(date("F") . "1"))));
+ $n10yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("10 month", strtotime(date("F") . "1"))),date('Y', strtotime("10 month", strtotime(date("F") . "1"))));
+ $n11yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("11 month", strtotime(date("F") . "1"))),date('Y', strtotime("11 month", strtotime(date("F") . "1"))));
+
+
+
+ $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+ $p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+ $p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+ $p4yyyymm = date("Y-m", strtotime("-4 month", strtotime(date("F") . "1")) );
+ $p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
+ $p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
+ $p7yyyymm = date("Y-m", strtotime("-7 month", strtotime(date("F") . "1")) );
+ $p8yyyymm = date("Y-m", strtotime("-8 month", strtotime(date("F") . "1")) );
+ $p9yyyymm = date("Y-m", strtotime("-9 month", strtotime(date("F") . "1")) );
+ $p10yyyymm = date("Y-m", strtotime("-10 month", strtotime(date("F") . "1")) );
+ $p11yyyymm = date("Y-m", strtotime("-11 month", strtotime(date("F") . "1")) );
+
+ $n1yyyymm = date("Y-m", strtotime("1 month", strtotime(date("F") . "1")) );
+ $n2yyyymm = date("Y-m", strtotime("2 month", strtotime(date("F") . "1")) );
+ $n3yyyymm = date("Y-m", strtotime("3 month", strtotime(date("F") . "1")) );
+ $n4yyyymm = date("Y-m", strtotime("4 month", strtotime(date("F") . "1")) );
+ $n5yyyymm = date("Y-m", strtotime("5 month", strtotime(date("F") . "1")) );
+ $n6yyyymm = date("Y-m", strtotime("6 month", strtotime(date("F") . "1")) );
+ $n7yyyymm = date("Y-m", strtotime("7 month", strtotime(date("F") . "1")) );
+ $n8yyyymm = date("Y-m", strtotime("8 month", strtotime(date("F") . "1")) );
+ $n9yyyymm = date("Y-m", strtotime("9 month", strtotime(date("F") . "1")) );
+ $n10yyyymm = date("Y-m", strtotime("10 month", strtotime(date("F") . "1")) );
+ $n11yyyymm = date("Y-m", strtotime("11 month", strtotime(date("F") . "1")) );
+?>
 <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/dailytrend/<?=$self['mcaNumber']?>" class="external link">Team Shopping Trend</a></small></strong></h1>
 
 <table  border=0 cellspacing=0 cellpadding=0 class="Roboto szhalf">
@@ -230,7 +284,7 @@ foreach($MyAncestor as $key=>$val){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left bottom bg-color-pink"><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>
@@ -269,7 +323,7 @@ foreach($MyAncestor as $key=>$val){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>

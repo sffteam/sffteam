@@ -1,5 +1,6 @@
 <?php
  $yyyymm = date('Y-m');
+ 
  $yyyymmdays=date(d)-1;
 
  $p1yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-1 month", strtotime(date("F") . "1"))),date('Y', strtotime("-1 month", strtotime(date("F") . "1"))));
