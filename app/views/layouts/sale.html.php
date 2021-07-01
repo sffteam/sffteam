@@ -15,6 +15,9 @@
 <script src="/js/sale.js"></script>
 <script src="/js/ytd.js"></script>
 <script src="/js/app.js"></script>
+<script>
+ initiate();
+</script>
 
 
   </head>
@@ -26,7 +29,4 @@
   </div>
 </body>
 <!-- JS code -->
-<script>
- initiate();
-</script>
 </html>

@@ -11,10 +11,11 @@
   <title><?=$self['mcaName']?> - <?=$self['mcaNumber']?> - <?=$yyyymm?></title>
 <!--  <link rel="stylesheet" href="/css/style.css">-->
   <link rel="stylesheet" href="/css/app.css">
-<script src="/framework7/js/framework7.bundle.min.js"></script>
-
-
-
+  <script src="/framework7/js/framework7.bundle.min.js"></script>
+<script src="/js/ytd.js"></script>
+<script>
+ initiate();
+</script>
 
   </head>
 
@@ -26,8 +27,4 @@
   </div>
 </body>
 <!-- JS code -->
-<script src="/js/ytd.js"></script>
-<script>
- initiate();
-</script>
 </html>
