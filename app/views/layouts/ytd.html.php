@@ -16,13 +16,14 @@
 <script>
  initiate();
 </script>
-
+  <?php echo $this->_render('element', 'graph');?>
   </head>
 
 <body>
   <div id="mcaNumber"><?=$self['mcaNumber']?></div>
-		<div class="page page-content">
+		<div class="page">
   <?php echo $this->_render('element', 'mca_menu');?>
+  
   <?php echo $this->content(); ?>
   </div>
 </body>
