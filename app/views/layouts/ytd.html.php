@@ -21,9 +21,8 @@
 
 <body>
   <div id="mcaNumber"><?=$self['mcaNumber']?></div>
-		<div class="page">
+		<div class="page page-content">
   <?php echo $this->_render('element', 'mca_menu');?>
-  
   <?php echo $this->content(); ?>
   </div>
 </body>
