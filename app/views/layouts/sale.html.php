@@ -23,11 +23,11 @@
   </head>
 
 <body>
-<div class="page">
+<div class="view view-main">
+ <div class="block page-content">
  <?php echo $this->_render('element', 'mca_menu');?>
  <?php echo $this->_render('element', 'graph');?>
- <div class="block page-content">
-  <?php echo $this->content(); ?>
+ <?php echo $this->content(); ?>
  </div>
 </div>
 </body>
