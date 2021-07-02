@@ -28,7 +28,6 @@
 <script src="/framework7/js/framework7.bundle.min.js"></script>
 <script src="/js/sale.js"></script>
 <script src="/js/ytd.js"></script>
-<script src="/js/app.js"></script>
 <script>
  initiate();
 </script>
