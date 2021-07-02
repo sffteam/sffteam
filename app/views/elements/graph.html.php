@@ -53,8 +53,8 @@
  $n10yyyymm = date("Y-m", strtotime("10 month", strtotime(date("F") . "1")) );
  $n11yyyymm = date("Y-m", strtotime("11 month", strtotime(date("F") . "1")) );
 ?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+<script  src="https://www.gstatic.com/charts/loader.js"></script>
+    <script >
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawGBVChart);
       google.charts.setOnLoadCallback(drawGPVChart);
