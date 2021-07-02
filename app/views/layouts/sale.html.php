@@ -11,18 +11,10 @@
   <title><?=$self['mcaName']?> - <?=$self['mcaNumber']?> - <?=$yyyymm?></title>
 <!--  <link rel="stylesheet" href="/css/style.css">-->
   <link rel="stylesheet" href="/css/app.css"/>
-<script src="/framework7/js/framework7.bundle.min.js"></script>
-<script src="/js/sale.js"></script>
-<script src="/js/ytd.js"></script>
-<script src="/js/app.js"></script>
-<script>
- initiate();
-</script>
-  
-
   </head>
 
 <body>
+<div id="app">
 <div class="view view-main">
  <div class="block page-content">
  <?php echo $this->_render('element', 'mca_menu');?>
@@ -30,6 +22,14 @@
  <?php echo $this->content(); ?>
  </div>
 </div>
+</div>
 </body>
 <!-- JS code -->
+<script src="/framework7/js/framework7.bundle.min.js"></script>
+<script src="/js/sale.js"></script>
+<script src="/js/ytd.js"></script>
+<script src="/js/app.js"></script>
+<script>
+ initiate();
+</script>
 </html>
