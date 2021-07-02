@@ -14,15 +14,15 @@
   </head>
 
 <body>
-<div id="app">
-<div class="view view-main">
+
+<div class="view view-main page">
  <div class="block page-content">
  <?php echo $this->_render('element', 'mca_menu');?>
  <?php echo $this->_render('element', 'graph');?>
  <?php echo $this->content(); ?>
  </div>
 </div>
-</div>
+
 </body>
 <!-- JS code -->
 <script src="/framework7/js/framework7.bundle.min.js"></script>
