@@ -48,7 +48,7 @@ foreach($team as $t){
 }
 ?>  
   <td> <?=$t[$yyyymm]['PV']?></td>
-  <td> <?=$t[$yyyymm]['GPV']?></td>
+  <td> <?=$t[$yyyymm]['BV']?></td>
   <td> <?=$t[$yyyymm]['GPV']?></td>
   <td> <?=$t[$yyyymm]['GBV']?></td>
   <td> <?=$t['KYC']?></td>
