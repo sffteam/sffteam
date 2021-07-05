@@ -6332,7 +6332,7 @@ public function p ($category="",$mcaNumber=""){
  return compact('self','Categories','AllProducts','category');
 }
 public function c ($mcaNumber=""){
-$this->_render['layout'] = 'sale';
+  $this->_render['layout'] = 'sale';
  	ini_set('max_execution_time', '0');
   ini_set("memory_limit", "-1");
    $yyyymm = date('Y-m');
@@ -6366,7 +6366,23 @@ $this->_render['layout'] = 'sale';
     return compact('self','team','countteam');
 }
 
-
+public function qualifiers($mcaNumber,$yyyymm){
+ $this->_render['layout'] = 'sale';
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+ 
+  $self = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+   )
+  ));
+ $team = Users::find('all',array(
+  'conditions'=>array(
+   'refer'=>(string)$mcaNumber,
+   $yyyymm.'.GPV'=>array('$gt'=>0)
+   )
+ ));
+ return compact('self','team','yyyymm');
+}
 
 //end of class
 }
