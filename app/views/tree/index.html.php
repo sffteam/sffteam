@@ -34,7 +34,7 @@ foreach($allusers as $user) {
 									<?=$user['mcaName']?></b><br>\
          <b>☎️ <a target="_blank" href="https://wa.me/+91<?=$user['mobile']?>?text=https://sff.team/sale/index/all/<?=$mcaNumber?>/mrp/top"><?=$user['mobile']?></a></b><br>\
 									<?php if($user['PV']>0){echo "PV: ".$user['PV']."<br>";}?>\
-         	<?php if($user['BV']>0){echo "BV: ".$user['BV']."<br>";}?>\
+         <?php if($user['BV']>0){echo "BV: ".$user['BV']."<br>";}?>\
 									<?php if($user['ExtraPV']>0){echo "EPV: ".$user['ExtraPV']."<br>";}?>\
          <?php if($user['TotalEPV']>0){echo "TEPV: ".$user['TotalEPV']."<br>";}?>\
 									<?php if($user['PGPV']>0){echo "PGPV: ".$user['PGPV']."<br>";}?>\
