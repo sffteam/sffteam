@@ -1,5 +1,5 @@
 
-<div class="page-content">
+<div class="block page-content">
 
 <p>What is Lorem Ipsum?</p>
 
