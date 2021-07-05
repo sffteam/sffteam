@@ -16,11 +16,9 @@
 <body>
 
 <div class="view view-main page">
- <div class="block page-content">
  <?php echo $this->_render('element', 'mca_menu');?>
- <?php echo $this->_render('element', 'graph');?>
  <?php echo $this->content(); ?>
- </div>
+ <?php echo $this->_render('element', 'graph');?>
 </div>
 
 </body>
