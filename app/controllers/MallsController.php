@@ -6037,13 +6037,24 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  return $this->render(array('json' => array("success"=>"Yes",'users'=>count($users))));
 }
 
-public function contacts(){
+public function contacts($mcaNumber){
 set_time_limit(0);
 ini_set('memory_limit','-1'); 
 $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
 
+ $self = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+ ));
+ print_r($self['left']);
+ $left = $self['left'];
+ $right = $self['right'];
+
  $users = Users::find('all',array(
-  'conditions'=>array('Enable'=>'Yes')
+  'conditions'=>array(
+   'left'=>array('$gt'=>$left),
+   'right'=>array('$lt'=>$right),
+   'Enable'=>'Yes'
+  )
  ));
  $todayJoining = array();
  foreach($users as $u){
@@ -6071,16 +6082,18 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
     if($findrefermobile['Mobile']){
      array_push($todayJoining,array(
       'name'=>$u['mcaName']." (MCA No: ".$u['mcaNumber'].")",
+      'mca'=>$u['mcaNumber'],
+      'DateJoin'=>date_format(date_create($u['DateJoin']),'Y-m-d'),
       'Mobile'=>$findmobile['Mobile'],
       'refer'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
+      'refer_mobile'=>"+91".$findrefermobile['Mobile'],
       'KYCNEFT'=>"KYC: ". $u['KYC'].", NEFT Approved: ".$u['NEFT'],
-      'DateJoin'=>$u['DateJoin'],
     ));
     }
    }
  }
  
- return compact('todayJoining');
+ return compact('todayJoining','self');
 }
 
 public function ytdgpv($mcaNumber=null,$yyyymm){
