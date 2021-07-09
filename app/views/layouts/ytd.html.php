@@ -12,19 +12,21 @@
 <!--  <link rel="stylesheet" href="/css/style.css">-->
   <link rel="stylesheet" href="/css/app.css">
   <script src="/framework7/js/framework7.bundle.min.js"></script>
-<script src="/js/ytd.js"></script>
-<script>
- initiate();
-</script>
+  
   <?php echo $this->_render('element', 'graph');?>
   </head>
 
 <body>
-  <div id="mcaNumber"><?=$self['mcaNumber']?></div>
-		<div class="page page-content">
+  <div id="mcaNumber" style="display:none"><?=$self['mcaNumber']?></div>
+  <div class="page page-content">
   <?php echo $this->_render('element', 'mca_menu');?>
   <?php echo $this->content(); ?>
   </div>
 </body>
 <!-- JS code -->
+<script src="/js/ytd.js"></script>
+<script>
+ initiate();
+</script>
+
 </html>

@@ -45,6 +45,7 @@ use app\models\X_leads;
 use app\models\X_stages;
 
 use \MongoRegex;
+use \MongoClient;
 
 class MallsController extends \lithium\action\Controller {
 
@@ -6294,6 +6295,10 @@ public function p ($category="",$mcaNumber=""){
  $self = Users::find('first',array(
  'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
  ));
+ $findmobile = Mobiles::find('first',array(
+ 'conditions'=>array('mcaNumber'=>$self['mcaNumber'])
+ ));
+ $self['Mobile']=$findmobile['Mobile'];
  $Categories = array(
   'HC' => 'Home Care 50%',
   'AB' => 'Agarbatti 30%',
@@ -6396,6 +6401,1263 @@ public function qualifiers($mcaNumber,$yyyymm){
  ));
  return compact('self','team','yyyymm');
 }
+
+public function snapshot($mcaNumber){
+  $this->_render['layout'] = 'snap';
+  ini_set('max_execution_time', '0');
+  ini_set("memory_limit", "-1");
+  if($yyyymm==""){
+     $yyyymm = date('Y-m');
+  }
+  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+  $p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+  $p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
+  $self = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+   )
+  ));
+  $snapshot = array();
+  $snapshot[$yyyymm.'.GPV'] = $self[$yyyymm]['GPV'];
+  $snapshot[$p1yyyymm.'.GPV'] = $self[$p1yyyymm]['GPV'];
+  $snapshot[$p2yyyymm.'.GPV'] = $self[$p2yyyymm]['GPV'];
+  $snapshot[$p3yyyymm.'.GPV'] = $self[$p3yyyymm]['GPV'];
+
+  $snapshot[$yyyymm.'.GBV'] = $self[$yyyymm]['GBV'];
+  $snapshot[$p1yyyymm.'.GBV'] = $self[$p1yyyymm]['GBV'];
+  $snapshot[$p2yyyymm.'.GBV'] = $self[$p2yyyymm]['GBV'];
+  $snapshot[$p3yyyymm.'.GBV'] = $self[$p3yyyymm]['GBV'];
+
+
+  $team = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Team'] = $team;
+  $active = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PV"=>array('$gt'=>0),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Active'] = $active;
+
+  $team = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Team'] = $team;
+  $active = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PV"=>array('$gt'=>0),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Active'] = $active;
+   $team = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Team'] = $team;
+  $active = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PV"=>array('$gt'=>0),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Active'] = $active;
+   
+   $team = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Team'] = $team;
+  $active = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PV"=>array('$gt'=>0),
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Active'] = $active;
+//============Percent 0====================
+  $level = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".GrossPV"=>0,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Level'] = $level;
+  $level = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".GrossPV"=>0,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Level'] = $level;
+  $level = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".GrossPV"=>0,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Level'] = $level;
+  $level = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".GrossPV"=>0,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Level'] = $level;
+//============Percent 7====================
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".Percent"=>7,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Percent7'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".Percent"=>7,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Percent7'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".Percent"=>7,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Percent7'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".Percent"=>7,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Percent7'] = $percent;
+//===============Percent 10=================
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".Percent"=>10,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Percent10'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".Percent"=>10,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Percent10'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".Percent"=>10,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Percent10'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".Percent"=>10,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Percent10'] = $percent;
+//===============Percent 13=================
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".Percent"=>13,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Percent13'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".Percent"=>13,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Percent13'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".Percent"=>13,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Percent13'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".Percent"=>13,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Percent13'] = $percent;
+//===============Percent 15=================
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".Percent"=>15,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Percent15'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".Percent"=>15,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Percent15'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".Percent"=>15,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Percent15'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".Percent"=>15,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Percent15'] = $percent;
+//===============Percent 16=================
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".Percent"=>16,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Percent16'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".Percent"=>16,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Percent16'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".Percent"=>16,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Percent16'] = $percent;
+  $percent = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".Percent"=>16,
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Percent16'] = $percent;
+//===============Valid Title Supervisor=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Supervisor',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Supervisor'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Supervisor',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Supervisor'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Supervisor',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Supervisor'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Supervisor',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Supervisor'] = $count;
+//===============Valid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Director',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.Director'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Director',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.Director'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Director',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.Director'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Director',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.Director'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Director (Qualified)',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Director (Qualified)',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Director (Qualified)',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Director (Qualified)',
+   "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorPaid'] = $count;
+//===============Valid Title Director NQ=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Director-Nqd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorNQ'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Director-Nqd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorNQ'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Director-Nqd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorNQ'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Director-Nqd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorNQ'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Director (Non Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorNQPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Director (Non Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorNQPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Director (Non Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorNQPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Director (Non Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorNQPaid'] = $count;
+//===============Valid Title Director QD=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Director-Qd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorQD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Director-Qd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorQD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Director-Qd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorQD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Director-Qd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorQD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorQDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorQDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorQDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorQDPaid'] = $count;
+//===============Valid Title Senior Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Senior Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorSD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Senior Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorSD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Senior Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorSD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Senior Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorSD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Senior Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorSDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Senior Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorSDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Senior Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorSDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Senior Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorSDPaid'] = $count;
+//===============Valid Title Executive Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Executive Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorED'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Executive Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorED'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Executive Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorED'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Executive Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorED'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Executive Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorEDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Executive Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorEDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Executive Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorEDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Executive Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorEDPaid'] = $count;
+//===============Valid Title Senior Executive Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Sed',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorSED'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Sed',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorSED'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Sed',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorSED'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Sed',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorSED'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Sed (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorSEDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Sed (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorSEDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Sed (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorSEDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Sed (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorSEDPaid'] = $count;
+//===============Valid Title Platinum Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Platinum Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorPLD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Platinum Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorPLD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Platinum Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorPLD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Platinum Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorPLD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Platinum Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorPLDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Platinum Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorPLDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Platinum Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorPLDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Platinum Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorPLDPaid'] = $count;
+//===============Valid Title Presidential Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Presidential Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorPRD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Presidential Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorPRD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Presidential Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorPRD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Presidential Director',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorPRD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Presidential Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorPRDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Presidential Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorPRDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Presidential Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorPRDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Presidential Director (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorPRDPaid'] = $count;
+//===============Valid Title Royal Black Diamond Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Rbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorRBD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Rbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorRBD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Rbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorRBD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Rbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorRBD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Rbd (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorRBDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Rbd (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorRBDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Rbd (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorRBDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Rbd (Qualified)',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorRBDPaid'] = $count;
+//===============Valid Title Global Black Diamond Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".ValidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorGBD'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".ValidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorGBD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".ValidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorGBD'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".ValidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorGBD'] = $count;
+//===============Paid Title Director=================
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PaidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$yyyymm.'.DirectorGBDPaid'] = $count;
+  
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p1yyyymm=>array('$exists'=>1),
+   $p1yyyymm.".PaidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p1yyyymm.'.DirectorGBDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p2yyyymm=>array('$exists'=>1),
+   $p2yyyymm.".PaidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p2yyyymm.'.DirectorGBDPaid'] = $count;
+  $count = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $p3yyyymm=>array('$exists'=>1),
+   $p3yyyymm.".PaidTitle"=>'Gbd',
+   // "Enable" => "Yes"
+   ),
+   ));
+   $snapshot[$p3yyyymm.'.DirectorGBDPaid'] = $count;
+
+
+   
+// $m = new MongoClient("mongodb://".CONNECTION_USER.":".CONNECTION_PASS."@".CONNECTION);
+// $con = $m->selectDB(CONNECTION_DB)->selectCollection("Users");
+// $cond = array(
+    // array('$match' => array(
+     // 'Enable' =>'Yes',
+     // )),
+    // array('$group'=>array(
+     // '_id'=>null,
+     // 'count'=> array('$sum'=>1),
+     // ))
+    // );
+// $out = $con->aggregate($cond,array('cursor'=>array('batchSize'=>1)));
+// print_r($out);
+   
+   
+   
+   
+   
+   return compact('self','snapshot');
+  }
+
 
 //end of class
 }
