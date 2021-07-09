@@ -31,7 +31,9 @@
     <th class="tdw5 top left"></th>
     <th class=" top left"></th>
     <th class="tdw10 top left"></th>
-    <th class="tdw50 top left text-align-left"><a href="#" data-sheet=".cart-sheet" onclick="return sendCart();" class="sheet-open color-white external link">Cart <span class="material-icons color-white">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></a></th>
+    <th class="tdw50 top left text-align-left">
+    <a href="#" class="login-screen-open color-white"  onclick="return sendCart();"  data-login-screen=".login-screen">Cart <span class="material-icons text-color-white">add_shopping_cart</span><span id="CartFill" class="badge color-white text-color-black"></span></a>
+    </th>
     <th class="tdw10 top left" id="tMRP">11</th>
     <th class="tdw10 top left" id="tDP"></th>
     <th class="tdw10 top left" id="tBV"></th>
@@ -82,30 +84,48 @@
    ?>
    </ul>
  </div>
- </div>
-</div>
-
-  <div class="sheet-modal cart-sheet">
-    <div class="toolbar">
-      <div class="toolbar-inner">
-        <div class="left"></div>
-        <div class="right"><a class="link sheet-close" href="#">Done</a></div>
-      </div>
-    </div>
-    <div class="sheet-modal-inner">
-      <div class="block">
-        <h4>Info</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a
-          nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
+<div class="login-screen">
+    <div class="view">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="login-screen-title">My Cart</div>
+          <form>
+              <div id="CartList">
+              </div>
+             
+            <div class="text-align-center list no-hairlines-md">
+          <ul>
+          <li class="item-content item-input item-input-outline">
+            <div class="item-media">
+              <i class="icon demo-list-icon"></i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title item-label">Your Mobile / Friends Mobile</div>
+              <div class="item-input-wrap">
+                <input type="text" value="<?=$self['Mobile']?>" name="Mobile" id="Mobile"/>
+                <span class="input-clear-button"></span>
+              </div>
+            </div>
+          </li>
+          </ul>
+          <a  target="_blank" title="Contact Us On WhatsApp" href="#" class="external whatsapplink hidemobile" onclick="return ShareWhatsApp();" id="ShareApp">Share</a>
+          <div class="block-footer"><a class="link login-screen-close color-red" href="#">Close</a></p>--End--</div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 
-<br>
-<hr>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+ </div>
+
+
+
+</div>
+
+  
+
+
 <br>
 <hr>
 </div>

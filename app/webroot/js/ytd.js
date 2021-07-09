@@ -242,6 +242,8 @@ function minustoCart(code) {
  addToCartProducts();
 }
 function addToCartBar() {
+ var mcaNumber = $$("#mcaNumber").html();
+ console.log(mcaNumber);
  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var items = 0;
  var rsValue = 0;
@@ -326,11 +328,51 @@ function addToCartProducts() {
   $$("#tPV").html(gotData['valuePV'].toFixed(1));
   $$("#tWt").html(gotData['valueWeight']);
   $$("#tSave").html(gotData['value'] - gotData['valueDP']);
+  htmlnew = '   <table>\
+              <tr>\
+               <th>Code</th>\
+               <th>Name</th>\
+               <th>Quantity</th>\
+               <th>T-DP</th>\
+               <th>T-BV</th>\
+               <th>T-PV</th>\
+              </tr>';
   for(key in gotData['CartProducts']){
-   
+   htmlnew = htmlnew + '              <tr>\
+               <td>'+gotData['CartProducts'][key]['Code']+'</td>\
+               <td class="text-align-left">'+gotData['CartProducts'][key]['Name']+'</td>\
+               <td>'+gotData['CartProducts'][key]['Quantity']+'</td>\
+               <td>'+gotData['CartProducts'][key]['DP']*gotData['CartProducts'][key]['Quantity']+'</td>\
+               <td>'+gotData['CartProducts'][key]['BV']*gotData['CartProducts'][key]['Quantity']+'</td>\
+               <td>'+gotData['CartProducts'][key]['PV']*gotData['CartProducts'][key]['Quantity']+'</td>\
+              </tr>';
+  items = items + gotData['CartProducts'][key]['Quantity'];
   }
+  htmlnew = htmlnew + '<tr>\
+               <th>Total</th>\
+               <th> </th>\
+               <th>'+items+'</th>\
+               <th>'+gotData['valueDP']+'</th>\
+               <th>'+gotData['valueBV']+'</th>\
+               <th>'+gotData['valuePV']+'</th>\
+  </tr>';
+  htmlnew = htmlnew + '</table>';
+  $$("#CartList").html(htmlnew);
  });
 }
+function ShareWhatsApp(){
+ var Mobile = $$("#Mobile").val();
+ var htmlCart = "Cart\n";
+ var cart = localStorage[storage + "."+mcaNumber+".cart"];
+ 
+ htmlCart = htmlCart + cart.replaceAll(",","\n");
+ 
+ htmlnew = "";
+ htmlnew = htmlnew + 'https://web.whatsapp.com/send?phone=+91'+Mobile+'&amp;text='+htmlCart;
+ $$("#ShareApp").attr('href',htmlnew);
+ console.log(htmlnew);
+}
+
 function CartSubmit(){
  var formData = app.form.convertToData('#CartNameMobile');
  
