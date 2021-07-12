@@ -68,10 +68,10 @@
  <th class="col top left"><?=$p6yyyymm?></th>
  <th class="col top left"><?=$p5yyyymm?></th>
  <th class="col top left"><?=$p4yyyymm?></th>
- <th class="col top left"><?=$p3yyyymm?></th>
- <th class="col top left"><?=$p2yyyymm?></th>
- <th class="col top left"><?=$p1yyyymm?></th>
- <th class="col top left right"><?=$yyyymm?></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p3yyyymm?>/" class="external text-color-white" target="_blank"><?=$p3yyyymm?></a></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p2yyyymm?>/" class="external text-color-white" target="_blank"><?=$p2yyyymm?></a></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p1yyyymm?>/" class="external text-color-white" target="_blank"><?=$p1yyyymm?></a></th>
+  <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$yyyymm?>/" class="external text-color-white" target="_blank"><?=$yyyymm?></a></th>
 </tr>
 <tr>
  <th class="col top left">PV</th>

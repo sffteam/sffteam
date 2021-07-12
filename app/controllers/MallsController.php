@@ -6447,7 +6447,14 @@ public function snapshot($mcaNumber){
    ),
    ));
    $snapshot[$yyyymm.'.Active'] = $active;
-
+  $active = Users::count('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm.".PV"=>array('$gt'=>0),
+   ),
+   ));
+   $snapshot[$yyyymm.'.ActiveAll'] = $active;
   $team = Users::count('all',array(
    'conditions'=>array(
    'left'=>array('$gt'=>$self['left']),
@@ -7657,6 +7664,28 @@ public function snapshot($mcaNumber){
    
    return compact('self','snapshot');
   }
+
+public function prevmonth($mcaNumber,$yyyymm){
+ $this->_render['layout'] = 'sale';
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+ 
+  $self = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+   )
+  ));
+  $team = Users::find('all',array(
+   'conditions'=>array(
+   'left'=>array('$gt'=>$self['left']),
+   'right'=>array('$lt'=>$self['right']),
+   $yyyymm=>array('$exists'=>1),
+   $yyyymm.".PV"=>array('$gt'=>0),
+   "Enable" => "Yes"
+   ),
+   ));
+  
+   return compact('self','team', 'yyyymm');
+}
 
 
 //end of class
