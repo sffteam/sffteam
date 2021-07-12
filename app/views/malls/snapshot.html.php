@@ -110,6 +110,19 @@
  <td class="col top left right"><?=number_format($snapshot[$yyyymm.'.GPV']/$snapshot[$yyyymm.'.Active']?:0,1)?></td>
 </tr>
 <tr>
+ <th class="col top left">Active All</th>
+ <td class="col top left right"><?=$snapshot[$p3yyyymm.'.ActiveAll']?:0?></td>
+ <td class="col top left right"><?=$snapshot[$p2yyyymm.'.ActiveAll']?:0?></td>
+ <td class="col top left right"><?=$snapshot[$p1yyyymm.'.ActiveAll']?:0?></td>
+ <td class="col top left right"><?=$snapshot[$yyyymm.'.ActiveAll']?:0?></td>
+</tr>
+<tr>
+ <th class="col top left">PV/Active All</th>
+ <td class="col top left right"><?=number_format($snapshot[$p3yyyymm.'.GPV']/$snapshot[$p3yyyymm.'.ActiveAll']?:0,1)?></td>
+ <td class="col top left right"><?=number_format($snapshot[$p2yyyymm.'.GPV']/$snapshot[$p2yyyymm.'.ActiveAll']?:0,1)?></td>
+ <td class="col top left right"><?=number_format($snapshot[$p1yyyymm.'.GPV']/$snapshot[$p1yyyymm.'.ActiveAll']?:0,1)?></td>
+ <td class="col top left right"><?=number_format($snapshot[$yyyymm.'.GPV']/$snapshot[$yyyymm.'.ActiveAll']?:0,1)?></td>
+</tr><tr>
  <th class="col top left">Percent 0<br>No Shopping</th>
  <td class="col top left right"><?=$snapshot[$p3yyyymm.'.Level']?:0?></td>
  <td class="col top left right"><?=$snapshot[$p2yyyymm.'.Level']?:0?></td>
