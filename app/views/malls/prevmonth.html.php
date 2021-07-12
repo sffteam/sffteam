@@ -42,7 +42,7 @@
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PGPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GBV']?></td>
- <td class="szhalf  top left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
+ <td class="szhalf  top left bottom"><?=$t[$yyyymm]['RollUpPV']?></td>
  
  </tr>
 
