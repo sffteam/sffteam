@@ -287,7 +287,18 @@ foreach($MyAncestor as $key=>$val){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a>
+ <?php if($t['KYC']=='Approved'){?>
+ <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">A</span>
+ <?php }?>
+ <?php if($t['NEFT']=='Y'){?>
+ <span class="Roboto badge color-green">N</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">N</span>
+ <?php }?>
+ </td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left bottom bg-color-pink"><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['TotalEPV']?></td>
@@ -296,7 +307,6 @@ foreach($MyAncestor as $key=>$val){
  <td class="szhalf  top left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
  <td class="szhalf  top left bottom right"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td> 
  </tr>
-
 <?php $i++;} ?>
 </table>
 
@@ -327,7 +337,19 @@ foreach($MyAncestor as $key=>$val){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a></td>
+ <td class="  top left text-align-left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a>
+ <?php if($t['KYC']=='Approved'){?>
+ <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">A</span>
+ <?php }?>
+ <?php if($t['NEFT']=='Y'){?>
+ <span class="Roboto badge color-green">N</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">N</span>
+ <?php }?>
+
+ </td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left bottom "><?=$t[$yyyymm]['GrossPV']?></td>
@@ -368,7 +390,20 @@ $i = 0;foreach($team as $t){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="  top left text-align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a></td>
+ <td class="  top left text-align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a>
+ <?php if($t['KYC']=='Approved'){?>
+ <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">A</span>
+ <?php }?>
+ <?php if($t['NEFT']=='Y'){?>
+ <span class="Roboto badge color-green">N</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">N</span>
+ <?php }?>
+
+ 
+ </td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['TotalEPV']?></td>
