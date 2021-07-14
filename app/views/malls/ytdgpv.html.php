@@ -572,7 +572,19 @@ $i = 0;foreach($teamzero as $t){
  }
  ?>
  <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="link external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external link">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a></td>
+ <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a>
+ <?php if($t['KYC']=='Approved'){?>
+ <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">A</span>
+ <?php }?>
+ <?php if($t['NEFT']=='Y'){?>
+ <span class="Roboto badge color-green">N</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">N</span>
+ <?php }?>
+
+ </td>
  <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV']?></td>

@@ -341,10 +341,10 @@ function addToCartProducts() {
    htmlnew = htmlnew + '              <tr>\
                <td>'+gotData['CartProducts'][key]['Code']+'</td>\
                <td class="text-align-left">'+gotData['CartProducts'][key]['Name']+'</td>\
-               <td>'+gotData['CartProducts'][key]['Quantity']+'</td>\
-               <td>'+gotData['CartProducts'][key]['DP']*gotData['CartProducts'][key]['Quantity']+'</td>\
-               <td>'+gotData['CartProducts'][key]['BV']*gotData['CartProducts'][key]['Quantity']+'</td>\
-               <td>'+gotData['CartProducts'][key]['PV']*gotData['CartProducts'][key]['Quantity']+'</td>\
+               <td>'+(gotData['CartProducts'][key]['Quantity']).toFixed(1)+'</td>\
+               <td>'+(gotData['CartProducts'][key]['DP']*gotData['CartProducts'][key]['Quantity']).toFixed(1)+'</td>\
+               <td>'+(gotData['CartProducts'][key]['BV']*gotData['CartProducts'][key]['Quantity']).toFixed(1)+'</td>\
+               <td>'+(gotData['CartProducts'][key]['PV']*gotData['CartProducts'][key]['Quantity']).toFixed(1)+'</td>\
               </tr>';
   items = items + gotData['CartProducts'][key]['Quantity'];
   }
