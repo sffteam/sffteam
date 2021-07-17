@@ -577,6 +577,8 @@ public function show($Code){
 }
 
 public function searchmca(){
+ ini_set('memory_limit','-1');
+ set_time_limit(0);
  if($this->request->data){
   $user = Users::find('first',array(
    'conditions'=>array(
@@ -1160,6 +1162,46 @@ set_time_limit(0);
 }
 
  public function updateUserBuilders($data,$yyyymm){
+     if($data){
+  
+   $userActive = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$data['mcaNumber'])
+   ));
+   
+   if(count($userActive)>0){
+    
+    if($data['PV']>$userActive[$yyyymm]['PV']){
+     $today = array(
+      'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=> new \MongoDate()
+     );
+     print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
+          if($userActive['Enable']=="Yes"){
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "DP Purchase", // $subtitle
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased of PV ". ((int)$data['PV']-(int)$userActive[$yyyymm]['PV']) , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'] // new Name
+           );
+          }
+     
+    }else{
+     $today = array(
+      'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
+     );
+    }
+
    $data = array(
     'mcaName'=>(string)$data["mcaName"],
     'mcaNumber'=>(string)$data["mcaNumber"],
@@ -1194,11 +1236,13 @@ set_time_limit(0);
      $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.InActive'=>(integer)0,
-
+     $yyyymm.'.today'=>$today,
+     $yyyymm.'.'.date('Y-m-d')=>$today,
    );
-   
+   }
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
    Users::update($data,$conditions);
+ }
   
  }
 
@@ -1272,7 +1316,44 @@ set_time_limit(0);
      array('left' => array('>'=>(integer)$refer_left_inc)),
      array('multi' => true)
     );
+
+   $userActive = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$data['mcaNumber'])
+   ));
    
+   if(count($userActive)>0){
+    
+    if($data['PV']>$userActive[$yyyymm]['PV']){
+     $today = array(
+      'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=> new \MongoDate()
+     );
+     print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
+          if($userActive['Enable']=="Yes"){
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "DP Purchase", // $subtitle
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased of PV ". ((int)$data['PV']-(int)$userActive[$yyyymm]['PV']) , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'] // new Name
+           );
+          }
+     
+    }else{
+     $today = array(
+      'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
+     );
+    }
    $data = array(
     'mcaName'=>(string)$data["mcaName"],
     'mcaNumber'=>(string)$data["mcaNumber"],
@@ -1311,8 +1392,10 @@ set_time_limit(0);
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
-
+     $yyyymm.'.today'=>$today,
+     $yyyymm.'.'.date('Y-m-d')=>$today,
    );
+   }
 
    Users::create()->save($data);
    
@@ -1592,8 +1675,6 @@ set_time_limit(0);
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
            $this->addUserActive($data,$yyyymm);
-
-
           }
          }
         }else{
@@ -2009,7 +2090,13 @@ Users::update(
      array('left' => array('>'=>(integer)$refer_left_inc)),
      array('multi' => true)
     );
-   
+    $today = array(
+      'PV'=>(int)$data['PV'],
+      'BV'=>((int)$data['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
+     );
    $data = array(
     'mcaName'=>(string)$data["mcaName"],
     'mcaNumber'=>(string)$data["mcaNumber"],
@@ -2047,6 +2134,9 @@ Users::update(
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
+     $yyyymm.'.today'=>$today,
+     $yyyymm.'.'.date('Y-m-d')=>$today,
+
      'KYC'=>(string)$data['KYC'],
      'NEFT'=>$data['NEFT'],
      'Aadhar'=>$data['Aadhar'],
@@ -2065,6 +2155,44 @@ Users::update(
 
 
  public function updateUserEnrolment($data,$yyyymm){
+   $userActive = Users::find('first',array(
+    'conditions'=>array('mcaNumber'=>(string)$data['mcaNumber'])
+   ));
+   if(count($userActive)>0){
+    
+    if($data['PV']>$userActive[$yyyymm]['PV']){
+     $today = array(
+      'PV'=>((int)$data['PV']-(int)$userActive[$yyyymm]['PV']),
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=> new \MongoDate()
+     );
+     print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
+          if($userActive['Enable']=="Yes"){
+           $function = new Functions();
+           $function->addnotify(
+            $data['mcaNumber'],  // $mcaNumber
+            "DP Purchase", // $subtitle
+            $mcaName . "MCA No: <a href='/user/".$data['mcaNumber']."/' class='link'>". $data['mcaNumber'] . "</a><br> <strong>".$data['mcaName']."</strong> has made a purchased of PV ". ((int)$data['PV']-(int)$userActive[$yyyymm]['PV']) , // $title
+            "Click to follow up",// $text,
+            "<i class='icons f7-icons'>share</i>", // $icon,
+            $data['DateJoin'], // $titleRightText,
+            $data['mcaName'] // new Name
+           );
+          }
+     
+    }else{
+     $today = array(
+      'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
+      'GPV'=>((int)$data['GPV']),
+      'GBV'=>((int)$data['GBV']),
+      'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
+     );
+    }
+
+  
    $data = array(
     'mcaName'=>(string)$data["mcaName"],
     'mcaNumber'=>(string)$data["mcaNumber"],
@@ -2100,6 +2228,8 @@ Users::update(
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
+     $yyyymm.'.today'=>$today,
+     $yyyymm.'.'.date('Y-m-d')=>$today,
      'KYC'=>(string)$data['KYC'],
      'NEFT'=>$data['NEFT'],
      'Aadhar'=>$data['Aadhar'],
@@ -2108,6 +2238,7 @@ Users::update(
      'City'=>$data['City'],
      'Enable'=>$data['Enable'],
    );
+   }
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
    Users::update($data,$conditions);
  }
@@ -7707,7 +7838,7 @@ public function daily($mcaNumber){
  $this->_render['layout'] = 'sale';
  ini_set('max_execution_time', '0');
  ini_set("memory_limit", "-1");
- $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+ 
   $self = Users::find('first',array(
    'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
    )
@@ -7715,13 +7846,25 @@ public function daily($mcaNumber){
   $team = Users::find('all',array(
    'conditions'=>array(
    'refer'=>$mcaNumber,
-   "Enable" => "Yes"
+//   "Enable" => "Yes"
    ),
    ));
-
-
-  
-   return compact('self','team', 'yyyymm');
+   $todaysGPV = array();
+  $yyyymmdays=date(d)-1;
+  $p1yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-1 month", strtotime(date("F") . "1"))),date('Y', strtotime("-1 month", strtotime(date("F") . "1"))));
+  $totalDays = $yyyymmdays + $p1yyyymmdays;
+  foreach ($team as $t){
+    for($i=40;$i>=0;$i--){
+     $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
+     $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
+     $GPV = $t[$yyyymm][$prevDate]['GPV'];
+     $todaysGPV['mcaNumber']=$t['mcaNumber'];
+     $todaysGPV['mcaName']=$t['mcaName'];
+     $todaysGPV[$t['mcaNumber'].".".$yyyymm.".".$prevDate.".".'GPV'] = $GPV;
+    }
+  }
+//  print_r($todaysGPV);
+   return compact('self','team', 'yyyymm', 'todaysGPV');
 }
 
 //end of class
