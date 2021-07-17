@@ -6,26 +6,30 @@
  $totalDays = $yyyymmdays + $p1yyyymmdays;
 ?>
 <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small></strong></h1>
-<table cellspacing=0 cellpadding=0>
+<table cellspacing=0 cellpadding=0 class="Roboto">
  <tr>
  <th class="right left">Name</th>
- <?php for($i=$totalDays;$i>=0;$i--){
+ <?php for($i=40;$i>=0;$i--){
   $prevDate = date("M-d", strtotime('today - '.$i.' days') );
+  $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
   ?>
   <th class="right"><?=$prevDate?></th>
  <?php }?>
  </tr>
  <?php foreach($team as $t){?>
  <tr>
- <td  class="bottom right left"><?=$t['mcaName']?></td>
-    <?php for($i=$totalDays;$i>=0;$i--){
-     $prevDate = date("M-d", strtotime('today - '.$i.' days') );
-    ?>
- <td  class="bottom right"></td>
-    <?php }?>
- </tr>
+ <td  class="bottom right left"><a href="/malls/daily/<?=$t['mcaNumber']?>" class="external link"><?=$t['mcaName']?></a></td>
+ <?php for($i=40;$i>=0;$i--){
+  $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
+  $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
+  ?>
+ <td class="bottom right"><?=$t[$yyyymm][$prevDate]['GPV'];?></td>
  <?php }?>
+ </tr>
+ <?php }
+ ?>
 </table>
+
 <br>
 <hr>
 <p>&nbsp;</p>
