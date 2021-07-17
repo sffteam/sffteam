@@ -7687,6 +7687,42 @@ public function prevmonth($mcaNumber,$yyyymm){
    return compact('self','team', 'yyyymm');
 }
 
+public function findCity($city){
+ $users = Users::find('all',array(
+  'conditions'=>array('City'=>urldecode($city))
+ ));
+ 
+ foreach($users as $u){
+  $mcaNumber = $u['mcaNumber'];
+   $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber,)
+   ));
+   
+   $u['Mobile']=$findmobile['Mobile'];
+ }
+ return compact('users');
+}
+
+public function daily($mcaNumber){
+ $this->_render['layout'] = 'sale';
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+  $self = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+   )
+  ));
+  $team = Users::find('all',array(
+   'conditions'=>array(
+   'refer'=>$mcaNumber,
+   "Enable" => "Yes"
+   ),
+   ));
+
+
+  
+   return compact('self','team', 'yyyymm');
+}
 
 //end of class
 }
