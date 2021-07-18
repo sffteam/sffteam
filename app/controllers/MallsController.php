@@ -7846,7 +7846,7 @@ public function daily($mcaNumber){
   $team = Users::find('all',array(
    'conditions'=>array(
    'refer'=>$mcaNumber,
-//   "Enable" => "Yes"
+   'Enable' => "Yes"
    ),
    ));
    $todaysGPV = array();
