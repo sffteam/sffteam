@@ -7843,11 +7843,13 @@ public function daily($mcaNumber){
    'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
    )
   ));
+  $yyyymm = date('Y-m');
   $team = Users::find('all',array(
    'conditions'=>array(
    'refer'=>$mcaNumber,
    'Enable' => "Yes"
    ),
+   'order'=>array($yyyymm.'.GPV'=>DESC)
    ));
    $todaysGPV = array();
   $yyyymmdays=date(d)-1;
@@ -7857,10 +7859,10 @@ public function daily($mcaNumber){
     for($i=40;$i>=0;$i--){
      $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
      $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
-     $GPV = $t[$yyyymm][$prevDate]['GPV'];
+     $GPV = $t[$yyyymm][$prevDate]['GPV']?:0;
      $todaysGPV['mcaNumber']=$t['mcaNumber'];
      $todaysGPV['mcaName']=$t['mcaName'];
-     $todaysGPV[$t['mcaNumber'].".".$yyyymm.".".$prevDate.".".'GPV'] = $GPV;
+     $todaysGPV[$t['mcaNumber'].".".$yyyymm.".".$prevDate.".".'GPV'] = $GPV?:0;
     }
   }
 //  print_r($todaysGPV);

@@ -18,7 +18,7 @@
 <div class="view view-main page">
  <?php echo $this->_render('element', 'mca_menu');?>
  <?php echo $this->content(); ?>
- <?php echo $this->_render('element', 'graph');?>
+ <?php echo $this->_render('element', 'daily');?>
 </div>
 
 <!-- JS code -->
