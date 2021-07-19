@@ -212,7 +212,8 @@
  <td class="col top left"><?=number_format($self[$p2yyyymm]['PGBV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p1yyyymm]['PGBV'],0)?></td>
  <td class="col top left right bg-color-pink"><?=number_format($self[$yyyymm]['PGBV'],0)?></td>
-</tr><tr>
+</tr>
+<tr>
  <th class="col top left"><small>Roll Up</small></th>
  <td class="col top left"><?=number_format($self[$p10yyyymm]['RollUpPV'],0)?></td>
  <td class="col top left"><?=number_format($self[$p9yyyymm]['RollUpPV'],0)?></td>
@@ -253,6 +254,20 @@
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p2yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$p1yyyymm]['PaidTitle']))?:"-"?></small></td>
  <td class="col  left bottom right"><small><?=str_replace("r(N","r (N",str_replace("r(Q","r (Q",$self[$yyyymm]['PaidTitle']))?:"-"?></small></td>
+</tr>
+<tr>
+ <th class="col bottom left"><small>Gross</small></th>
+ <td class="col bottom left"><?=number_format($self[$p10yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p9yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p8yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p7yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p6yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p5yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p4yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p3yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p2yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left"><?=number_format($self[$p1yyyymm]['Gross'],0)?></td>
+ <td class="col bottom left right"><?=number_format($self[$yyyymm]['Gross'],0)?></td>
 </tr>
 </table>
 <p  class="Raleway szhalf">GBV/GPV is BV to PV ratio. This ratio is ideally 27. It reduces when you take advantage of Extra PV. Without Extra PV this ratio is always 27. </p>
