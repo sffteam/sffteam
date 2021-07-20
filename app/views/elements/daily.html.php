@@ -1,9 +1,6 @@
 <?php
  $yyyymm = date('Y-m');
- 
  $yyyymmdays=date(d)-1;
-
- 
 ?>
 <script  src="https://www.gstatic.com/charts/loader.js"></script>
     <script >
@@ -22,21 +19,17 @@
            echo "'".$t['mcaName']."',";
          }
         }
-            echo "''],\n";
-            $nameString = "[";
-         for($i=2;$i>=1;$i--){
+         echo "''],\n";
+         $nameString = "[";
+         for($i=3;$i>=1;$i--){ // change to number of days max 40
            $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
            $XprevDate = date("M-d", strtotime('today - '.$i.' days') );
            $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
-           
-           
-          $nameString = $nameString . "'".$XprevDate."'";
+           $nameString = $nameString . "'".$XprevDate."'";
            foreach($team as $t){
             if($t[$yyyymm][$prevDate]['GPV']!=0){
              $nameString = $nameString .  ',';
-             
              if($t[$yyyymm][$prevDate]['GPV']==="" || $t[$yyyymm][$prevDate]['GPV']===null){
-              
               $nameString = $nameString .  "0";
              }else{
               $nameString = $nameString . $t[$yyyymm][$prevDate]['GPV']?:0;
