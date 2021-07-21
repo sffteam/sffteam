@@ -18,6 +18,22 @@
   <th class="right"><?=$prevDate?></th>
  <?php }?>
  </tr>
+ <tr class="">
+ <td class="right left bottom">0</td>
+ <td class="right left bottom"><?=$self['mcaName']?></td>
+ <?php 
+ $yyyymm = date("Y-m", strtotime('today - 1 days') );
+ $prevDate = date("Y-m-d", strtotime('today - 0 days') );
+ $pprevDate = date("Y-m-d", strtotime('today - 1 days') );
+ ?> 
+ <td class="bottom right left"><?=$self[$yyyymm][$prevDate]['GPV']-$self[$yyyymm][$pprevDate]['GPV'];?></td>
+ <?php for($i=0;$i<=12;$i++){
+  $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
+  $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
+  ?>
+ <td class="bottom right"><?=$self[$yyyymm][$prevDate]['GPV']?:0;?></td>
+ <?php }?>
+ </tr>
  <?php $x=1;foreach($team as $t){?>
  <tr>
  <td class="bottom right left"><?=$x?></td>
