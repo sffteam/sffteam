@@ -11,7 +11,7 @@
  <th class="right left">#</th>
  <th class="right left">Name</th>
  <th class="right left">Today</th>
- <?php for($i=1;$i<=12;$i++){
+ <?php for($i=1;$i<=13;$i++){
   $prevDate = date("M-d", strtotime('today - '.$i.' days') );
   $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
   ?>
@@ -24,11 +24,11 @@
  <td  class="bottom right left"><a href="/malls/daily/<?=$t['mcaNumber']?>" class="external link"><?=$t['mcaName']?></a></td>
  <?php 
  $yyyymm = date("Y-m", strtotime('today - 1 days') );
- $prevDate = date("Y-m-d", strtotime('today - 1 days') );
- $pprevDate = date("Y-m-d", strtotime('today - 2 days') );
+ $prevDate = date("Y-m-d", strtotime('today - 0 days') );
+ $pprevDate = date("Y-m-d", strtotime('today - 1 days') );
  ?>
  <td class="bottom right left"><?=$t[$yyyymm][$prevDate]['GPV']-$t[$yyyymm][$pprevDate]['GPV'];?></td>
- <?php for($i=1;$i<=12;$i++){
+ <?php for($i=0;$i<=12;$i++){
   $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
   $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
   ?>
