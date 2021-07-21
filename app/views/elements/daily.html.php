@@ -11,7 +11,7 @@
         var data = google.visualization.arrayToDataTable([
         <?php 
         $yyyymm = date("Y-m", strtotime('today - 1 days') );
-        $prevDate = date("Y-m-d", strtotime('today - 1 days') );
+        $prevDate = date("Y-m-d", strtotime('today - 0 days') );
         $nameString = "['MMM-DD',";
         echo $nameString;
         foreach($team as $t){
@@ -21,7 +21,7 @@
         }
          echo "''],\n";
          $nameString = "[";
-         for($i=4;$i>=1;$i--){ // change to number of days max 40
+         for($i=4;$i>=0;$i--){ // change to number of days max 40
            $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
            $XprevDate = date("M-d", strtotime('today - '.$i.' days') );
            $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );

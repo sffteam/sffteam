@@ -7856,7 +7856,7 @@ public function daily($mcaNumber){
   $p1yyyymmdays=cal_days_in_month(CAL_GREGORIAN,date('m', strtotime("-1 month", strtotime(date("F") . "1"))),date('Y', strtotime("-1 month", strtotime(date("F") . "1"))));
   $totalDays = $yyyymmdays + $p1yyyymmdays;
   foreach ($team as $t){
-    for($i=40;$i>=0;$i--){
+    for($i=40;$i>=1;$i--){
      $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
      $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
      $GPV = $t[$yyyymm][$prevDate]['GPV']?:0;
