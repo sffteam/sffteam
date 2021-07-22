@@ -2,8 +2,8 @@ var $$ = Dom7;
 var storage = "ytdgpv";
 var version = "1.0.000";
 var server = "https://sffteam/malls/";
-var mcaNumber = $$("#mcaNumber").html();
-
+var mcaNumber = $$("#mcaNumber").val();
+console.log(mcaNumber);
 
 if (!localStorage[storage + "."+mcaNumber+".cart"]) {
  localStorage.setItem(storage + "."+mcaNumber+'.cart', "X:0");
@@ -242,8 +242,7 @@ function minustoCart(code) {
  addToCartProducts();
 }
 function addToCartBar() {
- var mcaNumber = $$("#mcaNumber").html();
- console.log(mcaNumber);
+ var mcaNumber = $$("#mcaNumber").val();
  var cart = localStorage[storage + "."+mcaNumber+".cart"];
  var items = 0;
  var rsValue = 0;

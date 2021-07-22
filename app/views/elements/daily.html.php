@@ -21,7 +21,7 @@
         }
          echo "''],\n";
          $nameString = "[";
-         for($i=5;$i>=0;$i--){ // change to number of days max 40
+         for($i=4;$i>=0;$i--){ // change to number of days max 40
            $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
            $XprevDate = date("M-d", strtotime('today - '.$i.' days') );
            $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );

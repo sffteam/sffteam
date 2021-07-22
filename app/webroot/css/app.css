@@ -19,6 +19,9 @@ td{
 .green{
  background-color:#C4EAC7
 }
+.bg-color-light-gray{
+ background-color:#DDDDDD
+}
 li{border-bottom:1px solid gray}
 ul.a {
   list-style-type: square;

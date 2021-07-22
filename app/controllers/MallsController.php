@@ -6419,7 +6419,7 @@ public function dailytrend($mcaNumber = ""){
 }
 public function p ($category="",$mcaNumber=""){
  
- $this->_render['layout'] = 'ytd';
+ $this->_render['layout'] = 'product';
  ini_set('max_execution_time', '0');
  ini_set("memory_limit", "-1");
  $yyyymm = date('Y-m');
