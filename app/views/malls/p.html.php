@@ -87,7 +87,7 @@
 <div class="login-screen">
     <div class="view">
       <div class="page">
-        <div class="page-content login-screen-content">
+        <div class="page-content login-screen-content  bg-color-light-gray">
           <div class="login-screen-title">My Cart</div>
           <form>
               <div id="CartList">
@@ -109,6 +109,7 @@
           </li>
           </ul>
           <a  target="_blank" title="Contact Us On WhatsApp" href="#" class="external whatsapplink hidemobile" onclick="return ShareWhatsApp();" id="ShareApp">Share</a>
+          <a  target="_blank" class="link login-screen-close color-red" title="Clear Cart" href="#" onclick="clearCart();">Clear Cart</a>
           <div class="block-footer"><a class="link login-screen-close color-red" href="#">Close</a></p>--End--</div>
             </div>
           </form>
