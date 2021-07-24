@@ -2091,10 +2091,10 @@ Users::update(
      array('multi' => true)
     );
     $today = array(
-      'PV'=>(int)$data['PV'],
-      'BV'=>((int)$data['BV']),
-      'GPV'=>((int)$data['GPV']),
-      'GBV'=>((int)$data['GBV']),
+      'PV'=>(int)$data['PV']?:0,
+      'BV'=>((int)$data['BV'])?:0,
+      'GPV'=>((int)$data['GPV'])?:0,
+      'GBV'=>((int)$data['GBV'])?:0,
       'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
      );
    $data = array(
@@ -2136,7 +2136,6 @@ Users::update(
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
      $yyyymm.'.'.date('Y-m-d')=>$today,
-
      'KYC'=>(string)$data['KYC'],
      'NEFT'=>$data['NEFT'],
      'Aadhar'=>$data['Aadhar'],
@@ -2144,7 +2143,6 @@ Users::update(
      'Zone'=>$data['Zone'],
      'City'=>$data['City'],
      'Enable'=>$data['Enable'],
-
    );
    print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
    Users::create()->save($data);
@@ -2185,9 +2183,9 @@ Users::update(
     }else{
      $today = array(
       'PV'=>$userActive[$yyyymm]['today']['PV']?:0,
-      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
-      'GPV'=>((int)$data['GPV']),
-      'GBV'=>((int)$data['GBV']),
+      'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV'])?:0,
+      'GPV'=>((int)$data['GPV'])?:0,
+      'GBV'=>((int)$data['GBV'])?:0,
       'Date'=>$userActive[$yyyymm]['today']['Date']?:"",
      );
     }
