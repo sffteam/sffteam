@@ -50,6 +50,17 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
+ Connections::add('default_Kailash', array(
+ 	'type' => CONNECTIONKAILASH_TYPE,
+ 	'host' => array(CONNECTIONKAILASH,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONKAILASH_DB,
+	'login' => CONNECTIONKAILASH_USER,
+	'password' => CONNECTIONKAILASH_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
 
 
  Connections::add('default_FalSabji', array(
