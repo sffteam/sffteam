@@ -57,7 +57,7 @@ class KailashController extends \lithium\action\Controller {
        "SKU"=>$p['SKU Number'],
        "Weight"=>$p['Net Weight'],
        "MRP"=>$p['MRP:Pan India'],
-       "Product Description"=>$p['Product Description'],
+       "Product_Description"=>$p['Product_Description'],
        "ShelfLife"=>$p['Shelf Life Value'],
        "ShelfLifeUnit"=>$p['Shelf Life Unit'],
        "IGST"=>$p['IGST'],
