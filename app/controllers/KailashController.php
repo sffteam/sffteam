@@ -37,7 +37,7 @@ class KailashController extends \lithium\action\Controller {
 
   public function products($category = null){
    $products = K_products::find('all',array(
-   'conditions'=>array('MainCategory'=> array('like'=>'/^'.$category.'/')),
+   'conditions'=>array('MainCategory'=> array('like'=>'/^'.urldecode($category).'/')),
    'order'=>array('Product Name'=>'ASC')
   ));
   $allproducts = array();
@@ -75,9 +75,6 @@ class KailashController extends \lithium\action\Controller {
       'SKUs'=>$allprices
      ));
     $newproduct = $c['Product Name'];
-    
-   
-    
    }
   }
   return $this->render(array('json' => array("success"=>"Yes",'allproducts'=>$allproducts)));
