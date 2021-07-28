@@ -3775,7 +3775,7 @@ public function getlevel(){
    'mcaNumber' => $u['mcaNumber'],
    'mcaName' => $u['mcaName'],
    'GrossPV'=>$u[$yyyymm]['GrossPV'],
-   'PV'=>$u[$pyyyymm]['PV'],
+   'PV'=>$u[$yyyymm]['PV'],
    'mobile'=>$mobile['Mobile']?:"",
    'LevelUp'=>((integer)$lpv-(integer)$u[$yyyymm]['GrossPV']),
    'yyyymm'=>$yyyymm,

@@ -279,3 +279,4 @@ function getUserSearch( chars) {
 function selectName(mcaNumber){
  console.log(mcaNumber);
 }
+
