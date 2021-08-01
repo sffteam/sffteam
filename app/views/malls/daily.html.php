@@ -26,12 +26,13 @@
  $prevDate = date("Y-m-d", strtotime('today - 0 days') );
  $pprevDate = date("Y-m-d", strtotime('today - 1 days') );
  ?> 
- <td class="bottom right left"><?=$self[$yyyymm][$prevDate]['GPV']-$self[$yyyymm][$pprevDate]['GPV'];?></td>
+ <td class="bottom right left"><?=$self[$yyyymm][$prevDate]['GPV']-$self[$yyyymm][$pprevDate]['GPV'];?><br>
+	<?=$self[$yyyymm][$prevDate]['GBV']-$self[$yyyymm][$pprevDate]['GBV'];?></td>
  <?php for($i=0;$i<=12;$i++){
   $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
   $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
   ?>
- <td class="bottom right"><?=$self[$yyyymm][$prevDate]['GPV']?:0;?></td>
+ <td class="bottom right"><?=$self[$yyyymm][$prevDate]['GPV']?:0;?><br><?=$self[$yyyymm][$prevDate]['GBV']?:0;?></td>
  <?php }?>
  </tr>
  <?php $x=1;foreach($team as $t){?>
@@ -43,12 +44,12 @@
  $prevDate = date("Y-m-d", strtotime('today - 0 days') );
  $pprevDate = date("Y-m-d", strtotime('today - 1 days') );
  ?>
- <td class="bottom right left"><?=$t[$yyyymm][$prevDate]['GPV']-$t[$yyyymm][$pprevDate]['GPV'];?></td>
+ <td class="bottom right left"><?=$t[$yyyymm][$prevDate]['GPV']-$t[$yyyymm][$pprevDate]['GPV'];?><br><?=$t[$yyyymm][$prevDate]['GBV']-$t[$yyyymm][$pprevDate]['GBV'];?></td>
  <?php for($i=0;$i<=12;$i++){
   $prevDate = date("Y-m-d", strtotime('today - '.$i.' days') );
   $yyyymm = date("Y-m", strtotime('today - '.$i.' days') );
   ?>
- <td class="bottom right"><?=$t[$yyyymm][$prevDate]['GPV']?:0;?></td>
+ <td class="bottom right"><?=$t[$yyyymm][$prevDate]['GPV']?:0;?><br><?=$t[$yyyymm][$prevDate]['GBV']?:0;?></td>
  <?php 
  
  }$x++;
