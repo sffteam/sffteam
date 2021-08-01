@@ -1147,13 +1147,15 @@ set_time_limit(0);
          if($data['mcaNumber']!=""){
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-           $this->addUserBuilders($data,$yyyymm);
+											$yyyymmdd = $this->request->data['yyyymmdd'];
+           $this->addUserBuilders($data,$yyyymm,$yyyymmdd);
            
           }
          }
         }else{
+											$yyyymmdd = $this->request->data['yyyymmdd'];
            $yyyymm = $this->request->data['yyyymm'];
-           $this->updateUserBuilders($data,$yyyymm);
+           $this->updateUserBuilders($data,$yyyymm,$yyyymmdd);
         }
       }
       fclose($handle);
@@ -1161,7 +1163,7 @@ set_time_limit(0);
  }
 }
 
- public function updateUserBuilders($data,$yyyymm){
+ public function updateUserBuilders($data,$yyyymm,$yyyymmdd){
      if($data){
   
    $userActive = Users::find('first',array(
@@ -1176,7 +1178,7 @@ set_time_limit(0);
       'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
       'GBV'=>((int)$data['GBV']),
-      'Date'=> new \MongoDate()
+      'Date'=> $yyyymmdd
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
           if($userActive['Enable']=="Yes"){
@@ -1237,7 +1239,7 @@ set_time_limit(0);
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.InActive'=>(integer)0,
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.date('Y-m-d')=>$today,
+     $yyyymm.'.'.$yyyymmdd =>$today,
    );
    }
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
@@ -1263,7 +1265,7 @@ set_time_limit(0);
   return compact('data');
  }
 
- public function adduserBuilders($data,$yyyymm){
+ public function adduserBuilders($data,$yyyymm,$yyyymmdd){
   
    if($data){
    if($data['mcaNumber']!="" && $data["mcaName"]!=""){
@@ -1329,7 +1331,7 @@ set_time_limit(0);
       'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
       'GBV'=>((int)$data['GBV']),
-      'Date'=> new \MongoDate()
+      'Date'=> $yyyymmdd
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
           if($userActive['Enable']=="Yes"){
@@ -1393,7 +1395,7 @@ set_time_limit(0);
      $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.date('Y-m-d')=>$today,
+     $yyyymm.'.'.$yyyymmdd=>$today,
    );
    }
 
@@ -1674,7 +1676,8 @@ set_time_limit(0);
          if($data['mcaNumber']!=""){
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-           $this->addUserActive($data,$yyyymm);
+											$yyyymmdd = $this->request->data['yyyymmdd'];
+           $this->addUserActive($data,$yyyymm,$yyyymmdd);
           }
          }
         }else{
@@ -1843,7 +1846,8 @@ set_time_limit(0);
          if($data['mcaNumber']!=""){
           if((int)$data['mcaNumber']>0){
            $yyyymm = $this->request->data['yyyymm'];
-           $this->addUserEnrolment($data,$yyyymm);
+											$yyyymmdd = $this->request->data['yyyymmdd'];
+           $this->addUserEnrolment($data,$yyyymm,$yyyymmdd);
            
            $function = new Functions();
            $function->addnotify(
@@ -1859,7 +1863,8 @@ set_time_limit(0);
          }
         }else{
            $yyyymm = $this->request->data['yyyymm'];
-           $this->updateUserEnrolment($data,$yyyymm);
+											$yyyymmdd = $this->request->data['yyyymmdd'];
+           $this->updateUserEnrolment($data,$yyyymm,$yyyymmdd);
         }
       }
       fclose($handle);
@@ -1961,7 +1966,7 @@ Users::update(
  }
 
 
- public function adduserActive($data,$yyyymm){
+ public function adduserActive($data,$yyyymm,$yyyymmdd){
    if($data){
   
    $userActive = Users::find('first',array(
@@ -1976,7 +1981,7 @@ Users::update(
       'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
       'GBV'=>((int)$data['GBV']),
-      'Date'=> new \MongoDate()
+      'Date'=> $yyyymmdd
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
           if($userActive['Enable']=="Yes"){
@@ -2024,7 +2029,7 @@ Users::update(
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.date('Y-m-d')=>$today,
+     $yyyymm.'.'.$yyyymmdd=>$today,
   );
     $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
     Users::update($data,$conditions);
@@ -2037,7 +2042,7 @@ Users::update(
  }
 
 
- public function adduserEnrolment($data,$yyyymm){
+ public function adduserEnrolment($data,$yyyymm,$yyyymmdd){
   
    if($data){
    if($data['mcaNumber']!="" && $data["mcaName"]!=""){
@@ -2135,7 +2140,7 @@ Users::update(
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.date('Y-m-d')=>$today,
+     $yyyymm.'.'.$yyyymmdd =>$today,
      'KYC'=>(string)$data['KYC'],
      'NEFT'=>$data['NEFT'],
      'Aadhar'=>$data['Aadhar'],
@@ -2152,7 +2157,7 @@ Users::update(
  }
 
 
- public function updateUserEnrolment($data,$yyyymm){
+ public function updateUserEnrolment($data,$yyyymm,$yyyymmdd){
    $userActive = Users::find('first',array(
     'conditions'=>array('mcaNumber'=>(string)$data['mcaNumber'])
    ));
@@ -2164,7 +2169,7 @@ Users::update(
       'BV'=>((int)$data['BV']-(int)$userActive[$yyyymm]['BV']),
       'GPV'=>((int)$data['GPV']),
       'GBV'=>((int)$data['GBV']),
-      'Date'=> new \MongoDate()
+      'Date'=> $yyyymmdd
      );
      print_r($data['mcaName'].': PV'.((int)$data['PV']-(int)$userActive[$yyyymm]['PV']).'<br>');
           if($userActive['Enable']=="Yes"){
@@ -2227,7 +2232,7 @@ Users::update(
      $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.date('Y-m-d')=>$today,
+     $yyyymm.'.'.$yyyymmdd=>$today,
      'KYC'=>(string)$data['KYC'],
      'NEFT'=>$data['NEFT'],
      'Aadhar'=>$data['Aadhar'],
@@ -7842,12 +7847,13 @@ public function daily($mcaNumber){
    )
   ));
   $yyyymm = date('Y-m');
+		$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
   $team = Users::find('all',array(
    'conditions'=>array(
    'refer'=>$mcaNumber,
    'Enable' => "Yes"
    ),
-   'order'=>array($yyyymm.'.GPV'=>DESC)
+   'order'=>array($yyyymm.'.GPV'=>DESC,$p1yyyymm.'.GPV'=>DESC)
    ));
    $todaysGPV = array();
   $yyyymmdays=date(d)-1;
