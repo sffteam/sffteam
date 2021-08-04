@@ -145,7 +145,7 @@ public function getproductsimages(){
     foreach($products as $p){
       $dataParam = array(
        'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
-       'caption'=> '<iframe src=\'<span class="text-color-yellow"> &nbsp;'.$val.'&nbsp; </span><br>'.$p['Name'].' <br>['.$p['Code'].'] <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).'<span class="text-color-yellow"> PV: '.number_format($p['PV'],2).'</span> <span class="text-color-green">BV: '.number_format($p['BV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>\' style="height:400px;width:400px"></iframe>',
+       'caption'=> '<span class="text-color-yellow"> &nbsp;'.$val.'&nbsp; </span><br>'.$p['Name'].' <br>['.$p['Code'].'] <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).'<span class="text-color-yellow"> PV: '.number_format($p['PV'],2).'</span> <span class="text-color-green">BV: '.number_format($p['BV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
       );
      array_push($allparams,$dataParam);
     
