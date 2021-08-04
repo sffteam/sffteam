@@ -206,6 +206,61 @@ public function getItemsCategory(){
  
  return $this->render(array('json' => array("success"=>"Yes",'TUY'=>$tuy,'Products'=>$allTUY)));
 }
+
+public function cartproducts(){
+  $cart = $this->request->data;
+  $CartProducts = array();
+  foreach ($cart as $code => $quantity){
+   if($code!="X"){
+    $product = Malls::find('first',array(
+     'conditions'=>array('Code'=>(string)$code)
+    ));
+   }
+   if(count($product)>0){
+   array_push($CartProducts,array(
+    'Code' => $product['Code'],
+    'Name' => $product['Name'],
+    'MRP' => $product['MRP'],
+    'DP' => $product['DP'],
+    'BV' => $product['BV'],
+    'PV' => $product['PV'],
+    'Weight' => $product['Weight'],
+    'Percent' => $product['Percent'],
+    'Quantity'=> (integer)$quantity
+   ));
+   }
+   
+   $settings = Settings::find('first');
+    $walletpoints = round($product['BV']*$quantity*$settings['WalletPoints']/100,0);
+    if($product['discountType']=="Rs"){
+     $totalPV = floatval(($product['PV']));
+     $totalBV = floatval(($product['BV']));
+     $totalDP = floatval(($product['DP']));
+     $totalWeight = floatval(($product['Weight']));
+     $totalvalue = floatval(($product['MRP'] - $product['discount'])*$quantity);
+    }else if($product['discountType']=="Percent"){
+     $totalPV = floatval(($product['PV'])); 
+     $totalBV = floatval(($product['BV']));
+     $totalDP = floatval(($product['DP']));
+     $totalWeight = floatval(($product['Weight']));
+     $totalvalue = floatval(($product['MRP']-$product['MRP']*$product['discount']/100)*$quantity); 
+    }else{
+     $totalPV = floatval($product['PV']*$quantity); 
+     $totalBV = floatval($product['BV']*$quantity); 
+     $totalDP = floatval($product['DP']*$quantity);
+     $totalWeight = floatval(($product['Weight']));
+     $totalvalue = floatval($product['MRP']*$quantity); 
+    }
+    $wp = $wp + $walletpoints;
+    $value = $value + $totalvalue;
+    $valueBV = $valueBV + $totalBV;
+    $valuePV = $valuePV + $totalPV;
+    $valueDP = $valueDP + $totalDP;
+    $valueWeight = $valueWeight + $totalWeight;
+  }
+  return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"valueWeight"=>$valueWeight,"CartProducts"=>$CartProducts,'mcaNumber'=>$cart['mcaNumber'])));  
+}
+
 //end of class
 }
 
