@@ -107,6 +107,60 @@ class ModicareController extends \lithium\action\Controller {
   return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$Code)));  
  }
  
+public function getproductsimages(){
+  $CategoriesArray = array(
+  'HC' => 'Home Care 50%',
+  'AB' => 'Agarbatti 30%',
+  'LC' => 'Laundry Care 35% & 60%',
+  'PC' => 'Personal Care 10% to 60%',
+  'FP' => 'Food & Beverages 10% - 65%',
+  'SC' => 'Skin Care 60%',
+  'FS' => 'Food Supplement 60%',
+  'MJ' => 'Jewelery 40%',
+  'UC' => 'Cosmetics - Urban Color 60%',
+  'BC' => 'Baby Care 40 - 60%',
+  'AG' => 'Agriculture 60%',
+  'AC' => 'Auto Care 50%',
+  'HL' => 'Wellness 40-60%',
+  'WA' => 'Watches 50%',
+  'MG' => 'Technology 60%',
+  '00' => 'Others 10% to 60%',
+  '60' => 'Extra 0% to 60%',
+  );
+ 
+ $allproducts = array();
+ foreach($CategoriesArray as $key=>$val){
+  $Code = $key;
+  //print_r($Code);
+  $data = array(
+   'category'=>$val,
+   'category_'=> str_replace("-","_",str_replace(" ","_",$val)),
+  );
+  
+  
+  $products = Malls::find('all',array(
+   'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/')),
+  ));
+  $allparams = array();
+    foreach($products as $p){
+      $dataParam = array(
+       'url'=>'https://sff.team/img/products/'. $p['Code'].'.jpg',
+       'caption'=> ' <span class="text-color-yellow"> &nbsp;'.$val.'&nbsp; </span><br>'.$p['Name'].' <br>['.$p['Code'].'] <span class="text-color-red">MRP: <strike>'.number_format($p['MRP'],2).'</strike></span> <span class="text-color-green">DP: '.number_format($p['DP'],2).' PV: '.number_format($p['PV'],2).' BV: '.number_format($p['BV'],2).'</span> <span class="text-color-blue">'.number_format($p['BV']/$p['DP']*100,0).'%</span>',
+      );
+     array_push($allparams,$dataParam);
+    
+    }
+  
+  array_push($allproducts,array(
+   'category'=>$data,
+   'photos'=>$allparams
+  ));
+  
+ }
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));  
+}
+
 //end of class
 }
 
