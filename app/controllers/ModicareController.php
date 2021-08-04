@@ -44,7 +44,7 @@ class ModicareController extends \lithium\action\Controller {
     'AB' => array('Name'=>'AGARBATTI','color'=>'#e239A5','percent'=>'30%'),
     'LC' => array('Name'=>'LAUNDRY','color'=>'#303f9f','percent'=>'35% to 60%'),
     'PC' => array('Name'=>'PERSONAL','color'=>'#8e24aa','percent'=>'10% to 50%'),
-    'FP' => array('Name'=>'FOOD','color'=>'#00796b',,'percent'=>'10% to 50%'),
+    'FP' => array('Name'=>'FOOD','color'=>'#00796b','percent'=>'10% to 50%'),
     'SC' => array('Name'=>'SKINCARE','color'=>'#0288d1','percent'=>'60%'),
     'MJ' => array('Name'=>'JEWELERY','color'=>'#455a64','percent'=>'40%'),
     'UC' => array('Name'=>'COSMETICS','color'=>'#388e3c','percent'=>'60%'),
