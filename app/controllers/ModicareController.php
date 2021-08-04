@@ -134,7 +134,7 @@ public function getproductsimages(){
   //print_r($Code);
   $data = array(
    'category'=>$val,
-   'category_'=> str_replace("-","_",str_replace(" ","_",$val)),
+   'category_'=> str_replace(" ","_",$val),
   );
   
   
