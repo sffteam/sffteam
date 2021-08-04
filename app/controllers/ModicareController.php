@@ -57,8 +57,32 @@ class ModicareController extends \lithium\action\Controller {
 				'00' => array('Name'=>'Others','color'=>'#01579b','percent'=>'105 to 60%'),
 				'60' => array('Name'=>'Extra','color'=>'#01579b','percent'=>'0%'),
     );
+  $products = Malls::find('all',array(
+   'order'=>array('DP'=>'ASC','Name'=>'ASC')
+  ));
+  $AllProducts = array();
+  
+  foreach($products as $p){
+   array_push($AllProducts,array(
+    'Code'=>$p['Code'],
+    'Name'=>$p['Name'],
+    'MRP'=>$p['MRP'],
+    'DP'=>$p['DP'],
+    'BV'=>$p['BV'],
+    'PV'=>$p['PV'],
+    'Weight'=>$p['Weight'],
+    'Available'=>$p['Available'],
+    'Percent'=>$p['Percent'],
+    'Saving'=>$p['Saving'],
+    'SavingPercent'=>$p['SavingPercent'],
+    'InDemand'=>$p['InDemand'],
+    'BuyInLoyalty'=>$p['BuyInLoyalty'],
+    'TUYName'=>$p['TUYName'],
+    'Video'=>$p['Video'],
+   ));
+  }
 
-  return $this->render(array('json' => array("success"=>"Yes",'Category'=>$CategoriesArray,'CategorySwiper'=>$CategoriesSwiperArray)));  
+  return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$CategoriesArray,'CategorySwiper'=>$CategoriesSwiperArray)));
   
  }
  
