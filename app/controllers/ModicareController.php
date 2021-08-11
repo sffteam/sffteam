@@ -8,6 +8,7 @@ use app\extensions\action\GoogleAuthenticator;
 use app\controllers\DashboardController;
 use lithium\data\Connections;
 use app\models\Malls;
+use app\models\Names;
 
 use \MongoRegex;
 use \MongoClient;
@@ -179,6 +180,9 @@ public function getItemsCategory(){
   }
   foreach($tuy as $t){
    foreach($products as $tn){
+					$names = Names::find('first',array(
+						'conditions'=array('Code'=>$tn['Code'])
+					));
      if($t==$tn['TUYName']){
       array_push($tuysub,
        array(
@@ -195,7 +199,11 @@ public function getItemsCategory(){
        'InDemand'=>$tn['InDemand'],
        'BuyInLoyalty'=>$tn['BuyInLoyalty'],
        'TUYName'=>$tn['TUYName'],
-       'Video'=>$tn['Video'],
+       'Video'=>$names['Video'],
+							'Short'=>$names['Short'],
+							'Category'=>$names['Category'],
+							'Description'=>$names['Description'],
+							'Hindi'=>$names['Hindi'],
       ));
      }
    }
@@ -268,15 +276,14 @@ public function getprice(){
   $wp = 0;
   $walletpoints = 0;
   foreach ($cart as $code => $quantity){
-   
    $product = Malls::find('first',array(
     'conditions'=>array('Code'=>(string)$code)
    ));
-     $totalPV = floatval($product['PV']*$quantity); 
-     $totalBV = floatval($product['BV']*$quantity); 
-     $totalDP = floatval($product['DP']*$quantity); 
-     $totalvalue = floatval($product['MRP']*$quantity); 
-     $totalWeight = floatval($product['Weight']*$quantity); 
+			$totalPV = floatval($product['PV']*$quantity); 
+			$totalBV = floatval($product['BV']*$quantity); 
+			$totalDP = floatval($product['DP']*$quantity); 
+			$totalvalue = floatval($product['MRP']*$quantity); 
+			$totalWeight = floatval($product['Weight']*$quantity); 
 
     $value = $value + $totalvalue;
     $valueBV = $valueBV + $totalBV;
