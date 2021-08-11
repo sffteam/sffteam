@@ -181,7 +181,7 @@ public function getItemsCategory(){
   foreach($tuy as $t){
    foreach($products as $tn){
 					$names = Names::find('first',array(
-						'conditions'=array('Code'=>$tn['Code'])
+						'conditions'=>array('Code'=>$tn['Code'])
 					));
      if($t==$tn['TUYName']){
       array_push($tuysub,
