@@ -64,6 +64,9 @@ class ModicareController extends \lithium\action\Controller {
   $AllProducts = array();
   
   foreach($products as $p){
+					$names = Names::find('first',array(
+						'conditions'=>array('Code'=>$p['Code'])
+					));
    array_push($AllProducts,array(
     'Code'=>$p['Code'],
     'Name'=>$p['Name'],
@@ -79,7 +82,12 @@ class ModicareController extends \lithium\action\Controller {
     'InDemand'=>$p['InDemand'],
     'BuyInLoyalty'=>$p['BuyInLoyalty'],
     'TUYName'=>$p['TUYName'],
-    'Video'=>$p['Video'],
+				'Video'=>$names['Video'],
+				'Short'=>$names['Short'],
+				'Category'=>$names['Category'],
+				'Description'=>$names['Description'],
+				'Hindi'=>$names['Hindi'],
+
    ));
   }
 
