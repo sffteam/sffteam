@@ -311,7 +311,7 @@ public function product($Code,$format=null){
    return compact('product');
   }
 		$names = Names::find('first',array(
-			'conditions'=>array($Code=>)
+			'conditions'=>array('Code'=>$Code)
 		));
 				$product['Video']=>$names['Video'];
 				$product['Short']=>$names['Short'];
