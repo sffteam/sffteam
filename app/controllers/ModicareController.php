@@ -124,7 +124,7 @@ public function getproducts(){
  $allproducts = array();
  foreach ($products as $p){
 					$names = Names::find('first',array(
-						'conditions'=>array('Code'=>$tn['Code'])
+						'conditions'=>array('Code'=>$p['Code'])
 					));
 
   array_push($allproducts,array(
