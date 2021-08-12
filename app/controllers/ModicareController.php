@@ -9,6 +9,7 @@ use app\controllers\DashboardController;
 use lithium\data\Connections;
 use app\models\Malls;
 use app\models\Names;
+use app\models\Settings;
 
 use \MongoRegex;
 use \MongoClient;
