@@ -365,7 +365,10 @@ public function cartsubmit(){
      array(
       'Code'=>str_replace("minusCode","",$key),
       'Quantity'=>(integer)$val,
-      'Rate'=>$prices['DP'],
+						'MRP'=>$prices['MRP'],
+      'DP'=>$prices['DP'],
+						'BV'=>$prices['BV'],
+						'PV'=>$prices['PV'],
       'Value' => (integer)$val * $prices['DP'],
       'Name'=>$prices['Name'],
 						'Short'=>$names['Short'],
@@ -374,6 +377,18 @@ public function cartsubmit(){
       )
     ); 
    }
+     $totalPV = floatval($prices['PV']*$val); 
+     $totalBV = floatval($prices['BV']*$val); 
+     $totalDP = floatval($prices['DP']*$val);
+     $totalWeight = floatval(($prices['Weight']*$val));
+     $totalMRP = floatval($prices['MRP']*$val); 
+					
+    $value = $value + $totalMRP;
+    $valueBV = $valueBV + $totalBV;
+    $valuePV = $valuePV + $totalPV;
+    $valueDP = $valueDP + $totalDP;
+    $valueWeight = $valueWeight + $totalWeight;
+
   }
   $data = array(
    'Name'=>$this->request->data['C_name'],
@@ -386,7 +401,7 @@ public function cartsubmit(){
    'DateTime'=>date('d-m-Y'),
   );
   Dporders::create()->save($data);
-    return $this->render(array('json' => array("success"=>"Yes",'data'=>$data)));
+    return $this->render(array('json' => array("success"=>"Yes",'data'=>$data,"value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"valueWeight"=>$valueWeight,)));
  }
 
 
