@@ -116,7 +116,28 @@ class ModicareController extends \lithium\action\Controller {
   
   return $this->render(array('json' => array("success"=>"Yes",'products'=>$AllProducts,'Category'=>$Code)));  
  }
+public function getproducts(){
+ $products = Malls::find('all',array(
+  'order'=>array('Code'=>'ASC','Name'=>'ASC')
+ ));
  
+ $allproducts = array();
+ foreach ($products as $p){
+					$names = Names::find('first',array(
+						'conditions'=>array('Code'=>$tn['Code'])
+					));
+
+  array_push($allproducts,array(
+   'Code'=>$p['Code'],
+   'Name'=>$p['Name'],
+			'Short'=>$names['Short'],
+			'Category'=>$names['Category'],
+  ));
+ }
+ 
+ return $this->render(array('json' => array("success"=>"Yes",'products'=>$allproducts)));   
+}
+
 public function getproductsimages(){
   $CategoriesArray = array(
   'HC' => 'Home Care',
