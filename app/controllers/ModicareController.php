@@ -234,6 +234,9 @@ public function cartproducts(){
     ));
    }
    if(count($product)>0){
+				$names = Names::find('first',array(
+					'conditions'=>array('Code'=>$code)
+				));
    array_push($CartProducts,array(
     'Code' => $product['Code'],
     'Name' => $product['Name'],
@@ -243,7 +246,9 @@ public function cartproducts(){
     'PV' => $product['PV'],
     'Weight' => $product['Weight'],
     'Percent' => $product['Percent'],
-    'Quantity'=> (integer)$quantity
+    'Quantity'=> (integer)$quantity,
+				'Short'=>$names['Short'],
+				'Category'=>$names['Category'],
    ));
    }
    
