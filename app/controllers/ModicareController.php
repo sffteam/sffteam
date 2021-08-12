@@ -9,6 +9,7 @@ use app\controllers\DashboardController;
 use lithium\data\Connections;
 use app\models\Malls;
 use app\models\Names;
+use app\models\Dporders;
 use app\models\Settings;
 
 use \MongoRegex;
@@ -347,6 +348,46 @@ public function product($Code,$format=null){
 				$product['Hindi']=$names['Hindi'];
  return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));  
 }
+
+public function cartsubmit(){
+  
+  $products = array();
+  foreach($this->request->data as $key=>$val){
+   if(substr($key,0,9)=="minusCode"){
+   $Code = str_replace("minusCode","",$key);
+   $prices = Malls::find('first',array(
+   'conditions'=>array('Code'=> $Code)
+   ));
+   $names = Names::find('first',array(
+   'conditions'=>array('Code'=> $Code)
+   ));    
+    array_push($products, 
+     array(
+      'Code'=>str_replace("minusCode","",$key),
+      'Quantity'=>(integer)$val,
+      'Rate'=>$prices['DP'],
+      'Value' => (integer)$val * $prices['DP'],
+      'Name'=>$prices['Name'],
+						'Short'=>$names['Short'],
+						'Category'=>$names['Category'],
+      'Weight'=>$prices['Weight'],
+      )
+    ); 
+   }
+  }
+  $data = array(
+   'Name'=>$this->request->data['C_name'],
+			'mcaNumber'=>$this->request->data['C_mcaNumber'],
+   'Mobile'=>$this->request->data['C_mobile'],
+			'DP_Mobile'=>$this->request->data['DP_mobile'],
+   'Address'=>$this->request->data['C_address'],
+   'Pincode'=>$this->request->data['C_pincode'],
+   'Products'=>$products,
+   'DateTime'=>date('d-m-Y'),
+  );
+  Dporders::create()->save($data);
+    return $this->render(array('json' => array("success"=>"Yes",'data'=>$data)));
+ }
 
 
 //end of class
