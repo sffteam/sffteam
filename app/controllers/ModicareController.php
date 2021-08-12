@@ -310,6 +310,14 @@ public function product($Code,$format=null){
   if($format=="jpg"){
    return compact('product');
   }
+		$names = Names::find('first',array(
+			'conditions'=>array($Code=>)
+		));
+				$product['Video']=>$names['Video'];
+				$product['Short']=>$names['Short'];
+				$product['Category']=>$names['Category'];
+				$product['Description']=>$names['Description'];
+				$product['Hindi']=>$names['Hindi'];
  return $this->render(array('json' => array("success"=>"Yes","product"=>$product)));  
 }
 
