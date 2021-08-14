@@ -404,7 +404,112 @@ public function cartsubmit(){
     return $this->render(array('json' => array("success"=>"Yes",'data'=>$data,"value"=>$value,"valueBV"=>$valueBV,"valuePV"=>$valuePV,"valueDP"=>$valueDP,"valueWeight"=>$valueWeight,)));
  }
 
+public function dplabels(){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+ $products = Names::find('all',array(
+		'order'=>array('Code'=>'ASC')
+	));
+	$arrayImages = array();
+	foreach($products as $p){
+		$file = $this->createImageInstantly($p['Code']);
+		array_push($arrayImages,$file);
+	}
 
+	return $this->render(array('json' => array("success"=>"Yes",'Images'=>$arrayImages)));
+}
+
+public function createImageInstantly($Code){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+	$p = Names::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));
+	$m = Malls::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));	
+	$x=1200;$y=450;
+	$code = $p['Code'];
+	$short = $p['Short'];
+	$category = $p['Category'];
+	$MRP = $m['MRP'];
+	$DP = $m['DP'];
+	$BV = $m['BV'];
+	$PV = $m['PV'];
+	$Weight = round($m['Weight']/100)*100;
+	header('Content-Type: image/png');
+	$targetFolder = '/app/webroot/img/dpimages/';
+	$imageFolder = '/app/webroot/img/products/';
+	$fontFolder = '/';
+
+	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+	$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+	
+	$outputImage = imagecreatetruecolor($x, $y);
+	$white = imagecolorallocate($outputImage, 255, 255, 255);
+	$black = imagecolorallocate($outputImage, 0, 0, 0);
+	$red = imagecolorallocate($outputImage, 255, 0, 0);
+	$blue = imagecolorallocate($outputImage, 0, 0, 255);
+	$green = imagecolorallocate($outputImage, 0, 102, 0);
+	$brown = imagecolorallocate($outputImage, 102, 0, 0);
+
+
+
+	imagefill($outputImage, 0, 0, $white);
+	$text = 'MRP: '.$MRP;
+	// $widthCode = $x - strlen(trim($code.$short))*100/2;
+	// $widthCategory = $x - strlen(trim($category))*150/2;
+	// $widthMRP = $x - strlen(trim("MRP: ".number_format($MRP,1)))*160/2;
+	// $widthDP = $x - strlen(trim("DP: ".number_format($DP,1)))*170/2;
+	// $widthBVPV = $x - strlen(trim("BV: ".number_format($BV,1))."  -  ".trim("PV: ".number_format($PV,1)))*80/2;
+	
+	$widthCode = $widthCategory = $widthMRP = $widthDP = $widthBVPV = 30;
+	
+		$img = $imagePath.$code."_400.jpg";
+  $first = imagecreatefromjpeg($img);
+  imagecopyresized($outputImage,$first,700,0,0,0, 400, 400,380,380);
+
+	
+	imagettftext($outputImage, 36, 0, $widthCode, 100, $black, './fonts/GothamBold.ttf', wordwrap(" ".$code." ".$short ,50,"\n",true));
+	imagettftext($outputImage, 40, 0, $widthCategory,170, $black, './fonts/GothamBold.ttf', wordwrap(" ".$category ,50,"\n",true));
+	
+	
+	imagettftext($outputImage, 50, 0, $widthMRP,240, $red, './fonts/GothamBold.ttf', wordwrap(" ".trim("MRP: ".number_format($MRP,1)) ,40,"\n",true));
+	
+	imageline($outputImage,50,190,500,240,$black);
+	imageline($outputImage,51,191,501,241,$black);
+	imageline($outputImage,50,240,500,190,$black);
+	imageline($outputImage,51,241,501,191,$black);
+	
+	imageline($outputImage,1,1,1200,1,$black);
+	imageline($outputImage,1,3,1200,3,$black);
+	
+	imageline($outputImage,1,1,1,450,$black);
+	imageline($outputImage,3,1,3,450,$black);
+	
+	imageline($outputImage,1,449,1200,449,$black);
+	imageline($outputImage,1,447,1200,447,$black);
+	
+	imageline($outputImage,1199,1,1199,449,$black);
+	imageline($outputImage,1197,1,1197,449,$black);
+	
+	
+	imagettftext($outputImage, 50, 0, $widthDP,310, $blue, './fonts/GothamBold.ttf', wordwrap(" ".trim("DP: ".number_format($DP,1)) ,40,"\n",true));
+	imagettftext($outputImage, 40, 0, $widthBVPV,370, $green, './fonts/GothamBold.ttf', wordwrap(" ".trim("BV: ".number_format($BV,1))."  -  ".trim("PV: ".number_format($PV,1)) ,30,"\n",true));
+	
+	imagettftext($outputImage, 20, 0, 35,30, $black, './fonts/GothamBold.ttf', wordwrap("S J Trading Co. +91 98257 52955" ,60,"\n",true));
+
+	$filename=$code.'.png';
+	imagepng($outputImage, $targetPath . $filename);
+	imagedestroy($outputImage);
+
+
+
+
+
+
+	return compact('code','short','category','MRP','DP','BV','PV','Weight');
+}
 //end of class
 }
 
