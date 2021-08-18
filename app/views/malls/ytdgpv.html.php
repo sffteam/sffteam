@@ -439,6 +439,63 @@ $rate = 1+number_format((($self[$yyyymm]['GBV']/$yyyymmdays)-($self[$p1yyyymm]['
 $nrate = 1.2;
 ?>
 <hr>
+
+<h1 class="Raleway szhalf">Team Zero this month</h1>
+<table border=0 cellpadding=1 cellspacing=0 class="Roboto szhalf">
+ <tr>
+ <th class="szhalf top left">#</th>
+ <th class="szhalf top left">Name</th>
+ <th class="szhalf top left">MCA No</th>
+	<th class=" szhalf top left"><?=$p5yyyymm?></th>
+	<th class=" szhalf top left"><?=$p4yyyymm?></th>
+	<th class=" szhalf top left"><?=$p3yyyymm?></th>
+	<th class=" szhalf top left"><?=$p2yyyymm?></th>
+	<th class=" szhalf top left"><?=$p1yyyymm?></th>
+ <th class=" szhalf top left">PV</th>
+ <th class=" szhalf top left">GPV</th>
+ <th class=" szhalf top left right">Growth</th>
+ </tr>
+<?php 
+$i = 0;foreach($teamzero as $t){
+ $i++;
+ ?>
+<tr>
+ <td class="szhalf left bottom"><?=$i?></td>
+ <td class="text-align-left  left bottom">
+ <?php 
+ if($t['refer_id']==$self['mcaNumber']){
+  echo "&#9728;";
+ }
+ ?>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a>
+ <?php if($t['KYC']=='Approved'){?>
+ <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">A</span>
+ <?php }?>
+ <?php if($t['NEFT']=='Y'){?>
+ <span class="Roboto badge color-green">N</span>
+ <?php }else{?>
+ <span class="Roboto badge color-red">N</span>
+ <?php }?>
+
+ </td>
+	<td class="  left bottom"><?=$t[$p5yyyymm]['PV']?></td>
+	<td class="  left bottom"><?=$t[$p4yyyymm]['PV']?></td>
+	<td class="  left bottom"><?=$t[$p3yyyymm]['PV']?></td>
+	<td class="  left bottom"><?=$t[$p2yyyymm]['PV']?></td>
+	<td class="  left bottom"><?=$t[$p1yyyymm]['PV']?></td>
+ <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
+ <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
+ <td class="  left right bottom"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
+</tr>
+<?php 
+}
+?> 
+</table>
+<br>
+<hr>
 <p class="Roboto szhalf">If you do business at the current rate of this month in the next month and maintain 20% in subsequent months. You will have to your own PV and build your team along with title. Your GPV and GBV will grow and your Cheque will be 10% commission based on your GBV.</p>
 <table  border="0" cellspacing=0 cellpadding=1 class="Roboto szhalf">
 <tr>
@@ -561,64 +618,7 @@ $months = 0;
  <td  class="szhalf  top left "><small><?=number_format($rate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$nrate*$average*.1,0)?></small></td>
 </tr>
 </table>
-<hr>
-<h1 class="Raleway szhalf">Team Zero this month</h1>
-<table border=0 cellpadding=1 cellspacing=0 class="Roboto szhalf">
- <tr>
- <th class="szhalf top left">#</th>
- <th class="szhalf top left">Name</th>
- <th class="szhalf top left">MCA No</th>
-	<th class=" szhalf top left">PPV</th>
- <th class=" szhalf top left">PV</th>
- <th class=" szhalf top left">GPV</th>
- <th class=" szhalf top left">TEPV</th>
- <th class=" szhalf top left">PGPV</th>
- <th class=" szhalf top left">GBV</th>
- <th class=" szhalf top left">GBV/GPV %</th>
- <th class=" szhalf top left right">Growth</th>
- </tr>
-<?php 
-$i = 0;foreach($teamzero as $t){
- $i++;
- ?>
-<tr>
- <td class="szhalf left bottom"><?=$i?></td>
- <td class="text-align-left  left bottom">
- <?php 
- if($t['refer_id']==$self['mcaNumber']){
-  echo "&#9728;";
- }
- ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
- <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a>
- <?php if($t['KYC']=='Approved'){?>
- <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
- <?php }else{?>
- <span class="Roboto badge color-red">A</span>
- <?php }?>
- <?php if($t['NEFT']=='Y'){?>
- <span class="Roboto badge color-green">N</span>
- <?php }else{?>
- <span class="Roboto badge color-red">N</span>
- <?php }?>
-
- </td>
-	<td class="  left bottom"><?=$t[$p1yyyymm]['PV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['PGPV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['GBV']?></td>
- <td class="  left bottom"><?=number_format($t[$yyyymm]['GBV']/$t[$yyyymm]['GPV'],0)?></td>
- <td class="  left right bottom"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
-</tr>
-<?php 
-}
-?> 
-</table>
-<br>
-<hr>
-<p>&nbsp;</p>
+<hr><p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <br>
