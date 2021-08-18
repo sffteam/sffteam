@@ -6239,6 +6239,8 @@ public function ytdgpv($mcaNumber=null,$yyyymm){
      $yyyymm = date('Y-m');
     }
      $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+					$p2yyyymm = date("Y-m", strtotime("-2 month", strtotime(date("F") . "1")) );
+					$p3yyyymm = date("Y-m", strtotime("-3 month", strtotime(date("F") . "1")) );
     $self = Users::find('first',array(
      'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
      )
@@ -6257,7 +6259,7 @@ public function ytdgpv($mcaNumber=null,$yyyymm){
    'right'=>array('$lt'=>$self['right']),
     $yyyymm.'.PV'=>0,
    "Enable" => "Yes"),
-   'order'=>array($yyyymm.'.GPV'=>DESC),
+   'order'=>array($p1yyyymm.'.PV'=>DESC,$p2yyyymm.'.PV'=>DESC,$p3yyyymm.'.PV'=>DESC,$yyyymm.'.GPV'=>DESC),
    ));
    
    foreach($team as $t){
