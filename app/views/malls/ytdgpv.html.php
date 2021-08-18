@@ -392,21 +392,36 @@ foreach($MyAncestor as $key=>$val){
  <th class=" szhalf col top left ">TEPV</th>
  <th class=" szhalf col top left ">PGPV</th>
  <th class=" szhalf col top left ">GBV</th>
- <th class=" szhalf col top left ">GBV/GPV %</th>
+ <th class=" szhalf col top left ">Ratio</th>
  <th class=" szhalf col top left right">Growth</th>
  </tr>
+
+	<?php 
+	foreach($team as $t){
+		if(substr($t['DateJoin'],3)==date('M Y')){
+			$totalNPV = $totalNPV + $t[$yyyymm]['PV'];
+		}
+	}
+	?>
+	<tr>
+	<th class="szhalf col top left "></th>
+	<th colspan="6" class="sz1 col top left bg-color-green">New Joining GPV</th>
+	<th class="sz1 col top left bg-color-green"><?=$totalNPV?></th>
+	<th colspan="3" class="szhalf col top left "></th>
+	</tr>
+<tr>
+
 <?php 
 $i = 0;foreach($team as $t){
  $i++;
  ?>
-<tr>
  <td class="szhalf col top left "><?=$i?></td>
  <td class="text-align-left col top left ">
  <?php if($t['refer_id']==$self['mcaNumber']){
   echo "&#9728;";
  }
  ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class=" external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>" title="Open <?=$t['mcaName']?> report" class=" external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>% <?=$t['DateJoin']?></small></td>
  <td class="  top left text-align-left"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d" class="external" title="Open Tree Structure" target="_blank"><?=$t['mcaNumber']?></a>
  <?php if($t['KYC']=='Approved'){?>
  <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
@@ -418,11 +433,16 @@ $i = 0;foreach($team as $t){
  <?php }else{?>
  <span class="Roboto badge color-red">N</span>
  <?php }?>
-
- 
  </td>
+<?php
+	if(substr($t['DateJoin'],3)==date('M Y')){
+		$same = "bg-color-green";
+	}else{
+		$same = "";
+	}
+?>
 	<td class="szhalf  top left "><?=$t[$p1yyyymm]['PV']?></td>
- <td class="szhalf  top left "><?=$t[$yyyymm]['PV']?></td>
+ <td class="szhalf  top left <?=$same?>"><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['TotalEPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['PGPV']?></td>
@@ -456,19 +476,39 @@ $nrate = 1.2;
  <th class=" szhalf top left">GPV</th>
  <th class=" szhalf top left right">Growth</th>
  </tr>
+<?php
+foreach($teamzero as $t){
+	$totalPPV = $totalPPV + $t[$p1yyyymm]['PV'];
+}
+?>
+<tr>
+	<th class="top left"></th>
+	<th colspan="6" class="sz1 top left bg-color-red">GPV Lost this month</th>
+	<th  class="sz1 top left bg-color-red"><?=$totalPPV?></th>
+	<th colspan="3" class="top left right"></th>
+</tr>
 <?php 
 $i = 0;foreach($teamzero as $t){
+	$totalPPV = $totalPPV + $t[$p1yyyymm]['PV'];
  $i++;
  ?>
+<?php
+	if(substr($t['DateJoin'],3)==date('M Y')){
+		$same = "bg-color-green";
+	}else{
+		$same = "";
+	}
+?>
+
 <tr>
  <td class="szhalf left bottom"><?=$i?></td>
- <td class="text-align-left  left bottom">
+ <td class="text-align-left  left bottom <?=$same?>">
  <?php 
  if($t['refer_id']==$self['mcaNumber']){
   echo "&#9728;";
  }
  ?>
- <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>%</small></td>
+ <a href="/malls/ytdgpv/<?=$t['mcaNumber']?>"  title="Open <?=$t['mcaName']?> report" class="external"><small><?=$t['mcaName']?></small></a> <small><a href="tel:+91<?=$t['Mobile']?>" class="external ">(+91<?=$t['Mobile']?>)</a> <?=$t[$yyyymm]['ValidTitle']?> <?=$t[$yyyymm]['Percent']?>% <?=$t['DateJoin']?></small></td>
  <td class="text-align-center  left bottom"><a href="/tree/index/<?=$t['mcaNumber']?>/<?=$yyyymm?>/d"  title="Open tree structure report" class="external" target="_blank"><?=$t['mcaNumber']?></a>
  <?php if($t['KYC']=='Approved'){?>
  <span class="Roboto badge color-green tooltip-init" data-tooltip="KYC Approved" >A</span>
@@ -487,7 +527,7 @@ $i = 0;foreach($teamzero as $t){
 	<td class="  left bottom"><?=$t[$p3yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p2yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p1yyyymm]['PV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
+ <td class="<?=$same?>  left bottom"><?=$t[$yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
  <td class="  left right bottom"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
 </tr>
