@@ -385,6 +385,7 @@ foreach($MyAncestor as $key=>$val){
  <th class="szhalf col top left ">#</th>
  <th class="szhalf col top left ">Name</th>
  <th class="szhalf col top left ">MCA No</th>
+	<th class=" szhalf col top left ">PPV</th>
  <th class=" szhalf col top left ">PV</th>
  <th class=" szhalf col top left ">GPV</th>
  <th class=" szhalf col top left ">TEPV</th>
@@ -419,6 +420,7 @@ $i = 0;foreach($team as $t){
 
  
  </td>
+	<td class="szhalf  top left "><?=$t[$p1yyyymm]['PV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['PV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['GPV']?></td>
  <td class="szhalf  top left "><?=$t[$yyyymm]['TotalEPV']?></td>
@@ -566,6 +568,7 @@ $months = 0;
  <th class="szhalf top left">#</th>
  <th class="szhalf top left">Name</th>
  <th class="szhalf top left">MCA No</th>
+	<th class=" szhalf top left">PPV</th>
  <th class=" szhalf top left">PV</th>
  <th class=" szhalf top left">GPV</th>
  <th class=" szhalf top left">TEPV</th>
@@ -600,6 +603,7 @@ $i = 0;foreach($teamzero as $t){
  <?php }?>
 
  </td>
+	<td class="  left bottom"><?=$t[$p1yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['PV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
  <td class="  left bottom"><?=$t[$yyyymm]['TotalEPV']?></td>
