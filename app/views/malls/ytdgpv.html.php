@@ -1,5 +1,5 @@
 
-<div class="block page-content">
+<div class="block page-content" >
 
 <?php
  $yyyymm = date('Y-m');
@@ -278,7 +278,7 @@ foreach($MyAncestor as $key=>$val){
  print_r($val[0]."<br>");
 };
 ?></p>
-
+<a href="#" id="PGPV"></a> 
 <h1 class="Raleway sz1">PGPV Contributors <?=$yyyymm?></h1>
 <table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
  <tr>
@@ -328,6 +328,7 @@ foreach($MyAncestor as $key=>$val){
 <div id="GBVChart" style="width: 100%; height: 300px"></div>
 <div id="GPVChart" style="width: 100%; height: 300px"></div>
 <hr>
+<a href="#" id="NewDirectors"></a> 
 <h1 class="Raleway sz1">New Directors <?=$yyyymm?></h1>
 <table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
  <tr>
@@ -378,7 +379,7 @@ foreach($MyAncestor as $key=>$val){
 </table>
  
  
-
+<a href="#" id="YourTeam"></a> 
 <p class="Roboto szhalf">Your team who have completed PV in this month. &#9728; are your Direct Team, Your Direct Team who have not completed this month PV is not included. Total Team Size <?=$countteam?> ACTIVE <?=count($team)?>.</p>
 <table border=0 cellspacing=0 cellpadding=1 class="Roboto szhalf">
  <tr>
@@ -439,7 +440,7 @@ $rate = 1+number_format((($self[$yyyymm]['GBV']/$yyyymmdays)-($self[$p1yyyymm]['
 $nrate = 1.2;
 ?>
 <hr>
-
+<a href="#" id="TeamZero"></a> 
 <h1 class="Raleway szhalf">Team Zero this month</h1>
 <table border=0 cellpadding=1 cellspacing=0 class="Roboto szhalf">
  <tr>
