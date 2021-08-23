@@ -502,14 +502,73 @@ public function createImageInstantly($Code){
 	$filename=$code.'.png';
 	imagepng($outputImage, $targetPath . $filename);
 	imagedestroy($outputImage);
-
-
-
-
-
-
 	return compact('code','short','category','MRP','DP','BV','PV','Weight');
 }
+
+public function banner($Code=null){
+	$products = Names::find('all',array(
+		'conditions'=>array('Code'=> array('like'=>'/^'.$Code.'/')),
+	));
+	$arrayImages = array();
+	
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+	$x=2400;$y=30000;
+	header('Content-Type: image/png');
+	$targetFolder = '/app/webroot/img/dpimages/';
+	$imageFolder = '/app/webroot/img/products/';
+	$fontFolder = '/';
+
+	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+	$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+	
+	$outputImage = imagecreatetruecolor($x, $y);
+	$white = imagecolorallocate($outputImage, 255, 255, 255);
+	$black = imagecolorallocate($outputImage, 0, 0, 0);
+	$red = imagecolorallocate($outputImage, 255, 0, 0);
+	$blue = imagecolorallocate($outputImage, 0, 0, 255);
+	$green = imagecolorallocate($outputImage, 0, 102, 0);
+	$brown = imagecolorallocate($outputImage, 102, 0, 0);
+	imagefill($outputImage, 0, 0, $white);
+	
+	
+	$filename=$Code.'.png';
+	$xx = 0;
+	$yy = 0;
+	foreach($products as $p){
+	$m = Malls::find('first',array(
+		'conditions'=>array('Code'=>$p['Code'])
+	));	
+	$pr = Names::find('first',array(
+		'conditions'=>array('Code'=>$p['Code'])
+	));
+	$code = $pr['Code'];
+	$short = $pr['Short'];
+	$category = $pr['Category'];
+		$img = $imagePath.$code."_400.jpg";
+  $first = imagecreatefromjpeg($img);
+
+
+  imagecopyresized($outputImage,$first,$xx,$yy,0,0, 400, 400,398,398);
+  imageline($outputImage,$xx,$yy,($xx+400),($yy),$black);
+		imageline($outputImage,($xx+400),$yy,($xx+400),($yy+500),$black);
+		
+  imagettftext($outputImage, 12, 0, ($xx+20), ($yy+430), $black, './fonts/GothamBold.ttf', wordwrap(" ".$code." ".$short ,50,"\n",true));
+  imagettftext($outputImage, 12, 0, ($xx+20), ($yy+460), $black, './fonts/GothamBold.ttf', wordwrap(" ".$category ,50,"\n",true));
+		
+		$xx = $xx + 400;
+		if($xx == 2400){
+			$yy = $yy + 500;
+			$xx = 0;
+		}
+	}
+	imagepng($outputImage, $targetPath . $filename);
+	imagedestroy($outputImage);
+	return $this->render(array('json' => array("success"=>"Yes",'Images'=>$Code)));
+	
+}
+
+
 //end of class
 }
 
