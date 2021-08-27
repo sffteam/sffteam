@@ -6209,7 +6209,6 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
    'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
    ));
     $allteam = $allteam . "\\n".$t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
-    
    }
 
 
