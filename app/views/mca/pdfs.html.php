@@ -28,5 +28,13 @@
           <li><a href="/img/documents/Commando-SFF-Mall-Reports.pdf" class="external link" target="_blank">SFF-Mall & Reports</a></li>
           <li><a href="/img/documents/Sapne Interactive PDF_V9.pdf" class="external link" target="_blank">Sapne Interactive - A must on Mobile</a></li>
           <li><a href="/img/documents/MODICARE DIGITAL BOOKLET ENGLISH JULY 2021.pdf" class="external link" target="_blank">Digital Booklet - July 2021</a></li>
+          <li><a href="/img/msds/Beyond Blue TC  - MSDS.pdf" class="external link" target="_blank">Beyond Blue TC  - MSDS</a></li>
+										<li><a href="/img/msds/HD Floor Cleaner  - MSDS.pdf" class="external link" target="_blank">HD Floor Cleaner  - MSDS</a></li>
+										<li><a href="/img/msds/MIO  - SP- MSDS.pdf" class="external link" target="_blank">MIO  - SP- MSDS</a></li>
+										<li><a href="/img/msds/One - Der Drop Advanced-Concentrared Dish Wash Liquid  - MSDS.pdf" class="external link" target="_blank">One - Der Drop Advanced-Concentrared Dish Wash Liquid  - MSDS</a></li>
+										<li><a href="/img/msds/Silver Dip  - MSDS.pdf" class="external link" target="_blank">Silver Dip  - MSDS</a></li>
+										<li><a href="/img/msds/Spic N Span-Bathroom  Cleaner  - MSDS.pdf" class="external link" target="_blank">Spic N Span-Bathroom  Cleaner  - MSDS</a></li>
+										<li><a href="/img/msds/Stericlean  - MSDS.pdf" class="external link" target="_blank">Stericlean  - MSDS</a></li>
+										
         </ul>
       </div>
