@@ -1,4 +1,3 @@
-
 <div class="block page-content" >
 
 <?php
@@ -56,8 +55,7 @@
  $n10yyyymm = date("Y-m", strtotime("10 month", strtotime(date("F") . "1")) );
  $n11yyyymm = date("Y-m", strtotime("11 month", strtotime(date("F") . "1")) );
 ?>
-<h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external " title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external ">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external ">Daily</a></small></strong></h1>
-
+<h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small> Daily GPV report <a href="/malls/growth/<?=$self['mcaNumber']?>" class="external link">Monthly</a></small> Growth</strong></h1>
 <table  border=0 cellspacing=0 cellpadding=0 class="Roboto szhalf">
 <tr>
  <th class="col top left"><small>YYYY-MM</small></th>
