@@ -43,23 +43,27 @@ class ModicareController extends \lithium\action\Controller {
   '60' => 'Extra 0% to 60%',
   );
   $CategoriesSwiperArray = array(
-    'HC' => array('Name'=>'Home Care','color'=>'#e53935','percent'=>'50%'),
-    'AB' => array('Name'=>'Agarbatti','color'=>'#e239A5','percent'=>'30%'),
-    'LC' => array('Name'=>'Laundry Care','color'=>'#303f9f','percent'=>'35% to 60%'),
-    'PC' => array('Name'=>'Personal Care','color'=>'#8e24aa','percent'=>'10% to 50%'),
-    'FP' => array('Name'=>'Food & Beverages','color'=>'#00796b','percent'=>'10% to 50%'),
-    'SC' => array('Name'=>'Skin Care','color'=>'#0288d1','percent'=>'60%'),
-    'MJ' => array('Name'=>'Jewelery','color'=>'#455a64','percent'=>'40%'),
-    'UC' => array('Name'=>'Cosmetics - Urban Color','color'=>'#388e3c','percent'=>'60%'),
-    'BC' => array('Name'=>'Baby Care','color'=>'#afb42b','percent'=>'40% to 60%'),
-    'AG' => array('Name'=>'Agriculture','color'=>'#fbc02d','percent'=>'60%'),
-    'AC' => array('Name'=>'Auto Care','color'=>'#e64a19','percent'=>'50%'),
-    'HL' => array('Name'=>'Wellness','color'=>'#6d4c41','percent'=>'40% to 60%'),
-    'WA' => array('Name'=>'Watches','color'=>'#0097a7','percent'=>'50%'),
-    'MG' => array('Name'=>'Technology','color'=>'#01579b','percent'=>'60%'),
-				'00' => array('Name'=>'Others','color'=>'#01579b','percent'=>'105 to 60%'),
-				'60' => array('Name'=>'Extra','color'=>'#01579b','percent'=>'0%'),
+    'HC' => array('Name'=>'Home Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e53935','percent'=>'50%'),
+    'AB' => array('Name'=>'Agarbatti','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e239A5','percent'=>'30%'),
+    'LC' => array('Name'=>'Laundry Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#303f9f','percent'=>'35% to 60%'),
+    'PC' => array('Name'=>'Personal Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#8e24aa','percent'=>'10% to 50%'),
+    'FP' => array('Name'=>'Food & Beverages','r'=>229,'g'=>57, 'b'=>53,'color'=>'#00796b','percent'=>'10% to 50%'),
+    'SC' => array('Name'=>'Skin Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#0288d1','percent'=>'60%'),
+    'MJ' => array('Name'=>'Jewelery','r'=>229,'g'=>57, 'b'=>53,'color'=>'#455a64','percent'=>'40%'),
+    'UC' => array('Name'=>'Cosmetics - Urban Color','r'=>229,'g'=>57, 'b'=>53,'color'=>'#388e3c','percent'=>'60%'),
+    'BC' => array('Name'=>'Baby Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#afb42b','percent'=>'40% to 60%'),
+    'AG' => array('Name'=>'Agriculture','r'=>229,'g'=>57, 'b'=>53,'color'=>'#fbc02d','percent'=>'60%'),
+    'AC' => array('Name'=>'Auto Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e64a19','percent'=>'50%'),
+    'HL' => array('Name'=>'Wellness','r'=>229,'g'=>57, 'b'=>53,'color'=>'#6d4c41','percent'=>'40% to 60%'),
+    'WA' => array('Name'=>'Watches','r'=>229,'g'=>57, 'b'=>53,'color'=>'#0097a7','percent'=>'50%'),
+    'MG' => array('Name'=>'Technology','r'=>229,'g'=>57, 'b'=>53,'color'=>'#01579b','percent'=>'60%'),
+				'00' => array('Name'=>'Others','r'=>229,'g'=>57, 'b'=>53,'color'=>'#01579b','percent'=>'105 to 60%'),
+				'60' => array('Name'=>'Extra','r'=>229,'g'=>57, 'b'=>53,'color'=>'#01579b','percent'=>'0%'),
     );
+
+		
+
+
   $products = Malls::find('all',array(
    'order'=>array('DP'=>'ASC','Name'=>'ASC')
   ));
@@ -496,10 +500,11 @@ public function createImageInstantly($Code){
 	
 	imagettftext($outputImage, 50, 0, $widthDP,310, $blue, './fonts/GothamBold.ttf', wordwrap(" ".trim("DP: ".number_format($DP,1)) ,40,"\n",true));
 	imagettftext($outputImage, 40, 0, $widthBVPV,370, $green, './fonts/GothamBold.ttf', wordwrap(" ".trim("BV: ".number_format($BV,1))."  -  ".trim("PV: ".number_format($PV,1)) ,30,"\n",true));
+	imagettftext($outputImage, 30, 0, $widthBVPV,410, $black, './fonts/GothamBold.ttf', wordwrap(" ".number_format($BV/$DP*100,0)."%" ,30,"\n",true));
 	
-	imagettftext($outputImage, 20, 0, 35,30, $black, './fonts/GothamBold.ttf', wordwrap("S J Trading Co. +91 98257 52955" ,60,"\n",true));
+	imagettftext($outputImage, 20, 0, 35,30, $black, './fonts/Raleway-Medium.ttf', wordwrap("WeCapacitate" ,60,"\n",true));
 
-	$filename=$code.'.png';
+	$filename='x-'.$code.'.png';
 	imagepng($outputImage, $targetPath . $filename);
 	imagedestroy($outputImage);
 	return compact('code','short','category','MRP','DP','BV','PV','Weight');
@@ -568,6 +573,158 @@ public function banner($Code=null){
 	
 }
 
+public function dtod(){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+ $products = Names::find('all',array(
+		'order'=>array('Code'=>'ASC')
+	));
+	$arrayImages = array();
+	foreach($products as $p){
+		$file = $this->createImageInstantlydtod($p['Code']);
+		array_push($arrayImages,$file);
+	}
+
+	return $this->render(array('json' => array("success"=>"Yes",'Images'=>$arrayImages)));
+}
+
+public function createImageInstantlydtod($Code){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+	$p = Names::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));
+	$m = Malls::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));	
+	$x=600;$y=800;
+	$code = $p['Code'];
+	$short = $p['Short'];
+	$category = $p['Category'];
+	$desc = $p['Description'];
+	$MRP = $m['MRP'];
+	$DP = $m['DP'];
+	$BV = $m['BV'];
+	$PV = $m['PV'];
+	$Weight = round($m['Weight']/100)*100;
+	header('Content-Type: image/png');
+	$targetFolder = '/app/webroot/img/dpimages/';
+	$imageFolder = '/app/webroot/img/products/';
+	$fontFolder = '/';
+
+	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+	$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+
+  $Categories = array(
+    'HC' => array('Name'=>'Home Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e53935','percent'=>'50%'),
+    'AB' => array('Name'=>'Agarbatti','r'=>227,'g'=>167, 'b'=>165,'color'=>'#e239A5','percent'=>'30%'),
+    'LC' => array('Name'=>'Laundry Care','r'=>48,'g'=>63, 'b'=>159,'color'=>'#303f9f','percent'=>'35% to 60%'),
+    'PC' => array('Name'=>'Personal Care','r'=>142,'g'=>36, 'b'=>170,'color'=>'#8e24aa','percent'=>'10% to 50%'),
+    'FP' => array('Name'=>'Food & Beverages','r'=>0,'g'=>121, 'b'=>107,'color'=>'#00796b','percent'=>'10% to 50%'),
+    'SC' => array('Name'=>'Skin Care','r'=>2,'g'=>136, 'b'=>209,'color'=>'#0288d1','percent'=>'60%'),
+    'MJ' => array('Name'=>'Jewelery','r'=>69,'g'=>90, 'b'=>100,'color'=>'#455a64','percent'=>'40%'),
+    'UC' => array('Name'=>'Cosmetics - Urban Color','r'=>56,'g'=>142, 'b'=>60,'color'=>'#388e3c','percent'=>'60%'),
+    'BC' => array('Name'=>'Baby Care','r'=>175,'g'=>180, 'b'=>43,'color'=>'#afb42b','percent'=>'40% to 60%'),
+    'AG' => array('Name'=>'Agriculture','r'=>251,'g'=>192, 'b'=>45,'color'=>'#fbc02d','percent'=>'60%'),
+    'AC' => array('Name'=>'Auto Care','r'=>230,'g'=>74, 'b'=>35,'color'=>'#e64a19','percent'=>'50%'),
+    'HL' => array('Name'=>'Wellness','r'=>109,'g'=>76, 'b'=>67,'color'=>'#6d4c41','percent'=>'40% to 60%'),
+    'WA' => array('Name'=>'Watches','r'=>0,'g'=>151, 'b'=>167,'color'=>'#0097a7','percent'=>'50%'),
+    'MG' => array('Name'=>'Technology','r'=>1,'g'=>87, 'b'=>155,'color'=>'#01579b','percent'=>'60%'),
+				'00' => array('Name'=>'Others','r'=>14,'g'=>18, 'b'=>155,'color'=>'#01579b','percent'=>'105 to 60%'),
+				'60' => array('Name'=>'Extra','r'=>22,'g'=>180, 'b'=>34,'color'=>'#01579b','percent'=>'0%'),
+    );
+
+
+
+	$outputImage = imagecreatetruecolor($x, $y);
+		foreach($Categories as $key=>$val){
+			if(substr($Code,0,2)==$key){
+				$background = imagecolorallocate($outputImage, $val['r'], $val['g'], $val['b']);
+			}
+		}
+	
+	$white = imagecolorallocate($outputImage, 255, 255, 255);
+	$black = imagecolorallocate($outputImage, 0, 0, 0);
+	$red = imagecolorallocate($outputImage, 255, 0, 0);
+	$blue = imagecolorallocate($outputImage, 0, 0, 255);
+	$green = imagecolorallocate($outputImage, 0, 102, 0);
+	$brown = imagecolorallocate($outputImage, 102, 0, 0);
+	
+	imagefill($outputImage, 0, 0, $white);
+	$text = 'MRP: '.$MRP;
+	$widthCode = $widthCategory = $widthMRP = $widthDP = $widthBVPV = 30;
+	
+		$img = $imagePath.$code."_400.jpg";
+  $first = imagecreatefromjpeg($img);
+		
+		$img = $imagePath."WeCap-logo.jpg";
+		$second = imagecreatefromjpeg($img);
+		
+		$img = $imagePath."ModiCare-Logo.jpg";
+		$third = imagecreatefromjpeg($img);
+		
+  imagecopyresized($outputImage,$first,100,130,0,0, 400, 400,380,380);
+		imagecopy($outputImage,$second,10,130,0,0,80,80);
+		imagecopy($outputImage,$third,490,130,0,0,100,34);
+
+	imagefilledrectangle($outputImage,0,0,$x,80, $background);
+	imagettftext($outputImage, 20, 0, $widthCode, 110, $black, './fonts/GothamBold.ttf', wordwrap(" ".$code." ".$short ,50,"\n",true));
+	imagettftext($outputImage, 26, 0, $widthCategory,50, $white, './fonts/GothamBold.ttf', wordwrap(" ".$category ,50,"\n",true));
+//	imagettftext($outputImage, 20, 0, $widthCode,50, $brown, './fonts/GothamBold.ttf', wordwrap(" ".$Weight ,50,"\n",true));
+	$a = $this->imagettftextjustified($outputImage, 14, 0, 20, 550, $black, './fonts/GothamBook.ttf', $desc, 550, $minspacing=3,$linespacing=1);
+//	imagettftext($outputImage, 14, 0, 10,550, $black, './fonts/GothamBook.ttf', wordwrap($desc ,60,"\n",true));
+	
+	$filename=$code.'.png';
+	imagepng($outputImage, $targetPath . $filename);
+	imagedestroy($outputImage);
+	return compact('code','short','category','MRP','DP','BV','PV','Weight');
+}
+
+
+function imagettftextjustified(&$image, $size, $angle, $left, $top, $color, $font, $text, $max_width, $minspacing=3,$linespacing=1)
+{
+$wordwidth = array();
+$linewidth = array();
+$linewordcount = array();
+$largest_line_height = 0;
+$lineno=0;
+$words=explode(" ",$text);
+$wln=0;
+$linewidth[$lineno]=0;
+$linewordcount[$lineno]=0;
+foreach ($words as $word)
+{
+$dimensions = imagettfbbox($size, $angle, $font, $word);
+$line_width = $dimensions[2] - $dimensions[0];
+$line_height = $dimensions[1] - $dimensions[7];
+if ($line_height>$largest_line_height) $largest_line_height=$line_height;
+if (($linewidth[$lineno]+$line_width+$minspacing)>$max_width)
+{
+$lineno++;
+$linewidth[$lineno]=0;
+$linewordcount[$lineno]=0;
+$wln=0;
+}
+$linewidth[$lineno]+=$line_width+$minspacing;
+$wordwidth[$lineno][$wln]=$line_width;
+$wordtext[$lineno][$wln]=$word;
+$linewordcount[$lineno]++;
+$wln++;
+}
+for ($ln=0;$ln<=$lineno;$ln++)
+{
+$slack=$max_width-$linewidth[$ln];
+if (($linewordcount[$ln]>1)&&($ln!=$lineno)) $spacing=($slack/($linewordcount[$ln]-1));
+else $spacing=$minspacing;
+$x=0;
+for ($w=0;$w<$linewordcount[$ln];$w++)
+{
+imagettftext($image, $size, $angle, $left + intval($x), $top + $largest_line_height + ($largest_line_height * $ln * $linespacing), $color, $font, $wordtext[$ln][$w]);
+$x+=$wordwidth[$ln][$w]+$spacing+$minspacing;
+}
+}
+return true;
+}
 
 //end of class
 }

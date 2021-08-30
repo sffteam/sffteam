@@ -7874,6 +7874,29 @@ public function daily($mcaNumber){
    return compact('self','team', 'yyyymm', 'todaysGPV');
 }
 
+public function growth($mcaNumber){
+	$this->_render['layout'] = 'sale';
+ ini_set('max_execution_time', '0');
+ ini_set("memory_limit", "-1");
+  $yyyymm = date('Y-m');
+		$p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
+ 
+  $self = Users::find('first',array(
+   'conditions'=>array('mcaNumber'=>(string)$mcaNumber,
+   )
+  ));
+  $team = Users::find('all',array(
+   'conditions'=>array(
+   'refer'=>$mcaNumber,
+   'Enable' => "Yes"
+   ),
+   'order'=>array($yyyymm.'.GPV'=>DESC,$p1yyyymm.'.GPV'=>DESC)
+   ));
+   return compact('self','team', 'yyyymm');
+	
+}
+
+
 //end of class
 }
 
