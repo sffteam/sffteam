@@ -86,7 +86,7 @@
 </tr>
 <?php foreach ($team as $t){?>
 <tr>
-	<td class="left right bottom"><?=$t['mcaName']?></td>
+	<td class="left right bottom"><a href="/malls/growth/<?=$t['mcaNumber']?>" class="external"><?=$t['mcaName']?></a></td>
 	<td class="right bottom"><?=number_format($t[$p12yyyymm]['GBV']/$p12yyyymmdays,0)?><br></td>
 	<td class="right bottom"><?=number_format($t[$p11yyyymm]['GBV']/$p11yyyymmdays,0)?><br><?=number_format($t[$p11yyyymm]['GBV']/$p11yyyymmdays-$t[$p12yyyymm]['GBV']/$p12yyyymmdays,0)?></td>
 	<td class="right bottom"><?=number_format($t[$p10yyyymm]['GBV']/$p10yyyymmdays,0)?><br><?=number_format($t[$p10yyyymm]['GBV']/$p10yyyymmdays-$t[$p11yyyymm]['GBV']/$p11yyyymmdays,0)?></td>
