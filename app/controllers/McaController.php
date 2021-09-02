@@ -5,6 +5,7 @@ use app\models\Urls;
 use app\models\Malls;
 use app\models\Users;
 use app\models\Mobiles;
+use app\models\Certificates;
 
 class McaController extends \lithium\action\Controller {
 
@@ -325,6 +326,35 @@ public function findJoinee($mcaNumber){
  
 // return $this->render(array('json' => array("success"=>"Yes","joinee"=>count($joinee),'joinee'=>$DetailJoinee)));    
  return $DetailJoinee;
+}
+
+public function certificates($commando = null){
+	
+	$certificates = Certificates::find('all',array(
+		'order'=>array('commando'=>'DESC')
+	));
+	
+	$trainings = array();
+	$training = ".........";
+
+	foreach($certificates as $c){
+		if($training != $c['commando']){
+			array_push($trainings,array('training'=>$c['commando'],'date'=>$c['date']));
+			$training = $c['commando'];
+		}
+	}
+	
+	if($commando==null){
+		
+	}else{
+		$commando = urldecode($commando);
+		print_r($commando);
+		$participants = Certificates::find('all',array(
+			conditions=>array('commando'=>$commando)
+		));
+	}
+
+	return compact('trainings','participants');
 }
 
 
