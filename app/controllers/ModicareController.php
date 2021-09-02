@@ -680,6 +680,183 @@ public function createImageInstantlydtod($Code){
 	return compact('code','short','category','MRP','DP','BV','PV','Weight');
 }
 
+public function costing(){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+ $products = Names::find('all',array(
+		'order'=>array('Code'=>'ASC')
+	));
+	$arrayImages = array();
+	foreach($products as $p){
+		$file = $this->createImageInstantlydcosting($p['Code']);
+		array_push($arrayImages,$file);
+	}
+
+	return $this->render(array('json' => array("success"=>"Yes",'Images'=>$arrayImages)));
+}
+
+public function createImageInstantlydcosting($Code){
+	ini_set('memory_limit','-1');
+ set_time_limit(0);
+	$p = Names::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));
+	$m = Malls::find('first',array(
+		'conditions'=>array('Code'=>$Code)
+	));	
+	$x=900;$y=1600;
+	$code = $p['Code'];
+	$short = $p['Short'];
+	$category = $p['Category'];
+	$desc = $p['Description'];
+	$MRP = $m['MRP'];
+	$DP = $m['DP'];
+	$BV = $m['BV'];
+	$PV = $m['PV'];
+	$Weight = round($m['Weight']/100)*100;
+	header('Content-Type: image/png');
+	$targetFolder = '/app/webroot/img/costing/';
+	$imageFolder = '/app/webroot/img/products/';
+	$fontFolder = '/';
+
+	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+	$imagePath = $_SERVER['DOCUMENT_ROOT'] . $imageFolder;
+
+  $Categories = array(
+    'HC' => array('Name'=>'Home Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e53935','percent'=>'50%'),
+    'AB' => array('Name'=>'Agarbatti','r'=>227,'g'=>167, 'b'=>165,'color'=>'#e239A5','percent'=>'30%'),
+    'LC' => array('Name'=>'Laundry Care','r'=>48,'g'=>63, 'b'=>159,'color'=>'#303f9f','percent'=>'35% to 60%'),
+    'PC' => array('Name'=>'Personal Care','r'=>142,'g'=>36, 'b'=>170,'color'=>'#8e24aa','percent'=>'10% to 50%'),
+    'FP' => array('Name'=>'Food & Beverages','r'=>0,'g'=>121, 'b'=>107,'color'=>'#00796b','percent'=>'10% to 50%'),
+    'SC' => array('Name'=>'Skin Care','r'=>2,'g'=>136, 'b'=>209,'color'=>'#0288d1','percent'=>'60%'),
+    'MJ' => array('Name'=>'Jewelery','r'=>69,'g'=>90, 'b'=>100,'color'=>'#455a64','percent'=>'40%'),
+    'UC' => array('Name'=>'Cosmetics - Urban Color','r'=>56,'g'=>142, 'b'=>60,'color'=>'#388e3c','percent'=>'60%'),
+    'BC' => array('Name'=>'Baby Care','r'=>175,'g'=>180, 'b'=>43,'color'=>'#afb42b','percent'=>'40% to 60%'),
+    'AG' => array('Name'=>'Agriculture','r'=>251,'g'=>192, 'b'=>45,'color'=>'#fbc02d','percent'=>'60%'),
+    'AC' => array('Name'=>'Auto Care','r'=>230,'g'=>74, 'b'=>35,'color'=>'#e64a19','percent'=>'50%'),
+    'HL' => array('Name'=>'Wellness','r'=>109,'g'=>76, 'b'=>67,'color'=>'#6d4c41','percent'=>'40% to 60%'),
+    'WA' => array('Name'=>'Watches','r'=>0,'g'=>151, 'b'=>167,'color'=>'#0097a7','percent'=>'50%'),
+    'MG' => array('Name'=>'Technology','r'=>1,'g'=>87, 'b'=>155,'color'=>'#01579b','percent'=>'60%'),
+				'00' => array('Name'=>'Others','r'=>14,'g'=>18, 'b'=>155,'color'=>'#01579b','percent'=>'105 to 60%'),
+				'60' => array('Name'=>'Extra','r'=>22,'g'=>180, 'b'=>34,'color'=>'#01579b','percent'=>'0%'),
+    );
+
+
+
+	$outputImage = imagecreatetruecolor($x, $y);
+		foreach($Categories as $key=>$val){
+			if(substr($Code,0,2)==$key){
+				$background = imagecolorallocate($outputImage, $val['r'], $val['g'], $val['b']);
+			}
+		}
+	
+	$white = imagecolorallocate($outputImage, 255, 255, 255);
+	$black = imagecolorallocate($outputImage, 0, 0, 0);
+	$red = imagecolorallocate($outputImage, 255, 0, 0);
+	$blue = imagecolorallocate($outputImage, 0, 0, 255);
+	$green = imagecolorallocate($outputImage, 0, 102, 0);
+	$brown = imagecolorallocate($outputImage, 102, 0, 0);
+	
+	imagefill($outputImage, 0, 0, $white);
+	$text = 'MRP: '.$MRP;
+	$widthCode = $widthCategory = $widthMRP = $widthDP = $widthBVPV = 30;
+	
+		$img = $imagePath.$code."_400.jpg";
+  $first = imagecreatefromjpeg($img);
+		
+		$img = $imagePath."WeCap-logo.jpg";
+		$second = imagecreatefromjpeg($img);
+		
+		$img = $imagePath."ModiCare-Logo.jpg";
+		$third = imagecreatefromjpeg($img);
+		
+  imagecopyresized($outputImage,$first,260,130,0,0, 280, 280,400,400);
+		imagecopy($outputImage,$second,10,130,0,0,80,80);
+		imagecopy($outputImage,$third,780,130,0,0,100,34);
+
+	imagefilledrectangle($outputImage,0,0,$x,80, $background);
+	imagettftext($outputImage, 20, 0, $widthCode, 110, $black, './fonts/GothamBold.ttf', wordwrap(" ".$code." ".$short ,50,"\n",true));
+	imagettftext($outputImage, 26, 0, $widthCategory,50, $white, './fonts/GothamBold.ttf', wordwrap(" ".$category ,50,"\n",true));
+	imagettftext($outputImage, 26, 0, 750,50, $white, './fonts/GothamBold.ttf', wordwrap(" ".number_format($BV/$DP*100,0).'%' ,150,"\n",true));
+//	imagettftext($outputImage, 20, 0, $widthCode,50, $brown, './fonts/GothamBold.ttf', wordwrap(" ".$Weight ,50,"\n",true));
+
+	imageline($outputImage,50,420,850,420,$black);
+	imageline($outputImage,50,470,850,470,$black);
+	imageline($outputImage,50,520,850,520,$black);
+	imageline($outputImage,50,570,850,570,$black);
+	imageline($outputImage,50,620,850,620,$black);
+	imageline($outputImage,50,670,850,670,$black);
+	imageline($outputImage,50,720,850,720,$black);
+	imageline($outputImage,50,770,850,770,$black);
+	imageline($outputImage,50,820,850,820,$black);
+	
+	imageline($outputImage,50,420,50,820,$black);
+	imageline($outputImage,400,420,400,820,$black);
+	imageline($outputImage,850,420,850,820,$black);
+	imageline($outputImage,550,420,550,820,$black);
+	imageline($outputImage,700,420,700,820,$black);
+	
+	$a = $this->imagettftextjustified($outputImage, 14, 0, 410, 430, $black, './fonts/GothamBold.ttf', '1st 6 months', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 14, 0, 560, 430, $black, './fonts/GothamBold.ttf', 'Next 6 months', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 14, 0, 710, 430, $black, './fonts/GothamBold.ttf', 'Total 12 months', 860, $minspacing=3,$linespacing=1);
+	
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 480, $red, './fonts/GothamBold.ttf', 'MRP', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 480, $red, './fonts/GothamBold.ttf', $MRP, 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 480, $red, './fonts/GothamBold.ttf', $MRP, 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 480, $red, './fonts/GothamBold.ttf', $MRP, 860, $minspacing=3,$linespacing=1);
+
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 530, $green, './fonts/GothamBold.ttf', 'DP Distribution Price', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 530, $green, './fonts/GothamBold.ttf', $DP, 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 530, $green, './fonts/GothamBold.ttf', $DP, 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 530, $green, './fonts/GothamBold.ttf', $DP, 860, $minspacing=3,$linespacing=1);
+
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 580, $blue, './fonts/GothamBold.ttf', 'FREE Gift', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 580, $blue, './fonts/GothamBold.ttf', number_format($DP*.1,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 580, $blue, './fonts/GothamBold.ttf', number_format($DP*.1,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 580, $blue, './fonts/GothamBold.ttf', number_format($DP*.1,1), 860, $minspacing=3,$linespacing=1);
+
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 630, $green, './fonts/GothamBold.ttf', 'Cost after FREE Gift', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 630, $green, './fonts/GothamBold.ttf', number_format($DP-$DP*.1,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 630, $green, './fonts/GothamBold.ttf', number_format($DP-$DP*.1,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 630, $green, './fonts/GothamBold.ttf', number_format($DP-$DP*.1,1), 860, $minspacing=3,$linespacing=1);
+
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 680, $blue, './fonts/GothamBold.ttf', 'Loyalty Voucher in Rs.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 680, $blue, './fonts/GothamBold.ttf', number_format($DP/6,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 680, $blue, './fonts/GothamBold.ttf', number_format($DP/3,1), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 680, $blue, './fonts/GothamBold.ttf', number_format($DP/4,1), 860, $minspacing=3,$linespacing=1);
+
+	$a = $this->imagettftextjustified($outputImage, 14, 0, 80, 730, $green, './fonts/GothamBold.ttf', 'Net Effective Cost after Loyalty', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 730, $green, './fonts/GothamBold.ttf', number_format(($DP-$DP*.1) - $DP/6,0), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 590, 730, $green, './fonts/GothamBold.ttf', number_format(($DP-$DP*.1) - $DP/3,0), 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 730, $green, './fonts/GothamBold.ttf', number_format(($DP-$DP*.1) - $DP/4,0), 860, $minspacing=3,$linespacing=1);
+
+
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 80, 780, $green, './fonts/GothamBold.ttf', 'Discount MRP / %', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 430, 780, $green, './fonts/GothamBold.ttf', number_format($MRP-(($DP-$DP*.1) - $DP/6),0).' / '.number_format(($MRP-(($DP-$DP*.1) - $DP/6))/$MRP*100,0).'%', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 570, 780, $green, './fonts/GothamBold.ttf', number_format($MRP-(($DP-$DP*.1) - $DP/3),0).' / '.number_format(($MRP-(($DP-$DP*.1) - $DP/3))/$MRP*100,0).'%', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 16, 0, 730, 780, $green, './fonts/GothamBold.ttf', number_format($MRP-(($DP-$DP*.1) - $DP/4),0).' / '.number_format(($MRP-(($DP-$DP*.1) - $DP/4))/$MRP*100,0).'%', 860, $minspacing=3,$linespacing=1);
+
+
+
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 830, $black, './fonts/GothamBook.ttf', 'Additional Advantage: Cash back benifits of Accumulated Performance Bonus of 7% to 16% of BV and Director Bonus 4% of BV, which comes back into your bank account every month as per your position.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 870, $black, './fonts/GothamBook.ttf', '* This is as per current scheme of the company.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 890, $black, './fonts/GothamBook.ttf', '1. Purchase amount should be between Rs. 2500 and Rs. 5000 per month regularly.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 910, $black, './fonts/GothamBook.ttf', '2. Purchase should be done between 1st to 15th of each month for taking advantage of Free Gift and Loyalty.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 930, $black, './fonts/GothamBook.ttf', '3. Any product combination of your choice can be taken every month.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 950, $black, './fonts/GothamBook.ttf', '4. Free Delivery by courier above Rs. 4000 purchase. Below Rs. 4000, Rs. 77 courier charges.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 970, $black, './fonts/GothamBook.ttf', '5. The above example is for general understanding. Please enquire for current scheme applicable to you.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 990, $black, './fonts/GothamBold.ttf', 'E&OE', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 13, 0, 800, 990, $black, './fonts/GothamBold.ttf', 'Sept 2021', 860, $minspacing=3,$linespacing=1);
+	
+	
+	$a = $this->imagettftextjustified($outputImage, 15, 0, 20, 1010, $black, './fonts/GothamBook.ttf', $desc, 860, $minspacing=3,$linespacing=1);
+//	imagettftext($outputImage, 14, 0, 10,550, $black, './fonts/GothamBook.ttf', wordwrap($desc ,60,"\n",true));
+	
+	$filename=$code.'.png';
+	imagepng($outputImage, $targetPath . $filename);
+	imagedestroy($outputImage);
+	return compact('code','short','category','MRP','DP','BV','PV','Weight');
+}
 
 function imagettftextjustified(&$image, $size, $angle, $left, $top, $color, $font, $text, $max_width, $minspacing=3,$linespacing=1)
 {

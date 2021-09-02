@@ -10,7 +10,9 @@
         </div>
         <div class="title">WeCapacitate</div>
         <div class="right">
-        </div>
+								  <a href="/mca/certificates" class="link external Bebas">
+											Certificates
+										</a></div>
       </div>
       
       
