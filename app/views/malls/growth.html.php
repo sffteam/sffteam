@@ -105,6 +105,76 @@
 </table>
 
 <br>
+
+<hr>
+<table cellspacing=0 cellpadding=0 class="Roboto szhalf">
+<tr>
+ <th class="col top left"><small>YYYY-MM</small></th>
+	<th class="col top left"><?=$p12yyyymm?></th>
+	<th class="col top left"><?=$p11yyyymm?></th>
+ <th class="col top left"><?=$p10yyyymm?></th>
+ <th class="col top left"><?=$p9yyyymm?></th>
+ <th class="col top left"><?=$p8yyyymm?></th>
+ <th class="col top left"><?=$p7yyyymm?></th>
+ <th class="col top left"><?=$p6yyyymm?></th>
+ <th class="col top left"><?=$p5yyyymm?></th>
+ <th class="col top left"><?=$p4yyyymm?></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p3yyyymm?>/" class="external text-color-white" target="_blank"><?=$p3yyyymm?></a></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p2yyyymm?>/" class="external text-color-white" target="_blank"><?=$p2yyyymm?></a></th>
+ <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$p1yyyymm?>/" class="external text-color-white" target="_blank"><?=$p1yyyymm?></a></th>
+  <th class="col top left"><a href="/malls/prevmonth/<?=$self['mcaNumber']?>/<?=$yyyymm?>/" class="external text-color-white" target="_blank"><?=$yyyymm?></a></th>
+</tr>
+<tr >
+	<td class="left right bottom">Days</td>
+	<td class="right bottom"><?=$p12yyyymmdays?></td>
+	<td class="right bottom"><?=$p11yyyymmdays?></td>
+	<td class="right bottom"><?=$p10yyyymmdays?></td>
+	<td class="right bottom"><?=$p9yyyymmdays?></td>
+	<td class="right bottom"><?=$p8yyyymmdays?></td>
+	<td class="right bottom"><?=$p7yyyymmdays?></td>
+	<td class="right bottom"><?=$p6yyyymmdays?></td>
+	<td class="right bottom"><?=$p5yyyymmdays?></td>
+	<td class="right bottom"><?=$p4yyyymmdays?></td>
+	<td class="right bottom"><?=$p3yyyymmdays?></td>
+	<td class="right bottom"><?=$p2yyyymmdays?></td>
+	<td class="right bottom"><?=$p1yyyymmdays?></td>
+	<td class="right bottom"><?=$yyyymmdays?></td>
+</tr>
+<tr>
+<td class="left right bottom"><?=$self['mcaName']?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+	<td class="right bottom"><?=number_format(100,0)?></td>
+</tr>
+<?php foreach ($team as $t){?>
+<tr>
+	<td class="left right bottom"><a href="/malls/growth/<?=$t['mcaNumber']?>" class="external"><?=$t['mcaName']?></a></td>
+	<td class="right bottom"><?=number_format($t[$p12yyyymm]['GBV']/$self[$p12yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p11yyyymm]['GBV']/$self[$p11yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p10yyyymm]['GBV']/$self[$p10yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p9yyyymm]['GBV']/$self[$p9yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p8yyyymm]['GBV']/$self[$p8yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p7yyyymm]['GBV']/$self[$p7yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p6yyyymm]['GBV']/$self[$p6yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p5yyyymm]['GBV']/$self[$p5yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p4yyyymm]['GBV']/$self[$p4yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p3yyyymm]['GBV']/$self[$p3yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p2yyyymm]['GBV']/$self[$p2yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$p1yyyymm]['GBV']/$self[$p1yyyymm]['GBV']*100,0)?><br></td>
+	<td class="right bottom"><?=number_format($t[$yyyymm]['GBV']/$self[$yyyymm]['GBV']*100,0)?><br></td>
+</tr>
+<?php }?>
+</table>
 <hr>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
