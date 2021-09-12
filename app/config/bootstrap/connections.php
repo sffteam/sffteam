@@ -62,6 +62,17 @@ use lithium\data\Connections;
 //	'readPreference' => Mongo::RP_NEAREST	
  ));
 
+ Connections::add('default_Sukhadiya', array(
+ 	'type' => CONNECTIONSUKHADIYA_TYPE,
+ 	'host' => array(CONNECTIONSUKHADIYA,
+		),
+//	'replicaSet' => true,
+	'database' => CONNECTIONSUKHADIYA_DB,
+	'login' => CONNECTIONSUKHADIYA_USER,
+	'password' => CONNECTIONSUKHADIYA_PASS,	
+//	'setSlaveOkay' => true,
+//	'readPreference' => Mongo::RP_NEAREST	
+ ));
 
  Connections::add('default_FalSabji', array(
  	'type' => CONNECTIONFALSABJI_TYPE,
