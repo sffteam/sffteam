@@ -82,7 +82,7 @@
 	<td class="right bottom"><?=number_format($self[$p3yyyymm]['GBV']/$p3yyyymmdays,0)?><br><?=number_format($self[$p3yyyymm]['GBV']/$p3yyyymmdays-$self[$p4yyyymm]['GBV']/$p4yyyymmdays,0)?></td>
 	<td class="right bottom"><?=number_format($self[$p2yyyymm]['GBV']/$p2yyyymmdays,0)?><br><?=number_format($self[$p2yyyymm]['GBV']/$p2yyyymmdays-$self[$p3yyyymm]['GBV']/$p3yyyymmdays,0)?></td>
 	<td class="right bottom"><?=number_format($self[$p1yyyymm]['GBV']/$p1yyyymmdays,0)?><br><?=number_format($self[$p1yyyymm]['GBV']/$p1yyyymmdays-$self[$p2yyyymm]['GBV']/$p2yyyymmdays,0)?></td>
-	<td class="right bottom"><?=number_format($self[$yyyymm]['GBV']/$yyyymmdays,0)?><br><?=number_format($self[$yyyymm]['GBV']/$p0yyyymmdays-$self[$p1yyyymm]['GBV']/$p1yyyymmdays,0)?></td>
+	<td class="right bottom"><?=number_format($self[$yyyymm]['GBV']/$yyyymmdays,0)?><br><?=number_format($self[$yyyymm]['GBV']/$yyyymmdays-$self[$p1yyyymm]['GBV']/$p1yyyymmdays,0)?></td>
 </tr>
 <?php foreach ($team as $t){?>
 <tr>
@@ -99,7 +99,7 @@
 	<td class="right bottom"><?=number_format($t[$p3yyyymm]['GBV']/$p3yyyymmdays,0)?><br><?=number_format($t[$p3yyyymm]['GBV']/$p3yyyymmdays-$t[$p4yyyymm]['GBV']/$p4yyyymmdays,0)?></td>
 	<td class="right bottom"><?=number_format($t[$p2yyyymm]['GBV']/$p2yyyymmdays,0)?><br><?=number_format($t[$p2yyyymm]['GBV']/$p2yyyymmdays-$t[$p3yyyymm]['GBV']/$p3yyyymmdays,0)?></td>
 	<td class="right bottom"><?=number_format($t[$p1yyyymm]['GBV']/$p1yyyymmdays,0)?><br><?=number_format($t[$p1yyyymm]['GBV']/$p1yyyymmdays-$t[$p2yyyymm]['GBV']/$p2yyyymmdays,0)?></td>
-	<td class="right bottom"><?=number_format($t[$yyyymm]['GBV']/$yyyymmdays,0)?><br><?=number_format($t[$yyyymm]['GBV']/$p0yyyymmdays-$t[$p1yyyymm]['GBV']/$p1yyyymmdays,0)?></td>
+	<td class="right bottom"><?=number_format($t[$yyyymm]['GBV']/$yyyymmdays,0)?><br><?=number_format($t[$yyyymm]['GBV']/$yyyymmdays-($t[$p1yyyymm]['GBV']/$p1yyyymmdays),0)?></td>
 </tr>
 <?php }?>
 </table>
