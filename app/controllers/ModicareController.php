@@ -838,15 +838,15 @@ public function createImageInstantlydcosting($Code){
 
 
 
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 830, $black, './fonts/GothamBook.ttf', 'Additional Advantage: Cash back benifits of Accumulated Performance Bonus of 7% to 16% of BV and Director Bonus 4% of BV, which comes back into your bank account every month as per your position.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 870, $black, './fonts/GothamBook.ttf', '* This is as per current scheme of the company.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 890, $black, './fonts/GothamBook.ttf', '1. Purchase amount should be between Rs. 2500 and Rs. 5000 per month regularly.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 910, $black, './fonts/GothamBook.ttf', '2. Purchase should be done between 1st to 15th of each month for taking advantage of Free Gift and Loyalty.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 930, $black, './fonts/GothamBook.ttf', '3. Any product combination of your choice can be taken every month.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 950, $black, './fonts/GothamBook.ttf', '4. Free Delivery by courier above Rs. 4000 purchase. Below Rs. 4000, Rs. 77 courier charges.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 970, $black, './fonts/GothamBook.ttf', '5. The above example is for general understanding. Please enquire for current scheme applicable to you.', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 20, 990, $black, './fonts/GothamBold.ttf', 'E&OE', 860, $minspacing=3,$linespacing=1);
-	$a = $this->imagettftextjustified($outputImage, 13, 0, 800, 990, $black, './fonts/GothamBold.ttf', 'Sept 2021', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 830, $black, './fonts/GothamBook.ttf', 'Additional Advantage: Cash back benifits of Accumulated Performance Bonus of 7% to 16% of BV and Director Bonus 4% of BV, which comes back into your bank account every month as per your position.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 870, $black, './fonts/GothamBook.ttf', '* This is as per current scheme of the company.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 890, $black, './fonts/GothamBook.ttf', '1. Purchase amount should be between Rs. 2500 and Rs. 5000 per month regularly.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 910, $black, './fonts/GothamBook.ttf', '2. Purchase should be done between 1st to 15th of each month for taking advantage of Free Gift and Loyalty.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 930, $black, './fonts/GothamBook.ttf', '3. Any product combination of your choice can be taken every month.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 950, $black, './fonts/GothamBook.ttf', '4. Free Delivery by courier above Rs. 4000 purchase. Below Rs. 4000, Rs. 77 courier charges.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 970, $black, './fonts/GothamBook.ttf', '5. The above example is for general understanding. Please enquire for current scheme applicable to you.', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 20, 990, $black, './fonts/GothamBold.ttf', 'E&OE', 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 12, 0, 800, 990, $black, './fonts/GothamBold.ttf', 'Sept 2021', 860, $minspacing=3,$linespacing=1);
 	
 	
 	$a = $this->imagettftextjustified($outputImage, 15, 0, 20, 1010, $black, './fonts/GothamBook.ttf', $desc, 860, $minspacing=3,$linespacing=1);
