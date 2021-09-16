@@ -11,6 +11,7 @@ use app\models\Malls;
 use app\models\Names;
 use app\models\Dporders;
 use app\models\Settings;
+use app\models\Languages;
 
 use \MongoRegex;
 use \MongoClient;
@@ -709,6 +710,7 @@ public function createImageInstantlydcosting($Code){
 	$short = $p['Short'];
 	$category = $p['Category'];
 	$desc = $p['Description'];
+	$hindi = $p['Hindi'];
 	$MRP = $m['MRP'];
 	$DP = $m['DP'];
 	$BV = $m['BV'];
@@ -849,12 +851,14 @@ public function createImageInstantlydcosting($Code){
 	$a = $this->imagettftextjustified($outputImage, 12, 0, 800, 990, $black, './fonts/GothamBold.ttf', 'Sept 2021', 860, $minspacing=3,$linespacing=1);
 	
 	
-	$a = $this->imagettftextjustified($outputImage, 15, 0, 20, 1010, $black, './fonts/GothamBook.ttf', $desc, 860, $minspacing=3,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 15, 0, 20, 1010, $black, './fonts/GothamBook.ttf', $desc, 860, $minspacing=5,$linespacing=1);
+	$a = $this->imagettftextjustified($outputImage, 15, 0, 20, $a+10, $black, './fonts/mangal.ttf', $hindi, 860, $minspacing=5,$linespacing=1);
 //	imagettftext($outputImage, 14, 0, 10,550, $black, './fonts/GothamBook.ttf', wordwrap($desc ,60,"\n",true));
 	
 	$filename=$code.'.png';
 	imagepng($outputImage, $targetPath . $filename);
 	imagedestroy($outputImage);
+//	return $this->render(array('json' => array("success"=>"Yes")));
 	return compact('code','short','category','MRP','DP','BV','PV','Weight');
 }
 
@@ -899,8 +903,18 @@ for ($w=0;$w<$linewordcount[$ln];$w++)
 imagettftext($image, $size, $angle, $left + intval($x), $top + $largest_line_height + ($largest_line_height * $ln * $linespacing), $color, $font, $wordtext[$ln][$w]);
 $x+=$wordwidth[$ln][$w]+$spacing+$minspacing;
 }
+// imagettftext(    GdImage $image,    float $size,    float $angle,    int $x,    int $y,    int $color,    string $font_filename,    string $text,    array $options = []): array|false
+
+$paragraph = $top + $largest_line_height + ($largest_line_height * $ln * $linespacing);
 }
-return true;
+return $paragraph;
+}
+
+public function languages(){
+	$languages = Languages::find('all',array(
+		'order'=>array('Name'=>'ASC')
+	));
+	return $this->render(array('json' => array("success"=>"Yes",'languages'=>$languages)));
 }
 
 //end of class
