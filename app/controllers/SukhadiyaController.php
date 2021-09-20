@@ -28,7 +28,7 @@ class SukhadiyaController extends \lithium\action\Controller {
   $newcategory = "";
   foreach($categories as $c){
    if($newcategory != $c['MainCategory']){
-    array_push($allcategories,$c['MainCategory']);
+    array_push($allcategories,array('category'=>$c['MainCategory'],'SKU'=>$c['SKU Number']));
     $newcategory = $c['MainCategory'];
    }
   }
