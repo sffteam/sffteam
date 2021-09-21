@@ -55,7 +55,7 @@
  $n10yyyymm = date("Y-m", strtotime("10 month", strtotime(date("F") . "1")) );
  $n11yyyymm = date("Y-m", strtotime("11 month", strtotime(date("F") . "1")) );
 ?>
-<h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small> Daily GPV report <a href="/malls/growth/<?=$self['mcaNumber']?>" class="external link">Monthly</a></small> Growth</strong></h1>
+<h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small> Daily GPV report <a href="/malls/growth/<?=$self['mcaNumber']?>" class="external link">Monthly Growth</a> <a href="/malls/loyalty/<?=$self['mcaNumber']?>" class="external link">Loyalty</a></small> </strong></h1>
 <table  border=0 cellspacing=0 cellpadding=0 class="Roboto szhalf">
 <tr>
  <th class="col top left"><small>YYYY-MM</small></th>
@@ -465,14 +465,13 @@ $nrate = 1.2;
  <th class="szhalf top left">#</th>
  <th class="szhalf top left">Name</th>
  <th class="szhalf top left">MCA No</th>
+	<th class=" szhalf top left"><?=$p7yyyymm?></th>
+	<th class=" szhalf top left"><?=$p6yyyymm?></th>
 	<th class=" szhalf top left"><?=$p5yyyymm?></th>
 	<th class=" szhalf top left"><?=$p4yyyymm?></th>
 	<th class=" szhalf top left"><?=$p3yyyymm?></th>
 	<th class=" szhalf top left"><?=$p2yyyymm?></th>
 	<th class=" szhalf top left"><?=$p1yyyymm?></th>
- <th class=" szhalf top left">PV</th>
- <th class=" szhalf top left">GPV</th>
- <th class=" szhalf top left right">Growth</th>
  </tr>
 <?php
 foreach($teamzero as $t){
@@ -520,14 +519,15 @@ $i = 0;foreach($teamzero as $t){
  <?php }?>
 
  </td>
+	<td class="  left bottom"><?=$t[$p7yyyymm]['PV']?></td>
+	<td class="  left bottom"><?=$t[$p6yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p5yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p4yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p3yyyymm]['PV']?></td>
 	<td class="  left bottom"><?=$t[$p2yyyymm]['PV']?></td>
-	<td class="  left bottom"><?=$t[$p1yyyymm]['PV']?></td>
- <td class="<?=$same?>  left bottom"><?=$t[$yyyymm]['PV']?></td>
- <td class="  left bottom"><?=$t[$yyyymm]['GPV']?></td>
- <td class="  left right bottom"><?=number_format((($t[$yyyymm]['GBV']/$yyyymmdays)-($t[$p1yyyymm]['GBV']/$p1yyyymmdays))/($t[$p1yyyymm]['GBV']/$p1yyyymmdays)*100,0)?>%</td>
+	<td class="  left bottom right"><?=$t[$p1yyyymm]['PV']?></td>
+ 
+ 
 </tr>
 <?php 
 }
