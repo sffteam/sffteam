@@ -8,7 +8,7 @@
  $p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
 ?>
 <h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small> Daily GPV report <a href="/malls/growth/<?=$self['mcaNumber']?>" class="external link">Monthly Growth</a> <a href="/malls/loyalty/<?=$self['mcaNumber']?>" class="external link">Loyalty</a></small> </strong></h1>
-<table  border="1" class="Roboto">
+<table  border="1" class="Roboto szhalf" cellspacing=0 cellpadding=2>
 <tr>
  <th class="col top left" ><small>#</small></th>
  <th class="col top left" ><small>Loyalty DP</small></th>

@@ -6356,6 +6356,7 @@ public function myteam($mcaNumber=null){
  
 }
 public function loyalty($mcaNumber=null){
+	$this->_render['layout'] = 'ytd';
  	ini_set('max_execution_time', '0');
   ini_set("memory_limit", "-1");
   $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
