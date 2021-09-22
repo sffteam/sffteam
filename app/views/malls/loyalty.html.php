@@ -7,6 +7,7 @@
  $p5yyyymm = date("Y-m", strtotime("-5 month", strtotime(date("F") . "1")) );
  $p6yyyymm = date("Y-m", strtotime("-6 month", strtotime(date("F") . "1")) );
 ?>
+<h1 class="Raleway sz1"><strong><?=$self['mcaName']?> - (<a href="/tree/index/<?=$self['mcaNumber']?>/<?=$yyyymm?>/d" class="external links" title="Open Tree Structure" target="_blank"><?=$self['mcaNumber']?></a>) <?=$self[$yyyymm]['PaidTitle']?> - <?=$self['DateJoin']?> <br><small>KYC: <?=$self['KYC']?>, NEFT: <?=$self['NEFT']?>  <a href="/malls/snapshot/<?=$self['mcaNumber']?>" class="external link">Snapshot</a> - <a href="/malls/daily/<?=$self['mcaNumber']?>" class="external link">Daily</a></small> Daily GPV report <a href="/malls/growth/<?=$self['mcaNumber']?>" class="external link">Monthly Growth</a> <a href="/malls/loyalty/<?=$self['mcaNumber']?>" class="external link">Loyalty</a></small> </strong></h1>
 <table  border="1" class="Roboto">
 <tr>
  <th class="col top left" ><small>#</small></th>
@@ -21,6 +22,20 @@
  <th class="col top left"><?=$p2yyyymm?></th>
  <th class="col top left"><?=$p1yyyymm?></th>
  <th class="col top left right"><?=$yyyymm?></th>
+</tr>
+<tr>
+ <td class="col top left" ><small>0</small></td>
+ <td class="col top left" ><small><?=$self['mcaName']?></small></td>
+<td class="col top left"><small><a href="/malls/ytdgpv/<?=$self['mcaNumber']?>/<?=$yyyymm?>/D/" target="_blank" class="external link"><?=$self['mcaNumber']?></a></small></td>
+	<td class="col top left"><small><a href="/malls/ytdgpv/<?=$self['refer']?>/<?=$yyyymm?>/D/" target="_blank" class="external link"><?=$self['refer']?></a></small></td>
+ <td class="col top left"><small>+91<?=$self['Mobile']?></small></td>
+ <td class="col top left"><?=$self[$p6yyyymm]['BV']*2?></td>
+ <td class="col top left"><?=$self[$p5yyyymm]['BV']*2?></td>
+ <td class="col top left"><?=$self[$p4yyyymm]['BV']*2?></td>
+ <td class="col top left"><?=$self[$p3yyyymm]['BV']*2?></td>
+ <td class="col top left"><?=$self[$p2yyyymm]['BV']*2?></td>
+ <td class="col top left"><?=$self[$p1yyyymm]['BV']*2?></td>
+ <td class="col top left right"><?=$self[$yyyymm]['BV']*2?></td>
 </tr>
 <?php 
   $i=1;
