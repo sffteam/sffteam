@@ -6376,9 +6376,9 @@ public function loyalty($mcaNumber=null){
    'left'=>array('$gt'=>$self['left']),
    'right'=>array('$lt'=>$self['right']),
 				$p1yyyymm.'.BV'=> array('$gt'=>850),
-				$yyyymm.'.PV'=> 0,
+//				$yyyymm.'.PV'=> 0,
    "Enable" => "Yes"),
-   'order'=>array($yyyymm.'.GrossPV'=>DESC),
+   'order'=>array($yyyymm.'.PV'=>ASC),
    ));
    foreach($team as $t){
     $findmobile = Mobiles::find('first',array(
