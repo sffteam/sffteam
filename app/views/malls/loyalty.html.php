@@ -1,3 +1,4 @@
+<div class="block page-content" >
 <?php 
  $yyyymm = date('Y-m');
  $p1yyyymm = date("Y-m", strtotime("-1 month", strtotime(date("F") . "1")) );
@@ -74,3 +75,4 @@
    }?>
 </table>
 
+</div>
