@@ -224,8 +224,8 @@ public function getmobiles(){
 	 $mobile = Users::find('all',array(
 		 'conditions'=>array(
 			'mcaNumber'=>array('$nin'=>$next),
-//			'DateJoin'=> array('$regex'=>$yyyy,'$options'=>'i'),
-			$yyyymm.'.GPV' =>array('$gt'=>0),
+			'DateJoin'=> array('$regex'=>$yyyy,'$options'=>'i'),
+//			$yyyymm.'.PV' =>array('$gt'=>0),
 			'Enable'=>'Yes'
 		 ),
 		 'fields'=>array('mcaNumber', 'mcaName', $p1yyyymm.'.PV', $yyyymm.'.PV', 'DateJoin'),
