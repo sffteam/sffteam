@@ -151,7 +151,7 @@ public function getproductsimages(){
   $CategoriesArray = array(
   'HC' => 'Home Care',
   'AB' => 'Agarbatti',
-		'AP' => 'air Purifier',
+		'AP' => 'Air Purifier',
   'LC' => 'Laundry Care',
   'PC' => 'Personal Care',
   'FP' => 'Food & Beverages',
