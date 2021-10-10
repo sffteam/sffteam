@@ -26,6 +26,7 @@ class ModicareController extends \lithium\action\Controller {
  public function index(){
   $CategoriesArray = array(
   'HC' => 'Home Care 50%',
+		'AP' => 'Air Purifier - 50%',
   'AB' => 'Agarbatti 30%',
   'LC' => 'Laundry Care 35% & 60%',
   'PC' => 'Personal Care 10% to 60%',
@@ -42,9 +43,11 @@ class ModicareController extends \lithium\action\Controller {
   'MG' => 'Technology 60%',
   '00' => 'Others 10% to 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier - 50%',
   );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'Home Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e53935','percent'=>'50%'),
+				'AP' => array('Name'=>'Air Purifier','r'=>220,'g'=>97, 'b'=>23,'color'=>'#e53935','percent'=>'50%'),
     'AB' => array('Name'=>'Agarbatti','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e239A5','percent'=>'30%'),
     'LC' => array('Name'=>'Laundry Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#303f9f','percent'=>'35% to 60%'),
     'PC' => array('Name'=>'Personal Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#8e24aa','percent'=>'10% to 50%'),
@@ -148,6 +151,7 @@ public function getproductsimages(){
   $CategoriesArray = array(
   'HC' => 'Home Care',
   'AB' => 'Agarbatti',
+		'AP' => 'air Purifier',
   'LC' => 'Laundry Care',
   'PC' => 'Personal Care',
   'FP' => 'Food & Beverages',
