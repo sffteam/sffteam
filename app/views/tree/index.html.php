@@ -105,12 +105,12 @@ $i++;
 </div>
 <ul>
 <?php foreach($allusers as $user) {?>
-	<?php if(strpos($user['PaidTitle'], "Non") !== false){
+	<?php if($user['PV']>0){
 				if($user['PV']>0){
 					echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "-".$user['PV']."</li>";
 				}
 			}elseif($user['PaidTitle']!=""){
-				echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "-".$user['PV']."</li>";
+			//	echo "<li>". $user['mcaName'] . "-" . $user['PaidTitle'] . "-".$user['PV']."</li>";
 				}?>
 <?php 
 }?>
