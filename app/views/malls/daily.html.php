@@ -20,7 +20,7 @@
  </tr>
  <tr class="">
  <td class="right left bottom">0</td>
- <td class="right left bottom"><?=$self['mcaName']?></td>
+ <td class="right left bottom"><?=$self['mcaName']?> - <?=count($team)?></td>
  <?php 
  $yyyymm = date("Y-m", strtotime('today - 1 days') );
  $prevDate = date("Y-m-d", strtotime('today - 0 days') );
@@ -38,7 +38,7 @@
  <?php $x=1;foreach($team as $t){?>
  <tr>
  <td class="bottom right left"><?=$x?></td>
- <td  class="bottom right left"><a href="/malls/daily/<?=$t['mcaNumber']?>" class="external link"><?=$t['mcaName']?></a></td>
+ <td  class="bottom right left"><a href="/malls/daily/<?=$t['mcaNumber']?>" class="external link"><?=$t['mcaName']?></a> </td>
  <?php 
  $yyyymm = date("Y-m", strtotime('today - 1 days') );
  $prevDate = date("Y-m-d", strtotime('today - 0 days') );

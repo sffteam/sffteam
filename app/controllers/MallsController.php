@@ -6236,6 +6236,64 @@ $yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
  return compact('todayJoining','self');
 }
 
+public function mobiles($mcaNumber){
+set_time_limit(0);
+ini_set('memory_limit','-1'); 
+$yyyymm = date("Y-m", strtotime("0 month", strtotime(date("F") . "1")) );
+
+ $self = Users::find('first',array(
+  'conditions'=>array('mcaNumber'=>(string)$mcaNumber)
+ ));
+ print_r($self['left']);
+ $left = $self['left'];
+ $right = $self['right'];
+
+ $users = Users::find('all',array(
+  'conditions'=>array(
+   'left'=>array('$gt'=>$left),
+   'right'=>array('$lt'=>$right),
+   'Enable'=>'Yes'
+  )
+ ));
+ $todayJoining = array();
+ foreach($users as $u){
+  $mcaNumber = $u['mcaNumber'];
+   $findmobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$mcaNumber,)
+   ));
+   $findrefermobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$u['refer'])
+   ));
+   $team = Users::find('all',array(
+    'conditions'=>array('refer'=>$u['mcaNumber'])
+   ));
+   $allteam = " ";
+   foreach($team as $t){
+    $findTeammobile = Mobiles::find('first',array(
+   'conditions'=>array('mcaNumber'=>$t['mcaNumber'])
+   ));
+    $allteam = $allteam . "\\n".$t['mcaName']." *GPV: ".$t[$yyyymm]['GPV']." PGPV: ".$t[$yyyymm]['PGPV']."* (+91".$findTeammobile['Mobile']."), ";
+   }
+
+
+   if($findmobile['Mobile']){
+    if($findrefermobile['Mobile']){
+     array_push($todayJoining,array(
+      'name'=>$u['mcaName']." (MCA No: ".$u['mcaNumber'].")",
+      'mca'=>$u['mcaNumber'],
+      'DateJoin'=>date_format(date_create($u['DateJoin']),'Y-m-d'),
+      'Mobile'=>$findmobile['Mobile'],
+      'refer'=>$u['refer_name']." (+91".$findrefermobile['Mobile'].")",
+      'refer_mobile'=>"+91".$findrefermobile['Mobile'],
+      'KYCNEFT'=>"KYC: ". $u['KYC'].", NEFT Approved: ".$u['NEFT'],
+    ));
+    }
+   }
+ }
+ 
+ return compact('todayJoining','self');
+}
+
 public function ytdgpv($mcaNumber=null,$yyyymm){
    $this->_render['layout'] = 'ytd';
  	ini_set('max_execution_time', '0');
@@ -7906,6 +7964,116 @@ public function growth($mcaNumber){
 	
 }
 
+public function commission($mcaNumber,$yyyymm){
+	ini_set('max_execution_time', '0');
+	ini_set("memory_limit", "-1");
+
+$this->_render['layout'] = 'sale';
+
+				$self = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>$mcaNumber)
+				));
+			$user = Users::find('first',array(
+				'conditions'=>array('mcaNumber'=>$mcaNumber)
+			));
+			$allusers = array();
+   
+   
+				array_push($allusers,array(
+					'mcaNumber'=>$user['mcaNumber'],
+					'mcaName'=>$user['mcaName'],
+     'mobile'=>$mobile['Mobile'],
+					'refer'=>$user['refer'],
+     'KYC'=>$user['KYC'],
+     'NEFT'=>$user['NEFT'],
+     'PV'=>$user[$yyyymm]['PV'],
+     'BV'=>$user[$yyyymm]['BV'],     
+     'ExtraPV'=>$user[$yyyymm]['ExtraPV'],     
+     'PGPV'=>$user[$yyyymm]['PGPV'],
+					'PGBV'=>$user[$yyyymm]['PGBV'],
+					'GrossPV'=>$user[$yyyymm]['GrossPV'],
+     'GPV'=>$user[$yyyymm]['GPV'],
+					'GBV'=>$user[$yyyymm]['GBV'],
+					'RollUpPV'=>$user[$yyyymm]['RollUpPV'],					
+					'InActive'=>$user[$yyyymm]['InActive'],
+					'PaidTitle'=>$user[$yyyymm]['PaidTitle'],
+					'ValidTitle'=>$user[$yyyymm]['ValidTitle'],
+     'Gross'=>$user[$yyyymm]['Gross'],
+     'TotalEPV'=>$user[$yyyymm]['TotalEPV'],
+					'DateJoin'=>$user['DateJoin'],
+					'Days'=>(string)round((time()-strtotime($user['DateJoin']))/60/60/24,0)
+				));
+				
+				$users = Users::find('all',array(
+					'conditions'=>array(
+						'left'=>array('$gt'=>$user['left']),
+						'right'=>array('$lt'=>$user['right']),
+						$yyyymm.'.Percent'=>(integer)16,
+				//		$yyyymm.'.PaidTitle' => array('like'=>'/(Qualified)/'),
+      "Enable" => "Yes"
+					),
+					'order'=>array(
+					//'mcaName'=>'ASC'
+					)
+			));
+			$prevmcaNumber = $self['mcaNumber'];
+			$Level = (integer)1;
+			$FindLevel = array();
+				foreach($users as $u){
+    $mobile = Mobiles::find('first',array(
+				'conditions'=>array('mcaNumber'=>$u['mcaNumber'])
+			));
+
+			if(strpos($u[$yyyymm]['PaidTitle'], "Non") == false){
+					if($u['refer']==$prevmcaNumber){
+						array_push($FindLevel,array(
+							"Name"=>$u['mcaName'],
+							"Level"=>$Level
+						));
+						$prevmcaNumber = $u['mcaNumber'];
+					}else{
+						$prevmcaNumber = $u['mcaNumber'];
+						$Level = (integer)$Level+1;
+					}
+					
+					$Level = (integer)$Level;
+			}
+			$prevmcaNumber = $u['mcaNumber'];
+				
+					
+
+				array_push($allusers,array(
+					'mcaNumber'=>$u['mcaNumber'],
+     'mobile'=>$mobile['Mobile'],
+					'mcaName'=>$u['mcaName'],
+					'refer'=>$u['refer'],
+     'KYC'=>$u['KYC'],
+     'NEFT'=>$u['NEFT'],
+     'PV'=>$u[$yyyymm]['PV'],
+     'BV'=>$u[$yyyymm]['BV'],
+     'ExtraPV'=>$u[$yyyymm]['ExtraPV'],
+					'PGPV'=>$u[$yyyymm]['PGPV'],
+					'PGBV'=>$u[$yyyymm]['PGBV'],
+					'GrossPV'=>$u[$yyyymm]['GrossPV'],
+					'RollUpPV'=>$u[$yyyymm]['RollUpPV'],
+     'GPV'=>$u[$yyyymm]['GPV'],
+					'GBV'=>$u[$yyyymm]['GBV'],
+					'InActive'=>$u[$yyyymm]['InActive'],
+					'PaidTitle'=>$u[$yyyymm]['PaidTitle'],
+     'ValidTitle'=>$u[$yyyymm]['ValidTitle'],
+     'Gross'=>$u[$yyyymm]['Gross'],
+     'TotalEPV'=>$u[$yyyymm]['TotalEPV'],
+					'DateJoin'=>$u['DateJoin'],
+					'Days'=>(string)round((time()-strtotime($u['DateJoin']))/60/60/24,0)
+    ));				
+				}
+			//}
+			//LEVEL FIND
+			
+			
+			
+		return compact('allusers','level','self','yyyymm','D','FindLevel' );	
+}
 
 //end of class
 }
