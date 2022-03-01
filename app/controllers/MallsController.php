@@ -2848,10 +2848,11 @@ ini_set('memory_limit', '-1');
    
  
    $groups = array(
-    'Consultant'=>array('GPV'=>0,'Level'=>7),
-    'Senior Consultant'=>array('GPV'=>300,'Level'=>10),
-    'Deputy Supervisor'=>array('GPV'=>1200,'Level'=>13),
-    'Supervisor'=>array('GPV'=>2700,'Level'=>15),
+    'Consultant'=>array('GPV'=>0,'Level'=>6),
+    'Senior Consultant'=>array('GPV'=>100,'Level'=>8),
+				'Assistant Supervisor'=>array('GPV'=>300,'Level'=>10),
+    'Supervisor'=>array('GPV'=>1000,'Level'=>12),
+    'Senior Supervisor'=>array('GPV'=>2000,'Level'=>14),
     'Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1250,'Legs'=>0),
     'Senior Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1100,'Legs'=>1),
     'Execuive Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>900,'Legs'=>2),
