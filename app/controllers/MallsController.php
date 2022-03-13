@@ -99,8 +99,13 @@ class MallsController extends \lithium\action\Controller {
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'HOME','color'=>'#e53935'),
@@ -2848,10 +2853,11 @@ ini_set('memory_limit', '-1');
    
  
    $groups = array(
-    'Consultant'=>array('GPV'=>0,'Level'=>7),
-    'Senior Consultant'=>array('GPV'=>300,'Level'=>10),
-    'Deputy Supervisor'=>array('GPV'=>1200,'Level'=>13),
-    'Supervisor'=>array('GPV'=>2700,'Level'=>15),
+    'Consultant'=>array('GPV'=>0,'Level'=>6),
+    'Senior Consultant'=>array('GPV'=>100,'Level'=>8),
+				'Assistant Supervisor'=>array('GPV'=>300,'Level'=>10),
+    'Supervisor'=>array('GPV'=>1000,'Level'=>12),
+    'Senior Supervisor'=>array('GPV'=>2000,'Level'=>14),
     'Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1250,'Legs'=>0),
     'Senior Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>1100,'Legs'=>1),
     'Execuive Director'=>array('GPV'=>4000,'Level'=>16,'PGBV'=>900,'Legs'=>2),
@@ -3174,8 +3180,13 @@ public function getproductsimages(){
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
  
  $allproducts = array();
@@ -6518,8 +6529,13 @@ public function p ($category="",$mcaNumber=""){
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
 //  foreach($Categories as $key=>$val){
    // $count = Malls::find('count',array('Code'=> array('like'=>'/^'.$key.'/')));

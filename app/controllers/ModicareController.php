@@ -26,7 +26,6 @@ class ModicareController extends \lithium\action\Controller {
  public function index(){
   $CategoriesArray = array(
   'HC' => 'Home Care 50%',
-		'AP' => 'Air Purifier - 50%',
   'AB' => 'Agarbatti 30%',
   'LC' => 'Laundry Care 35% & 60%',
   'PC' => 'Personal Care 10% to 60%',
@@ -41,9 +40,13 @@ class ModicareController extends \lithium\action\Controller {
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
-		'AP' => 'Air Purifier - 50%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'Home Care','r'=>229,'g'=>57, 'b'=>53,'color'=>'#e53935','percent'=>'50%'),
@@ -149,24 +152,28 @@ public function getproducts(){
 
 public function getproductsimages(){
   $CategoriesArray = array(
-  'HC' => 'Home Care',
-  'AB' => 'Agarbatti',
-		'AP' => 'Air Purifier',
-  'LC' => 'Laundry Care',
-  'PC' => 'Personal Care',
-  'FP' => 'Food & Beverages',
-  'SC' => 'Skin Care',
-  'FS' => 'Food Supplement',
-  'MJ' => 'Jewelery',
-  'UC' => 'Cosmetics - Urban Color',
-  'BC' => 'Baby Care',
-  'AG' => 'Agriculture',
-  'AC' => 'Auto Care',
-  'HL' => 'Wellness',
-  'WA' => 'Watches',
-  'MG' => 'Technology',
-  '00' => 'Others',
-  '60' => 'Extra',
+  'HC' => 'Home Care 50%',
+  'AB' => 'Agarbatti 30%',
+  'LC' => 'Laundry Care 35% & 60%',
+  'PC' => 'Personal Care 10% to 60%',
+  'FP' => 'Food & Beverages 10% - 65%',
+  'SC' => 'Skin Care 60%',
+  'FS' => 'Food Supplement 60%',
+  'MJ' => 'Jewelery 40%',
+  'UC' => 'Cosmetics - Urban Color 60%',
+  'BC' => 'Baby Care 40 - 60%',
+  'AG' => 'Agriculture 60%',
+  'AC' => 'Auto Care 50%',
+  'HL' => 'Wellness 40-60%',
+  'WA' => 'Watches 50%',
+  'MG' => 'Technology 60%',
+  '00' => 'Others 60%',
+  '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
  
  $allproducts = array();
@@ -336,7 +343,7 @@ public function getprice(){
     $valueDP = $valueDP + $totalDP;
     $valueWeight = $valueWeight + $totalWeight;
    }
-   
+   $getCat = 
   return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV?:0,"valuePV"=>$valuePV?:0,"valueDP"=>$valueDP?:0,"weight"=>$valueWeight?:0)));  
 
  }
