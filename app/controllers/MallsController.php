@@ -99,8 +99,13 @@ class MallsController extends \lithium\action\Controller {
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
   $CategoriesSwiperArray = array(
     'HC' => array('Name'=>'HOME','color'=>'#e53935'),
@@ -3175,8 +3180,13 @@ public function getproductsimages(){
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
  
  $allproducts = array();
@@ -6519,8 +6529,13 @@ public function p ($category="",$mcaNumber=""){
   'HL' => 'Wellness 40-60%',
   'WA' => 'Watches 50%',
   'MG' => 'Technology 60%',
-  '00' => 'Others 10% to 60%',
+  '00' => 'Others 60%',
   '60' => 'Extra 0% to 60%',
+		'AP' => 'Air Purifier 20% to 50%',
+		'AX' => 'Mobile 30%',
+		'ET' => 'Courses 0%',
+		'GN' => 'RFID 0%',
+		'WR' => 'Courses 0%',
   );
 //  foreach($Categories as $key=>$val){
    // $count = Malls::find('count',array('Code'=> array('like'=>'/^'.$key.'/')));
