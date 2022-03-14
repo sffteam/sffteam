@@ -343,7 +343,7 @@ public function getprice(){
     $valueDP = $valueDP + $totalDP;
     $valueWeight = $valueWeight + $totalWeight;
    }
-   $getCat = 
+
   return $this->render(array('json' => array("success"=>"Yes","value"=>$value,"valueBV"=>$valueBV?:0,"valuePV"=>$valuePV?:0,"valueDP"=>$valueDP?:0,"weight"=>$valueWeight?:0)));  
 
  }
