@@ -1786,65 +1786,65 @@ public function uploadEnrolment(){
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
-   
+
    if($_FILES['file']['tmp_name'] == 0){ 
     $name = $_FILES['file']['tmp_name'];
     $ext = strtolower(end(explode('.', $_FILES['file']['tmp_name'])));
     $type = $_FILES['file']['tmp_name'];
     $tmpName = $_FILES['file']['tmp_name'];
    }
-   $row = 1;
+		//	print_r($this->request->data);
 
+   $row = 1;
    if (($handle = fopen($tmpName, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
        $num = count($data);
        $row++;
         $data = array(
-         'mcaNumber' => (string)$data[1],
-         'mcaName' => ucwords(strtolower((string)$data[2])),
-         'DateJoin' => (string)$data[4],
-         'Level' => (string)$data[5],
-         'refer' => (string)$data[6],
-         'ValidTitle'=>trim((string)$data[7]?:""),
-         'PaidTitle'=>trim((string)$data[8]?:""),
-         'KYC'=>(string)$data[9],
-         
-									'Activation'=>(string)$data[10],
-									'NoofMonths'=>(string)$data[11],
-         'ExtraPV'=>(integer)$data[12],
-         'PrevCummPV'=>(integer)$data[13],
-         'PV'=>(integer)$data[14],
-         'BV'=>(integer)$data[15],
-         'GPV'=>(integer)$data[16],
-         'GBV'=>(integer)$data[17],
-         'GrossPV'=>(integer)$data[18],
-         'PGPV'=>(integer)$data[19],
-         'PGBV'=>(integer)$data[20],
-         'RollUpPV'=>(integer)$data[21],
-         'Percent'=>(integer)$data[22],
+         'mcaNumber' => (string)$data[0],
+         'mcaName' => ucwords(strtolower((string)$data[1])),
+         'Zone'=>(string)$data[2],
+									'State'=>(string)$data[3],
+         'City'=>(string)$data[4],
+         'DateJoin' => (string)$data[5],
+									'Status' => (string)$data[6],
+									'KYC'=>(string)$data[7],
+									'Activation'=>(string)$data[8],
+
+
+         'Level' => (string)$data[9],
+         'refer' => (string)$data[10],
+         'ValidTitle'=>ucwords(strtolower(trim((string)$data[11]?:""))),
+         'PaidTitle'=>ucwords(strtolower(trim((string)$data[12]?:""))),
+         'PV'=>(integer)$data[13],
+         'BV'=>(integer)$data[14],
+									'CP'=>(integer)$data[15],
+									'Return'=>(integer)$data[16],
+								 'GPV'=>(integer)$data[17],
+         'GBV'=>(integer)$data[18],
+        	'Percent' => (string)$data[19],
+         'PGPV'=>(integer)$data[20],
+         'PGBV'=>(integer)$data[21],
+         'RollUpPV'=>(integer)$data[22],
          'Legs'=>(integer)$data[23],
          'QDLegs'=>(integer)$data[24],
-         'APB'=>(integer)$data[25],
-         'DBP'=>(integer)$data[26],
-         'TBBP'=>(integer)$data[27],
-         'DB'=>(integer)$data[28],
-         'TBB'=>(integer)$data[29],
-         'LPBP'=>(integer)$data[30],
-         'LPB'=>(integer)$data[31],
-         'TF'=>(integer)$data[32],
-         'CF'=>(integer)$data[33],
-         'HF'=>(integer)$data[34],
-         'ABB'=>(integer)$data[35],
+         
+									'APB'=>(integer)$data[25],
+									'SMSB'=>(integer)$data[26],
+									'DB'=>(integer)$data[27],
+									'LPB'=>(integer)$data[28],
+         'BB'=>(integer)$data[29],
+         'TF'=>(integer)$data[30],
+									'WTF'=>(integer)$data[31],
+									'CF'=>(integer)$data[32],
+         'HF'=>(integer)$data[33],
+         'BDB'=>(integer)$data[34],
+         'RDB'=>(integer)$data[35],
          'Gross'=>(integer)$data[36],
-         'NEFT'=>(string)$data[37],
-         'Aadhar'=>(string)$data[38],
-         'DaysLeft'=>(integer)$data[39],
-         'State'=>(string)$data[40],
-         'Zone'=>(string)$data[41],
-         'City'=>(string)$data[42],
-         'Enable'=>(string)$data[43],
-        );
+									
+									);
         
+
 //        print_r($data['Activation']);
         $user = Users::find("first",array(
         "conditions"=>array('mcaNumber'=>$data['mcaNumber'])
@@ -2122,43 +2122,42 @@ Users::update(
     'Level'=>(integer)$data['Level'],
 				'Activation'=>(string)$data['Activation'],
 				'NoofMonths'=>(integer)$data['NoofMonths'],
+    'State'=>$data['State'],
+    'Zone'=>$data['Zone'],
+    'City'=>$data['City'],
+				'Status'=>$data['Status'],
+    'KYC'=>(string)$data['KYC'],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
-     $yyyymm.'.InActive'=>(integer)$data['InActive'],
-     $yyyymm.'.Percent'=>(integer)$data['Percent'],
-     $yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
-     $yyyymm.'.ExtraPV'=>(integer)$data['ExtraPV'],
      $yyyymm.'.PV'=>(integer)$data['PV'],
      $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.Sales'=>(integer)$data['Sales'],
+     $yyyymm.'.Return'=>(integer)$data['Return'],
      $yyyymm.'.GPV'=>(integer)$data['GPV'],
      $yyyymm.'.GBV'=>(integer)$data['GBV'],
-     $yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
      $yyyymm.'.PGPV'=>(integer)$data['PGPV'],
      $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
      $yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
-     $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
-     $yyyymm.'.DaysLeft'=>(integer)$data['DaysLeft'],
      $yyyymm.'.APB'=>(integer)$data['APB'],
+     $yyyymm.'.SMSB'=>(integer)$data['SMSB'],
      $yyyymm.'.DB'=>(integer)$data['DB'],
      $yyyymm.'.LPB'=>(integer)$data['LPB'],
      $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.WTF'=>(integer)$data['WTF'],
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
      $yyyymm.'.'.$yyyymmdd =>$today,
-     'KYC'=>(string)$data['KYC'],
-     'NEFT'=>$data['NEFT'],
-     'Aadhar'=>$data['Aadhar'],
-     'State'=>$data['State'],
-     'Zone'=>$data['Zone'],
-     'City'=>$data['City'],
-     'Enable'=>$data['Enable'],
+     
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     
+					'Enable'=>'Yes',
    );
-   print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
+  // print_r($data['mcaName'].": ".$data[$yyyymm.'.PV']."<br>\n");
    Users::create()->save($data);
    
   }
@@ -2206,52 +2205,54 @@ Users::update(
 
   
    $data = array(
+
     'mcaName'=>(string)$data["mcaName"],
     'mcaNumber'=>(string)$data["mcaNumber"],
     'refer'=>(string)$data["refer"],
+    'refer_name'=>$refer_name,
+    'refer_id'=>(string)$refer_id,
+    'ancestors'=> $ancestors,
+    'DateJoin'=>(string)$data["DateJoin"],
+    'left'=>(integer)($refer_left+1),
+    'right'=>(integer)($refer_left+2),
+    'Level'=>(integer)$data['Level'],
+				'Activation'=>(string)$data['Activation'],
+				'NoofMonths'=>(integer)$data['NoofMonths'],
+    'State'=>$data['State'],
+    'Zone'=>$data['Zone'],
+    'City'=>$data['City'],
+				'Status'=>$data['Status'],
+    'KYC'=>(string)$data['KYC'],
      $yyyymm.'.ValidTitle'=>(string)$data['ValidTitle'],
      $yyyymm.'.PaidTitle'=>(string)$data['PaidTitle'],
-     $yyyymm.'.InActive'=>(integer)$data['InActive'],
-     $yyyymm.'.Percent'=>(integer)$data['Percent'],
-     $yyyymm.'.PrevCummPV'=>(integer)$data['PrevCummPV'],
-     $yyyymm.'.ExtraPV'=>(integer)$data['ExtraPV'],
      $yyyymm.'.PV'=>(integer)$data['PV'],
      $yyyymm.'.BV'=>(integer)$data['BV'],
+     $yyyymm.'.Sales'=>(integer)$data['Sales'],
+     $yyyymm.'.Return'=>(integer)$data['Return'],
      $yyyymm.'.GPV'=>(integer)$data['GPV'],
      $yyyymm.'.GBV'=>(integer)$data['GBV'],
-     $yyyymm.'.GrossPV'=>(integer)$data['GrossPV'],
+     $yyyymm.'.Percent'=>(integer)$data['Percent'],
      $yyyymm.'.PGPV'=>(integer)$data['PGPV'],
      $yyyymm.'.PGBV'=>(integer)$data['PGBV'],
      $yyyymm.'.RollUpPV'=>(integer)$data['RollUpPV'],
-     $yyyymm.'.RollUpBV'=>(integer)$data['RollUpBV'],
-     $yyyymm.'.Level'=>(integer)$data['Level'],
      $yyyymm.'.Legs'=>(integer)$data['Legs'],
      $yyyymm.'.QDLegs'=>(integer)$data['QDLegs'],
-     $yyyymm.'.DaysLeft'=>(integer)$data['DaysLeft'],
      $yyyymm.'.APB'=>(integer)$data['APB'],
-     $yyyymm.'.DBP'=>(integer)$data['DPB'],
+     $yyyymm.'.SMSB'=>(integer)$data['SMSB'],
      $yyyymm.'.DB'=>(integer)$data['DB'],
-     $yyyymm.'.TBBP'=>(integer)$data['TBBP'],
-     $yyyymm.'.TBB'=>(integer)$data['TBB'],
-     $yyyymm.'.LPBP'=>(integer)$data['LPBP'],
      $yyyymm.'.LPB'=>(integer)$data['LPB'],
      $yyyymm.'.TF'=>(integer)$data['TF'],
+     $yyyymm.'.WTF'=>(integer)$data['WTF'],
      $yyyymm.'.CF'=>(integer)$data['CF'],
      $yyyymm.'.HF'=>(integer)$data['HF'],
-     $yyyymm.'.ABB'=>(integer)$data['ABB'],
      $yyyymm.'.Gross'=>(integer)$data['Gross'],
      $yyyymm.'.today'=>$today,
-     $yyyymm.'.'.$yyyymmdd=>$today,
-     'KYC'=>(string)$data['KYC'],
-     'NEFT'=>$data['NEFT'],
-     'Aadhar'=>$data['Aadhar'],
-     'State'=>$data['State'],
-     'Zone'=>$data['Zone'],
-     'City'=>$data['City'],
-     'Enable'=>$data['Enable'],
-					'Activation'=>(string)$data['Activation'],
-					'NoofMonths'=>(integer)$data['NoofMonths']
-   );
+     $yyyymm.'.'.$yyyymmdd =>$today,
+     
+     $yyyymm.'.Level'=>(integer)$data['Level'],
+     
+					'Enable'=>'Yes',
+					);
    }
    $conditions = array('mcaNumber'=>(string)$data["mcaNumber"]);
    Users::update($data,$conditions);
