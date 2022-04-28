@@ -19,7 +19,7 @@ Date: <input type="text" id="yyyymmdd" name="yyyymmdd" value="<?=gmdate('Y-m-d',
 <script>
 function changeYear(){
 	var FileNameSelected = document.getElementById("FileName").value;
-	console.log(FileNameSelected.substring(12,19));
-	document.getElementById("yyyymm").value = FileNameSelected.substring(12,19);
+	console.log(FileNameSelected.substring(47,54));
+	document.getElementById("yyyymm").value = FileNameSelected.substring(47,54);
 }
 </script>
