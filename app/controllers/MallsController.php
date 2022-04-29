@@ -1783,6 +1783,8 @@ public function list100pv(){
 
 public function uploadEnrolment(){
    ini_set('memory_limit','-1');
+ini_set('upload_max_filesize', '64M');ini_set('post_max_size', '64M');
+
 set_time_limit(0);
   if($this->request->data){
    $file = $this->request->data['file']; 
